@@ -1,0 +1,90 @@
+{
+	"name": "lmc-admin-ui",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"projectType": "application",
+	"sourceRoot": "apps/lmc-admin-ui/src",
+	"prefix": "la-methode-claire",
+	"targets": {
+		"build": {
+			"executor": "@angular-devkit/build-angular:browser",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/apps/lmc-admin-ui",
+				"index": "apps/lmc-admin-ui/src/index.html",
+				"main": "apps/lmc-admin-ui/src/main.ts",
+				"polyfills": ["zone.js"],
+				"tsConfig": "apps/lmc-admin-ui/tsconfig.app.json",
+				"inlineStyleLanguage": "scss",
+				"assets": [
+					"apps/lmc-admin-ui/src/favicon.ico",
+					"apps/lmc-admin-ui/src/assets"
+				],
+				"styles": ["apps/lmc-admin-ui/src/styles.scss"],
+				"scripts": []
+			},
+			"configurations": {
+				"production": {
+					"budgets": [
+						{
+							"type": "initial",
+							"maximumWarning": "500kb",
+							"maximumError": "1mb"
+						},
+						{
+							"type": "anyComponentStyle",
+							"maximumWarning": "2kb",
+							"maximumError": "4kb"
+						}
+					],
+					"outputHashing": "all"
+				},
+				"development": {
+					"buildOptimizer": false,
+					"optimization": false,
+					"vendorChunk": true,
+					"extractLicenses": false,
+					"sourceMap": true,
+					"namedChunks": true
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"serve": {
+			"executor": "@angular-devkit/build-angular:dev-server",
+			"configurations": {
+				"production": {
+					"browserTarget": "lmc-admin-ui:build:production"
+				},
+				"development": {
+					"browserTarget": "lmc-admin-ui:build:development"
+				}
+			},
+			"defaultConfiguration": "development"
+		},
+		"extract-i18n": {
+			"executor": "@angular-devkit/build-angular:extract-i18n",
+			"options": {
+				"browserTarget": "lmc-admin-ui:build"
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": [
+					"apps/lmc-admin-ui/**/*.ts",
+					"apps/lmc-admin-ui/**/*.html"
+				]
+			}
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+			"options": {
+				"jestConfig": "apps/lmc-admin-ui/jest.config.ts",
+				"passWithNoTests": true
+			}
+		}
+	},
+	"tags": []
+}
