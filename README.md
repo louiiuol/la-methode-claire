@@ -32,9 +32,21 @@ After running these commands, you can access locally these applications:
 | User Space   | htttp://localhost:4200 | UI dedidacted to logged in users |
 | Admin Space   | htttp://localhost:4201 | UI dedidacted to Administrator |
 
+### NX commands 🕹️
+
+> Handy commands to help you run, generate, build, test and more from root workspace.
+
+|        Name            |             Command         | Description  |
+|:----------------------|:----------------------------| :------------|
+| Launch dev server     | `nx serve APP_NAME`         | - |
+| Test the app          | `nx test APP_NAME`          | Not functional yet ! |
+| Build the app         | `nx build APP_NAME`          | Not functional yet ! |
+| See apps deps         | `nx graph`          | Diagram of the dependencies of the projects |
+| Remote caching          | `npx nx connect-to-nx-cloud`          | - |
+
 ## Wiki 🙏
 
-> This project have it's own wiki available [here](./wiki/README.md). It explains how this project was made and what is next on the development scope.
+> This project have it's own wiki available [here](https://github.com/louiiuol/la-methode-claire/wiki). It explains how this project was made and what is next on the development scope.
 
 ## Contact ✉️
 
