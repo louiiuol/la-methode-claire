@@ -18,6 +18,7 @@
 		"@nrwl/angular": "^15.4.2",
 		"@nrwl/cypress": "15.4.2",
 		"@nrwl/jest": "15.4.2",
+		"@nrwl/js": "15.4.2",
 		"@nrwl/nest": "15.4.2",
 		"@nrwl/next": "^15.4.2",
 		"@nrwl/node": "15.4.2",
