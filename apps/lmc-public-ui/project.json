@@ -23,6 +23,7 @@
 			"executor": "@nrwl/next:server",
 			"defaultConfiguration": "development",
 			"options": {
+				"port": 8080,
 				"buildTarget": "lmc-public-ui:build",
 				"dev": true
 			},
