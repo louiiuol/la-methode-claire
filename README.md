@@ -1,10 +1,10 @@
 # La Méthode Claire 👓
 
-> Une méthode de lecture simple, soignée et efficace ! Ce projet regroupe un ensemble d'applications permettant
+> A simple yet neat and effective reading methodology for school teachers. This project allows:
 >
-> - aux grand public de découvrir la méthode, et s'inscrire gratuitement
-> - aux utilisateurs connectés de suivre leur progression et plus encore ..
-> - aux administrateurs de gérer le contenu de l'application
+> - Public to discover the project, and sign up
+> - Logged in user to follow their progress and more ..
+> - Administors to manage content and users.
 
 ## Features 🎉
 
@@ -14,27 +14,23 @@
 4. User's progression
 5. Subscription & payment
 
-## Stack technique ⚙️
+## Get started 💪
 
-| Name           | Version       | Description  |
-| :-------------|:-------------:| :------------|
-| TypeScript    | ~4.8.2         | Pre processor Javascript adding typing support ! |
-| NestJs        | 8.3.0         | Node.js serverside Framework, ideal to create complex and maintenable API |
-| Mysql         | 5.7           | Relational database |
-| Angular         | 15.0.0        | Javascript Framework to build advanced UI |
-| NX         | 15.4.2           | Workspace manager. [Nx Documentation](https://nx.dev) |
-| NX Cloud        | @latest          | Enable [remote caching](https://nx.app) and make CI faster. |
-| Prettier         | ^2.6.2           | Code formatter |
+> After cloning project locally you can run the followings commands in the root folder in order to launch the app locally
 
-## Available commands 🕹
+``` bash
+npm i # Install workspace dependency
+npm run serve:apps # Launch API and ng applications (user-board & admin-board)
+npm run serve:public:ui # Launch distinct Nexjs Public application
+```
 
-|        Name            |             Command         | Description  |
-|:----------------------|:----------------------------| :------------|
-| Launch dev server     | `nx serve APP_NAME`         | - |
-| Test the app          | `nx test APP_NAME`          | Not functional yet ! |
-| Build the app         | `nx build APP_NAME`          | Not functional yet ! |
-| See apps deps         | `nx graph`          | Diagram of the dependencies of the projects |
-| Remote caching          | `npx nx connect-to-nx-cloud`          | - |
+After running these commands, you can access locally these applications:
+
+| Application | URL | Description |
+|:------------|:----|:------------|
+| Public UI   | htttp://localhost:8080 | Public landing page |
+| User Space   | htttp://localhost:4200 | UI dedidacted to logged in users |
+| Admin Space   | htttp://localhost:4201 | UI dedidacted to Administrator |
 
 ## Wiki 🙏
 
