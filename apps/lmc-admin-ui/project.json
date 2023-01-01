@@ -56,6 +56,7 @@
 					"browserTarget": "lmc-admin-ui:build:production"
 				},
 				"development": {
+					"port": 4201,
 					"browserTarget": "lmc-admin-ui:build:development"
 				}
 			},
