@@ -15,7 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@la-methode-claire/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+			"@lmc/api-interfaces": ["libs/api-interfaces/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
