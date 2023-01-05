@@ -12,7 +12,7 @@
 2. Library
 3. Content Administration
 4. User's progression
-5. Subscription & payment
+5. Subscription & Payment
 
 ## Get started 💪
 
