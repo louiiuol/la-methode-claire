@@ -21,7 +21,7 @@
 ``` bash
 npm i # Install workspace dependency
 npm run serve:apps # Launch API and ng applications (user-board & admin-board)
-npm run serve:public:ui # Launch distinct Nexjs Public application
+npm run serve:public:ui # Launch distinct Nextjs Public application
 ```
 
 After running these commands, you can access locally these applications:
