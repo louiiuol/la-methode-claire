@@ -4,7 +4,7 @@
 >
 > - Public to discover the project, and sign up
 > - Logged in user to follow their progress and more ..
-> - Administors to manage content and users.
+> - Administrators to manage content and users.
 
 ## Features 🎉
 
