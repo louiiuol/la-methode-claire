@@ -1,4 +1,5 @@
 /**
+ * Entry point of the API, this launch is loaded in order to run server with specified modules/configuration.
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
