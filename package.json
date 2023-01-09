@@ -73,10 +73,17 @@
 		"@angular/platform-browser": "~15.0.0",
 		"@angular/platform-browser-dynamic": "~15.0.0",
 		"@angular/router": "~15.0.0",
+		"@automapper/classes": "^8.7.7",
+		"@automapper/core": "^8.7.7",
+		"@automapper/nestjs": "^8.7.7",
 		"@nestjs/common": "^9.0.0",
 		"@nestjs/core": "^9.0.0",
 		"@nestjs/platform-express": "^9.0.0",
+		"@nestjs/typeorm": "^9.0.1",
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.0",
 		"core-js": "^3.6.5",
+		"mysql2": "^2.3.3",
 		"next": "13.0.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
@@ -84,6 +91,7 @@
 		"regenerator-runtime": "0.13.7",
 		"rxjs": "^7.0.0",
 		"tslib": "^2.3.0",
+		"typeorm": "^0.3.11",
 		"zone.js": "~0.11.4"
 	}
 }
