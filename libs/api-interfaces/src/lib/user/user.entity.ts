@@ -1,13 +1,5 @@
 import {AutoMap} from '@automapper/classes';
-import {
-	Entity,
-	Column,
-	PrimaryGeneratedColumn,
-	BaseEntity,
-	ManyToMany,
-	JoinTable,
-} from 'typeorm';
-import {Course} from '../library/courses/course.entity';
+import {Entity, Column, PrimaryGeneratedColumn, BaseEntity} from 'typeorm';
 import {UserRole} from './user.role';
 
 /**
@@ -19,29 +11,29 @@ import {UserRole} from './user.role';
 export class User extends BaseEntity {
 	@AutoMap()
 	@PrimaryGeneratedColumn()
-	uuid: number;
+	uuid!: number;
 
 	@AutoMap()
 	@Column({
 		nullable: true,
 	})
-	firstName: string;
+	firstName!: string;
 
 	@AutoMap()
 	@Column({
 		nullable: true,
 	})
-	lastName: string;
+	lastName!: string;
 
 	@AutoMap()
 	@Column()
-	email: string;
+	email!: string;
 
 	@Column()
-	password: string;
+	password!: string;
 
 	@Column({default: true})
-	isActive: boolean;
+	isActive!: boolean;
 
 	@AutoMap()
 	@Column({
@@ -49,12 +41,5 @@ export class User extends BaseEntity {
 		enum: UserRole,
 		default: UserRole.USER,
 	})
-	role: UserRole;
-
-	@AutoMap()
-	@ManyToMany(() => Course, c => c.users)
-	@JoinTable({
-		name: 'users_courses',
-	})
-	courses: Course[];
+	role!: UserRole;
 }
