@@ -3,8 +3,8 @@ import {classes} from '@automapper/classes';
 import {AutomapperModule} from '@automapper/nestjs';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {environment} from '../environments/environment';
-import {UsersModule} from './users/users.module';
 import {User} from '@lmc/api-interfaces';
+import {AuthModule} from './auth/auth.module';
 
 @Module({
 	imports: [
@@ -21,7 +21,7 @@ import {User} from '@lmc/api-interfaces';
 		AutomapperModule.forRoot({
 			strategyInitializer: classes(),
 		}),
-		UsersModule,
+		AuthModule,
 	],
 	controllers: [],
 	providers: [],
