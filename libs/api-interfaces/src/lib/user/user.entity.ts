@@ -42,4 +42,24 @@ export class User extends BaseEntity {
 		default: UserRole.USER,
 	})
 	role!: UserRole;
+
+	@AutoMap()
+	@Column()
+	picture!: string;
+
+	@AutoMap()
+	@Column()
+	locale!: string;
+
+	@AutoMap()
+	@Column()
+	provider!: string;
+
+	@AutoMap()
+	@Column()
+	accessToken!: string;
+
+	@AutoMap()
+	@Column()
+	refreshToken!: string;
 }

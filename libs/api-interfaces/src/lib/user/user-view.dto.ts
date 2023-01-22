@@ -1,20 +1,20 @@
-import { AutoMap } from '@automapper/classes';
+import {AutoMap} from '@automapper/classes';
 
 export class UserViewDto {
-  @AutoMap()
-  uuid: string;
+	@AutoMap()
+	uuid!: string;
 
-  @AutoMap()
-  email: string;
+	@AutoMap()
+	email!: string;
 
-  @AutoMap()
-  firstName: string;
+	@AutoMap()
+	firstName!: string;
 
-  @AutoMap()
-  lastName: string;
+	@AutoMap()
+	lastName!: string;
 
-  @AutoMap()
-  isActive: boolean;
+	@AutoMap()
+	isActive!: boolean;
 }
 
 export class UserUpdateDo extends UserViewDto {}
