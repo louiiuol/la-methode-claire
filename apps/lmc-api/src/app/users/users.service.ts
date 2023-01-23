@@ -1,21 +1,16 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {DeleteResult, Repository} from 'typeorm';
-import {InjectMapper} from '@automapper/nestjs';
-import {Mapper} from '@automapper/core';
-import {User, UserCreateDto, UserViewDto} from '@lmc/api-interfaces';
+import {User, UserCreateDto} from '@lmc/api-interfaces';
 
 @Injectable()
 export class UsersService {
 	constructor(
-		@InjectRepository(User) private usersRepository: Repository<User>,
-		@InjectMapper() private readonly classMapper: Mapper
+		@InjectRepository(User) private usersRepository: Repository<User>
 	) {}
 
-	async save(user: UserCreateDto): Promise<UserViewDto> {
-		const entity = await this.usersRepository.save(user);
-		return this.classMapper.mapAsync(entity, User, UserViewDto);
-	}
+	save = async (user: UserCreateDto): Promise<User> =>
+		await this.usersRepository.save(user);
 
 	findAll = (): Promise<User[]> => this.usersRepository.find();
 
@@ -25,7 +20,6 @@ export class UsersService {
 	findOneByEmail = (email: string): Promise<User> =>
 		this.usersRepository.findOne({
 			where: {email},
-			// relations: {courses: true},
 		});
 
 	remove = async (id: string): Promise<DeleteResult> =>

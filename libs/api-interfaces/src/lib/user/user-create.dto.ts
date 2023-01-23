@@ -1,3 +1,11 @@
-import { UserLoginDto } from './user-login.dto';
+import {AutoMap} from '@automapper/classes';
+import {IsString} from 'class-validator/types/decorator/typechecker/IsString';
+import {UserLoginDto} from './user-login.dto';
 
-export class UserCreateDto extends UserLoginDto {}
+export type AuthProviders = 'local' | 'google';
+
+export class UserCreateDto extends UserLoginDto {
+	@IsString()
+	@AutoMap()
+	provider: AuthProviders = 'local';
+}
