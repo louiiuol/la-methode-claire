@@ -1,5 +1,5 @@
 import {AutoMap} from '@automapper/classes';
-import {IsString} from 'class-validator/types/decorator/typechecker/IsString';
+import {IsString} from 'class-validator';
 import {UserLoginDto} from './user-login.dto';
 
 export type AuthProviders = 'local' | 'google';

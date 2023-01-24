@@ -10,7 +10,7 @@ import {UserRole} from './user.role';
 })
 export class User extends BaseEntity {
 	@AutoMap()
-	@PrimaryGeneratedColumn()
+	@PrimaryGeneratedColumn('uuid')
 	uuid!: number;
 
 	@AutoMap()
@@ -44,22 +44,32 @@ export class User extends BaseEntity {
 	role!: UserRole;
 
 	@AutoMap()
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	picture!: string;
 
 	@AutoMap()
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	locale!: string;
 
 	@AutoMap()
-	@Column()
+	@Column({
+		default: 'local',
+	})
 	provider!: string;
 
 	@AutoMap()
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	accessToken!: string;
 
 	@AutoMap()
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	refreshToken!: string;
 }
