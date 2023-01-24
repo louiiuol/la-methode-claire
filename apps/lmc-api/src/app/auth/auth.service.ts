@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
-	private readonly salt = environment.SALT;
+	private readonly salt = Number(environment.SALT);
 
 	constructor(
 		private usersService: UsersService,

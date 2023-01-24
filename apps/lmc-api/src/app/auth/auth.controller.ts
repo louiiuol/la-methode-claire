@@ -1,11 +1,5 @@
 import {Controller, Post, UseGuards, Body} from '@nestjs/common';
-import {
-	TokenJWT,
-	User,
-	UserCreateDto,
-	UserLoginDto,
-	UserViewDto,
-} from '@lmc/api-interfaces';
+import {TokenJWT, User, UserCreateDto, UserLoginDto} from '@lmc/api-interfaces';
 import {AuthService} from './auth.service';
 import {LocalAuthGuard} from './guards/local-auth.guard';
 
@@ -14,7 +8,7 @@ export class AuthController {
 	constructor(private authService: AuthService) {}
 
 	@Post('/register')
-	async register(@Body() dto: UserCreateDto): Promise<UserViewDto> {
+	async register(@Body() dto: UserCreateDto): Promise<void> {
 		return await this.authService.register(dto);
 	}
 
