@@ -1,9 +1,7 @@
 import {AutoMap} from '@automapper/classes';
+import {AbstractViewDTO} from '../utils/abstract-view.dto';
 
-export class UserViewDto {
-	@AutoMap()
-	uuid!: string;
-
+export class UserViewDto extends AbstractViewDTO {
 	@AutoMap()
 	email!: string;
 
