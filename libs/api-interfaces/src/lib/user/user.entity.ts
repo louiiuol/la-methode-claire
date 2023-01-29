@@ -26,7 +26,9 @@ export class User extends BaseEntity {
 	lastName!: string;
 
 	@AutoMap()
-	@Column()
+	@Column({
+		unique: true,
+	})
 	email!: string;
 
 	@Column()
