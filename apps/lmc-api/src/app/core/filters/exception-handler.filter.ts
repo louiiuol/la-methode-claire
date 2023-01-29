@@ -10,11 +10,6 @@ import {Response} from 'express';
 import {EntityNotFoundError, QueryFailedError} from 'typeorm';
 import {APIResponse} from '../../models/api-response.model';
 
-export const getStatusCode = (exception: unknown): number =>
-	exception instanceof EntityNotFoundError
-		? HttpStatus.NOT_FOUND
-		: HttpStatus.BAD_REQUEST;
-
 /**
  ** Custom exception filter to convert EntityNotFoundError & QueryFailedError
  ** from TypeOrm error event to NestJs responses as proper DTO
@@ -22,7 +17,7 @@ export const getStatusCode = (exception: unknown): number =>
  */
 @Injectable()
 @Catch(QueryFailedError, EntityNotFoundError, BadRequestException)
-export class GlobalExceptionFilter implements ExceptionFilter {
+export class ExceptionHandler implements ExceptionFilter {
 	/**
 	 * Entry point to catch any errors.
 	 * @param exception - The exception that caused this response to be created.
@@ -32,10 +27,20 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 	catch = (
 		exception: unknown,
 		host: ArgumentsHost
-	): Response<APIResponse<void>> =>
+	): Response<APIResponse<null>> =>
 		host
 			.switchToHttp()
 			.getResponse<Response>()
-			.status(getStatusCode(exception))
-			.json(new APIResponse<void>(null, {ctx: host.switchToHttp(), exception}));
+			.status(this.getStatusCode(exception))
+			.json(new APIResponse(null, {ctx: host.switchToHttp(), exception}));
+
+	/**
+	 * Cast exception to number status code.
+	 * @param exception - The exception that caused this response to be created.
+	 * @returns Status code of the exception.
+	 */
+	private getStatusCode = (exception: unknown): number =>
+		exception instanceof EntityNotFoundError
+			? HttpStatus.NOT_FOUND
+			: HttpStatus.BAD_REQUEST;
 }
