@@ -2,6 +2,7 @@ import {
 	AbstractViewDTO,
 	APIResponse as IAPIResponse,
 	APIResponseOptions,
+	PaginationConfig,
 } from '@lmc/api-interfaces';
 import {IncomingMessage} from 'http';
 
@@ -9,17 +10,16 @@ import {IncomingMessage} from 'http';
  * Implementation of APIResponse for every response from this API. This will help us
  * to be more consistent with the rest of the codebase.
  */
-export class APIResponse<T extends AbstractViewDTO | void | undefined>
-	implements IAPIResponse<T>
-{
+export class APIResponse<T extends AbstractViewDTO> implements IAPIResponse<T> {
 	timestamp: string;
 	path: string;
 	messages: string[];
 	error: string;
-	data: T | T[];
-	paginator: {index: number; limit: number; length: number};
+	data: T | T[] | null;
+	paginator: PaginationConfig | undefined;
 
 	constructor(data?: T | T[], options?: APIResponseOptions) {
+		// TODO Improve format => expected: 29/01/2023, 22:57:41
 		this.timestamp = new Date().toISOString();
 		this.path = options?.ctx?.getRequest<IncomingMessage>()?.url;
 		this.setErrorMessages(options?.exception);
