@@ -3,46 +3,39 @@ import {
 	Catch,
 	ArgumentsHost,
 	Injectable,
-	HttpException,
 	HttpStatus,
+	BadRequestException,
 } from '@nestjs/common';
 import {Response} from 'express';
-import {IncomingMessage} from 'http';
 import {EntityNotFoundError, QueryFailedError} from 'typeorm';
+import {APIResponse} from '../../models/api-response.model';
 
 export const getStatusCode = (exception: unknown): number =>
 	exception instanceof EntityNotFoundError
-		? 404
-		: exception instanceof QueryFailedError
-		? 400
-		: exception instanceof HttpException
-		? 500
-		: HttpStatus.INTERNAL_SERVER_ERROR;
-
-export const getErrorMessage = (exception: unknown): string =>
-	String(exception);
+		? HttpStatus.NOT_FOUND
+		: HttpStatus.BAD_REQUEST;
 
 /**
- ** Custom exception filter to convert EntityNotFoundError from TypeOrm to NestJs responses
+ ** Custom exception filter to convert EntityNotFoundError & QueryFailedError
+ ** from TypeOrm error event to NestJs responses as proper DTO
  * @see also @https://docs.nestjs.com/exception-filters
  */
 @Injectable()
-@Catch(QueryFailedError, EntityNotFoundError)
+@Catch(QueryFailedError, EntityNotFoundError, BadRequestException)
 export class GlobalExceptionFilter implements ExceptionFilter {
-	catch(exception: unknown, host: ArgumentsHost) {
-		const ctx = host.switchToHttp();
-		const response = ctx.getResponse<Response>();
-		const request = ctx.getRequest<IncomingMessage>();
-		const code = getStatusCode(exception);
-		const message = getErrorMessage(exception);
-
-		return response.status(code).json({
-			error: {
-				timestamp: new Date().toISOString(),
-				path: request.url,
-				code,
-				message,
-			},
-		});
-	}
+	/**
+	 * Entry point to catch any errors.
+	 * @param exception - The exception that caused this response to be created.
+	 * @param host - The host that caused this exception.
+	 * @returns {APIResponse} - Explain why this exception happened.
+	 */
+	catch = (
+		exception: unknown,
+		host: ArgumentsHost
+	): Response<APIResponse<void>> =>
+		host
+			.switchToHttp()
+			.getResponse<Response>()
+			.status(getStatusCode(exception))
+			.json(new APIResponse<void>(null, {ctx: host.switchToHttp(), exception}));
 }
