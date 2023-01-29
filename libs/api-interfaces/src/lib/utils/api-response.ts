@@ -2,6 +2,9 @@ import {AbstractViewDTO} from './abstract-view.dto';
 import {HttpArgumentsHost} from '@nestjs/common/interfaces';
 import {PaginationConfig} from './pagination-config';
 
+/**
+ * Configurational options for creating an APIResponse
+ */
 export type APIResponseOptions = {
 	ctx?: HttpArgumentsHost;
 	exception?: unknown;
@@ -11,17 +14,11 @@ export type APIResponseOptions = {
 /**
  * Represents wrapper for every response from API
  */
-export interface APIResponse<T extends AbstractViewDTO | void | undefined> {
+export interface APIResponse<T extends AbstractViewDTO | null> {
 	timestamp: string;
 	path: string;
 	messages: string[];
-	data: T | T[] | undefined;
+	data: T | T[] | null;
 	error: string | undefined;
-	paginator:
-		| {
-				index: number;
-				limit: number;
-				length: number;
-		  }
-		| undefined;
+	paginator: PaginationConfig | undefined;
 }
