@@ -1,8 +1,9 @@
-import {Request, Controller, Get} from '@nestjs/common';
+import {Request, Controller, Get, UseGuards} from '@nestjs/common';
 import {User, UserViewDto} from '@lmc/api-interfaces';
 import {InjectMapper} from '@automapper/nestjs';
 import {Mapper} from '@automapper/core';
 import {UsersService} from './users.service';
+import {JwtAuthGuard} from '../auth/guards/jwt-auth.guard';
 
 @Controller()
 export class UsersController {
@@ -11,6 +12,7 @@ export class UsersController {
 		private readonly usersService: UsersService
 	) {}
 
+	@UseGuards(JwtAuthGuard)
 	@Get('profile')
 	async getProfile(@Request() req): Promise<UserViewDto> {
 		const user = await this.usersService.findOneByEmail(req.user.email);

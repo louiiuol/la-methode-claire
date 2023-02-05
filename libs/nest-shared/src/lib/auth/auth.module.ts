@@ -7,7 +7,7 @@ import {JwtStrategy} from './guards/jwt.strategy';
 import {JwtModule} from '@nestjs/jwt';
 import {AuthController} from './auth.controller';
 import {GoogleStrategy} from './google/google.strategy';
-import {environment} from '../../environments/environment.prod';
+import {environment} from '../../../../../apps/lmc-api/src/environments/environment.prod';
 import {GoogleController} from './google/google.controller';
 
 @Module({

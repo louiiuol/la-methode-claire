@@ -4,7 +4,7 @@ import {UsersService} from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 
 import {User, TokenJWT, UserCreateDto} from '@lmc/api-interfaces';
-import {environment} from '../../environments/environment';
+import {environment} from '../../../../../apps/lmc-api/src/environments/environment';
 
 @Injectable()
 export class AuthService {

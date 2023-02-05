@@ -3,10 +3,9 @@ import {NestFactory} from '@nestjs/core';
 
 import {environment} from './environments/environment.prod';
 
-import {AppModule} from './app/app.module';
-import {ExceptionHandler} from './app/core/filters/exception-handler.filter';
+import {ExceptionHandler} from '@lmc/nest-shared';
 
-const processName = 'NestApplication';
+import {AppModule} from './app/app.module';
 
 /**
  * Entry point of the API, this launch is loaded in order to run server w/
@@ -27,6 +26,7 @@ const processName = 'NestApplication';
  */
 async function configureServer(app: INestApplication) {
 	const globalPrefix = environment.API_PREFIX;
+	const processName = 'NestApplication';
 	app.setGlobalPrefix(globalPrefix);
 	const port = Number(environment.API_PORT);
 	await app.listen(port);

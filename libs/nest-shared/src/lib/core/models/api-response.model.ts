@@ -51,8 +51,6 @@ export class APIResponse<T> implements IAPIResponse<T> {
 		this.messages = validationResponse
 			? validationResponse.message
 			: [String(exception)];
-		this.error = validationResponse
-			? validationResponse.error
-			: 'Query Failed: unknown error occured 🎩';
+		this.error = validationResponse ? validationResponse.error : 'Query Failed';
 	};
 }
