@@ -1,5 +1,4 @@
 import {
-	AbstractViewDTO,
 	APIResponse as IAPIResponse,
 	APIResponseOptions,
 	PaginationConfig,
@@ -32,12 +31,14 @@ export class APIResponse<T> implements IAPIResponse<T> {
 
 	private setSuccessMessages(input?: IncomingMessage): void {
 		const actions = {
-			POST: 'Creation',
+			POST: 'Action',
 			PUT: 'Full update',
 			PATCH: 'Partial update',
 			DELETE: 'Deletion',
 		};
-		this.messages = [`${actions[input?.method]} has been achieved. 🎉`];
+		this.messages = [
+			`${actions[input.method]} has been achieved successfully. 🎉`,
+		];
 	}
 
 	/**

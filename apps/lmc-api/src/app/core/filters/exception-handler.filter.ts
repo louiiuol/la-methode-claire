@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import {Response} from 'express';
 import {EntityNotFoundError, QueryFailedError} from 'typeorm';
-import {APIResponse} from '../../models/api-response.model';
+import {APIResponse} from '../models/api-response.model';
 
 /**
  ** Custom exception filter to convert EntityNotFoundError & QueryFailedError

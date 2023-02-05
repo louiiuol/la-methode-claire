@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {APIResponse} from '../../models/api-response.model';
+import {APIResponse} from '../models/api-response.model';
 
 /**
  * Intercept all requests and return a response formatted as APIResponse DTO.

@@ -15,6 +15,7 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@lmc/nest-shared": ["libs/nest-shared/src/index.ts"],
 			"@lmc/api-interfaces": ["libs/api-interfaces/src/index.ts"]
 		}
 	},
