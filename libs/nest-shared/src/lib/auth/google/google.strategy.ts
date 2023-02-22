@@ -2,17 +2,19 @@ import {PassportStrategy} from '@nestjs/passport';
 import {Strategy} from 'passport-google-oauth20';
 
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {environment} from 'apps/lmc-api/src/environments/environment';
 import {UserGoogle} from './user-google.dto';
 
-const callbackURL = `https://${environment.DATABASE_HOST}:${environment.API_PORT}/${environment.API_PREFIX}/${environment.GOOGLE_CALLBACK_URL}`;
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+const callbackURL = `http://${process.env.API_HOST}:${process.env.API_PORT}/${process.env.API_PREFIX}/auth/google/redirect`;
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 	constructor() {
 		super({
-			clientID: environment.GOOGLE_CLIENT_ID,
-			clientSecret: environment.GOOGLE_SECRET,
+			clientID: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_SECRET,
 			callbackURL,
 			scope: ['email', 'profile'],
 		});

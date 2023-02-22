@@ -1,21 +1,23 @@
 import {Module} from '@nestjs/common';
+import {JwtModule} from '@nestjs/jwt';
+import {PassportModule} from '@nestjs/passport';
 import {AuthService} from './auth.service';
 import {UsersModule} from '../users/users.module';
-import {PassportModule} from '@nestjs/passport';
 import {LocalStrategy} from './guards/local.strategy';
 import {JwtStrategy} from './guards/jwt.strategy';
-import {JwtModule} from '@nestjs/jwt';
 import {AuthController} from './auth.controller';
 import {GoogleStrategy} from './google/google.strategy';
-import {environment} from '../../../../../apps/lmc-api/src/environments/environment.prod';
 import {GoogleController} from './google/google.controller';
+
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
 	imports: [
 		UsersModule,
 		PassportModule,
 		JwtModule.register({
-			secret: environment.JWT_SECRET_KEY,
+			secret: process.env.JWT_SECRET_KEY,
 			signOptions: {expiresIn: '360s'},
 		}),
 	],

@@ -8,4 +8,11 @@ export class UserCreateDto extends UserLoginDto {
 	@IsString()
 	@AutoMap()
 	provider: AuthProviders = 'local';
+
+	constructor(user: any) {
+		super();
+		this.email = user.emails[0].value;
+		this.provider = user.provider;
+		
+	}
 }

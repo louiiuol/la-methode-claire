@@ -4,11 +4,10 @@ import {UsersService} from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 
 import {User, TokenJWT, UserCreateDto} from '@lmc/api-interfaces';
-import {environment} from '../../../../../apps/lmc-api/src/environments/environment';
 
 @Injectable()
 export class AuthService {
-	private readonly salt = Number(environment.SALT);
+	private readonly salt = 342683;
 
 	constructor(
 		private usersService: UsersService,
@@ -44,9 +43,11 @@ export class AuthService {
 
 	async googleLogin(req): Promise<TokenJWT> {
 		if (!req.user) throw new BadRequestException('USER_NOT_FOUND');
-		if (await this.usersService.findOneByEmail(req.user.email))
+		const email = req.user.emails.at(0);
+		if (email.verified && (await this.usersService.findOneByEmail(email.value)))
 			return this.login(req.user);
 		else {
+			console.log(req.user);
 			const user = await this.usersService.save(req.user);
 			return {accessToken: user.accessToken};
 		}
