@@ -1,0 +1,94 @@
+<ng-template #content>
+	<ng-container *ngIf="label">{{ label | translate }}</ng-container>
+	<ng-content></ng-content>
+</ng-template>
+
+<ng-container *ngIf="href; else buttonTemplate" [ngSwitch]="type">
+	<a
+		[routerLink]="href"
+		[queryParams]="params"
+		*ngSwitchCase="'raised'"
+		mat-raised-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</a>
+
+	<a
+		[routerLink]="href"
+		[queryParams]="params"
+		*ngSwitchCase="'stroked'"
+		mat-stroked-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</a>
+
+	<a
+		[routerLink]="href"
+		[queryParams]="params"
+		*ngSwitchCase="'flat'"
+		mat-flat-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</a>
+
+	<a
+		[routerLink]="href"
+		[queryParams]="params"
+		*ngSwitchCase="'icon'"
+		mat-icon-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</a>
+
+	<a
+		*ngSwitchDefault
+		mat-button
+		[routerLink]="href"
+		[queryParams]="params"
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</a>
+</ng-container>
+
+<ng-template #buttonTemplate [ngSwitch]="type">
+	<button
+		*ngSwitchCase="'raised'"
+		mat-raised-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</button>
+
+	<button
+		*ngSwitchCase="'stroked'"
+		mat-stroked-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</button>
+
+	<button
+		*ngSwitchCase="'flat'"
+		mat-flat-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</button>
+
+	<button
+		*ngSwitchCase="'icon'"
+		mat-icon-button
+		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</button>
+
+	<button *ngSwitchDefault mat-button [color]="color" [disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</button>
+</ng-template>

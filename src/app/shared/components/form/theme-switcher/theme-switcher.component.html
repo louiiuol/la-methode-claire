@@ -1,0 +1,9 @@
+<app-button
+	type="icon"
+	id="lang-switcher-btn"
+	(click)="theme.toggleTheme()"
+	aria-label="change website theme">
+	<app-icon color="medium">
+		{{ theme.currentTheme + '_mode' }}
+	</app-icon>
+</app-button>

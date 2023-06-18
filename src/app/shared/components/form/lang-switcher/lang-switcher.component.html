@@ -1,0 +1,23 @@
+<app-button
+	type="icon"
+	[matMenuTriggerFor]="languagesMenu"
+	aria-label="change website language">
+	<app-icon color="medium">translate</app-icon>
+</app-button>
+<mat-menu #languagesMenu="matMenu">
+	<button
+		mat-menu-item
+		*ngFor="let lang of translator.getLangs()"
+		[class]="{'text-bold': lang === translator.currentLang}"
+		(click)="translator.use(lang)">
+		<span class="flex gap-2">
+			<img
+				src="https://flagcdn.com/{{ lang }}.svg"
+				alt="{{ lang }}'s flag"
+				width="20" />
+			<span class="text-normal">{{
+				'core.languages.' + lang | translate
+			}}</span>
+		</span>
+	</button>
+</mat-menu>
