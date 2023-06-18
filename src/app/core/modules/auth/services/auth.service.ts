@@ -5,9 +5,10 @@ import {BehaviorSubject, iif, of} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 
 import {TokenStore, UserStore} from '../stores';
-import {LoginDto, RegisterDto, WhoAmIDto} from '../types';
+import {LoginDto, RegisterDto} from '../types';
 import {AuthResource} from '../resources/auth.resource';
 import {CurrentUser} from '../models/current-user.model';
+import {UserPreviewDto} from '@shared/modules';
 
 /**
  * Provides methods and properties to handle current user's state in the application:
@@ -68,8 +69,8 @@ export class AuthService {
 			tap(res => this.tokenStore.saveToken(res.value?.accessToken)),
 			mergeMap(v => iif(() => !!v.value, this.http.whoAmI(), of(v))),
 			tap(res => {
-				if ((res?.value as WhoAmIDto)?.uuid) {
-					this.updateCurrentUser(new CurrentUser(res.value as WhoAmIDto));
+				if ((res?.value as UserPreviewDto)?.uuid) {
+					this.updateCurrentUser(new CurrentUser(res.value as UserPreviewDto));
 					this.router
 						.navigate(['/dashboard'])
 						.catch(err =>

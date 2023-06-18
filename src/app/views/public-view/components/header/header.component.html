@@ -1,0 +1,18 @@
+<mat-toolbar class="gap-3">
+	<app-button
+		*ngIf="platform.isMobileView()"
+		(click)="toggledMobileMenu.emit()"
+		class="example-icon"
+		aria-label="Button to expand sidebar"
+		type="icon">
+		<app-icon>menu</app-icon>
+	</app-button>
+	<span class="flex-1"></span>
+	<app-button type="raised" href="/login">
+		{{ 'core.actions.login.action' | translate }}
+	</app-button>
+	<app-button *ngIf="!platform.isMobileView()" type="stroked" href="/register">
+		{{ 'core.actions.register.action' | translate }}
+	</app-button>
+	<app-theme-switcher />
+</mat-toolbar>

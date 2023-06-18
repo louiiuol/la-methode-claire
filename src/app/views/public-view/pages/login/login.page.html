@@ -1,0 +1,18 @@
+<app-card
+	class="w-full max-w-3xl"
+	title="views.public.pages.login.title"
+	subtitle="views.public.pages.login.subtitle">
+	<app-form action="login" [submitted]="logIn" [fields]="fields" />
+	<ng-template #cardFooter>
+		<div class="my-3 text-center">
+			<app-button
+				color="accent"
+				href="/forgot_password"
+				label="views.public.routes.forgot_password" />
+			<p class="mt-2">
+				{{'modules.account.no_account' | translate}}
+				<app-button href="/register" label="core.actions.register.action" />
+			</p>
+		</div>
+	</ng-template>
+</app-card>

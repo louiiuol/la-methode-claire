@@ -1,0 +1,16 @@
+<app-card
+	class="w-full max-w-3xl"
+	title="views.public.pages.register.title"
+	subtitle="views.public.pages.register.subtitle">
+	<app-form
+		action="register"
+		[submitted]="register"
+		[fields]="fields"
+		[validators]="validators" />
+	<ng-template #cardFooter>
+		<p class="mt-1">
+			{{'modules.account.already_account' | translate}}
+			<app-button href="/login" label="core.actions.login.action" />
+		</p>
+	</ng-template>
+</app-card>

@@ -12,12 +12,12 @@ import {
  * - Admin (Anne & Claire's dedicated dashboard)
  */
 export const APP_ROUTES: Routes = [
-	// {
-	// 	path: '',
-	// 	canActivate: [VisitorGuard],
-	// 	loadChildren: () =>
-	// 		import('./views/public-view/public.module').then(m => m.PublicModule),
-	// },
+	{
+		path: '',
+		canActivate: [VisitorGuard],
+		loadChildren: () =>
+			import('./views/public-view/public.module').then(m => m.PublicModule),
+	},
 	// {
 	// 	path: 'dashboard',
 	// 	canActivate: [CustomerGuard],
