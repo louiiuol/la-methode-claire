@@ -1,0 +1,69 @@
+{
+	"root": true,
+	"ignorePatterns": ["projects/**/*"],
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"extends": [
+				"eslint:recommended",
+				"plugin:@typescript-eslint/recommended",
+				"plugin:@angular-eslint/recommended",
+				"plugin:@angular-eslint/template/process-inline-templates"
+			],
+			"rules": {
+				"@angular-eslint/directive-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"prefix": "app",
+						"style": "camelCase"
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "element",
+						"prefix": "app",
+						"style": "kebab-case"
+					}
+				],
+				"@angular-eslint/component-class-suffix": [
+					"error",
+					{
+						"suffixes": ["Component", "Page", "Dialog", "Card", "Form"]
+					}
+				],
+				"indent": ["off", "tab"],
+				"linebreak-style": ["error", "unix"],
+				"quotes": [
+					"error",
+					"single",
+					{"avoidEscape": true, "allowTemplateLiterals": true}
+				],
+				"semi": ["error", "always"],
+				"@typescript-eslint/no-empty-function": "off",
+				"@typescript-eslint/no-explicit-any": "off",
+				"@angular-eslint/no-input-rename": "off",
+				"no-empty-function": "off",
+				"no-useless-escape": "warn",
+				"no-unused-vars": "off",
+				"no-console": [
+					"warn",
+					{
+						"allow": ["warn", "error"]
+					}
+				],
+				"@typescript-eslint/ban-ts-comment": "off",
+				"@typescript-eslint/no-unused-vars": "off"
+			}
+		},
+		{
+			"files": ["*.html"],
+			"extends": [
+				"plugin:@angular-eslint/template/recommended",
+				"plugin:@angular-eslint/template/accessibility"
+			],
+			"rules": {}
+		}
+	]
+}

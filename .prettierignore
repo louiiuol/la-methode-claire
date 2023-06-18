@@ -1,0 +1,5 @@
+.angular/
+.git/
+.dist/
+node_modules/
+wiki/

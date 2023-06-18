@@ -1,0 +1,24 @@
+{
+	"workbench.colorCustomizations": {
+		"statusBar.background": "#d24ac2",
+		"statusBar.foreground": "#15202b",
+		"statusBarItem.hoverBackground": "#d24ac2",
+		"statusBarItem.remoteBackground": "#711b67",
+		"statusBarItem.remoteForeground": "#15202b"
+	},
+	"cSpell.words": [
+		"dto",
+		"dtos",
+		"figma",
+		"formly",
+		"pageable",
+		"reseted",
+		"sonarlint",
+		"sonarqube",
+		"sonarsource",
+		"tailwindcss",
+		"theming",
+		"webp"
+	],
+	"scss.lint.unknownAtRules": "ignore"
+}

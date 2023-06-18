@@ -1,38 +1,50 @@
 {
-  "name": "lmc-ui",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
-  "private": true,
-  "dependencies": {
-    "@angular/animations": "^16.0.0",
-    "@angular/common": "^16.0.0",
-    "@angular/compiler": "^16.0.0",
-    "@angular/core": "^16.0.0",
-    "@angular/forms": "^16.0.0",
-    "@angular/platform-browser": "^16.0.0",
-    "@angular/platform-browser-dynamic": "^16.0.0",
-    "@angular/router": "^16.0.0",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.13.0"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^16.0.2",
-    "@angular/cli": "~16.0.2",
-    "@angular/compiler-cli": "^16.0.0",
-    "@types/jasmine": "~4.3.0",
-    "jasmine-core": "~4.6.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~5.0.2"
-  }
+	"name": "lmc-ui",
+	"author": "louiiuol",
+	"version": "0.0.1",
+	"scripts": {
+		"ng": "ng",
+		"start": "ng serve",
+		"build": "ng build",
+		"watch": "ng build --watch --configuration development",
+		"test": "ng test"
+	},
+	"private": true,
+	"dependencies": {
+		"@angular/animations": "^16.0.0",
+		"@angular/cdk": "^16.0.3",
+		"@angular/common": "^16.0.0",
+		"@angular/compiler": "^16.0.0",
+		"@angular/core": "^16.0.0",
+		"@angular/forms": "^16.0.0",
+		"@angular/material": "^16.0.3",
+		"@angular/platform-browser": "^16.0.0",
+		"@angular/platform-browser-dynamic": "^16.0.0",
+		"@angular/router": "^16.0.0",
+		"@ngx-formly/core": "^6.0.0",
+		"@ngx-formly/material": "^6.0.0",
+		"@ngx-translate/core": "^15.0.0",
+		"@ngx-translate/http-loader": "^8.0.0",
+		"primeng": "^16.0.1",
+		"tailwindcss": "^3.3.2",
+		"rxjs": "~7.8.0",
+		"tslib": "^2.3.0",
+		"zone.js": "~0.13.0"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "^16.0.2",
+		"@angular/cli": "~16.0.2",
+		"@angular/compiler-cli": "^16.0.0",
+		"@typescript-eslint/eslint-plugin": "5.59.7",
+		"@typescript-eslint/parser": "5.59.7",
+		"@types/jasmine": "~4.3.0",
+		"@ngx-formly/schematics": "^6.1.7",
+		"jasmine-core": "~4.6.0",
+		"karma": "~6.4.0",
+		"karma-chrome-launcher": "~3.2.0",
+		"karma-coverage": "~2.2.0",
+		"karma-jasmine": "~5.1.0",
+		"karma-jasmine-html-reporter": "~2.0.0",
+		"typescript": "~5.0.2"
+	}
 }
