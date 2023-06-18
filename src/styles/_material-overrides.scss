@@ -1,0 +1,18 @@
+/** FORM **/
+.mat-mdc-form-field-subscript-wrapper:has(mat-error, mat-hint) {
+	margin-bottom: 1em;
+	margin-top: 0.5em;
+	display: contents;
+	&::before {
+		position: absolute;
+	}
+	.mat-mdc-form-field-hint-wrapper,
+	.mat-mdc-form-field-error-wrapper {
+		position: inherit !important;
+		margin-bottom: 0.5em;
+	}
+}
+
+.mat-mdc-text-field-wrapper {
+	background-color: inherit !important;
+}

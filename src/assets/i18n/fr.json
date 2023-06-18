@@ -1,0 +1,175 @@
+{
+	"core": {
+		"languages": {
+			"change": "Changer la langue",
+			"fr": "Français",
+			"gb": "Anglais (UK)"
+		},
+		"actions": {
+			"create": {
+				"action": "créer",
+				"progress": "création",
+				"done": "créé"
+			},
+			"get": {
+				"action": "afficher",
+				"progress": "en cours de récupération",
+				"done": "affiché"
+			},
+			"update": {
+				"action": "mettre à jour",
+				"progress": "mise à jour en cours",
+				"done": "mis à jour"
+			},
+			"delete": {
+				"action": "supprimer",
+				"progress": "suppression en cours",
+				"done": "supprimé"
+			},
+			"add": {
+				"action": "ajouter",
+				"progress": "en cours d'ajout",
+				"done": "ajouté"
+			},
+			"register": {
+				"action": "s'inscrire",
+				"progress": "En cours d'inscription",
+				"done": "inscrits"
+			},
+			"login": {
+				"action": "se connecter",
+				"progress": "connection en cours",
+				"done": "connecté"
+			},
+			"submit": {
+				"action": "envoyer",
+				"progress": "envoi en cours",
+				"done": "envoyé"
+			},
+			"reset": {
+				"action": "réinitialiser",
+				"progress": "en cours de réinitialisation",
+				"done": "réinitialisé"
+			}
+		},
+		"states": {
+			"success": "{{action}} avec succès 🎉",
+			"failed": "Impossible de {{action}}",
+			"pending": "En attente de {{resp}}",
+			"loading": "Chargement",
+			"complete": "Terminé !"
+		},
+		"api": {
+			"resources": {
+				"auth": "Authentification",
+				"users": "utilisateurs",
+				"videos": "vidéothèque"
+			},
+			"status": {
+				"401": "Identifiants requis",
+				"403": "Accès interdit",
+				"404": "Aucune resource trouvée",
+				"409": "Action impossible à réaliser",
+				"422": "Certains champs sont incorrects"
+			},
+			"errors": {
+				"invalid_credentials": "Identifiants incorrects",
+				"this_resource_already_exist!": "Cette adresse email est déjà associée à un utilisateur",
+				"unknown_email": "Cette adresse email n'existe pas !",
+				"verify_input(s)": "Formulaire invalide",
+				"UNIQUE": "Existe déjà",
+				"UNREACHABLE": "l'API ne répond pas 🔍"
+			},
+			"success": {}
+		},
+		"form": {
+			"validation": {
+				"required": "Ce champ est requis!",
+				"minLength": "Texte trop court ({{actual}}/{{min}} caractères) !",
+				"maxLength": "Texte trop long ({{actual}}/{{max}} caractères) !",
+				"max": "La valeur doit être inférieure à {{max}} !",
+				"min": "La valeur doit être supérieure à {{min}} !",
+				"email": "Format d'email invalide !",
+				"pattern": "Format invalide ! ce champs accepte {{format}}",
+				"password_not_matching": "Le mot de passe est différent !"
+			},
+			"patterns": {
+				"digit": "des chiffres uniquement",
+				"password": "au moins 8 caractères, il doit être composé de minuscules, majuscules, chiffres et caractères spéciaux."
+			},
+			"fields": {
+				"agree": {
+					"label": "Je confirme avoir lu les conditions d'utilisation",
+					"description": "Vous devez accepter les termes pour vous inscrire"
+				},
+				"email": {
+					"label": "Adresse email",
+					"placeholder": "example@mail.com",
+					"description": ""
+				},
+				"password": {
+					"label": "Mot de passe",
+					"placeholder": "******",
+					"description": "Doit être un mot de passe sécurisé"
+				},
+				"passwordConfirm": {
+					"label": "confirmation du mot de passe",
+					"placeholder": "******",
+					"description": "Doit être identique au mot de passe ci dessus"
+				},
+				"usages": {
+					"label": "Quel est votre usage ?",
+					"placeholder": "",
+					"description": "Merci de nous indiquer dans quel contexte vous utilisez l'application"
+				},
+				"username": {
+					"label": "Adresse email",
+					"placeholder": "example@mail.com",
+					"description": ""
+				}
+			}
+		}
+	},
+	"views": {
+		"public": {
+			"routes": {
+				"login": "Se connecter",
+				"register": "S'inscrire",
+				"forgot_password": "Mot de passe oublié ?"
+			},
+			"pages": {
+				"login": {
+					"title": "Connectez vous à votre compte",
+					"subtitle": "Retrouvez votre vidéothèque personnalisée !"
+				},
+				"register": {
+					"title": "Créez votre compte",
+					"subtitle": "Inscrivez-vous et commencez à encoder vos vidéos !"
+				},
+				"forgot_password": {
+					"title": "Oublié votre mot de passe ?",
+					"subtitle": "Recevez un lien pour réinitialiser votre mot de passe"
+				},
+				"reset_password": {
+					"title": "Réinitialisez votre mot de passe",
+					"subtitle": "Après avoir re-défini votre mot de passe, vous pourrez l'utiliser pour vous connecter"
+				},
+				"contact": {
+					"title": "Contactez nous !",
+					"subtitle": "Posez nous vos questions"
+				}
+			}
+		}
+	},
+	"modules": {
+		"account": {
+			"title": "Compte",
+			"no_account": "Pas encore de compte ?",
+			"already_account": "Vous possédez déjà un compte ?",
+			"usages": {
+				"Individual": "Professionnel",
+				"Professional": "Personnel"
+			}
+		}
+	}
+}

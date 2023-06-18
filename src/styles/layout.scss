@@ -1,0 +1,60 @@
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Poppins, sans-serif;
+}
+
+app-root {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100dvh;
+	& > .page {
+		flex: 1;
+		display: flex;
+		background-color: #f0f0f0;
+		main {
+			flex: 1;
+			display: flex;
+			overflow-x: hidden;
+			overflow-y: auto;
+			max-height: calc(100dvh - 64px);
+			@media (width < 600px) {
+				max-height: calc(100dvh - 56px);
+			}
+			&.background-gradient {
+				background: linear-gradient(-45deg, #2d2689, #4cd3c4);
+				background-size: 200% 200%;
+				animation: gradient 20s ease infinite;
+			}
+			& > *:not(router-outlet) {
+				flex: 1 1 0%;
+				display: flex;
+				flex-direction: column;
+				padding: 0.75rem 1.25rem;
+				&.centered-content {
+					xalign-items: center;
+					xjustify-content: center;
+					& > * {
+						margin: auto;
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0 50%;
+	}
+}

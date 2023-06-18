@@ -1,0 +1,109 @@
+{
+	"core": {
+		"languages": {
+			"change": "Change language",
+			"fr": "French",
+			"gb": "English (UK)"
+		},
+		"actions": {
+			"create": {
+				"action": "create",
+				"progress": "creating",
+				"done": "created"
+			},
+			"get": {
+				"action": "retrieve",
+				"progress": "fetching",
+				"done": "retrieved"
+			},
+			"update": {
+				"action": "update",
+				"progress": "updating",
+				"done": "updated"
+			},
+			"delete": {
+				"action": "delete",
+				"progress": "deleting",
+				"done": "deleted"
+			},
+			"add": {
+				"action": "add",
+				"progress": "adding",
+				"done": "added"
+			},
+			"register": {
+				"action": "register",
+				"progress": "registering",
+				"done": "registered"
+			},
+			"login": {
+				"action": "log in",
+				"progress": "logging",
+				"done": "logged"
+			},
+			"submit": {
+				"action": "submit",
+				"progress": "submitting",
+				"done": "submitted"
+			},
+			"reset": {
+				"action": "reset",
+				"progress": "resetting",
+				"done": "reseted"
+			}
+		},
+		"states": {
+			"success": "Successfully {{action}} 🎉",
+			"failed": "Failed to {{action}}",
+			"pending": "Waiting for {{resp}} to complete",
+			"loading": "Loading",
+			"complete": "Done !"
+		},
+		"api": {
+			"resources": {
+				"auth": "Authentication",
+				"users": "users",
+				"videos": "videos"
+			},
+			"status": {
+				"401": "Bad credentials !",
+				"403": "Forbidden",
+				"409": "Conflict happened!",
+				"422": "Some fields are invalid"
+			},
+			"errors": {
+				"invalid_credentials": "Invalid credentials",
+				"UNIQUE": "Already exists",
+				"UNREACHABLE": "The API is not reachable 🔍"
+			},
+			"success": {}
+		},
+		"form": {
+			"validation": {
+				"required": "This field is required !",
+				"minLength": "Text is too short ({{actual}}/{{min}} characters) !",
+				"maxLength": "Text is too long ({{actual}}/{{max}} characters) !",
+				"max": "Value should be less than {{max}} !",
+				"min": "Value should be greater than {{min}} !",
+				"email": "Invalid email format !",
+				"pattern": "Invalid format ! expected {{format}}"
+			},
+			"patterns": {
+				"digit": "digits only",
+				"password": "Password should have a length of at least 8 characters, containing uppercase, lowercase and special characters, as well as number."
+			},
+			"fields": {
+				"email": {
+					"label": "Email address",
+					"placeholder": "example@mail.com",
+					"description": ""
+				},
+				"password": {
+					"label": "Password",
+					"placeholder": "******",
+					"description": "Must be a strong password"
+				}
+			}
+		}
+	}
+}

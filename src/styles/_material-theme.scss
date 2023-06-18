@@ -1,0 +1,208 @@
+// Custom Theming for Angular Material
+@use '@angular/material' as mat;
+
+$blue: (
+	50: #e1e0ee,
+	100: #b5b3d5,
+	200: #8480ba,
+	300: #524d9e,
+	400: #2d2689,
+	500: #080074,
+	600: #07006c,
+	700: #060061,
+	800: #040057,
+	900: #020044,
+	A100: #7979ff,
+	A200: #4646ff,
+	A400: #1313ff,
+	A700: #0000f8,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #ffffff,
+		400: #ffffff,
+		500: #ffffff,
+		600: #ffffff,
+		700: #ffffff,
+		800: #ffffff,
+		900: #ffffff,
+		A100: #000000,
+		A200: #ffffff,
+		A400: #ffffff,
+		A700: #ffffff,
+	),
+);
+$green: (
+	50: #e6f9f7,
+	100: #c0efea,
+	200: #96e5dd,
+	300: #6bdbcf,
+	400: #4cd3c4,
+	500: #2ccbba,
+	600: #27c6b3,
+	700: #21beab,
+	800: #1bb8a3,
+	900: #10ac94,
+	A100: #dbfff9,
+	A200: #a8fff0,
+	A400: #75ffe8,
+	A700: #5cffe3,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #ffffff,
+		500: #ffffff,
+		600: #ffffff,
+		700: #ffffff,
+		800: #ffffff,
+		900: #ffffff,
+		A100: #000000,
+		A200: #ffffff,
+		A400: #ffffff,
+		A700: #ffffff,
+	),
+);
+$red: (
+	// Defines Warnings Palette color
+	50: #fee8e7,
+	100: #fdc6c4,
+	200: #fca19d,
+	300: #fb7b75,
+	400: #fa5e58,
+	500: #f9423a,
+	600: #f83c34,
+	700: #f7332c,
+	800: #f62b25,
+	900: #f51d18,
+	A100: #ffffff,
+	A200: #fff3f3,
+	A400: #ffc1c0,
+	A700: #ffa8a7,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #fff,
+		500: #fff,
+		600: #fff,
+		700: #fff,
+		800: #fff,
+		900: #fff,
+		A100: #000000,
+		A200: #fff,
+		A400: #fff,
+		A700: #fff,
+	)
+);
+$pink: (
+	50: #f8e9fb,
+	100: #edc8f6,
+	200: #e2a3f0,
+	300: #d67eea,
+	400: #cd63e6,
+	500: #c447e1,
+	600: #be40dd,
+	700: #b637d9,
+	800: #af2fd5,
+	900: #a220cd,
+	A100: #ffffff,
+	A200: #f3d2ff,
+	A400: #e59fff,
+	A700: #de85ff,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #000000,
+		500: #ffffff,
+		600: #ffffff,
+		700: #ffffff,
+		800: #ffffff,
+		900: #ffffff,
+		A100: #000000,
+		A200: #000000,
+		A400: #000000,
+		A700: #000000,
+	),
+);
+$primary: mat.define-palette($blue);
+$primary-dark: mat.define-palette($pink);
+$accent: mat.define-palette($green);
+$warn: mat.define-palette($red);
+
+// Typography
+$typography-config: mat.define-typography-config(
+	$font-family: 'Poppins',
+);
+@include mat.core();
+
+// Light Theme
+$greencoder-light-theme: mat.define-light-theme(
+	(
+		color: (
+			primary: $primary,
+			accent: $accent,
+			warn: $warn,
+		),
+		typography: $typography-config,
+	)
+);
+@include mat.all-component-themes($greencoder-light-theme);
+
+// Dark Theme
+$greencoder-dark-theme: mat.define-dark-theme(
+	(
+		color: (
+			primary: $primary-dark,
+			accent: $accent,
+			warn: $warn,
+		),
+		typography: $typography-config,
+	)
+);
+
+/* CUSTOM STYLES */
+.text-accent {
+	color: mat.get-color-from-palette($accent) !important;
+}
+.bg-accent {
+	background-color: mat.get-color-from-palette($accent) !important;
+}
+.text-primary {
+	color: mat.get-color-from-palette($primary) !important;
+}
+
+.text-warn {
+	color: mat.get-color-from-palette($warn) !important;
+}
+.bg-warn {
+	background-color: mat.get-color-from-palette($warn) !important;
+}
+.text-success {
+	color: #26da35 !important;
+}
+.bg-success {
+	background-color: #26da35 !important;
+}
+.text-orange {
+	color: #ff6900 !important;
+}
+.bg-orange {
+	background-color: #ff6900 !important;
+}
+
+/* DARK MODE */
+.dark {
+	@include mat.all-component-colors($greencoder-dark-theme);
+	.text-primary {
+		color: mat.get-color-from-palette($primary-dark) !important;
+	}
+	.bg-primary {
+		background-color: mat.get-color-from-palette($primary-dark) !important;
+	}
+}
