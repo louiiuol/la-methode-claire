@@ -6,7 +6,7 @@ import {TranslateService as NgxTranslateModule} from '@ngx-translate/core';
  * Enumeration of all languages supported by the application
  * @enum
  */
-export type SupportedLangs = 'fr' | 'gb';
+export type SupportedLangs = 'fr';
 
 /**
  * Provides all logic related to application's translation
@@ -28,17 +28,8 @@ export class TranslateService {
 		private translator: NgxTranslateModule,
 		private storage: LocalStore
 	) {
-		this.translator.addLangs(['gb', 'fr']);
-		let browserLang = this.translator.getBrowserLang();
-		if (this.storage.check(this.langStorageKey)) {
-			this.translator.use(
-				this.storage.get(this.langStorageKey) as SupportedLangs
-			);
-		} else if (browserLang) {
-			if (browserLang === 'en') browserLang = 'gb';
-			this.storage.set(this.langStorageKey, browserLang);
-			this.translator.use(browserLang);
-		}
+		this.translator.addLangs(['fr']);
+		this.translator.use('fr');
 	}
 
 	/**
