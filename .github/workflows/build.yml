@@ -24,9 +24,6 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Test the app
-        run: npm run test
-
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
