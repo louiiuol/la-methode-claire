@@ -1,6 +1,6 @@
 import {inject} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, map, of, throwError} from 'rxjs';
+import {catchError, map, of} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
 import {environment} from '@env/environment';
@@ -229,19 +229,19 @@ export abstract class HttpResource {
 		action: RequestActions,
 		opt: RequestOptions | undefined
 	) => {
-		const error = httpError.error ?? httpError;
-		// General notification (based on code, resource and method called)
-		// Invalid credentials
-		// No result found
-		// Expired token
-		// Already exists
-		// Invalid input
-		// Network pb
-		// FOR 408 (TIMEOUT), la request should retry 3 times
-		// FOR 429, create 30 seconds timeout before sending next request
-		if (this.resource === '') this.resource = 'auth';
+		let error: any = httpError ?? httpError;
+		if (error.status === 0) {
+			this.notifier.error(
+				`core.api.errors.generic`,
+				'core.api.errors.server_down'
+			);
+			return of({
+				error: null,
+			} as HttpOutputEntity<null>);
+		}
+		const resource = this.resource === '' ? 'auth' : this.resource;
 		if (opt?.notifyOnError !== false)
-			this.notifier.error(`core.api.resources.${this.resource}`, {
+			this.notifier.error(`core.api.resources.${resource}`, {
 				key: 'core.states.failed',
 				param: {
 					action: this.translator.instant(
@@ -251,13 +251,13 @@ export abstract class HttpResource {
 			});
 
 		console.error(
-			`(${new Date().toLocaleDateString()}) [${error.code}] HTTP failed to ${
+			`(${new Date().toLocaleDateString()}) [${error.status}] HTTP failed to ${
 				opt?.customAction ?? action
 			} on [${this.resource.toLocaleUpperCase()}]`,
 			error.error ?? httpError
 		);
 
-		let returnedError = error.error ?? error.message ?? error;
+		let returnedError = error.error?.reasons ?? error.message ?? error;
 		if (Array.isArray(returnedError) && returnedError.length === 1)
 			returnedError = returnedError[0];
 		return of({
@@ -265,21 +265,23 @@ export abstract class HttpResource {
 		} as HttpOutputEntity<null>);
 	};
 
-	private handleError(error: HttpErrorResponse) {
-		if (error.status === 0) {
-			// A client-side or network error occurred. Handle it accordingly.
-			console.error('An error occurred:', error.error);
-		} else {
-			// The backend returned an unsuccessful response code.
-			// The response body may contain clues as to what went wrong.
-			console.error(
-				`Backend returned code ${error.status}, body was: `,
-				error.error
-			);
-		}
-		// Return an observable with a user-facing error message.
-		return throwError(
-			() => new Error('Something bad happened; please try again later.')
-		);
+	private handleGenericErrors(error: HttpErrorResponse) {
+		let isGenericError = false;
+
+		// General notification (based on code, resource and method called)
+		// Invalid credentials
+		// No result found
+		// Expired token
+		// Already exists
+		// Invalid input
+		// Network pb
+		// FOR 408 (TIMEOUT), la request should retry 3 times
+		// FOR 429, create 30 seconds timeout before sending next request
+		// List of
+		// if (error.status === 0) {
+		// 	return of({
+		// 		error: 'server_down',
+		// 	} as HttpOutputEntity<null>);
+		// }
 	}
 }
