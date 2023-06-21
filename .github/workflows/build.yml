@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build the app
-        run: npm run build
+        run: ng build --prod --base-href "https://${{ github.repository }}/"
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.1
