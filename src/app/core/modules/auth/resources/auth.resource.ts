@@ -21,7 +21,7 @@ export class AuthResource extends HttpResource {
 		});
 
 	logIn = (dto: LoginDto) =>
-		this.create<Token>(dto, {path: 'login', customAction: 'login'});
+		this.create<Token>(dto, {path: 'auth/login', customAction: 'login'});
 
 	whoAmI = () => this.get<UserPreviewDto>(null, {path: 'profile'});
 }
