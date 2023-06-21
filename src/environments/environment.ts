@@ -1,8 +1,7 @@
 export const environment = {
 	production: false,
 	hmr: true,
-	crypto_key: 'T0P53CR3T',
-	root_url: 'https://dev.greenencoder.net/api',
+	root_url: 'http://localhost:3333/api',
 };
 
 /*
