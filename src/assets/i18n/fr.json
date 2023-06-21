@@ -73,10 +73,12 @@
 				"422": "Certains champs sont incorrects"
 			},
 			"errors": {
+				"generic": "Un problème est survenu",
 				"invalid_credentials": "Identifiants incorrects",
 				"this_resource_already_exist!": "Cette adresse email est déjà associée à un utilisateur",
 				"unknown_email": "Cette adresse email n'existe pas !",
 				"verify_input(s)": "Formulaire invalide",
+				"server_down": "L'API est hors ligne. Merci de réessayer plus tard !",
 				"UNIQUE": "Existe déjà",
 				"UNREACHABLE": "l'API ne répond pas 🔍"
 			},
@@ -157,6 +159,10 @@
 				"contact": {
 					"title": "Contactez nous !",
 					"subtitle": "Posez nous vos questions"
+				},
+				"home": {
+					"title": "Bienvenue sur la Méthode Claire !",
+					"subtitle": "Une méthode lecture simple, efficace, et soignée destinée aux professeurs des écoles. Cette méthode est à appliquer préférablement au CP... Bonne visite ! 👋"
 				}
 			}
 		}
