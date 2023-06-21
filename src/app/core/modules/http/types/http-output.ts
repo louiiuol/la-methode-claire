@@ -1,4 +1,4 @@
-import {ApiFormErrorDetails} from './api-error-details';
+import {ApiFormErrorDetails} from './api-error-form-details';
 import {Pageable} from './pageable';
 
 /**
