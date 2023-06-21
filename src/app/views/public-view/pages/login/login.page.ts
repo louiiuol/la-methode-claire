@@ -28,7 +28,7 @@ export class LoginPage {
 	protected readonly class = 'centered-content';
 
 	protected readonly fields: FieldConfig[] = [
-		{preset: 'user.email', key: 'username', props: {required: true}},
+		{preset: 'user.email', props: {required: true}},
 		{
 			preset: 'user.password',
 			validators: [],

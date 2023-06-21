@@ -26,8 +26,7 @@ import {HeaderComponent} from './components';
 			<mat-drawer
 				#publicDrawer
 				[class]="platform.responsive('w-80', 'w-1/3', 'w-120')"
-				[mode]="platform.isMobileView() ? 'over' : 'side'"
-				[opened]="!platform.isMobileView()">
+				[mode]="platform.isMobileView() ? 'over' : 'side'">
 				hello
 			</mat-drawer>
 			<mat-drawer-content
