@@ -176,7 +176,7 @@ export class FormComponent implements OnInit {
 		if (!error) return [];
 		return typeof error === 'string'
 			? [this.generateMessage(error)]
-			: error?.map(error => this.checkErrorIsString(error));
+			: error.map(error => this.checkErrorIsString(error));
 	};
 
 	private checkErrorIsString = (error: string | object) =>
