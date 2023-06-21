@@ -45,7 +45,11 @@ export class TokenInterceptor implements HttpInterceptor {
 	 * @returns Observable explaining what went wrong with the request
 	 */
 	private handleAuthError(err: HttpErrorResponse): Observable<any> {
-		if (err.status === 401 && err.url !== environment.root_url + '/login') {
+		if (
+			this &&
+			err.status === 401 &&
+			err.url !== environment.root_url + '/login'
+		) {
 			this.tokenStore.clearToken();
 			inject(UserStore).clearUser();
 			this.router
