@@ -66,7 +66,11 @@ export class AuthService {
 	 */
 	logIn = (dto: LoginDto) =>
 		this.http.logIn(dto).pipe(
-			tap(res => this.tokenStore.saveToken(res.value?.accessToken)),
+			map(res => {
+				if (!res.error) this.tokenStore.saveToken(res.value?.accessToken);
+				else res.error = ['Invalid credentials.'];
+				return res;
+			}),
 			mergeMap(v => iif(() => !!v.value, this.http.whoAmI(), of(v))),
 			tap(res => {
 				if ((res?.value as UserPreviewDto)?.uuid) {
