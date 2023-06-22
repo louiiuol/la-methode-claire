@@ -1,21 +1,21 @@
 // Custom Theming for Angular Material
 @use '@angular/material' as mat;
-
-$blue: (
-	50: #e1e0ee,
-	100: #b5b3d5,
-	200: #8480ba,
-	300: #524d9e,
-	400: #2d2689,
-	500: #080074,
-	600: #07006c,
-	700: #060061,
-	800: #040057,
-	900: #020044,
-	A100: #7979ff,
-	A200: #4646ff,
-	A400: #1313ff,
-	A700: #0000f8,
+/* For use in src/lib/core/theming/_palette.scss */
+$md-blue: (
+	50: #e7e7ea,
+	100: #c2c3ca,
+	200: #9a9ba7,
+	300: #717283,
+	400: #525469,
+	500: #34364e,
+	600: #2f3047,
+	700: #27293d,
+	800: #212235,
+	900: #151625,
+	A100: #6974ff,
+	A200: #3645ff,
+	A400: #0316ff,
+	A700: #0012e8,
 	contrast: (
 		50: #000000,
 		100: #000000,
@@ -33,36 +33,70 @@ $blue: (
 		A700: #ffffff,
 	),
 );
-$green: (
-	50: #e6f9f7,
-	100: #c0efea,
-	200: #96e5dd,
-	300: #6bdbcf,
-	400: #4cd3c4,
-	500: #2ccbba,
-	600: #27c6b3,
-	700: #21beab,
-	800: #1bb8a3,
-	900: #10ac94,
-	A100: #dbfff9,
-	A200: #a8fff0,
-	A400: #75ffe8,
-	A700: #5cffe3,
+
+$md-teal: (
+	50: #f3f7f7,
+	100: #e2eaeb,
+	200: #cfdcde,
+	300: #bcced1,
+	400: #adc4c7,
+	500: #9fb9bd,
+	600: #97b2b7,
+	700: #8daaae,
+	800: #83a2a6,
+	900: #729398,
+	A100: #ffffff,
+	A200: #e5fbff,
+	A400: #b2f4ff,
+	A700: #98f0ff,
 	contrast: (
 		50: #000000,
 		100: #000000,
 		200: #000000,
 		300: #000000,
-		400: #ffffff,
-		500: #ffffff,
+		400: #000000,
+		500: #000000,
+		600: #000000,
+		700: #000000,
+		800: #000000,
+		900: #000000,
+		A100: #000000,
+		A200: #000000,
+		A400: #000000,
+		A700: #000000,
+	),
+);
+
+$md-orange: (
+	50: #f9ede6,
+	100: #f0d2c1,
+	200: #e6b498,
+	300: #db966e,
+	400: #d4804f,
+	500: #cc6930,
+	600: #c7612b,
+	700: #c05624,
+	800: #b94c1e,
+	900: #ad3b13,
+	A100: #ffe6df,
+	A200: #ffbeac,
+	A400: #ff9679,
+	A700: #ff825f,
+	contrast: (
+		50: #000000,
+		100: #000000,
+		200: #000000,
+		300: #000000,
+		400: #000000,
+		500: #000000,
 		600: #ffffff,
 		700: #ffffff,
 		800: #ffffff,
 		900: #ffffff,
 		A100: #000000,
-		A200: #ffffff,
-		A400: #ffffff,
-		A700: #ffffff,
+		A200: #000000,
+		A400: #000000,
+		A700: #000000,
 	),
 );
 $red: (
@@ -98,41 +132,9 @@ $red: (
 		A700: #fff,
 	)
 );
-$pink: (
-	50: #f8e9fb,
-	100: #edc8f6,
-	200: #e2a3f0,
-	300: #d67eea,
-	400: #cd63e6,
-	500: #c447e1,
-	600: #be40dd,
-	700: #b637d9,
-	800: #af2fd5,
-	900: #a220cd,
-	A100: #ffffff,
-	A200: #f3d2ff,
-	A400: #e59fff,
-	A700: #de85ff,
-	contrast: (
-		50: #000000,
-		100: #000000,
-		200: #000000,
-		300: #000000,
-		400: #000000,
-		500: #ffffff,
-		600: #ffffff,
-		700: #ffffff,
-		800: #ffffff,
-		900: #ffffff,
-		A100: #000000,
-		A200: #000000,
-		A400: #000000,
-		A700: #000000,
-	),
-);
-$primary: mat.define-palette($blue);
-$primary-dark: mat.define-palette($pink);
-$accent: mat.define-palette($green);
+$primary: mat.define-palette($md-blue);
+$primary-dark: mat.define-palette($md-teal);
+$accent: mat.define-palette($md-orange);
 $warn: mat.define-palette($red);
 
 // Typography
@@ -142,7 +144,7 @@ $typography-config: mat.define-typography-config(
 @include mat.core();
 
 // Light Theme
-$greencoder-light-theme: mat.define-light-theme(
+$lmc-light-theme: mat.define-light-theme(
 	(
 		color: (
 			primary: $primary,
@@ -152,10 +154,10 @@ $greencoder-light-theme: mat.define-light-theme(
 		typography: $typography-config,
 	)
 );
-@include mat.all-component-themes($greencoder-light-theme);
+@include mat.all-component-themes($lmc-light-theme);
 
 // Dark Theme
-$greencoder-dark-theme: mat.define-dark-theme(
+$lmc-dark-theme: mat.define-dark-theme(
 	(
 		color: (
 			primary: $primary-dark,
@@ -190,15 +192,15 @@ $greencoder-dark-theme: mat.define-dark-theme(
 	background-color: #26da35 !important;
 }
 .text-orange {
-	color: #ff6900 !important;
+	color: #cc6930 !important;
 }
 .bg-orange {
-	background-color: #ff6900 !important;
+	background-color: #cc6930 !important;
 }
 
 /* DARK MODE */
 .dark {
-	@include mat.all-component-colors($greencoder-dark-theme);
+	@include mat.all-component-colors($lmc-dark-theme);
 	.text-primary {
 		color: mat.get-color-from-palette($primary-dark) !important;
 	}
