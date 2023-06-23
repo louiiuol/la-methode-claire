@@ -19,7 +19,8 @@ const translateOptions: TranslateModuleConfig = {
 	defaultLanguage: 'fr',
 	loader: {
 		provide: TranslateLoader,
-		useFactory: (httpClient: HttpClient) => new TranslateHttpLoader(httpClient),
+		useFactory: (httpClient: HttpClient) =>
+			new TranslateHttpLoader(httpClient, 'assets/i18n/'),
 		deps: [HttpClient],
 	},
 };
