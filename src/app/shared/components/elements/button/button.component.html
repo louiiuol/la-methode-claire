@@ -6,6 +6,7 @@
 <ng-container *ngIf="href; else buttonTemplate" [ngSwitch]="type">
 	<a
 		[routerLink]="href"
+		[fragment]="fragment"
 		[queryParams]="params"
 		*ngSwitchCase="'raised'"
 		mat-raised-button
@@ -17,6 +18,7 @@
 	<a
 		[routerLink]="href"
 		[queryParams]="params"
+		[fragment]="fragment"
 		*ngSwitchCase="'stroked'"
 		mat-stroked-button
 		[color]="color"
@@ -27,6 +29,7 @@
 	<a
 		[routerLink]="href"
 		[queryParams]="params"
+		[fragment]="fragment"
 		*ngSwitchCase="'flat'"
 		mat-flat-button
 		[color]="color"
@@ -37,6 +40,7 @@
 	<a
 		[routerLink]="href"
 		[queryParams]="params"
+		[fragment]="fragment"
 		*ngSwitchCase="'icon'"
 		mat-icon-button
 		[color]="color"
@@ -49,6 +53,7 @@
 		mat-button
 		[routerLink]="href"
 		[queryParams]="params"
+		[fragment]="fragment"
 		[color]="color"
 		[disabled]="disabled">
 		<ng-container *ngTemplateOutlet="content"></ng-container>

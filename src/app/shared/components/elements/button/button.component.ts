@@ -62,10 +62,16 @@ export class ButtonComponent {
 	/**
 	 * Optional query params associated with `href` property.
 	 */
-	@Input() params?: {[key: string]: string | string[]}[] = [];
+	@Input() params?: {[key: string]: string | string[]};
 
 	/**
 	 * Optional label (must match a translation key)
 	 */
 	@Input() label?: string;
+
+	/**
+	 * Optional fragment associated with `href` property.
+	 */
+	@Input()
+	fragment?: string | undefined;
 }
