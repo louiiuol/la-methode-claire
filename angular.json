@@ -46,15 +46,8 @@
 						"polyfills": ["zone.js"],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
-						"assets": [
-							{
-								"glob": "**/*",
-								"input": "src/assets",
-								"output": "assets"
-							}
-						],
+						"assets": ["src/assets"],
 						"styles": [
-							"node_modules/primeng/resources/themes/lara-light-blue/theme.css",
 							"node_modules/primeng/resources/primeng.min.css",
 							"src/styles.scss"
 						],

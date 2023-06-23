@@ -18,7 +18,10 @@ import {APP_ROUTES} from './app.routes';
 @NgModule({
 	declarations: [AppPage],
 	imports: [
-		RouterModule.forRoot(APP_ROUTES, {bindToComponentInputs: true}),
+		RouterModule.forRoot(APP_ROUTES, {
+			bindToComponentInputs: true,
+			useHash: true,
+		}),
 		CoreModule.forRoot(),
 		...CORE_MODULES,
 	],
