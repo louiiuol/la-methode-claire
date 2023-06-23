@@ -44,7 +44,7 @@ export class IconComponent implements OnChanges {
 
 	protected fetched$ = new Observable();
 
-	private readonly _ASSETS_ROOT = 'assets/icon';
+	private readonly _ASSETS_ROOT = 'assets/img/icon';
 	private readonly untilDestroyed = untilDestroyed();
 
 	constructor(
