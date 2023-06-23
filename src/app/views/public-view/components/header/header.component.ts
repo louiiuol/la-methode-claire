@@ -41,10 +41,7 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	readonly navigationLinks = PUBLIC_ROUTES[0].children?.map(route => ({
-		name: route.title as string,
-		url: route.path as string,
-	}));
+	readonly navigationLinks = ['method', 'formula', 'claire', 'support'];
 
 	constructor(public platform: PlatformService) {}
 }
