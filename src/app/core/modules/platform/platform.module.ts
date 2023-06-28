@@ -6,7 +6,6 @@ import {
 	Platform,
 } from '@angular/cdk/platform';
 
-import {ThemeService} from './services/theme.service';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PlatformService} from './services/platform.service';
@@ -31,7 +30,7 @@ const modules = [
  */
 @NgModule({
 	imports: [...modules],
-	providers: [PlatformService, ThemeService, Platform],
+	providers: [PlatformService, Platform],
 	exports: [...modules],
 })
 export class PlatformModule {}

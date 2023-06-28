@@ -1,4 +1,5 @@
 import {Component, HostListener} from '@angular/core';
+import {ThemeService, TranslateService} from '@core';
 
 /**
  * Root component of the Application, responsible for:
@@ -20,5 +21,10 @@ export class AppPage {
 	@HostListener('window:beforeunload', ['$event'])
 	beforeunloadHandler(): boolean {
 		return true; //this.queue.canDeactivate.value;
+	}
+
+	constructor(translator: TranslateService, theme: ThemeService) {
+		translator.init();
+		theme.init();
 	}
 }

@@ -10,8 +10,6 @@ import {
 } from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {TranslateService} from './services/translate.service';
-
 /**
  * @internal
  */
@@ -37,11 +35,7 @@ registerLocaleData(localeFr);
  */
 @NgModule({
 	imports: [NgxTranslateModule.forRoot(translateOptions)],
-	providers: [
-		NgxTranslateService,
-		TranslateService,
-		{provide: LOCALE_ID, useValue: 'fr-FR'},
-	],
+	providers: [NgxTranslateService, {provide: LOCALE_ID, useValue: 'fr-FR'}],
 	exports: [NgxTranslateModule],
 })
 export class TranslateModule {}

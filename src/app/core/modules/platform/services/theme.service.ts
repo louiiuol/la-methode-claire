@@ -14,7 +14,7 @@ type Theme = 'light' | 'dark';
  *
  * Note: when dark mode is enabled, <body> will have a ".dark" class
  */
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ThemeService {
 	private readonly THEME_STORAGE_KEY = 'user-theme';
 	private readonly prefersDark = window.matchMedia(
@@ -28,8 +28,10 @@ export class ThemeService {
 		? (this.storage.get(this.THEME_STORAGE_KEY) as Theme)
 		: this.getTheme(this.prefersDark.matches);
 
-	constructor(private storage: LocalStore) {
-		if (this.currentTheme === 'dark') this.setCurrentTheme(this.currentTheme);
+	constructor(private storage: LocalStore) {}
+
+	init() {
+		this.setCurrentTheme(this.currentTheme);
 		this.prefersDark.addEventListener('change', e =>
 			this.setCurrentTheme(e.matches)
 		);

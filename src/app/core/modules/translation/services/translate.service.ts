@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {LocalStore} from '@core';
 import {TranslateService as NgxTranslateModule} from '@ngx-translate/core';
 
 /**
@@ -16,18 +15,16 @@ export type SupportedLangs = 'fr';
  * * Checks browser language preference
  * * Sets current language based on stored language or browser language
  */
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TranslateService {
 	/**
 	 * Current language active. The value is updated whenever `use(lang)` is called
 	 */
 	currentLang = this.translator.currentLang;
-	private readonly langStorageKey = 'user-language';
 
-	constructor(
-		private translator: NgxTranslateModule,
-		private storage: LocalStore
-	) {
+	constructor(private translator: NgxTranslateModule) {}
+
+	init() {
 		this.translator.addLangs(['fr']);
 		this.translator.use('fr');
 	}
