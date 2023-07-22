@@ -43,11 +43,6 @@ export const PUBLIC_ROUTES: Routes = [
 				loadComponent: () =>
 					import('./pages/contact/contact.page').then(m => m.ContactPage),
 			},
-			{
-				path: '',
-				redirectTo: '/',
-				pathMatch: 'full',
-			},
 		],
 	},
 ];

@@ -7,14 +7,18 @@ import {AuthService} from '../services/auth.service';
  * Provides Guard to validate access to restricted routes (Logged user level):
  * * If user is not logged, they will be redirected to `/login`
  * * If user is logged, he can access route (Customer View)
+ *
+ * @author louiiuol
  */
-export const CustomerGuard = () =>
-	inject(AuthService).isLoggedIn$.pipe(
+export const CustomerGuard = () => {
+	const router = inject(Router);
+	return inject(AuthService).isLoggedIn$.pipe(
 		map(value =>
 			!value
-				? inject(Router)
+				? router
 						.navigate(['/login'])
 						.catch(err => console.error('Failed to navigate to [Login]', err))
 				: true
 		)
 	);
+};

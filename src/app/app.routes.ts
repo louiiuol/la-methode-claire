@@ -1,9 +1,5 @@
 import {Routes} from '@angular/router';
-import {
-	VisitorGuard,
-	CustomerGuard,
-	AdminGuard,
-} from '@core/modules/auth/guards';
+import {VisitorGuard, CustomerGuard} from '@core/modules/auth/guards';
 
 /**
  * Global Routes of the application, defines all root sections:
@@ -19,15 +15,9 @@ export const APP_ROUTES: Routes = [
 			import('./views/public-view/public.module').then(m => m.PublicModule),
 	},
 	// {
-	// 	path: 'dashboard',
+	// 	path: 'app',
 	// 	canActivate: [CustomerGuard],
 	// 	loadChildren: () =>
 	// 		import('./views/customer/customer.module').then(m => m.CustomerModule),
-	// },
-	// {
-	// 	path: 'admin-board',
-	// 	canActivate: [AdminGuard],
-	// 	loadChildren: () =>
-	// 		import('./views/admin/admin.module').then(m => m.AdminModule),
 	// },
 ];

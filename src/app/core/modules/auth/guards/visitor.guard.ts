@@ -6,8 +6,12 @@ import {AuthService} from '../services/auth.service';
 /**
  * Provides Guard to validate access to unrestricted routes (public level):
  * * Automatically redirect user to their dashboard if they are logged in
+ *
+ * @author louiiuol
  */
-export const VisitorGuard = () =>
-	inject(AuthService).isLoggedIn$.pipe(
-		map(logged => (logged ? inject(Router).navigate(['/dashboard']) : true))
+export const VisitorGuard = () => {
+	const router = inject(Router);
+	return inject(AuthService).isLoggedIn$.pipe(
+		map(logged => (logged ? router.navigate(['/app']) : true))
 	);
+};
