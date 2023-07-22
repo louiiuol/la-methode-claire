@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {CardComponent} from '@shared/components';
 
 @Component({
@@ -6,4 +6,6 @@ import {CardComponent} from '@shared/components';
 	imports: [CardComponent],
 	templateUrl: 'home.page.html',
 })
-export class HomePage {}
+export class HomePage {
+	@HostBinding('class') protected class = '!block';
+}
