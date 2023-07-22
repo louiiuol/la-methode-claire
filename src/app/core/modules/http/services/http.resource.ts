@@ -230,6 +230,14 @@ export abstract class HttpResource {
 		opt: RequestOptions | undefined
 	) => {
 		let error: any = httpError ?? httpError;
+		const resource = this.resource === '' ? 'auth' : this.resource;
+		console.error(
+			`(${new Date().toLocaleDateString()}) [${error.status}] HTTP failed to ${
+				opt?.customAction ?? action
+			} on [${resource.toLocaleUpperCase()}]`,
+			error.error ?? httpError
+		);
+
 		if (error.status === 0) {
 			this.notifier.error(
 				`core.api.errors.generic`,
@@ -239,7 +247,7 @@ export abstract class HttpResource {
 				error: null,
 			} as HttpOutputEntity<null>);
 		}
-		const resource = this.resource === '' ? 'auth' : this.resource;
+
 		if (opt?.notifyOnError !== false)
 			this.notifier.error(`core.api.resources.${resource}`, {
 				key: 'core.states.failed',
@@ -249,13 +257,6 @@ export abstract class HttpResource {
 					),
 				},
 			});
-
-		console.error(
-			`(${new Date().toLocaleDateString()}) [${error.status}] HTTP failed to ${
-				opt?.customAction ?? action
-			} on [${this.resource.toLocaleUpperCase()}]`,
-			error.error ?? httpError
-		);
 
 		let returnedError = error.error?.reasons ?? error.message ?? error;
 		if (Array.isArray(returnedError) && returnedError.length === 1)
