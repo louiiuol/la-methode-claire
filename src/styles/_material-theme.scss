@@ -1,21 +1,20 @@
 // Custom Theming for Angular Material
 @use '@angular/material' as mat;
-/* For use in src/lib/core/theming/_palette.scss */
 $md-blue: (
-	50: #e7e7ea,
-	100: #c2c3ca,
-	200: #9a9ba7,
-	300: #717283,
-	400: #525469,
-	500: #34364e,
-	600: #2f3047,
-	700: #27293d,
-	800: #212235,
-	900: #151625,
-	A100: #6974ff,
-	A200: #3645ff,
-	A400: #0316ff,
-	A700: #0012e8,
+	50: #e8e8ed,
+	100: #c6c5d1,
+	200: #a19fb2,
+	300: #7b7993,
+	400: #5e5c7c,
+	500: #423f65,
+	600: #3c395d,
+	700: #333153,
+	800: #2b2949,
+	900: #1d1b37,
+	A100: #867bff,
+	A200: #5748ff,
+	A400: #2815ff,
+	A700: #1400fb,
 	contrast: (
 		50: #000000,
 		100: #000000,
@@ -34,21 +33,21 @@ $md-blue: (
 	),
 );
 
-$md-teal: (
-	50: #f3f7f7,
-	100: #e2eaeb,
-	200: #cfdcde,
-	300: #bcced1,
-	400: #adc4c7,
-	500: #9fb9bd,
-	600: #97b2b7,
-	700: #8daaae,
-	800: #83a2a6,
-	900: #729398,
+$md-sky: (
+	50: #f6f9fa,
+	100: #e8f0f3,
+	200: #d8e7ec,
+	300: #c8dde4,
+	400: #bdd5de,
+	500: #b1ced8,
+	600: #aac9d4,
+	700: #a1c2ce,
+	800: #98bcc8,
+	900: #88b0bf,
 	A100: #ffffff,
-	A200: #e5fbff,
-	A400: #b2f4ff,
-	A700: #98f0ff,
+	A200: #ffffff,
+	A400: #e9f9ff,
+	A700: #cff2ff,
 	contrast: (
 		50: #000000,
 		100: #000000,
@@ -68,20 +67,20 @@ $md-teal: (
 );
 
 $md-orange: (
-	50: #f9ede6,
-	100: #f0d2c1,
-	200: #e6b498,
-	300: #db966e,
-	400: #d4804f,
-	500: #cc6930,
-	600: #c7612b,
-	700: #c05624,
-	800: #b94c1e,
-	900: #ad3b13,
-	A100: #ffe6df,
-	A200: #ffbeac,
-	A400: #ff9679,
-	A700: #ff825f,
+	50: #fdede1,
+	100: #f9d2b4,
+	200: #f6b582,
+	300: #f29750,
+	400: #ef802b,
+	500: #ec6a05,
+	600: #ea6204,
+	700: #e75704,
+	800: #e44d03,
+	900: #df3c01,
+	A100: #ffffff,
+	A200: #ffdcd3,
+	A400: #ffb3a0,
+	A700: #ff9f86,
 	contrast: (
 		50: #000000,
 		100: #000000,
@@ -133,13 +132,13 @@ $red: (
 	)
 );
 $primary: mat.define-palette($md-blue);
-$primary-dark: mat.define-palette($md-teal);
+$primary-dark: mat.define-palette($md-sky);
 $accent: mat.define-palette($md-orange);
 $warn: mat.define-palette($red);
 
 // Typography
 $typography-config: mat.define-typography-config(
-	$font-family: 'Poppins',
+	$font-family: 'proxima-soft-condensed, sans serif',
 );
 @include mat.core();
 
@@ -155,6 +154,7 @@ $lmc-light-theme: mat.define-light-theme(
 	)
 );
 @include mat.all-component-themes($lmc-light-theme);
+@include mat.typography-hierarchy($typography-config);
 
 // Dark Theme
 $lmc-dark-theme: mat.define-dark-theme(
