@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TranslateService as NgxTranslateModule} from '@ngx-translate/core';
+import {TranslateKey} from '../types/translate-key';
 
 /**
  * Enumeration of all languages supported by the application
@@ -59,8 +60,10 @@ export class TranslateService {
 	 * @param params params to interpolate inside translated message
 	 * @returns translated message or given key if no translation was found
 	 */
-	translate = (key: string | string[], params?: object | undefined) =>
-		this.translator.instant(key, params);
+	translate = (key: string | TranslateKey) =>
+		this.isKeyWithParam(key)
+			? this.translator.instant(key.key, key.param)
+			: this.translator.instant(key);
 
 	/**
 	 * Translate given key, with current lang active, and wraps it into an observable.
@@ -75,4 +78,10 @@ export class TranslateService {
 	 */
 	stream = (key: string | string[], params?: object | undefined) =>
 		this.translator.stream(key, params);
+
+	private isKeyWithParam = (
+		tk: TranslateKey | string
+	): tk is {key: string; param: {[param: string]: string}} => {
+		return (tk as any).key;
+	};
 }
