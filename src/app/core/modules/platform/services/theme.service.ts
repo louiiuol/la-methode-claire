@@ -8,7 +8,7 @@ type Theme = 'light' | 'dark';
  *
  * When application init, this service process the following:
  * * Checks if user prefers dark mode (according to browser color-scheme).
- * * Set current theme for Angular Material & PrimeNG components.
+ * * Set current theme for Angular Material components.
  * * Watches if color-scheme preferences changes and toggle theme accordingly.
  * * Stores current theme in local storage.
  *
@@ -49,7 +49,6 @@ export class ThemeService {
 	private setCurrentTheme(theme: Theme | boolean) {
 		const currentTheme =
 			typeof theme === 'boolean' ? this.getTheme(theme) : theme;
-		this.setPrimeThemeCss(currentTheme);
 		this.toggleBodyClasses();
 		this.currentTheme = currentTheme;
 		this.storeTheme(currentTheme);
@@ -62,12 +61,6 @@ export class ThemeService {
 			? classes.remove(darkClassName)
 			: classes.add(darkClassName);
 	};
-
-	private setPrimeThemeCss(theme: Theme) {
-		const CSS_LOCATION = 'assets/themes/prime';
-		const importLink = document.getElementById('theme-link') as HTMLLinkElement;
-		importLink.href = `${CSS_LOCATION}-${theme}.css`;
-	}
 
 	private getTheme(dark: boolean) {
 		return dark ? 'dark' : 'light';
