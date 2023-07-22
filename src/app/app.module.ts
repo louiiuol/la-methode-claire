@@ -6,6 +6,7 @@ import {CORE_MODULES} from '@core/modules';
 
 import {AppPage} from './app.page';
 import {APP_ROUTES} from './app.routes';
+import {ToasterComponent} from './views/layout/components/toast.component';
 
 /**
  * Root module of this application.
@@ -24,6 +25,7 @@ import {APP_ROUTES} from './app.routes';
 		}),
 		CoreModule.forRoot(),
 		...CORE_MODULES,
+		ToasterComponent,
 	],
 	bootstrap: [AppPage],
 })

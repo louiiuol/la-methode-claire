@@ -1,28 +1,7 @@
-import {Injectable} from '@angular/core';
-import {capitalize} from '@core/helpers';
-import {TranslateService} from '@ngx-translate/core';
-import {Message, MessageService} from 'primeng/api';
-
-/**
- * Represent a translation key associated with param(s).
- * In order to use this type, you must make sure given params' key names match
- * the ones in translation file
- *
- * @see {@link https://www.vitamindev.com/angular/how-to-use-parameters-in-ngx-translate/ | how-to-use-parameters-in-ngx-translate}
- */
-interface TranslateKey {
-	key: string;
-	param: {[param: string]: string};
-}
-
-/**
- * Extends PrimeNG Message and add a `date` property
- *
- * @see {@link https://primeng.org/messages#api.messagesprops:~:text=PrimeNG%20Messages%20module.-,Properties%20of%20Messages,-%23 | PrimeNG Message properties}
- */
-interface Notification extends Message {
-	date: Date;
-}
+import {Injectable, signal} from '@angular/core';
+import {Notification, NotificationSeverity} from '../types/notification';
+import {TranslateKey, TranslateService} from '@core/modules/translation';
+import {v4 as uuidV4} from 'uuid';
 
 /**
  * Provides methods to notify translated information to the user.
@@ -30,28 +9,19 @@ interface Notification extends Message {
  * You can define the translation of the messages in two ways:
  * - passing a `string` that core correspond to a translation path
  * - passing a {@link TranslateKey} which contains a `key` (translation path)
- * and params. (more information on type's documentation)
+ * and params. (more information on `TranslateKey` type's documentation)
+ *
+ * @author louiiuol
  */
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class NotificationService {
 	/**
 	 * List of local notifications (all severities) that happened in user current session.
 	 * These notifications are not stored (yet) to browser storage.
 	 */
-	notifications: Notification[] = [];
+	notifications = signal<Notification[]>([]);
 
-	constructor(
-		private translator: TranslateService,
-		private notifier: MessageService
-	) {
-		this.notifier.messageObserver.subscribe(messages => {
-			if (Array.isArray(messages))
-				messages.forEach(m =>
-					this.notifications.push({date: new Date(), ...messages})
-				);
-			else this.notifications.push({date: new Date(), ...messages});
-		});
-	}
+	constructor(private translator: TranslateService) {}
 
 	/**
 	 * Send notification with given params to the user.
@@ -63,22 +33,20 @@ export class NotificationService {
 	notify(
 		title: TranslateKey | string,
 		message: TranslateKey | string,
-		severity = 'info',
-		key = 'root'
+		severity: NotificationSeverity,
+		life: number = 4000
 	) {
-		const summary = this.isKeyWithParam(title)
-			? this.translate(title.key, title.param)
-			: this.translate(title);
-		const detail = this.isKeyWithParam(message)
-			? this.translate(message.key, message.param)
-			: this.translate(message);
-
-		this.notifier.add({
-			key,
+		const summary = this.translator.translate(title);
+		const details = this.translator.translate(message);
+		const uuid: string = uuidV4();
+		this.notifications().push({
+			uuid,
 			severity,
 			summary,
-			detail,
+			details,
+			date: new Date(),
 		});
+		setTimeout(() => this.removedNotification(uuid), life);
 	}
 
 	/**
@@ -87,11 +55,8 @@ export class NotificationService {
 	 * @param message key to be displayed for description of the notification
 	 * @param key id of the container to display notification in
 	 */
-	success = (
-		title: TranslateKey | string,
-		message: TranslateKey | string,
-		key = 'root'
-	) => this.notify(title, message, 'success', key);
+	success = (title: TranslateKey | string, message: TranslateKey | string) =>
+		this.notify(title, message, 'success');
 
 	/**
 	 * Send Error notification with given params to the user.
@@ -99,25 +64,17 @@ export class NotificationService {
 	 * @param message key to be displayed for description of the notification
 	 * @param key id of the container to display notification in
 	 */
-	error = (
-		title: TranslateKey | string,
-		message: TranslateKey | string,
-		key = 'root'
-	) => this.notify(title, message, 'error', key);
+	error = (title: TranslateKey | string, message: TranslateKey | string) =>
+		this.notify(title, message, 'error');
 
 	/**
 	 * Clears local notifications list.
 	 */
 	clearNotifications() {
-		this.notifications = [];
+		this.notifications = signal<Notification[]>([]);
 	}
 
-	private translate = (key: string, param?: {[param: string]: string}) =>
-		capitalize(this.translator.instant(key, param));
-
-	private isKeyWithParam = (
-		tk: TranslateKey | string
-	): tk is {key: string; param: {[param: string]: string}} => {
-		return (tk as any).key;
-	};
+	removedNotification(uuid: string) {
+		this.notifications.set(this.notifications().filter(n => n.uuid !== uuid));
+	}
 }

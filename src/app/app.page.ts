@@ -1,4 +1,4 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, HostBinding, HostListener} from '@angular/core';
 import {ThemeService, TranslateService} from '@core';
 
 /**
@@ -9,8 +9,8 @@ import {ThemeService, TranslateService} from '@core';
 @Component({
 	selector: 'app-root',
 	template: `
-		<p-toast key="root" position="top-right"></p-toast>
 		<router-outlet></router-outlet>
+		<app-toaster></app-toaster>
 	`,
 })
 export class AppPage {
@@ -22,6 +22,8 @@ export class AppPage {
 	beforeunloadHandler(): boolean {
 		return true; //this.queue.canDeactivate.value;
 	}
+
+	@HostBinding('class') class = 'relative';
 
 	constructor(translator: TranslateService, theme: ThemeService) {
 		translator.init();
