@@ -225,17 +225,16 @@ export abstract class HttpResource {
 	};
 
 	private formatError = <T>(
-		httpError: HttpErrorResponse,
+		error: HttpErrorResponse,
 		action: RequestActions,
 		opt: RequestOptions | undefined
 	) => {
-		let error: any = httpError ?? httpError;
 		const resource = this.resource === '' ? 'auth' : this.resource;
 		console.error(
 			`(${new Date().toLocaleDateString()}) [${error.status}] HTTP failed to ${
 				opt?.customAction ?? action
 			} on [${resource.toLocaleUpperCase()}]`,
-			error.error ?? httpError
+			error
 		);
 
 		if (error.status === 0) {
