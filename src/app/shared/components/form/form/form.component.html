@@ -3,11 +3,11 @@
 	[formGroup]="form"
 	(ngSubmit)="onSubmit(formModel)"
 	class="form-grid grid px-2 py-1 md:px-6 md:py-2">
-	<p-messages
-		*ngIf="errorMessages.length"
-		[value]="errorMessages"
-		[closable]="true"
-		[enableService]="false"></p-messages>
+	<app-message
+		*ngIf="errorMessage"
+		severity="error"
+		[summary]="errorMessage"
+		[closable]="true" />
 	<formly-form
 		[form]="form"
 		[options]="options"

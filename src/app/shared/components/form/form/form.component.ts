@@ -6,19 +6,16 @@ import {
 	OnInit,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {LoaderComponent} from '@shared/components';
+import {LoaderComponent, MessageComponent} from '@shared/components';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
-import {MessagesModule} from 'primeng/messages';
-import {Message} from 'primeng/api';
 import {Observable} from 'rxjs';
 
 import {
 	APP_FORM_VALIDATORS,
 	FieldConfig,
 	FormModule,
-	HttpOutput,
 	TranslateService,
 	untilDestroyed,
 	APP_FORM_GROUPS,
@@ -45,6 +42,7 @@ import {
  *
  * See @inputs documentation for more information on usage.
  *
+ * @author louiiuol
  */
 @Component({
 	standalone: true,
@@ -53,7 +51,7 @@ import {
 		LoaderComponent,
 		MatButtonModule,
 		MatTooltipModule,
-		MessagesModule,
+		MessageComponent,
 	],
 	selector: 'app-form',
 	templateUrl: './form.component.html',
@@ -130,7 +128,7 @@ export class FormComponent implements OnInit {
 	protected formModel: any;
 	protected formFields?: FormlyFieldConfig<any>[];
 	protected isLoading = false;
-	protected errorMessages: Message[] = [];
+	protected errorMessage?: string;
 
 	private untilDestroyed$ = untilDestroyed();
 	private _initialModel: any;
@@ -153,7 +151,7 @@ export class FormComponent implements OnInit {
 	onSubmit(model: any): void {
 		this.load(this.submitted$(model), (res: any) => {
 			if (res.error) {
-				this.errorMessages = this.format(res) as Message[];
+				this.errorMessage = this.generateMessage(res.error.message);
 				// TODO add handle if error is typeof APIFormDetailsError..
 				this.reset();
 			}
@@ -172,15 +170,15 @@ export class FormComponent implements OnInit {
 	pristine = () =>
 		JSON.stringify(this._initialModel) === JSON.stringify(this.formModel);
 
-	private format = ({error}: HttpOutput<null>) => {
-		if (!error) return [];
-		return typeof error === 'string'
-			? [this.generateMessage(error)]
-			: error.map(error => this.checkErrorIsString(error));
-	};
+	// private format = ({error}: HttpOutput<null>) => {
+	// 	if (!error) return [];
+	// 	return typeof error === 'string'
+	// 		? [this.generateMessage(error)]
+	// 		: error.map(error => this.checkErrorIsString(error));
+	// };
 
-	private checkErrorIsString = (error: string | object) =>
-		(typeof error === 'string' ? this.generateMessage(error) : []) as Message[];
+	// private checkErrorIsString = (error: string | object) =>
+	// 	typeof error === 'string' ? this.generateMessage(error) : null;
 
 	private buildField = (field?: FieldConfig): FormlyFieldConfig => {
 		if (!field) return {};
@@ -212,14 +210,11 @@ export class FormComponent implements OnInit {
 		});
 	};
 
-	private generateMessage(summary: string, severity = 'error') {
-		return {
-			severity,
-			summary: this.translator.translate(
-				'core.api.errors.' +
-					summary.replaceAll('.', '').replaceAll(' ', '_').toLowerCase()
-			),
-		};
+	private generateMessage(summary: string) {
+		return this.translator.translate(
+			'core.api.errors.' +
+				summary.replaceAll('.', '').replaceAll(' ', '_').toLowerCase()
+		) as string;
 	}
 
 	private load(obs: Observable<any>, fn: any) {
