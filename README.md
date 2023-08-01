@@ -1,6 +1,18 @@
-# La méthode Claire - UI
+# La Méthode Claire 👓
 
-Description coming later ...
+> A simple yet neat and effective reading methodology for school teachers. This project allows:
+>
+> - Public to discover the project, and sign up
+> - Logged in user to follow their progress and more ..
+> - Administrators to manage content and users.
+
+## Features 🎉
+
+1. User Authentication
+2. Library
+3. Content Administration
+4. User's progression
+5. Subscription & Payment
 
 ## Prerequisites 📚
 
@@ -19,7 +31,6 @@ Description coming later ...
 | `@angular/animations` | `^16.0.1` | Add animations capability to components. More information [here](https://angular.io/guide/animations#defining-animations-and-attaching-them-to-the-html-template) |
 | `zone.js` | `~0.13.0` | Implements Zones for JavaScript, inspired by Dart. A Zone is an execution context that persists across async tasks. You can think of it as thread-local storage for JavaScript VMs. |
 | `rxjs` | `~7.5.0` | RxJS is a library for reactive programming using Observables, to make it easier to compose asynchronous or callback-based code. [documentation](https://rxjs.dev/api) |
-| `primeng` | `^16.0.0-rc.1` | Next Gen UI library [documentation](https://primeng.org/button)
 | `TailwindCSS` | `^3.3.2` | CSS utility library [documentation](https://tailwindcss.com/docs/flex)
 
 > You can find all dependencies and their version on the  [dependencies' page](https://vidmizer.gitlab.io/greencoder-v2/dependencies.html)
