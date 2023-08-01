@@ -130,6 +130,9 @@
 					"description": ""
 				}
 			}
+		},
+		"expressions": {
+			"learn_more": "En savoir plus"
 		}
 	},
 	"views": {
@@ -162,7 +165,46 @@
 				},
 				"home": {
 					"title": "Bienvenue sur la Méthode Claire !",
-					"subtitle": "Une méthode lecture simple, efficace, et soignée destinée aux professeurs des écoles. Cette méthode est à appliquer préférablement au CP... Bonne visite ! 👋"
+					"intro": {
+						"1": "La méthode Claire est <b class='text-accent'>claire</b>,",
+						"2": "parce qu'elle ne se contente pas de vous dire <b class='text-accent'>quoi faire</b>,",
+						"3": "mais aussi <b class='text-warn'>comment faire</b>",
+						"4": "et surtout, <b class='text-warn'>elle le fait avec vous</b> !"
+					},
+					"outro": "La méthode <b class='text-warn'>claire</b> vous explique, guide et soutient tout au long de l'année !",
+					"method": {
+						"title": "Devenez un expert en apprentissage de la lecture",
+						"explanations": {
+							"1": {
+								"title": "Scripts",
+								"description": "La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture."
+							},
+							"2": {
+								"title": "Leçons",
+								"description": "La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture."
+							},
+							"3": {
+								"title": "Exercices",
+								"description": "La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture."
+							},
+							"4": {
+								"title": "Tableau de révision",
+								"description": "La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture."
+							},
+							"5": {
+								"title": "Affiches",
+								"description": "La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture."
+							},
+							"6": {
+								"title": "Newsletter",
+								"description": "La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture."
+							}
+						}
+					},
+					"cta-register": {
+						"title": "Envie de découvrir la méthode ?",
+						"description": "Vous pouvez créer un compte gratuitement et bénéficier d’un aperçu de la méthode !"
+					}
 				}
 			}
 		}

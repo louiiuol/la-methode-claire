@@ -1,10 +1,61 @@
-<section id="intro" style="height: 100vh">
-	<h1 class="mat-headline-1">
-		La Méthode
-		<em class="text-accent">Claire</em>!
+<section id="intro" class="slide bg-primary relative">
+	<h1
+		style="text-wrap: balance; height: calc(100% - 64px)"
+		class="text-3xl md:text-7xl w-5/6 p-4 !leading-loose !mx-auto text-white flex flex-col justify-center h-full gap-2 text-center">
+		<span [innerHTML]="'views.public.pages.home.intro.1' | translate"></span>
+		<span [innerHTML]="'views.public.pages.home.intro.2' | translate"></span>
+		<span [innerHTML]="'views.public.pages.home.intro.3' | translate"></span>
+		<span [innerHTML]="'views.public.pages.home.intro.4' | translate"></span>
 	</h1>
-	<p class="mat-headline-4">
-		Tout ce que vous avez toujours voulu savoir sur l’enseignement de la
-		lecture, sans jamais oser le demander !
-	</p>
+	<footer class="absolute bottom-0 w-full text-center bg-accent text-xl p-3">
+		<p
+			class="!mb-0"
+			[innerHTML]="'views.public.pages.home.outro' | translate"></p>
+	</footer>
+</section>
+<section id="method" class="mb-10 [&>*:nth-child(even)]:flex-row-reverse">
+	<h2 class="text-4xl text-center mt-3 mb-2">
+		{{'views.public.pages.home.method.title' | translate}}
+	</h2>
+	<article
+		class="flex justify-center items-center gap-10 w-3/4 mx-auto my-4"
+		*ngFor="let explanation of methodExplanations">
+		<div>
+			<span [style]="{'color': explanation.color}" class="text-5xl">
+				{{explanation.index}}
+			</span>
+			<h3 class="text-3xl">
+				{{'views.public.pages.home.method.explanations.' + explanation.index +
+				'.title' | translate }}
+			</h3>
+			<p class="max-w-xs">
+				{{('views.public.pages.home.method.explanations.' + explanation.index +
+				'.description' ) | translate}}
+			</p>
+			<a
+				href="method/#{{explanation.title}}"
+				class="text-end text-accent w-full underline inline-block">
+				{{'core.expressions.learn_more' | translate}}
+			</a>
+		</div>
+		<img
+			class="max-w-xs"
+			[src]="'assets/img/illustrations/' + explanation.title + '.png'"
+			[alt]="explanation.title + '\'s illustration'" />
+	</article>
+</section>
+<section
+	id="cta-register"
+	class="flex justify-center items-center gap-7 p-7 bg-yellow-light">
+	<div>
+		<h2 class="text-3xl">
+			{{'views.public.pages.home.cta-register.title' | translate}}
+		</h2>
+		<p class="text-lg">
+			{{'views.public.pages.home.cta-register.description' | translate}}
+		</p>
+	</div>
+	<app-button type="raised" href="/register">
+		{{ 'core.actions.register.action' | translate }}
+	</app-button>
 </section>
