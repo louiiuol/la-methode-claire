@@ -2,18 +2,14 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	EventEmitter,
+	HostBinding,
 	Output,
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {NgFor, NgIf} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {PlatformService, TranslateModule} from '@core';
-import {
-	ButtonComponent,
-	IconComponent,
-	ThemeSwitcherComponent,
-} from '@shared/components';
-import {PUBLIC_ROUTES} from '../../public.routes';
+import {ButtonComponent, IconComponent} from '@shared/components';
 
 /**
  * Public views global header
@@ -23,16 +19,15 @@ import {PUBLIC_ROUTES} from '../../public.routes';
 @Component({
 	standalone: true,
 	imports: [
-		CommonModule,
+		NgIf,
+		NgFor,
 		TranslateModule,
 		MatToolbarModule,
 		IconComponent,
 		ButtonComponent,
-		ThemeSwitcherComponent,
 	],
 	selector: 'app-public-header',
 	templateUrl: './header.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
 	/**
@@ -41,7 +36,15 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	readonly navigationLinks = ['method', 'formula', 'claire', 'support'];
+	@HostBinding('class') class = 'sticky top-0 z-50';
+
+	readonly navigationLinks = [
+		'La méthode',
+		'éclaircissement',
+		'Qui est claire ?',
+		'F.A.Q',
+		'Abonnement',
+	];
 
 	constructor(public platform: PlatformService) {}
 }
