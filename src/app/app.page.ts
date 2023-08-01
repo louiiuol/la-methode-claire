@@ -1,5 +1,5 @@
 import {Component, HostBinding, HostListener} from '@angular/core';
-import {ThemeService, TranslateService} from '@core';
+import {TranslateService} from '@core';
 
 /**
  * Root component of the Application, responsible for:
@@ -25,8 +25,7 @@ export class AppPage {
 
 	@HostBinding('class') class = 'relative';
 
-	constructor(translator: TranslateService, theme: ThemeService) {
+	constructor(translator: TranslateService) {
 		translator.init();
-		theme.init();
 	}
 }

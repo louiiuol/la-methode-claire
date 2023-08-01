@@ -133,8 +133,8 @@ $red: (
 );
 $primary: mat.define-palette($md-blue);
 $primary-dark: mat.define-palette($md-sky);
-$accent: mat.define-palette($md-orange);
-$warn: mat.define-palette($red);
+$accent: mat.define-palette($md-sky);
+$warn: mat.define-palette($md-orange);
 
 // Typography
 $typography-config: mat.define-typography-config(
@@ -156,27 +156,20 @@ $lmc-light-theme: mat.define-light-theme(
 @include mat.all-component-themes($lmc-light-theme);
 @include mat.typography-hierarchy($typography-config);
 
-// Dark Theme
-$lmc-dark-theme: mat.define-dark-theme(
-	(
-		color: (
-			primary: $primary-dark,
-			accent: $accent,
-			warn: $warn,
-		),
-		typography: $typography-config,
-	)
-);
-
 /* CUSTOM STYLES */
+
+.text-primary {
+	color: mat.get-color-from-palette($primary) !important;
+}
+
+.bg-primary {
+	background-color: mat.get-color-from-palette($primary) !important;
+}
 .text-accent {
 	color: mat.get-color-from-palette($accent) !important;
 }
 .bg-accent {
 	background-color: mat.get-color-from-palette($accent) !important;
-}
-.text-primary {
-	color: mat.get-color-from-palette($primary) !important;
 }
 
 .text-warn {
@@ -198,13 +191,6 @@ $lmc-dark-theme: mat.define-dark-theme(
 	background-color: #cc6930 !important;
 }
 
-/* DARK MODE */
-.dark {
-	@include mat.all-component-colors($lmc-dark-theme);
-	.text-primary {
-		color: mat.get-color-from-palette($primary-dark) !important;
-	}
-	.bg-primary {
-		background-color: mat.get-color-from-palette($primary-dark) !important;
-	}
+.bg-yellow-light {
+	background-color: #f5f7ee !important;
 }

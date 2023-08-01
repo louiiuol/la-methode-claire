@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {ThemeService} from '@core/modules/platform/services/theme.service';
 
 import {ButtonComponent, IconComponent} from '@shared/components/elements';
@@ -17,5 +17,5 @@ import {ButtonComponent, IconComponent} from '@shared/components/elements';
 	templateUrl: './theme-switcher.component.html',
 })
 export class ThemeSwitcherComponent {
-	constructor(public theme: ThemeService) {}
+	protected readonly theme = Inject(ThemeService);
 }
