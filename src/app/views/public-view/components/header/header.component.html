@@ -22,7 +22,11 @@
 	<app-button type="raised" href="/login">
 		{{ 'core.actions.login.action' | translate }}
 	</app-button>
-	<app-button *ngIf="!platform.isMobileView()" type="stroked" href="/register">
+	<app-button
+		*ngIf="!platform.isMobileView()"
+		type="stroked"
+		color="accent"
+		href="/register">
 		{{ 'core.actions.register.action' | translate }}
 	</app-button>
 	<app-theme-switcher />
