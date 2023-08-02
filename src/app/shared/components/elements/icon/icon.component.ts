@@ -40,7 +40,7 @@ export class IconComponent implements OnChanges {
 	 */
 	@Input() name?: string;
 
-	@HostBinding('class') class = 'block mx-auto';
+	@HostBinding('class') class = 'inline mx-auto';
 
 	protected fetched$ = new Observable();
 
