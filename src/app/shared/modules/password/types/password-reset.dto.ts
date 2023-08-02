@@ -1,10 +1,10 @@
-export interface ResetPasswordDto {
+export interface PasswordResetDto {
 	token: string;
 	password: string;
 	passwordConfirm: string;
 }
 
-export interface ResetPasswordApiDto {
+export interface PasswordResetApiDto {
 	password: string;
 	_password: string;
 }

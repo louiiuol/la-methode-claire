@@ -151,7 +151,7 @@ export class FormComponent implements OnInit {
 	onSubmit(model: any): void {
 		this.load(this.submitted$(model), (res: any) => {
 			if (res.error) {
-				this.errorMessage = this.generateMessage(res.error.message);
+				this.errorMessage = this.generateMessage(res.error[0]);
 				// TODO add handle if error is typeof APIFormDetailsError..
 				this.reset();
 			}

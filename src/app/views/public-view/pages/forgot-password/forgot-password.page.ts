@@ -2,6 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
+	forwardRef,
 	inject,
 } from '@angular/core';
 import {FieldConfig} from '@core';
@@ -23,7 +24,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 		CardComponent,
 		FormComponent,
 		ButtonComponent,
-		TranslateModule,
+		forwardRef(() => TranslateModule),
 		PasswordModule,
 	],
 	templateUrl: './forgot-password.page.html',

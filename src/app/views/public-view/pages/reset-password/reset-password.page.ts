@@ -4,12 +4,12 @@ import {
 	Component,
 	HostBinding,
 	Input,
-	OnInit,
+	forwardRef,
 	inject,
 	signal,
 } from '@angular/core';
-import {FieldConfig} from '@core';
 import {TranslateModule} from '@ngx-translate/core';
+import {FieldConfig} from '@core';
 import {
 	CardComponent,
 	FormComponent,
@@ -28,8 +28,8 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 		CardComponent,
 		FormComponent,
 		ButtonComponent,
-		TranslateModule,
-		PasswordModule,
+		forwardRef(() => TranslateModule),
+		forwardRef(() => PasswordModule),
 	],
 	templateUrl: './reset-password.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

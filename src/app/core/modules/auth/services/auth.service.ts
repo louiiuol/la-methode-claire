@@ -9,6 +9,7 @@ import {LoginDto, RegisterDto} from '../types';
 import {AuthResource} from '../resources/auth.resource';
 import {CurrentUser} from '../models/current-user.model';
 import {UserPreviewDto} from '@shared/modules';
+import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.dto';
 
 /**
  * Provides methods and properties to handle current user's state in the application:
@@ -71,12 +72,12 @@ export class AuthService {
 				else res.error = ['Invalid credentials.'];
 				return res;
 			}),
-			mergeMap(v => iif(() => !!v.value, this.http.whoAmI(), of(v))),
+			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
 			tap(res => {
 				if ((res?.value as UserPreviewDto)?.uuid) {
 					this.updateCurrentUser(new CurrentUser(res.value as UserPreviewDto));
 					this.router
-						.navigate(['/dashboard'])
+						.navigate(['/app/dashboard'])
 						.catch(err =>
 							console.error('Failed to Redirect to [Dashboard]', err)
 						);
@@ -104,7 +105,11 @@ export class AuthService {
 	 * @param roles to be checked
 	 * @returns true if currentUser has at least one of the given roles, false otherwise
 	 */
-	isAdmin = (): boolean => this.currentUser$.value?.role === 'ADMIN';
+	isAdmin = () => this.currentUser$.value?.role === 'ADMIN';
+
+	getProfile = () => this.http.whoAmI();
+
+	updateProfile = (dto: ProfileUpdateDto) => this.http.updateProfile(dto);
 
 	/**
 	 * Updates current user in local storage and observable shared between components and services.

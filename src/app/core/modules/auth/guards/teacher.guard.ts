@@ -10,14 +10,16 @@ import {AuthService} from '../services/auth.service';
  *
  * @author louiiuol
  */
-export const CustomerGuard = () => {
+export const TeacherGuard = () => {
 	const router = inject(Router);
 	return inject(AuthService).isLoggedIn$.pipe(
 		map(value =>
 			!value
 				? router
 						.navigate(['/login'])
-						.catch(err => console.error('Failed to navigate to [Login]', err))
+						.catch(err =>
+							console.error('[TeacherGuard] Failed to navigate to [Login]', err)
+						)
 				: true
 		)
 	);

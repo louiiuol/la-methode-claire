@@ -2,6 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
+	forwardRef,
 	inject,
 } from '@angular/core';
 
@@ -19,13 +20,18 @@ import {AuthService, TranslateModule, FieldConfig} from '@core';
  */
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, ButtonComponent, TranslateModule],
+	imports: [
+		CardComponent,
+		FormComponent,
+		ButtonComponent,
+		forwardRef(() => TranslateModule),
+	],
 	templateUrl: './login.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage {
 	@HostBinding('class')
-	protected readonly class = 'centered-content';
+	protected readonly class = 'page centered-content';
 
 	protected readonly fields: FieldConfig[] = [
 		{preset: 'user.email', props: {required: true}},

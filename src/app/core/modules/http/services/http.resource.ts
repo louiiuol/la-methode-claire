@@ -256,12 +256,8 @@ export abstract class HttpResource {
 					),
 				},
 			});
-
-		let returnedError = error.error?.reasons ?? error.message ?? error;
-		if (Array.isArray(returnedError) && returnedError.length === 1)
-			returnedError = returnedError[0];
 		return of({
-			error: returnedError,
+			error: error.error?.message,
 		} as HttpOutputEntity<null>);
 	};
 

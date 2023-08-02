@@ -4,6 +4,7 @@ import {User, UserPreviewDto} from '@shared/modules/users/types';
 import {Token} from '../types/token.dto';
 import {LoginDto} from '../types/login.dto';
 import {HttpResource} from '@core/modules/http/services/http.resource';
+import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.dto';
 
 /**
  * CRUD requests related to user's authentication.
@@ -23,5 +24,8 @@ export class AuthResource extends HttpResource {
 	logIn = (dto: LoginDto) =>
 		this.create<Token>(dto, {path: 'auth/login', customAction: 'login'});
 
-	whoAmI = () => this.get<UserPreviewDto>(null, {path: 'profile'});
+	whoAmI = () => this.get<UserPreviewDto>(null, {path: 'me'});
+
+	updateProfile = (dto: ProfileUpdateDto) =>
+		this.partialUpdate(null, dto, {path: 'me'});
 }

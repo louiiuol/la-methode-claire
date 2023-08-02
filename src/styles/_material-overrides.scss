@@ -16,3 +16,13 @@
 .mat-mdc-text-field-wrapper {
 	background-color: inherit !important;
 }
+
+.mat-mdc-menu-item > span {
+	display: flex;
+}
+
+.mat-mdc-menu-item > span,
+.mat-mdc-menu-item .mat-icon-no-color,
+.mat-mdc-menu-submenu-icon {
+	color: currentColor !important;
+}
