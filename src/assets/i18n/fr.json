@@ -34,12 +34,17 @@
 			"register": {
 				"action": "s'inscrire",
 				"progress": "En cours d'inscription",
-				"done": "inscrits"
+				"done": "inscrit"
 			},
 			"login": {
 				"action": "se connecter",
 				"progress": "connection en cours",
 				"done": "connecté"
+			},
+			"logout": {
+				"action": "se déconnecter",
+				"progress": "Déconnections en cours",
+				"done": "déconnecté"
 			},
 			"submit": {
 				"action": "envoyer",
@@ -128,6 +133,16 @@
 					"label": "Adresse email",
 					"placeholder": "example@mail.com",
 					"description": ""
+				},
+				"firstName": {
+					"label": "Prénom",
+					"placeholder": "Jean",
+					"description": ""
+				},
+				"lastName": {
+					"label": "Nom",
+					"placeholder": "Dupont",
+					"description": ""
 				}
 			}
 		},
@@ -140,7 +155,11 @@
 			"routes": {
 				"login": "Se connecter",
 				"register": "S'inscrire",
-				"forgot_password": "Mot de passe oublié ?"
+				"forgot_password": "Mot de passe oublié ?",
+				"method": "La méthode",
+				"explanation": "Éclaircissement",
+				"who_is_claire": "Qui est claire ?",
+				"faq": "F.A.Q"
 			},
 			"pages": {
 				"login": {
@@ -206,6 +225,14 @@
 						"description": "Vous pouvez créer un compte gratuitement et bénéficier d’un aperçu de la méthode !"
 					}
 				}
+			}
+		},
+		"teacher": {
+			"routes": {
+				"dashboard": "Tableau de bord",
+				"profile": "Profil",
+				"subscription": "Abonnement",
+				"faq": "F.A.Q"
 			}
 		}
 	},

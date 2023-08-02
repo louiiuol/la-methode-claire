@@ -1,0 +1,46 @@
+<mat-toolbar class="gap-3 h-16 justify-start mat-elevation-z1">
+	<app-button
+		*ngIf="platform.isMobileView()"
+		(click)="toggledMobileMenu.emit()"
+		aria-label="Button to expand sidebar"
+		type="icon">
+		<app-icon>menu</app-icon>
+	</app-button>
+	<app-button color="warn" type="icon" href="/">
+		<app-icon name="logo" />
+	</app-button>
+	<ng-container *ngIf="!platform.isMobileView()">
+		<app-button
+			*ngFor="let link of navigationLinks"
+			color="primary"
+			[href]="'/app/' + link"
+			[label]="'views.teacher.routes.' + link" />
+	</ng-container>
+
+	<span class="flex-1"></span>
+
+	<app-button
+		[matMenuTriggerFor]="userMenu"
+		class="bg-primary rounded-full !text-white leading-none"
+		type="icon">
+		<span class="text-white">
+			{{ currentUser?.initials?.toLocaleUpperCase() }}
+		</span>
+	</app-button>
+	<mat-menu #userMenu="matMenu">
+		<app-button
+			type="menu-item"
+			href="/app/profile"
+			label="views.teacher.routes.profile">
+			<app-icon>person</app-icon>
+		</app-button>
+
+		<app-button
+			type="menu-item"
+			color="warn"
+			(click)="logOut()"
+			label="core.actions.logout.action">
+			<app-icon>logout</app-icon>
+		</app-button>
+	</mat-menu>
+</mat-toolbar>
