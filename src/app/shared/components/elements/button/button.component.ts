@@ -9,10 +9,17 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {ThemePalette} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@core';
 
-type ButtonType = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon';
+type ButtonType =
+	| 'basic'
+	| 'raised'
+	| 'stroked'
+	| 'flat'
+	| 'icon'
+	| 'menu-item';
 
 /**
  * Inherit material button with pre-configuration to ease button/link integration.
@@ -29,6 +36,7 @@ type ButtonType = 'basic' | 'raised' | 'stroked' | 'flat' | 'icon';
 		NgTemplateOutlet,
 		MatIconModule,
 		MatButtonModule,
+		MatMenuModule,
 		RouterModule,
 		TranslateModule,
 	],

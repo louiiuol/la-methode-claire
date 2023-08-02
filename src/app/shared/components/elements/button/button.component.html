@@ -1,6 +1,6 @@
 <ng-template #content>
-	<ng-container *ngIf="label">{{ label | translate }}</ng-container>
 	<ng-content></ng-content>
+	<ng-container *ngIf="label">{{ label | translate }}</ng-container>
 </ng-template>
 
 <ng-container *ngIf="href; else buttonTemplate" [ngSwitch]="type">
@@ -49,6 +49,17 @@
 	</a>
 
 	<a
+		[routerLink]="href"
+		[queryParams]="params"
+		[fragment]="fragment"
+		*ngSwitchCase="'menu-item'"
+		mat-menu-item
+		[class]="'text-' + color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</a>
+
+	<a
 		*ngSwitchDefault
 		mat-button
 		[routerLink]="href"
@@ -89,6 +100,14 @@
 		*ngSwitchCase="'icon'"
 		mat-icon-button
 		[color]="color"
+		[disabled]="disabled">
+		<ng-container *ngTemplateOutlet="content"></ng-container>
+	</button>
+
+	<button
+		*ngSwitchCase="'menu-item'"
+		mat-menu-item
+		[class]="'text-' + color"
 		[disabled]="disabled">
 		<ng-container *ngTemplateOutlet="content"></ng-container>
 	</button>
