@@ -1,4 +1,4 @@
-<mat-toolbar class="gap-3 h-16 justify-start">
+<mat-toolbar class="gap-3 h-16 justify-start mat-elevation-z1">
 	<app-button
 		*ngIf="platform.isMobileView()"
 		(click)="toggledMobileMenu.emit()"
@@ -7,28 +7,22 @@
 		<app-icon>menu</app-icon>
 	</app-button>
 	<app-button color="warn" type="icon" href="/">
-		<app-icon name="logo"></app-icon>
+		<app-icon name="logo" />
 	</app-button>
 	<span class="flex-1"></span>
 	<ng-container *ngIf="!platform.isMobileView()">
 		<app-button
 			*ngFor="let link of navigationLinks"
 			color="primary"
-			href="/"
-			[fragment]="link">
-			{{ link }}
-		</app-button>
+			[href]="'/' + link"
+			[label]="'views.public.routes.' + link" />
 	</ng-container>
 
 	<span class="flex-1"></span>
-	<app-button type="raised" href="/login">
-		{{ 'core.actions.login.action' | translate }}
-	</app-button>
+	<app-button type="raised" href="/login" label="core.actions.login.action" />
 	<app-button
-		*ngIf="!platform.isMobileView()"
-		type="stroked"
+		type="raised"
 		color="accent"
-		href="/register">
-		{{ 'core.actions.register.action' | translate }}
-	</app-button>
+		href="/register"
+		label="core.actions.register.action" />
 </mat-toolbar>

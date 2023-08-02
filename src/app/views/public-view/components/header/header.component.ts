@@ -8,7 +8,7 @@ import {
 import {NgFor, NgIf} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
-import {PlatformService, TranslateModule} from '@core';
+import {PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
 
 /**
@@ -18,14 +18,7 @@ import {ButtonComponent, IconComponent} from '@shared/components';
  */
 @Component({
 	standalone: true,
-	imports: [
-		NgIf,
-		NgFor,
-		TranslateModule,
-		MatToolbarModule,
-		IconComponent,
-		ButtonComponent,
-	],
+	imports: [NgIf, NgFor, MatToolbarModule, IconComponent, ButtonComponent],
 	selector: 'app-public-header',
 	templateUrl: './header.component.html',
 })
@@ -38,13 +31,7 @@ export class HeaderComponent {
 
 	@HostBinding('class') class = 'sticky top-0 z-50';
 
-	readonly navigationLinks = [
-		'La méthode',
-		'éclaircissement',
-		'Qui est claire ?',
-		'F.A.Q',
-		'Abonnement',
-	];
+	readonly navigationLinks = ['method', 'explanation', 'who_is_claire', 'faq'];
 
 	constructor(public platform: PlatformService) {}
 }
