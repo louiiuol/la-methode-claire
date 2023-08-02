@@ -11,6 +11,7 @@ export const PUBLIC_ROUTES: Routes = [
 		children: [
 			{
 				path: '',
+				pathMatch: 'full',
 				loadComponent: () =>
 					import('./pages/home/home.page').then(m => m.HomePage),
 			},
