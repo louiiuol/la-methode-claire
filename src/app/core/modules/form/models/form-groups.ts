@@ -40,5 +40,19 @@ export const APP_FORM_GROUPS: {[key: string]: FieldConfig[]} = {
 			type: 'checkbox',
 			defaultValue: false,
 		},
+		{
+			key: 'firstName',
+			validators: [Validators.min(1), Validators.max(100)],
+			props: {
+				type: 'text',
+			},
+		},
+		{
+			key: 'lastName',
+			validators: [Validators.min(1), Validators.max(100)],
+			props: {
+				type: 'text',
+			},
+		},
 	],
 };
