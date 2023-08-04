@@ -17,6 +17,7 @@
 	background-color: inherit !important;
 }
 
+/** MENU **/
 .mat-mdc-menu-item > span {
 	display: flex;
 }
@@ -25,4 +26,21 @@
 .mat-mdc-menu-item .mat-icon-no-color,
 .mat-mdc-menu-submenu-icon {
 	color: currentColor !important;
+}
+
+/** DRAWER **/
+.mat-drawer-inner-container {
+	display: flex;
+	flex-direction: column;
+}
+
+mat-drawer-content {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+}
+
+/** CARD **/
+.mat-mdc-card-header-text {
+	width: 100%;
 }
