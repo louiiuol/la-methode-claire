@@ -1,6 +1,5 @@
 import {inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {map} from 'rxjs';
 import {AuthService} from '../services/auth.service';
 
 /**
@@ -12,15 +11,11 @@ import {AuthService} from '../services/auth.service';
  */
 export const TeacherGuard = () => {
 	const router = inject(Router);
-	return inject(AuthService).isLoggedIn$.pipe(
-		map(value =>
-			!value
-				? router
-						.navigate(['/login'])
-						.catch(err =>
-							console.error('[TeacherGuard] Failed to navigate to [Login]', err)
-						)
-				: true
-		)
-	);
+	return !inject(AuthService).isLoggedIn$()
+		? router
+				.navigate(['/login'])
+				.catch(err =>
+					console.error('[TeacherGuard] Failed to navigate to [Login]', err)
+				)
+		: true;
 };

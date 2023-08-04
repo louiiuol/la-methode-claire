@@ -1,6 +1,5 @@
 import {inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {map} from 'rxjs';
 import {AuthService} from '../services/auth.service';
 
 /**
@@ -11,7 +10,11 @@ import {AuthService} from '../services/auth.service';
  */
 export const VisitorGuard = () => {
 	const router = inject(Router);
-	return inject(AuthService).isLoggedIn$.pipe(
-		map(logged => (logged ? router.navigate(['/app']) : true))
-	);
+	return inject(AuthService).isLoggedIn$()
+		? router
+				.navigate(['/app/dashboard'])
+				.catch(err =>
+					console.error('[TeacherGuard] Failed to navigate to [Login]', err)
+				)
+		: true;
 };

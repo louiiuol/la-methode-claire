@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, computed, signal} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {BehaviorSubject, iif, of} from 'rxjs';
@@ -29,11 +29,11 @@ import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.
  */
 @Injectable()
 export class AuthService {
-	private readonly currentUser$ = new BehaviorSubject<CurrentUser | null>(
-		this.userStore.getUser()
+	private readonly currentUser$ = signal(this.userStore.getUser());
+	readonly currentUser = this.currentUser$();
+	readonly isLoggedIn$ = computed(
+		() => !!this.currentUser$()?.uuid && this.tokenStore.checkToken()
 	);
-	readonly currentUser = this.currentUser$.value;
-	readonly isLoggedIn$ = this.currentUser$.pipe(map(user => !!user?.uuid));
 
 	constructor(
 		private readonly http: AuthResource,
@@ -69,7 +69,7 @@ export class AuthService {
 		this.http.logIn(dto).pipe(
 			map(res => {
 				if (!res.error) this.tokenStore.saveToken(res.value?.accessToken);
-				else res.error = ['Invalid credentials.'];
+				else res.error = 'Invalid credentials.';
 				return res;
 			}),
 			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
@@ -94,7 +94,7 @@ export class AuthService {
 	logOut = (): void => {
 		this.tokenStore.clearToken();
 		this.userStore.clearUser();
-		this.currentUser$.next(null);
+		this.currentUser$.set(null);
 		this.router
 			.navigate(['/'])
 			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
@@ -105,7 +105,7 @@ export class AuthService {
 	 * @param roles to be checked
 	 * @returns true if currentUser has at least one of the given roles, false otherwise
 	 */
-	isAdmin = () => this.currentUser$.value?.role === 'ADMIN';
+	isAdmin = () => this.currentUser$()?.role === 'ADMIN';
 
 	getProfile = () => this.http.whoAmI();
 
@@ -116,5 +116,5 @@ export class AuthService {
 	 * @param user entity to be stored
 	 */
 	private updateCurrentUser = (user: CurrentUser): void =>
-		this.currentUser$.next(this.userStore.saveUser(user));
+		this.currentUser$.set(this.userStore.saveUser(user));
 }

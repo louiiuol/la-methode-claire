@@ -12,8 +12,10 @@ export class CurrentUser {
 	initials: string;
 	isAdmin: boolean;
 	lastName: string | null;
+	currentLesson: number;
 	role: UserRole;
 	uuid: string;
+	hasValidSubscription = false;
 
 	constructor(user: UserPreviewDto) {
 		this.uuid = user.uuid;
@@ -23,6 +25,7 @@ export class CurrentUser {
 		this.initials = this.formatInitials(user);
 		this.isAdmin = user.role === 'ADMIN';
 		this.role = user.role;
+		this.currentLesson = user.currentLessonIndex;
 	}
 
 	private formatInitials(
