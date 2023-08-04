@@ -6,9 +6,7 @@
 		type="icon">
 		<app-icon>menu</app-icon>
 	</app-button>
-	<app-button color="warn" type="icon" href="/">
-		<app-icon name="logo" />
-	</app-button>
+	<app-icon class="w-32" name="logo" />
 	<ng-container *ngIf="!platform.isMobileView()">
 		<app-button
 			*ngFor="let link of navigationLinks"
@@ -21,7 +19,7 @@
 
 	<app-button
 		[matMenuTriggerFor]="userMenu"
-		class="bg-primary rounded-full !text-white leading-none"
+		class="bg-primary rounded-full leading-none"
 		type="icon">
 		<span class="text-white">
 			{{ currentUser?.initials?.toLocaleUpperCase() }}

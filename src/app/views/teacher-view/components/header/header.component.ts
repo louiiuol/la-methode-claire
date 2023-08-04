@@ -28,7 +28,12 @@ export class HeaderComponent {
 
 	@HostBinding('class') class = 'sticky top-0 z-50';
 
-	protected readonly navigationLinks = ['dashboard', 'faq', 'subscription'];
+	protected readonly navigationLinks = [
+		'dashboard',
+		'progression',
+		'faq',
+		'subscription',
+	];
 	protected readonly currentUser = this.authenticator.currentUser;
 
 	constructor(
