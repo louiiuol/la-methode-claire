@@ -38,10 +38,10 @@ export class LoginPage {
 		{
 			preset: 'user.password',
 			validators: [],
-			props: {required: true},
+			props: {required: true, attributes: {autocomplete: 'on'}},
 		},
 	];
 	protected readonly logIn = inject(AuthService).logIn;
 
-	protected readonly navigationLinks = ['register', 'forgot_password'];
+	protected readonly navigationLinks = ['register', 'forgot-password'];
 }
