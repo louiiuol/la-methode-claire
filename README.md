@@ -33,8 +33,6 @@
 | `rxjs` | `~7.5.0` | RxJS is a library for reactive programming using Observables, to make it easier to compose asynchronous or callback-based code. [documentation](https://rxjs.dev/api) |
 | `TailwindCSS` | `^3.3.2` | CSS utility library [documentation](https://tailwindcss.com/docs/flex)
 
-> You can find all dependencies and their version on the  [dependencies' page](https://vidmizer.gitlab.io/greencoder-v2/dependencies.html)
-
 ## Available commands 🕹️
 
 | Command | Description |
