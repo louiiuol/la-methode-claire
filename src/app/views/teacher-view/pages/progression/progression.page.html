@@ -1,0 +1,32 @@
+<ng-container *ngIf="lessons$ | async as lessons">
+	<header
+		class="w-full flex gap-2 items-center justify-start bg-slate-300 p-4 overflow-x-auto">
+		<app-button
+			class="rounded-full leading-none inline-block"
+			[class]="{
+        'bg-accent': lesson.order < currentLesson || lesson.order > currentLesson,
+        'font-bold': lesson.order === currentLesson,
+        'bg-primary': lesson.order === currentLesson,
+        'text-white': lesson.order === currentLesson,
+        'opacity-60': lesson.order < currentLesson,
+        'opacity-30': lesson.order > 2 && !hasValidSubscription,
+        'cursor-not-allowed': lesson.order > 2 && !hasValidSubscription
+      }"
+			type="icon"
+			[disabled]="lesson.order > 2 && !hasValidSubscription"
+			(click)="setCurrentLesson(lesson.order)"
+			*ngFor="let lesson of lessons">
+			<span
+				[class]="{
+          'text-primary': lesson.order < currentLesson || lesson.order > currentLesson,
+          'text-accent': lesson.order === currentLesson
+        }">
+				{{lesson.order + 1}}
+			</span>
+		</app-button>
+	</header>
+	<app-course-viewer
+		[currentLessonIndex]="currentLesson"
+		[course]="lessons[currentLesson]"
+		(nextLesson)="setCurrentLesson($event)" />
+</ng-container>
