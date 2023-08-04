@@ -16,8 +16,6 @@ import {ButtonComponent, CardComponent} from '@shared/components';
 export class HomePage {
 	@HostBinding('class') protected class = '!block';
 
-	toto = 6;
-
 	methodExplanations = [
 		{
 			index: 1,
