@@ -26,24 +26,24 @@ export const PUBLIC_ROUTES: Routes = [
 					import('./pages/register/register.page').then(m => m.RegisterPage),
 			},
 			{
-				path: 'forgot_password',
+				path: 'forgot-password',
 				loadComponent: () =>
 					import('./pages/forgot-password/forgot-password.page').then(
 						m => m.ForgotPasswordPage
 					),
 			},
 			{
-				path: 'reset_password/:token',
+				path: 'reset-password',
 				loadComponent: () =>
 					import('./pages/reset-password/reset-password.page').then(
 						m => m.ResetPasswordPage
 					),
 			},
-			{
-				path: 'contact',
-				loadComponent: () =>
-					import('./pages/contact/contact.page').then(m => m.ContactPage),
-			},
+			// {
+			// 	path: 'contact',
+			// 	loadComponent: () =>
+			// 		import('./pages/contact/contact.page').then(m => m.ContactPage),
+			// },
 		],
 	},
 ];
