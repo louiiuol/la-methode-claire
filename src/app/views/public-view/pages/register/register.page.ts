@@ -33,7 +33,12 @@ export class RegisterPage {
 
 		{
 			preset: 'user.password',
-			props: {required: true},
+			props: {
+				required: true,
+				attributes: {
+					autocomplete: 'new-password',
+				},
+			},
 			className: 'inline-block w-1/2',
 		},
 		{
@@ -45,5 +50,5 @@ export class RegisterPage {
 		{preset: 'user.agree', props: {required: true}},
 	];
 	protected readonly validators = ['passwordMatch'];
-	protected readonly navigationLinks = ['register', 'forgot_password'];
+	protected readonly navigationLinks = ['register', 'forgot-password'];
 }
