@@ -31,6 +31,15 @@ export abstract class HttpResource {
 	protected readonly notifier = inject(NotificationService);
 	protected readonly translator = inject(TranslateService);
 
+	private readonly statusTranslation: {[key: number]: string} = {
+		0: 'server_down',
+		401: 'token_expired',
+		403: 'forbidden',
+		404: 'not_found',
+		409: 'conflict',
+		502: 'server_restarting',
+	};
+
 	/**
 	 * Retrieve one item (matching given id) on requested resource
 	 *
@@ -42,7 +51,7 @@ export abstract class HttpResource {
 	protected get = <T>(uuid?: string | null, opt?: RequestOptions) =>
 		this.http
 			.get<ApiResponse<T>>(
-				this.generateURI(uuid, opt?.path),
+				this.generateURI(uuid, opt),
 				this.getRequestOptions(opt)
 			)
 			.pipe(
@@ -59,13 +68,13 @@ export abstract class HttpResource {
 	 */
 	protected getAll = <T>(opt?: RequestOptions) =>
 		this.http
-			.get<ApiResponse<T>>(
-				this.generateURI(null, opt?.path),
+			.get<ApiResponse<T[]>>(
+				this.generateURI(null, opt),
 				this.getRequestOptions(opt)
 			)
 			.pipe(
-				map(res => this.formatData<T>(res, 'get', opt) as HttpOutputArray<T>),
-				catchError(err => this.formatError<T>(err, 'get', opt))
+				map(res => this.formatData<T[]>(res, 'get', opt) as HttpOutputArray<T>),
+				catchError(err => this.formatError<null>(err, 'get', opt))
 			);
 
 	/**
@@ -78,7 +87,7 @@ export abstract class HttpResource {
 	protected getAllPaginated = <T>(opt?: RequestOptions) =>
 		this.http
 			.get<ApiResponse<T>>(
-				this.generateURI(null, opt?.path),
+				this.generateURI(null, opt),
 				this.getRequestOptions(opt)
 			)
 			.pipe(
@@ -99,7 +108,7 @@ export abstract class HttpResource {
 	protected create = <T>(dto: unknown, opt?: RequestOptions) =>
 		this.http
 			.post<ApiResponse<T>>(
-				this.generateURI(null, opt?.path),
+				this.generateURI(null, opt),
 				dto,
 				this.getRequestOptions(opt)
 			)
@@ -124,7 +133,7 @@ export abstract class HttpResource {
 	) =>
 		this.http
 			.put<ApiResponse<T>>(
-				this.generateURI(uuid, opt?.path),
+				this.generateURI(uuid, opt),
 				dto,
 				this.getRequestOptions(opt)
 			)
@@ -151,7 +160,7 @@ export abstract class HttpResource {
 	) =>
 		this.http
 			.patch<ApiResponse<T>>(
-				this.generateURI(uuid, opt?.path),
+				this.generateURI(uuid, opt),
 				dto,
 				this.getRequestOptions(opt)
 			)
@@ -172,7 +181,7 @@ export abstract class HttpResource {
 	protected delete = (uuid: string, opt?: RequestOptions) =>
 		this.http
 			.delete<ApiResponse<string>>(
-				this.generateURI(uuid, opt?.path),
+				this.generateURI(uuid, opt),
 				this.getRequestOptions(opt)
 			)
 			.pipe(
@@ -189,12 +198,14 @@ export abstract class HttpResource {
 	 */
 	protected generateURI = (
 		uuid?: string | null,
-		customResource?: string
+		opt?: RequestOptions
 	): string => {
 		let result = this.path;
-		if (this.resource) result += `/${this.resource}`;
-		if (customResource) result += `/${customResource}`;
+		if (opt?.customResource) result += `/${opt.customResource}`;
+		else if (opt?.customResource !== '' && this.resource !== '')
+			result += `/${this.resource}`;
 		if (uuid) result += `/${uuid}`;
+		if (opt?.path) result += `/${opt.path}`;
 		return result;
 	};
 
@@ -208,7 +219,8 @@ export abstract class HttpResource {
 		action: RequestActions,
 		opt: RequestOptions | undefined
 	): HttpOutput<T> => {
-		const resource = this.resource === '' ? 'auth' : this.resource;
+		const resource =
+			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
 		if (opt?.notifyOnSuccess || ['update', 'delete'].includes(action))
 			this.notifier.success(`core.api.resources.${resource}`, {
 				key: 'core.states.success',
@@ -225,26 +237,35 @@ export abstract class HttpResource {
 	};
 
 	private formatError = <T>(
-		error: HttpErrorResponse,
+		response: HttpErrorResponse,
 		action: RequestActions,
 		opt: RequestOptions | undefined
 	) => {
-		const resource = this.resource === '' ? 'auth' : this.resource;
+		const res = response.error as ApiResponse<null>;
+		console.log(res);
+		const resource =
+			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
 		console.error(
-			`(${new Date().toLocaleDateString()}) [${error.status}] HTTP failed to ${
+			`(${new Date().toLocaleDateString()}) [${res.code}] HTTP failed to ${
 				opt?.customAction ?? action
 			} on [${resource.toLocaleUpperCase()}]`,
-			error
+			res
 		);
 
-		if (error.status === 0) {
+		const commonErrorMessage = this.statusTranslation[res.code];
+		if (commonErrorMessage && opt?.notifyOnError !== false) {
 			this.notifier.error(
-				`core.api.errors.generic`,
-				'core.api.errors.server_down'
+				'core.api.errors.generic',
+				`core.api.errors.${commonErrorMessage}`
 			);
 			return of({
 				error: null,
 			} as HttpOutputEntity<null>);
+		}
+
+		if (res.code === 422) {
+			// TODO Format reasons as ApiFormErrorDTO
+			return of({error: res.error?.reasons} as HttpOutputEntity<null>);
 		}
 
 		if (opt?.notifyOnError !== false)
@@ -257,27 +278,7 @@ export abstract class HttpResource {
 				},
 			});
 		return of({
-			error: error.error?.message,
+			error: res.message,
 		} as HttpOutputEntity<null>);
 	};
-
-	private handleGenericErrors(error: HttpErrorResponse) {
-		let isGenericError = false;
-
-		// General notification (based on code, resource and method called)
-		// Invalid credentials
-		// No result found
-		// Expired token
-		// Already exists
-		// Invalid input
-		// Network pb
-		// FOR 408 (TIMEOUT), la request should retry 3 times
-		// FOR 429, create 30 seconds timeout before sending next request
-		// List of
-		// if (error.status === 0) {
-		// 	return of({
-		// 		error: 'server_down',
-		// 	} as HttpOutputEntity<null>);
-		// }
-	}
 }

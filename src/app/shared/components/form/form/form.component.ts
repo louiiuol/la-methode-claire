@@ -2,8 +2,10 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	EventEmitter,
 	Input,
 	OnInit,
+	Output,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {LoaderComponent, MessageComponent} from '@shared/components';
@@ -121,6 +123,8 @@ export class FormComponent implements OnInit {
 		return this.formModel;
 	}
 
+	@Output() sent = new EventEmitter();
+
 	protected options: FormlyFormOptions = {
 		formState: {disabled: false},
 	};
@@ -128,7 +132,7 @@ export class FormComponent implements OnInit {
 	protected formModel: any;
 	protected formFields?: FormlyFieldConfig<any>[];
 	protected isLoading = false;
-	protected errorMessage?: string;
+	protected errorMessages: string[] = [];
 
 	private untilDestroyed$ = untilDestroyed();
 	private _initialModel: any;
@@ -150,11 +154,16 @@ export class FormComponent implements OnInit {
 	 */
 	onSubmit(model: any): void {
 		this.load(this.submitted$(model), (res: any) => {
+			let valid = false;
 			if (res.error) {
-				this.errorMessage = this.generateMessage(res.error[0]);
+				this.errorMessages = this.generateMessage(res.error);
 				// TODO add handle if error is typeof APIFormDetailsError..
 				this.reset();
+			} else {
+				valid = true;
+				this._initialModel = structuredClone(this.model);
 			}
+			this.sent.emit(valid);
 		});
 	}
 
@@ -169,6 +178,8 @@ export class FormComponent implements OnInit {
 	 */
 	pristine = () =>
 		JSON.stringify(this._initialModel) === JSON.stringify(this.formModel);
+
+	isValidForm = () => this.form.valid && !this.pristine();
 
 	// private format = ({error}: HttpOutput<null>) => {
 	// 	if (!error) return [];
@@ -210,12 +221,17 @@ export class FormComponent implements OnInit {
 		});
 	};
 
-	private generateMessage(summary: string) {
-		return this.translator.translate(
-			'core.api.errors.' +
-				summary.replaceAll('.', '').replaceAll(' ', '_').toLowerCase()
-		) as string;
-	}
+	private generateMessage = (summary: string | string[]) =>
+		this.translateMessage(Array.isArray(summary) ? summary : [summary]);
+
+	private translateMessage = (summary: string[]) =>
+		summary.map(
+			str =>
+				this.translator.translate(
+					'core.api.errors.' +
+						str.replaceAll('.', '').replaceAll(' ', '_').toLowerCase()
+				) as string
+		);
 
 	private load(obs: Observable<any>, fn: any) {
 		this.toggleDisabled();

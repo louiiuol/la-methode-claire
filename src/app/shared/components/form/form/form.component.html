@@ -4,9 +4,9 @@
 	(ngSubmit)="onSubmit(formModel)"
 	class="form-grid grid px-2 py-1 md:px-6 md:py-2">
 	<app-message
-		*ngIf="errorMessage"
 		severity="error"
-		[summary]="errorMessage"
+		*ngFor="let message of errorMessages"
+		[summary]="message"
 		[closable]="true" />
 	<formly-form
 		[form]="form"
@@ -28,7 +28,7 @@
 			type="submit"
 			matTooltip="Form is invalid"
 			[matTooltipDisabled]="form.valid"
-			[disabled]="form.invalid">
+			[disabled]="!isValidForm()">
 			{{ 'core.actions.' + action + '.action' | translate }}
 		</button>
 	</footer>

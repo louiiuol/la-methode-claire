@@ -3,7 +3,7 @@
  */
 export interface ApiFormErrorDetails {
 	/**
-	 * Field's name on which error occurred
+	 * Field's name on which error occurred if defined, otherwise represents form's error(s)
 	 */
 	field?: string;
 

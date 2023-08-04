@@ -8,7 +8,7 @@ import {Pageable} from './pageable';
  */
 export interface HttpOutput<T> {
 	value?: T | Pageable<T> | T[] | null;
-	error?: ApiFormErrorDetails[] | string | string[] | null;
+	error?: ApiFormErrorDetails[] | string | null;
 }
 
 /**

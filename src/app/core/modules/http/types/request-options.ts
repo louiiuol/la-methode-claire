@@ -14,7 +14,7 @@ export interface RequestOptions {
 	/**
 	 * HttpParams for the request
 	 */
-	params?: {[param: string]: string | string[]};
+	params?: {[param: string]: string | string[] | number | number[]};
 
 	/**
 	 * HttpHeader for the request
@@ -46,4 +46,6 @@ export interface RequestOptions {
 			},
    */
 	customAction?: string;
+
+	customResource?: string;
 }
