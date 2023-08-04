@@ -22,10 +22,17 @@ export class AuthResource extends HttpResource {
 		});
 
 	logIn = (dto: LoginDto) =>
-		this.create<Token>(dto, {path: 'auth/login', customAction: 'login'});
+		this.create<Token>(dto, {
+			customResource: 'auth',
+			notifyOnError: false,
+			path: 'login',
+			customAction: 'login',
+		});
 
 	whoAmI = () => this.get<UserPreviewDto>(null, {path: 'me'});
 
 	updateProfile = (dto: ProfileUpdateDto) =>
-		this.partialUpdate(null, dto, {path: 'me'});
+		this.partialUpdate<UserPreviewDto>(null, dto, {
+			path: 'me',
+		});
 }
