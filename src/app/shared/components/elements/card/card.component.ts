@@ -1,5 +1,11 @@
 import {NgIf, NgTemplateOutlet} from '@angular/common';
-import {Component, ContentChild, Input, TemplateRef} from '@angular/core';
+import {
+	Component,
+	ContentChild,
+	HostBinding,
+	Input,
+	TemplateRef,
+} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {TranslateModule} from '@core';
 
@@ -22,4 +28,6 @@ export class CardComponent {
 
 	@ContentChild('cardFooter')
 	protected cardFooter?: TemplateRef<any>;
+
+	@HostBinding('class') class = 'block mx-auto';
 }

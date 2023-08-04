@@ -5,7 +5,12 @@ import {
 	NgSwitchDefault,
 	NgTemplateOutlet,
 } from '@angular/common';
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	forwardRef,
+} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {ThemePalette} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
@@ -38,7 +43,7 @@ type ButtonType =
 		MatButtonModule,
 		MatMenuModule,
 		RouterModule,
-		TranslateModule,
+		forwardRef(() => TranslateModule),
 	],
 	selector: 'app-button',
 	templateUrl: 'button.component.html',
@@ -81,5 +86,5 @@ export class ButtonComponent {
 	 * Optional fragment associated with `href` property.
 	 */
 	@Input()
-	fragment?: string | undefined;
+	fragment?: string;
 }
