@@ -67,8 +67,8 @@
 		"api": {
 			"resources": {
 				"auth": "Authentification",
-				"users": "utilisateurs",
-				"videos": "vidéothèque"
+				"users": "Utilisateurs",
+				"courses": "Librairie"
 			},
 			"status": {
 				"401": "Identifiants requis",
@@ -84,6 +84,7 @@
 				"unknown_email": "Cette adresse email n'existe pas !",
 				"verify_input(s)": "Formulaire invalide",
 				"server_down": "L'API est hors ligne. Merci de réessayer plus tard !",
+				"token_must_be_a_jwt_string": "Clé d'identification expirée",
 				"UNIQUE": "Existe déjà",
 				"UNREACHABLE": "l'API ne répond pas 🔍"
 			},
@@ -155,7 +156,7 @@
 			"routes": {
 				"login": "Se connecter",
 				"register": "S'inscrire",
-				"forgot_password": "Mot de passe oublié ?",
+				"forgot-password": "Mot de passe oublié ?",
 				"method": "La méthode",
 				"explanation": "Éclaircissement",
 				"who_is_claire": "Qui est claire ?",
@@ -230,6 +231,7 @@
 		"teacher": {
 			"routes": {
 				"dashboard": "Tableau de bord",
+				"progression": "Progression",
 				"profile": "Profil",
 				"subscription": "Abonnement",
 				"faq": "F.A.Q"
@@ -244,6 +246,20 @@
 			"usages": {
 				"Individual": "Professionnel",
 				"Professional": "Personnel"
+			}
+		},
+		"library": {
+			"files": {
+				"script": "Script",
+				"text": "Histoire",
+				"lesson": "Leçon",
+				"exercice": "Exercice",
+				"poster": "Poster"
+			},
+			"mark_as_finished": "Marquer comme terminée",
+			"no_file_selected": {
+				"title": "Aucun fichier sélectionné",
+				"description": "Merci de sélectionner un fichier sur la droite pour en visualiser le contenu"
 			}
 		}
 	}
