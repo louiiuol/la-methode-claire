@@ -19,24 +19,19 @@ export class PasswordService {
 			})
 		);
 
-	resetPassword = (dto: PasswordResetDto) => {
-		const {token, password, passwordConfirm} = dto;
-		return this.http
-			.resetpassword(token, {
-				password,
-				_password: passwordConfirm,
+	resetPassword = (input: PasswordResetDto) => {
+		const {user, passwordConfirm, ...dto} = input;
+		return this.http.resetpassword(user, dto).pipe(
+			tap(res => {
+				if (!res.error) {
+					this.router
+						.navigate(['/login'])
+						.catch(err =>
+							console.error('Failed to redirect to [LoginPage] ', err)
+						);
+				}
 			})
-			.pipe(
-				tap(res => {
-					if (!res.error) {
-						this.router
-							.navigate(['/login'])
-							.catch(err =>
-								console.error('Failed to redirect to [LoginPage] ', err)
-							);
-					}
-				})
-			);
+		);
 	};
 
 	updatePassword = (dto: PasswordUpdateDto) => this.http.updatePassword(dto);

@@ -3,7 +3,7 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
-	Input,
+	computed,
 	forwardRef,
 	inject,
 	signal,
@@ -14,8 +14,10 @@ import {
 	CardComponent,
 	FormComponent,
 	ButtonComponent,
+	MessageComponent,
 } from '@shared/components';
 import {PasswordService, PasswordModule} from '@shared/modules/password';
+import {ActivatedRoute} from '@angular/router';
 
 /**
  * Forgot password form, allows user to enter their credential to receive a email that
@@ -28,6 +30,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 		CardComponent,
 		FormComponent,
 		ButtonComponent,
+		MessageComponent,
 		forwardRef(() => TranslateModule),
 		forwardRef(() => PasswordModule),
 	],
@@ -35,11 +38,13 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordPage {
-	@Input({alias: 'token'}) tokenFromPath?: string; // Fetch token from route
-
 	@HostBinding('class')
 	protected readonly class = 'centered-content';
 
+	protected token = signal<string | null>(null);
+	protected user = signal<string | null>(null);
+
+	protected model = computed(() => ({token: this.token(), user: this.user()}));
 	protected fields: FieldConfig[] = [
 		{preset: 'user.password', props: {required: true}},
 		{preset: 'user.passwordConfirm', props: {required: true}},
@@ -47,5 +52,17 @@ export class ResetPasswordPage {
 	protected readonly resetPassword = inject(PasswordService).resetPassword;
 	protected validators = ['passwordMatch'];
 	protected readonly navigationLinks = ['register', 'login'];
-	protected token = signal(this.tokenFromPath);
+
+	protected requestSent = signal(false);
+
+	constructor(private activatedRoute: ActivatedRoute) {
+		this.activatedRoute.queryParamMap.subscribe(params => {
+			this.token.set(params.get('token'));
+			this.user.set(params.get('user'));
+		});
+	}
+
+	hideForm(valid: boolean) {
+		this.requestSent.set(valid);
+	}
 }
