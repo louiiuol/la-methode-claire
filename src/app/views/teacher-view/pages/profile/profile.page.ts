@@ -43,8 +43,6 @@ export class ProfilePage {
 	protected readonly updatePassword = inject(PasswordService).updatePassword;
 	protected passwordValidators = ['passwordMatch'];
 
-	model = {email: 'toto@yolo.com'};
-
 	protected readonly model$ = this.authenticator.getProfile();
 
 	constructor(private readonly authenticator: AuthService) {}
