@@ -1,3 +1,4 @@
+import {NgIf} from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -21,6 +22,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 @Component({
 	standalone: true,
 	imports: [
+		NgIf,
 		CardComponent,
 		FormComponent,
 		ButtonComponent,
@@ -39,4 +41,6 @@ export class ForgotPasswordPage {
 	];
 	protected readonly forgotPassword = inject(PasswordService).forgotPassword;
 	protected readonly navigationLinks = ['register', 'login'];
+
+	protected emailSent = false;
 }
