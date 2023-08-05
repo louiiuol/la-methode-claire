@@ -16,6 +16,8 @@ import {environment} from '@env/environment';
  * - Inject Core modules (see src/app/core/modules for more details)
  *
  * <strong>To learn more on this application's architecture, this module has its own README !</strong>
+ *
+ * @author louiiuol
  */
 @NgModule({
 	declarations: [AppPage],

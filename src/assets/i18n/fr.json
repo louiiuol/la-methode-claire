@@ -257,6 +257,7 @@
 				"poster": "Poster"
 			},
 			"mark_as_finished": "Marquer comme terminée",
+			"for_sub_only": "Cette leçon est réservée aux abonnées",
 			"no_file_selected": {
 				"title": "Aucun fichier sélectionné",
 				"description": "Merci de sélectionner un fichier sur la droite pour en visualiser le contenu"

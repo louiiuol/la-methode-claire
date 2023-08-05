@@ -54,13 +54,14 @@
 
 	<ng-container
 		*ngIf="
-			files.selectedOptions.selected[0]?.value as file;
+			files.selectedOptions.selected[0]?.value as selectedFile;
 			else noFileSelected
 		">
 		<iframe
 			title="file viewer"
 			[src]="
-				'assets/pdf/courses/' + course.order + '/' + file + '.pdf' | trustURL
+				'assets/pdf/courses/' + course.order + '/' + selectedFile + '.pdf'
+					| trustURL
 			"
 			class="flex-1 h-full">
 		</iframe>

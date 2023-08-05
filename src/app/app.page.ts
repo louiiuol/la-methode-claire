@@ -5,6 +5,8 @@ import {TranslateService} from '@core';
  * Root component of the Application, responsible for:
  * - Displaying "root" notifications to the user.
  * - Defining layout of application, in which views will be displayed.
+ *
+ * @author louiiuol
  */
 @Component({
 	selector: 'app-root',

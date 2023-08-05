@@ -4,7 +4,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 /**
  * Formats given url and makes it "safe" using DomSanitizer
  *
- * This pipe must be used with controlled content only (should be parsed and escaped)
+ * This pipe must be used with controlled content only
+ * (should be parsed and escaped to prevent XSS attacks)
  */
 @Pipe({
 	standalone: true,
