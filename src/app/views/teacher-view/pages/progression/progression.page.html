@@ -1,7 +1,9 @@
 <ng-container *ngIf="lessons$ | async as lessons">
 	<header
-		class="w-full flex gap-2 items-center justify-start bg-slate-300 p-4 overflow-x-auto">
+		style="scroll-snap-type: inline mandatory; scroll-padding-inline: 0.5rem"
+		class="w-full flex gap-2 items-center justify-start bg-slate-300 p-4 overflow-x-auto overscroll-x-contain">
 		<app-button
+			style="scroll-snap-align: start"
 			class="rounded-full leading-none inline-block"
 			[class]="{
         'bg-accent': lesson.order < currentLesson || lesson.order > currentLesson,
@@ -14,6 +16,8 @@
       }"
 			type="icon"
 			[disabled]="lesson.order > 2 && !hasValidSubscription"
+			[matTooltip]="'modules.library.for_sub_only' | translate"
+			[matTooltipDisabled]="lesson.order < 3 || hasValidSubscription"
 			(click)="setCurrentLesson(lesson.order)"
 			*ngFor="let lesson of lessons">
 			<span

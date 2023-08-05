@@ -1,12 +1,16 @@
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {Component, HostBinding, forwardRef} from '@angular/core';
-import {AuthService} from '@core';
+
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
+const MaterialModules = [MatBadgeModule, MatTooltipModule];
+
+import {AuthService, TranslateModule} from '@core';
 import {ButtonComponent} from '@shared/components';
 import {LibraryModule} from '@shared/modules/library/library.module';
 import {LibraryService} from '@shared/modules/library/services/library.service';
-import {MatBadgeModule} from '@angular/material/badge';
 
-const MaterialModules = [MatBadgeModule];
 @Component({
 	standalone: true,
 	imports: [
@@ -14,6 +18,7 @@ const MaterialModules = [MatBadgeModule];
 		AsyncPipe,
 		NgFor,
 		forwardRef(() => LibraryModule),
+		forwardRef(() => TranslateModule),
 		ButtonComponent,
 		...MaterialModules,
 	],
