@@ -1,5 +1,5 @@
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {Component, HostBinding, forwardRef} from '@angular/core';
+import {Component, HostBinding, forwardRef, inject} from '@angular/core';
 import {AuthService} from '@core';
 import {ButtonComponent} from '@shared/components';
 import {LibraryModule} from '@shared/modules/library/library.module';
@@ -17,17 +17,12 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 	templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {
-	@HostBinding('class') class = 'p-6';
+	@HostBinding('class')
+	protected readonly class = 'p-6';
 
-	lessons$ = this.library.getLibrary();
-
-	protected currentLesson = this.authenticator?.currentUser?.currentLesson ?? 0;
-
-	hasValidSubscription =
-		!!this.authenticator?.currentUser?.hasValidSubscription;
-
-	constructor(
-		private readonly library: LibraryService,
-		private readonly authenticator: AuthService
-	) {}
+	protected readonly lessons$ = inject(LibraryService).getLibrary();
+	protected readonly currentUser = inject(AuthService).currentUser();
+	protected readonly currentLesson = this.currentUser?.currentLesson ?? 0;
+	protected readonly hasValidSubscription =
+		!!this.currentUser?.hasValidSubscription;
 }

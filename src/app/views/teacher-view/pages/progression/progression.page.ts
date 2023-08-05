@@ -25,13 +25,15 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 	templateUrl: './progression.page.html',
 })
 export class ProgressionPage {
-	@HostBinding('class') class = 'p-6';
+	@HostBinding('class')
+	protected readonly class = 'p-6';
 
 	protected readonly lessons$ = this.library.getLibrary();
+	protected readonly hasValidSubscription =
+		!!this.authenticator?.currentUser()?.hasValidSubscription;
 
-	protected currentLesson = this.authenticator?.currentUser?.currentLesson ?? 0;
-	protected hasValidSubscription =
-		!!this.authenticator?.currentUser?.hasValidSubscription;
+	protected currentLesson =
+		this.authenticator?.currentUser()?.currentLesson ?? 0;
 
 	constructor(
 		private readonly library: LibraryService,

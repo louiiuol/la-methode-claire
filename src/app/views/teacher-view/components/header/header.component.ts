@@ -34,7 +34,7 @@ export class HeaderComponent {
 		'faq',
 		'subscription',
 	];
-	protected readonly currentUser = this.authenticator.currentUser;
+	protected readonly currentUser = this.authenticator.currentUser();
 
 	constructor(
 		public platform: PlatformService,

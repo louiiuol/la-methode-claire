@@ -29,10 +29,9 @@ import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.
  */
 @Injectable()
 export class AuthService {
-	private readonly currentUser$ = signal(this.userStore.getUser());
-	readonly currentUser = this.currentUser$();
+	readonly currentUser = signal(this.userStore.getUser());
 	readonly isLoggedIn$ = computed(
-		() => !!this.currentUser$()?.uuid && this.tokenStore.checkToken()
+		() => !!this.currentUser()?.uuid && this.tokenStore.checkToken()
 	);
 
 	constructor(
@@ -94,7 +93,7 @@ export class AuthService {
 	logOut = (): void => {
 		this.tokenStore.clearToken();
 		this.userStore.clearUser();
-		this.currentUser$.set(null);
+		this.currentUser.set(null);
 		this.router
 			.navigate(['/'])
 			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
@@ -105,7 +104,7 @@ export class AuthService {
 	 * @param roles to be checked
 	 * @returns true if currentUser has at least one of the given roles, false otherwise
 	 */
-	isAdmin = () => this.currentUser$()?.role === 'ADMIN';
+	isAdmin = () => this.currentUser()?.role === 'ADMIN';
 
 	getProfile = () => this.http.whoAmI();
 
@@ -116,5 +115,5 @@ export class AuthService {
 	 * @param user entity to be stored
 	 */
 	private updateCurrentUser = (user: CurrentUser): void =>
-		this.currentUser$.set(this.userStore.saveUser(user));
+		this.currentUser.set(this.userStore.saveUser(user));
 }
