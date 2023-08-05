@@ -15,11 +15,15 @@ import {HeaderComponent} from './components';
 	imports: [forwardRef(() => RouterModule), HeaderComponent],
 	template: `
 		<app-public-header />
-		<main>
+		<main class="mt-16 mb-8 bg-slate-100">
 			<router-outlet></router-outlet>
 		</main>
+		<p class="fixed bottom-0 w-full text-center p-4 -z-10">
+			© La méthode claire. {{ currentYear }}
+		</p>
 	`,
 })
 export class PublicPage {
 	@HostBinding('class') private readonly class = 'page';
+	protected readonly currentYear = new Date().getFullYear();
 }

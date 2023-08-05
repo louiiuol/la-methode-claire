@@ -29,7 +29,7 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	@HostBinding('class') class = 'sticky top-0 z-50';
+	@HostBinding('class') class = 'fixed top-0 z-50 w-full';
 
 	readonly navigationLinks = ['method', 'explanation', 'who_is_claire', 'faq'];
 
