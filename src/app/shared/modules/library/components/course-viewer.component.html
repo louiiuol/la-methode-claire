@@ -45,7 +45,10 @@
 		<hr class="mb-6 mt-3" />
 		<h3 class="text-xl">Liste des fichiers</h3>
 		<mat-selection-list #files [multiple]="false">
-			<mat-list-option *ngFor="let file of filesAvailable" [value]="file">
+			<mat-list-option
+				*ngFor="let file of filesAvailable"
+				[value]="file"
+				[selected]="file === filesAvailable[0]">
 				{{ 'modules.library.files.' + file | translate }}
 			</mat-list-option>
 		</mat-selection-list>

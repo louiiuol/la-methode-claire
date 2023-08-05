@@ -72,7 +72,7 @@ export class CourseViewerComponent {
 	filesAvailable: string[] = [];
 
 	hasValidSubscription =
-		!!this.authenticator?.currentUser?.hasValidSubscription;
+		!!this.authenticator?.currentUser()?.hasValidSubscription;
 
 	private _course?: CourseViewDto;
 
