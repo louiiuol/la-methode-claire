@@ -4,6 +4,11 @@ import {map, tap} from 'rxjs';
 import {PasswordResource} from './password.resource';
 import {PasswordForgotDto, PasswordResetDto, PasswordUpdateDto} from '../types';
 
+/**
+ * Provides methods to handle user's password
+ *
+ * @author louiiuol
+ */
 @Injectable()
 export class PasswordService {
 	constructor(

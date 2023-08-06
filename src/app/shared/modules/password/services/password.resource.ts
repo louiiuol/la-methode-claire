@@ -1,11 +1,11 @@
-import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {HttpResource} from '@core/modules/http/services/http.resource';
 import {PasswordUpdateDto, PasswordResetApiDto} from '../types';
 
 /**
  * CRUD requests related to user's password.
- * @internal
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class PasswordResource extends HttpResource {

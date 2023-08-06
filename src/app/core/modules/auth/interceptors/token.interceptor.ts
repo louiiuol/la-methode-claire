@@ -13,21 +13,19 @@ import {catchError} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
 import {TokenStore} from '../stores/token.store';
-import {UserStore} from '../stores/user.store';
+import {AuthService} from '../services/auth.service';
 
 /**
  * Intercepts every HTTP requests made by the Application thanks to `HttpInterceptor`, and adds the following logic:
  * * If current user is logged in, clone every request with JWT header (once logged, users will only request protected resources)
  * * If API send 401 status, log out current user and redirect to login (refresh token not implemented yet)
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 	private readonly appUrlDomain = environment.root_url;
-
-	constructor(
-		private readonly router: Router,
-		private readonly tokenStore: TokenStore
-	) {}
+	private readonly tokenStore = inject(TokenStore);
 
 	intercept(
 		req: HttpRequest<any>,
@@ -39,8 +37,8 @@ export class TokenInterceptor implements HttpInterceptor {
 	}
 
 	/**
-	 * Checks if unauthorized request occurs.
-	 * If so, will logOut currentUser and redirect him to login page
+	 * Checks if unauthorized request occurs (except for /login route which specific scenario handle in AuthService's login() method)
+	 * If so, interceptor will log out currentUser and redirect him to login page
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request
 	 */
@@ -48,14 +46,9 @@ export class TokenInterceptor implements HttpInterceptor {
 		if (
 			this &&
 			err.status === 401 &&
-			err.url !== environment.root_url + '/login'
+			err.url !== this.appUrlDomain + '/login'
 		) {
-			this.tokenStore.clearToken();
-			inject(UserStore).clearUser();
-			this.router
-				.navigate(['/login'])
-				.then(() => window.location.reload())
-				.catch(err => console.error('Failed to redirect', err));
+			inject(AuthService).logOut();
 			return of(err?.message); // or EMPTY may be appropriate here
 		}
 		return throwError(() => err);

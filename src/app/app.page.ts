@@ -21,11 +21,12 @@ export class AppPage {
 	 * @returns True if component allows redirection, false otherwise
 	 */
 	@HostListener('window:beforeunload', ['$event'])
-	beforeunloadHandler(): boolean {
+	private beforeunloadHandler(): boolean {
 		return true; //this.queue.canDeactivate.value;
 	}
 
-	@HostBinding('class') class = 'relative';
+	@HostBinding('class')
+	protected readonly class = 'relative';
 
 	constructor(translator: TranslateService) {
 		translator.init();

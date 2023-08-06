@@ -9,26 +9,26 @@ import {
 } from '@angular/core';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
-import {untilDestroyed} from '@core';
+import {takeUntilDestroyed} from '@core';
 import {Observable, map} from 'rxjs';
 
 /**
  * Embedded SVG icon fetched locally from custom assets.
  * Check property "name" for technical information.
+ *
  * @author louiiuol
  */
 @Component({
 	standalone: true,
 	imports: [NgIf, AsyncPipe, MatIconModule],
 	selector: 'app-icon',
-	template: ` <!-- SVG embed tag -->
-		<mat-icon
+	template: ` <mat-icon
 			class="!w-full"
 			inline
-			*ngIf="name && (fetched$ | async)"
-			[svgIcon]="name"
+			*ngIf="svg && fetched$ && (fetched$ | async)"
+			[svgIcon]="svg"
 			aria-hidden="false" />
-		<mat-icon *ngIf="!name" class="!w-full" aria-hidden="false">
+		<mat-icon *ngIf="!svg" class="!w-full" aria-hidden="false">
 			<ng-content></ng-content>
 		</mat-icon>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,14 +38,15 @@ export class IconComponent implements OnChanges {
 	 * Defines icon to be shown. (can be updated)
 	 * * Check assets/images/svg folder for available icons
 	 */
-	@Input() name?: string;
+	@Input() svg?: string;
 
-	@HostBinding('class') class = 'inline mx-auto';
+	@HostBinding('class')
+	protected readonly class = 'inline mx-auto';
 
-	protected fetched$ = new Observable();
+	protected fetched$?: Observable<boolean>;
 
 	private readonly _ASSETS_ROOT = 'assets/img/icon';
-	private readonly untilDestroyed = untilDestroyed();
+	private readonly untilDestroyed$ = takeUntilDestroyed();
 
 	constructor(
 		private _httpClient: HttpClient,
@@ -54,20 +55,20 @@ export class IconComponent implements OnChanges {
 	) {}
 
 	ngOnChanges(): void {
-		if (this.name)
+		if (this.svg)
 			this.fetched$ = this._httpClient
-				.get(`${this._ASSETS_ROOT}/${this.name}.svg`, {
+				.get(`${this._ASSETS_ROOT}/${this.svg}.svg`, {
 					responseType: 'text',
 				})
 				.pipe(
-					this.untilDestroyed<string>(),
+					this.untilDestroyed$,
 					map(icon => {
-						if (this.name)
+						if (this.svg)
 							this.iconRegistry.addSvgIconLiteral(
-								this.name,
-								this.sanitizer.bypassSecurityTrustHtml(icon)
+								this.svg,
+								this.sanitizer.bypassSecurityTrustHtml(icon as string)
 							);
-						return !!this.name;
+						return !!this.svg;
 					})
 				);
 	}

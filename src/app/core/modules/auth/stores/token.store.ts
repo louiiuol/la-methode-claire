@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {CookieStore} from '@core/modules/storage/services';
 
 /**
- * Provides store in cookies to save, check, get or delete tokens
- * @internal
+ * Provides store in cookies to save, check, get or delete user's token
+ * @author louiiuol
  */
 @Injectable()
 export class TokenStore {

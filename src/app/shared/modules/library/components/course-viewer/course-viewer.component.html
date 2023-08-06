@@ -55,7 +55,7 @@
 			</mat-selection-list>
 			<span class="flex-1"></span>
 		</mat-drawer>
-		<app-pdf-viewer
+		<app-file-viewer
 			*ngIf="files.selectedOptions.selected[0] as selectedFile"
 			[file]="[course.order, selectedFile.value].join('/')" />
 	</mat-drawer-container>

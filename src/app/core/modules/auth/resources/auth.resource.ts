@@ -8,7 +8,8 @@ import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.
 
 /**
  * CRUD requests related to user's authentication.
- * @internal
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class AuthResource extends HttpResource {
@@ -24,7 +25,6 @@ export class AuthResource extends HttpResource {
 	logIn = (dto: LoginDto) =>
 		this.create<Token>(dto, {
 			customResource: 'auth',
-			notifyOnError: false,
 			path: 'login',
 			customAction: 'login',
 		});

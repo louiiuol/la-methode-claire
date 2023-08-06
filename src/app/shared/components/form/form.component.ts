@@ -19,8 +19,8 @@ import {
 	FieldConfig,
 	FormModule,
 	TranslateService,
-	untilDestroyed,
 	APP_FORM_GROUPS,
+	takeUntilDestroyed,
 } from '@core';
 
 /**
@@ -134,7 +134,7 @@ export class FormComponent implements OnInit {
 	protected isLoading = false;
 	protected errorMessages: string[] = [];
 
-	private untilDestroyed$ = untilDestroyed();
+	private untilDestroyed$ = takeUntilDestroyed();
 	private _initialModel: any;
 
 	constructor(
@@ -236,7 +236,7 @@ export class FormComponent implements OnInit {
 	private load(obs: Observable<any>, fn: any) {
 		this.toggleDisabled();
 		this.isLoading = true;
-		return obs.pipe(this.untilDestroyed$()).subscribe(res => {
+		return obs.pipe(this.untilDestroyed$).subscribe(res => {
 			fn(res);
 			this.toggleDisabled();
 			this.isLoading = false;

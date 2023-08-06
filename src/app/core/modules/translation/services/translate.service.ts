@@ -15,6 +15,8 @@ export type SupportedLangs = 'fr';
  * * Adds List of langs available (french & english for now)
  * * Checks browser language preference
  * * Sets current language based on stored language or browser language
+ *
+ * @author louiiuol
  */
 @Injectable({providedIn: 'root'})
 export class TranslateService {

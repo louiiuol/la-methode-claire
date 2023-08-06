@@ -36,7 +36,7 @@ const providers = [CanDeactivateGuard];
  *
  * Modules
  *
- *
+ * @author louiiuol
  */
 @NgModule({providers})
 export class CoreModule {

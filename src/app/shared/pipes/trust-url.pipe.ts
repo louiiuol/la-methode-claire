@@ -6,6 +6,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
  *
  * This pipe must be used with controlled content only
  * (should be parsed and escaped to prevent XSS attacks)
+ *
+ * @author louiiuol
  */
 @Pipe({
 	standalone: true,

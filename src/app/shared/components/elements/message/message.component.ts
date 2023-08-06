@@ -19,7 +19,7 @@ const MESSAGE_DICTIONARY = {
 } as const;
 
 /**
- * Simple standalone to display inline box with colored messages depending on given
+ * Simple component to display inline container with colored messages depending on given
  * severity. Check this component's `@Input` for more informations
  *
  * @author louiiuol

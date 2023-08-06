@@ -1,18 +1,13 @@
 <mat-card
 	[title]="title ?? '' | translate"
-	style="max-width: 90vw"
-	class="mx-auto w-fit max-w-3xl pb-3 pt-2">
-	<mat-card-header
-		*ngIf="title || subtitle"
-		class="text-primary"
-		style="padding: 16px 38px 8px">
-		<mat-card-title class="text-center" *ngIf="!!title">
+	class="mx-auto w-fit px-5 max-w-full">
+	<mat-card-header *ngIf="title || subtitle" class="text-primary !pt-8 !pb-2">
+		<mat-card-title class="text-center !text-2xl" *ngIf="!!title">
 			{{ title | translate }}
 		</mat-card-title>
 		<mat-card-subtitle
-			class="text-center"
-			*ngIf="!!subtitle"
-			style="text-wrap: balance">
+			class="text-center text-balance !text-lg"
+			*ngIf="!!subtitle">
 			{{ subtitle | translate }}
 		</mat-card-subtitle>
 	</mat-card-header>
@@ -23,10 +18,7 @@
 		<ng-content></ng-content>
 	</mat-card-content>
 
-	<mat-card-actions
-		*ngIf="!!cardFooter"
-		class="justify-evenly"
-		style="padding: 8px 32px 8px">
+	<mat-card-actions *ngIf="!!cardFooter" class="justify-evenly !px-2 !pb-8">
 		<ng-container [ngTemplateOutlet]="cardFooter"></ng-container>
 	</mat-card-actions>
 </mat-card>

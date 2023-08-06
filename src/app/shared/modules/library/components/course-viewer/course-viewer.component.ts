@@ -1,11 +1,9 @@
 import {
-	AfterViewInit,
 	Component,
 	EventEmitter,
 	HostBinding,
 	Input,
 	Output,
-	ViewChild,
 	forwardRef,
 } from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
@@ -29,11 +27,10 @@ import {
 	ButtonComponent,
 	CardComponent,
 	IconComponent,
-	PdfViewerComponent,
+	FileViewerComponent,
 } from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
-import {MatSelect} from '@angular/material/select';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -51,7 +48,7 @@ import {MatSelect} from '@angular/material/select';
 		ButtonComponent,
 		IconComponent,
 		CardComponent,
-		PdfViewerComponent,
+		FileViewerComponent,
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',

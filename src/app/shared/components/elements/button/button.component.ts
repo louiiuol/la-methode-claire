@@ -8,14 +8,19 @@ import {
 import {
 	ChangeDetectionStrategy,
 	Component,
+	HostBinding,
+	HostListener,
 	Input,
 	forwardRef,
 } from '@angular/core';
+import {RouterModule} from '@angular/router';
+
 import {MatButtonModule} from '@angular/material/button';
-import {ThemePalette} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import {RouterModule} from '@angular/router';
+const MaterialModules = [MatButtonModule, MatIconModule, MatMenuModule];
+import {ThemePalette} from '@angular/material/core';
+
 import {TranslateModule} from '@core';
 
 type ButtonType =
@@ -28,8 +33,12 @@ type ButtonType =
 
 /**
  * Inherit material button with pre-configuration to ease button/link integration.
+ * This component will render a `<button>` or a `<a>` tag depending if `href` is defined or not.
+ * (based on HTML schematic, if button redirect to an another page, then it should be an anchor)
  *
  * @see {@link https://material.angular.io/components/button/overview | Material buttons}
+ *
+ * @author louiiuol
  */
 @Component({
 	standalone: true,
@@ -39,9 +48,7 @@ type ButtonType =
 		NgSwitchCase,
 		NgSwitchDefault,
 		NgTemplateOutlet,
-		MatIconModule,
-		MatButtonModule,
-		MatMenuModule,
+		...MaterialModules,
 		RouterModule,
 		forwardRef(() => TranslateModule),
 	],
@@ -62,11 +69,6 @@ export class ButtonComponent {
 	@Input() color: ThemePalette = 'primary';
 
 	/**
-	 * Should this button be disabled ?
-	 */
-	@Input() disabled = false;
-
-	/**
 	 * Optional router Link to redirect user. If this props is set, this component
 	 * will use a `<a>` tag instead of `<button>` (to enforce HTML semantic)
 	 */
@@ -85,6 +87,20 @@ export class ButtonComponent {
 	/**
 	 * Optional fragment associated with `href` property.
 	 */
-	@Input()
-	fragment?: string;
+	@Input() fragment?: string;
+
+	/**
+	 * Disable interaction with this button, if the button is disabled, associated
+	 * click event will be prevented.
+	 */
+	@Input() disabled = false;
+
+	@HostListener('click', ['$event'])
+	@HostListener('dblclick', ['$event'])
+	protected onClick(e: Event) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+		}
+	}
 }

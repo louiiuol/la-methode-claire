@@ -4,6 +4,8 @@ import {CourseViewDto} from '../types/course-view.dto';
 
 /**
  * CRUD requests related to library.
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class LibraryResource extends HttpResource {

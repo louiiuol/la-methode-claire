@@ -1,3 +1,6 @@
+/**
+ * Representation of Course returned by API
+ */
 export interface CourseViewDto {
 	uuid: string;
 	order: number;

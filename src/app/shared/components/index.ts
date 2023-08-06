@@ -1,3 +1,3 @@
 export * from './elements';
-export * from './form';
-export * from './features';
+export {FormComponent} from './form/form.component';
+export {FileViewerComponent} from './file-viewer/file-viewer.component';

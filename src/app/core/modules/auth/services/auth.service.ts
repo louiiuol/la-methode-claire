@@ -1,13 +1,14 @@
 import {Injectable, computed, signal} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {BehaviorSubject, iif, of} from 'rxjs';
+import {iif, of} from 'rxjs';
 import {map, mergeMap, tap} from 'rxjs/operators';
 
-import {TokenStore, UserStore} from '../stores';
-import {LoginDto, RegisterDto} from '../types';
-import {AuthResource} from '../resources/auth.resource';
-import {CurrentUser} from '../models/current-user.model';
+import {TokenStore, UserStore} from '@core/modules/auth/stores';
+import {LoginDto, RegisterDto} from '@core/modules/auth/types';
+import {AuthResource} from '@core/modules/auth/resources/auth.resource';
+import {CurrentUser} from '@core/modules/auth/models/current-user.model';
+
 import {UserPreviewDto} from '@shared/modules';
 import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.dto';
 
@@ -24,8 +25,10 @@ import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.
  * - <strong>logIn()</strong> and <strong>logOut()</strong> toggles currentUser state
  * - <strong>hasRoles(roles: UserRole[])</strong> checks if current user has given roles
  *
- * <strong>Note</strong> This services uses internally stores (TokenStore and UserStore) to keep user informations in browser refresh.
+ * <strong>Note</strong> This services uses internally stores (TokenStore and UserStore) to keep user informations in browser storage.
  * If user refresh the page, currentUser will be initialized with browser storage values.
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class AuthService {
@@ -95,16 +98,9 @@ export class AuthService {
 		this.userStore.clearUser();
 		this.currentUser.set(null);
 		this.router
-			.navigate(['/'])
+			.navigate(['/login'])
 			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
 	};
-
-	/**
-	 * Checks if current user has given role(s)
-	 * @param roles to be checked
-	 * @returns true if currentUser has at least one of the given roles, false otherwise
-	 */
-	isAdmin = () => this.currentUser()?.role === 'ADMIN';
 
 	getProfile = () => this.http.whoAmI();
 

@@ -13,7 +13,8 @@ import {TokenStore, UserStore} from './stores';
  *
  * > This module is injected directly into AppModule to ease its integration. You should not have to import it
  * > in any modules, nor provides services, they already injected and available anywhere !
- * @internal
+ *
+ * @author louiiuol
  */
 @NgModule({
 	providers: [

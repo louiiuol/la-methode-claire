@@ -1,13 +1,18 @@
-import {CommonModule} from '@angular/common';
-import {Component, HostBinding} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
 
+/**
+ * Simple component to render a loader (with CSS only).
+ * This component is meant to be called with *ngIf directive: otherwise will always be shown.
+ * Also, this component is positioned as absolute, so parent element must be positioned as relative.
+ *
+ * @author louiiuol
+ */
 @Component({
 	selector: 'app-loader',
 	standalone: true,
-	imports: [CommonModule],
-	template: `<span></span>`,
+	imports: [],
+	template: `<span class="text-primary"></span>`,
 	styleUrls: ['./loader.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoaderComponent {
-	@HostBinding('class') class = 'is-primary';
-}
+export class LoaderComponent {}

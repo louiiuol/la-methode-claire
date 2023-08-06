@@ -9,14 +9,20 @@ import {NgIf} from '@angular/common';
 import {TrustUrlPipe} from '@shared/pipes';
 import {TranslateModule} from '@core';
 
+/**
+ * Simple component to display a file into an iframe based on given file name.
+ * For now, files must be located in 'assets/pdf/courses/' and should be a `.pdf` file.
+ *
+ * @author louiiuol
+ */
 @Component({
 	standalone: true,
-	selector: 'app-pdf-viewer',
+	selector: 'app-file-viewer',
 	imports: [NgIf, TrustUrlPipe, forwardRef(() => TranslateModule)],
-	templateUrl: './pdf-viewer.component.html',
+	templateUrl: './file-viewer.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PdfViewerComponent {
+export class FileViewerComponent {
 	@Input({required: true}) file: string | null | undefined;
 
 	@HostBinding('class')

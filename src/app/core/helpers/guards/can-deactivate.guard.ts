@@ -2,21 +2,20 @@ import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 
 /**
- * @internal
+ * Represents interface that associated components must implement.
  */
 type CanComponentDeactivate = {
 	canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 };
 
 /**
- * Checks if component allows to redirect to another route.
- * * Must be called in angular route with `canDeactivate` property.
- * * Must be associated with component that contains a `canDeactivate() method`
+ * Checks if component allows user to be redirect to an another route.
+ * * Must be called in angular routes with `canDeactivate` property.
+ * * Must be associated with component that contains a `canDeactivate()` method
  *
- * This way, component can defines some logic to prevent user from leaving section,
- * without saving a form changes for example..
- * @internal
- * @deprecated
+ * This way, components can defines some logic to prevent user from leaving route for specific reason.
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class CanDeactivateGuard {

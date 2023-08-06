@@ -1,1 +1,1 @@
-export {User, UserRole, UserPreviewDto} from './types';
+export * from './types';

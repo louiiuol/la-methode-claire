@@ -4,7 +4,7 @@ import {CurrentUser} from '../models/current-user.model';
 
 /**
  * Provides store in local to save, check, get or delete current user information
- * @internal
+ * @author louiiuol
  */
 @Injectable()
 export class UserStore {

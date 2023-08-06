@@ -2,9 +2,12 @@ import {User, UserPreviewDto, UserRole} from '@shared/modules/users';
 
 /**
  * Representation of current user logged in the app.
- * Gather common information about user like their role, permission, credits ...
+ * Gather common information about user like their role, permission, credits ..
  *
- * @see {@link User} to learn more on these properties
+ * This class will be instantiated by `AuthService` when login is successful.
+ * From there, instance will be available from `AuthService.currentUser` (which is a signal)
+ *
+ * @author louiiuol
  */
 export class CurrentUser {
 	email: string;

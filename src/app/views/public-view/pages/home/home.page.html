@@ -1,7 +1,7 @@
 <section id="intro" class="slide bg-primary relative">
 	<h1
-		style="text-wrap: balance; height: calc(100% - 64px)"
-		class="text-3xl sm:text-7xl md:text-7xl w-5/6 p-4 !leading-relaxed lg:!leading-loose !mx-auto text-white flex flex-col justify-center h-full gap-2 text-center">
+		style="height: calc(100% - 64px)"
+		class="text-3xl sm:text-7xl md:text-7xl w-5/6 p-4 !leading-relaxed lg:!leading-loose !mx-auto text-white flex flex-col justify-center h-full gap-2 text-center text-balance">
 		<span [innerHTML]="'views.public.pages.home.intro.1' | translate"></span>
 		<span [innerHTML]="'views.public.pages.home.intro.2' | translate"></span>
 		<span [innerHTML]="'views.public.pages.home.intro.3' | translate"></span>
@@ -55,7 +55,7 @@
 			{{'views.public.pages.home.cta-register.description' | translate}}
 		</p>
 	</div>
-	<app-button type="raised" href="/register">
+	<app-button class="disable" type="raised" href="/register">
 		{{ 'core.actions.register.action' | translate }}
 	</app-button>
 </section>
