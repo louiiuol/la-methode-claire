@@ -15,7 +15,7 @@ import {HeaderComponent} from './components';
 	imports: [forwardRef(() => RouterModule), HeaderComponent],
 	template: `
 		<app-public-header />
-		<main class="mt-16 mb-8 bg-slate-100">
+		<main class="mt-16">
 			<router-outlet></router-outlet>
 		</main>
 		<p class="fixed bottom-0 w-full text-center p-4 -z-10">
