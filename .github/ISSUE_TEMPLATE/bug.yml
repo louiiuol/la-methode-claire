@@ -1,0 +1,64 @@
+name: Bug
+description: Faire remonter un bug existant
+title: '🐞 '
+labels: ['bug', 'needs triage']
+assignees:
+  - louiiuol
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de remplir ce formulaire!
+  - type: input
+    id: contact
+    attributes:
+      label: Informations de contact
+      description: Comment souhaitez vous être contactez si nous avons besoin de plus d'information?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Que s'est-il passé ?
+      description: Aussi, qu'attendiez vous qu'il se passe ?
+      placeholder: Que voyez-vous ?
+      value: ''
+    validations:
+      required: true
+  - type: dropdown
+    id: user
+    attributes:
+      label: User
+      description: Sur quel type d'utilisateur est ce arrivé ?
+      options:
+        - Utilisateur
+        - Professeur
+        - Admin
+    validations:
+      required: true
+  # - type: dropdown
+  #   id: version
+  #   attributes:
+  #     label: Version
+  #     description: Quelle version d'application utilisez vous?
+  #     options:
+  #       - 1.0.0 (Default)
+  #   validations:
+  #     required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Sur quel navigateur le bug s'est produit ?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+  - type: textarea
+    id: logs
+    attributes:
+      label: Trace
+      description: Merci d'ajouter toute informations permettant de comprendre l'exception qui s'est produite. (logs, trace, réponse de la requête)
+      render: shell
