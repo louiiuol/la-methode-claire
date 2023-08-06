@@ -1,9 +1,11 @@
 import {
+	AfterViewInit,
 	Component,
 	EventEmitter,
 	HostBinding,
 	Input,
 	Output,
+	ViewChild,
 	forwardRef,
 } from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
@@ -21,18 +23,22 @@ const MaterialModules = [
 
 import {take} from 'rxjs';
 
-import {CourseViewDto} from '../types/course-view.dto';
+import {AuthService, TranslateModule, isBoolean} from '@core';
 import {TrustUrlPipe} from '@shared/pipes';
 import {
 	ButtonComponent,
 	CardComponent,
 	IconComponent,
+	PdfViewerComponent,
 } from '@shared/components';
-import {AuthService, TranslateModule} from '@core';
-import {LibraryService} from '../services/library.service';
+import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
+import {LibraryService} from '@shared/modules/library/services/library.service';
+import {MatSelect} from '@angular/material/select';
 
 /**
- * Display lesson details
+ * Display lesson details, including phonemes, words and files for the given `Course`
+ *
+ * @author louiiuol
  */
 @Component({
 	standalone: true,
@@ -41,38 +47,50 @@ import {LibraryService} from '../services/library.service';
 		NgFor,
 		TrustUrlPipe,
 		...MaterialModules,
+		forwardRef(() => TranslateModule),
 		ButtonComponent,
 		IconComponent,
 		CardComponent,
-		forwardRef(() => TranslateModule),
+		PdfViewerComponent,
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
 })
 export class CourseViewerComponent {
-	@Input({required: true}) set course(course: CourseViewDto) {
+	/**
+	 * Defines current course to be shown. Depending on which course is given,
+	 * this method will populate `filesAvailable` field with given course's files.
+	 */
+	@Input({required: true}) set course(course: CourseViewDto | undefined) {
 		this._course = course;
 		this.filesAvailable = [];
-		for (let prop in course) {
-			if (typeof (course as any)[prop] === 'boolean' && !!(course as any)[prop])
+		for (let prop in course)
+			if (isBoolean(course[prop]) && !!course[prop])
 				this.filesAvailable.push(prop);
-		}
 	}
 
-	get course() {
-		return this._course as CourseViewDto;
+	get course(): CourseViewDto | undefined {
+		return this._course;
 	}
 
+	/**
+	 * Defines current lesson' index for user. This property will be used to check if user
+	 * has already seen this course or not.
+	 */
 	@Input({required: true}) currentLessonIndex!: number;
 
+	/**
+	 * Emits next Course index, this allows to move up to the next lesson from the parent component.
+	 */
 	@Output() nextLesson = new EventEmitter();
 
-	@HostBinding('class') class = 'flex-1';
+	@HostBinding('class')
+	protected readonly class = 'flex-1';
 
-	filesAvailable: string[] = [];
-
-	hasValidSubscription =
+	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.hasValidSubscription;
+
+	protected filesAvailable: string[] = [];
 
 	private _course?: CourseViewDto;
 
@@ -82,14 +100,10 @@ export class CourseViewerComponent {
 	) {}
 
 	completeLesson() {
-		const nextIndex = this.course.order + 1;
+		const nextIndex = (this.course?.order ?? 0) + 1;
 		this.library
 			.setCurrentLesson(nextIndex)
 			.pipe(take(1))
-			.subscribe(res => {
-				if (!res.error) {
-					this.nextLesson.emit(nextIndex);
-				}
-			});
+			.subscribe(res => !res.error && this.nextLesson.emit(nextIndex));
 	}
 }
