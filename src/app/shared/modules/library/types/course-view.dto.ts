@@ -8,4 +8,5 @@ export interface CourseViewDto {
 	text: boolean;
 	poster: boolean;
 	words: string[];
+	[key: string]: any;
 }
