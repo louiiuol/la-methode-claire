@@ -16,6 +16,8 @@ type PlatformBreakpointName = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'unset';
  * When application init, this service process the following:
  * * Watch for the current size {@link PlatformBreakpointName}
  * and update {@currentSize} value whenever viewport size changes.
+ *
+ * @author louiiuol
  */
 @Injectable()
 export class PlatformService {

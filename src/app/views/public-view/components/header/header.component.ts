@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	HostBinding,
-	Output,
-} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
@@ -29,9 +23,17 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	@HostBinding('class') class = 'fixed top-0 z-50 w-full';
+	@HostBinding('class')
+	protected readonly class = 'fixed top-0 z-50 w-full';
 
-	readonly navigationLinks = ['method', 'explanation', 'who_is_claire', 'faq'];
+	protected readonly navigationLinks = [
+		'method',
+		'explanation',
+		'who_is_claire',
+		'faq',
+	];
 
-	constructor(public platform: PlatformService) {}
+	isMobile = () => this.platform.isMobileView();
+
+	constructor(private readonly platform: PlatformService) {}
 }

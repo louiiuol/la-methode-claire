@@ -13,6 +13,8 @@ type Theme = 'light' | 'dark';
  * * Stores current theme in local storage.
  *
  * Note: when dark mode is enabled, <body> will have a ".dark" class
+ *
+ * @author louiiuol
  */
 @Injectable({providedIn: 'root'})
 export class ThemeService {

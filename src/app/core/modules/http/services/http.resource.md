@@ -46,6 +46,6 @@ Create http requests is very simple. Just follow these steps:
    in `RequestOptions` documentation )
 2. Note that your service's methods all returns same HttpOutput (more information in interface's documentation)
 3. You can now create a second service that will consume methods you just created, but add some custom logic (state management ...)
-4. Call the observable directly from your component's template (please follow vidmizer's best practices for 'rendering observable inside a component')
+4. Call the observable directly from your component's template
 
 ---
