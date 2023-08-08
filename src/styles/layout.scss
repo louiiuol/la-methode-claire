@@ -22,7 +22,6 @@ app-root .page {
 		display: flex;
 		flex-direction: column;
 		min-height: calc(100dvh - 64px);
-		margin-block: 64px;
 		& > *:not(router-outlet) {
 			flex: 1 1 0%;
 			display: flex;

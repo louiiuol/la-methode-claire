@@ -179,7 +179,8 @@ export class FormComponent implements OnInit {
 	pristine = () =>
 		JSON.stringify(this._initialModel) === JSON.stringify(this.formModel);
 
-	isValidForm = () => this.form.valid && !this.pristine();
+	isValidForm = () =>
+		this.form.valid && (!this.pristine() || this.action !== 'update');
 
 	// private format = ({error}: HttpOutput<null>) => {
 	// 	if (!error) return [];

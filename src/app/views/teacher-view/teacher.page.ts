@@ -21,6 +21,8 @@ import {HeaderComponent} from './components';
 	imports: [forwardRef(() => RouterModule), HeaderComponent],
 })
 export class TeacherPage {
-	@HostBinding('class') class = 'page';
-	@HostBinding('id') key = 'teacher-view';
+	@HostBinding('class')
+	protected readonly class = 'page';
+	@HostBinding('id')
+	protected readonly key = 'teacher-view';
 }

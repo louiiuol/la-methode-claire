@@ -31,8 +31,8 @@ export class HeaderComponent {
 	protected readonly navigationLinks = [
 		'dashboard',
 		'progression',
-		'faq',
-		'subscription',
+		// 'faq',
+		// 'subscription',
 	];
 	protected readonly currentUser = this.authenticator.currentUser();
 
