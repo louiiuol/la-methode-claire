@@ -1,6 +1,12 @@
-import {Component, HostBinding, forwardRef, inject} from '@angular/core';
+import {
+	Component,
+	HostBinding,
+	ViewChild,
+	forwardRef,
+	inject,
+} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 
 const MaterialModules = [MatSidenavModule, MatListModule];
@@ -47,7 +53,7 @@ import {navigationLinks} from './public.routes';
 						class="!cursor-pointer"
 						*ngFor="let link of navigationLinks"
 						color="primary"
-						[routerLink]="'/' + link">
+						(click)="redirect(link)">
 						{{ 'views.public.routes.' + link | translate }}
 					</mat-list-item>
 				</mat-list>
@@ -69,9 +75,14 @@ export class PublicPage {
 	@HostBinding('class') private readonly class = 'page';
 	protected readonly currentYear = new Date().getFullYear();
 
+	@ViewChild('drawer') drawer?: MatDrawer;
+
 	protected redirect(url: string) {
-		inject(Router).navigateByUrl(`/${url}`);
+		this.drawer?.close();
+		this.router.navigateByUrl(`/${url}`);
 	}
 
 	protected readonly navigationLinks = navigationLinks;
+
+	constructor(private readonly router: Router) {}
 }
