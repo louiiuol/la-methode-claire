@@ -1,28 +1,41 @@
 <section id="intro" class="slide bg-primary relative">
 	<h1
-		style="height: calc(100% - 64px)"
-		class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl w-5/6 p-4 !leading-loose !mx-auto text-white flex flex-col justify-center h-full gap-2 text-center text-balance">
-		<span
-			class="animate__animated animate__fadeInDown"
-			[innerHTML]="'views.public.pages.home.intro.1' | translate"></span>
-		<span
-			class="animate__animated animate__fadeInLeft animate__delay-1s"
-			[innerHTML]="'views.public.pages.home.intro.2' | translate"></span>
-		<span
-			class="animate__animated animate__fadeInLeft animate__delay-2s"
-			[innerHTML]="'views.public.pages.home.intro.3' | translate"></span>
-		<span
-			class="animate__animated animate__fadeInUp animate__delay-3s"
-			[innerHTML]="'views.public.pages.home.intro.4' | translate"></span>
+		class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl w-full sm:p-4 !leading-loose !mx-auto text-white flex flex-col justify-center h-full gap-2 text-center text-balance overflow-hidden">
+		<span class="animate__animated animate__fadeInDown">
+			La méthode Claire est
+			<b
+				class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__pulse animate__delay-1s inline-block">
+				claire </b
+			>,
+		</span>
+		<span class="animate__animated animate__fadeInLeft animate__delay-1s">
+			parce qu'elle ne se contente pas de vous dire
+			<b
+				class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__pulse animate__delay-2s inline-block">
+				quoi faire </b
+			>,
+		</span>
+		<span class="animate__animated animate__fadeInLeft animate__delay-2s">
+			mais aussi
+			<b
+				class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__pulse animate__delay-3s inline-block">
+				comment faire
+			</b>
+		</span>
+		<span class="animate__animated animate__fadeInUp animate__delay-3s">
+			et surtout, <br />
+			<b
+				class="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__heartBeat animate__delay-4s inline-block">
+				elle le fait avec vous !
+			</b>
+		</span>
 	</h1>
-	<footer class="absolute bottom-0 w-full text-center bg-accent text-2xl p-3">
-		<p
-			class="!mb-0"
-			[innerHTML]="'views.public.pages.home.outro' | translate"></p>
-	</footer>
+</section>
+<section class="w-full text-center bg-accent text-xl sm:text-2xl p-3">
+	<p class="!mb-0">{{'views.public.pages.home.intro' | translate}}</p>
 </section>
 <section id="method" class="mb-10 [&>*:nth-child(even)]:flex-row-reverse mt-10">
-	<h2 class="text-4xl text-center mt-3 mb-2 text-balance">
+	<h2 class="text-4xl text-center mt-3 mb-2 text-balance px-2">
 		{{'views.public.pages.home.method.title' | translate}}
 	</h2>
 	<article

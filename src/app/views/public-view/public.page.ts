@@ -62,7 +62,7 @@ import {navigationLinks} from './public.routes';
 				<p class="text-center p-4">© La méthode claire. {{ currentYear }}</p>
 			</mat-drawer>
 			<app-public-header (toggledMobileMenu)="drawer.toggle()" />
-			<main class="my-16">
+			<main class="overflow-y-auto pb-16">
 				<router-outlet></router-outlet>
 			</main>
 			<p class="fixed bottom-0 w-full text-center p-4 -z-10 h-16">

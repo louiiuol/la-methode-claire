@@ -36,15 +36,10 @@ export class HomePage {
 		{
 			index: 4,
 			color: '#ef7e64',
-			title: 'dashboard',
-		},
-		{
-			index: 5,
-			color: '#fcdac6',
 			title: 'poster',
 		},
 		{
-			index: 6,
+			index: 5,
 			color: '#ef7f96',
 			title: 'newsletter',
 		},

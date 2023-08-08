@@ -1,5 +1,14 @@
-import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {Component, HostBinding, forwardRef} from '@angular/core';
+import {AsyncPipe, NgFor, NgIf, ViewportScroller} from '@angular/common';
+import {
+	AfterViewChecked,
+	Component,
+	ElementRef,
+	HostBinding,
+	OnInit,
+	ViewChild,
+	forwardRef,
+	inject,
+} from '@angular/core';
 
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -28,20 +37,12 @@ export class ProgressionPage {
 	@HostBinding('class')
 	protected readonly class = 'p-6';
 
-	protected readonly lessons$ = this.library.getLibrary();
+	protected readonly lessons$ = inject(LibraryService).getLibrary();
 	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.hasValidSubscription;
 
 	protected currentLesson =
 		this.authenticator?.currentUser()?.currentLesson ?? 0;
 
-	constructor(
-		private readonly library: LibraryService,
-		private readonly authenticator: AuthService
-	) {}
-
-	setCurrentLesson = (index: number) => {
-		if (index <= 2 || (index > 2 && this.hasValidSubscription))
-			this.currentLesson = index;
-	};
+	constructor(private readonly authenticator: AuthService) {}
 }

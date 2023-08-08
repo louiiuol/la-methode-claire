@@ -25,7 +25,7 @@ export class HeaderComponent {
 	@Output() toggledMobileMenu = new EventEmitter();
 
 	@HostBinding('class')
-	protected readonly class = 'fixed top-0 z-50 w-full';
+	protected readonly class = 'w-full';
 
 	protected readonly navigationLinks = navigationLinks;
 
