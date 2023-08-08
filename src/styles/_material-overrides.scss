@@ -34,10 +34,10 @@
 	flex-direction: column;
 }
 
-mat-drawer-container.flexed mat-drawer-content {
+.mat-drawer-content {
 	display: flex !important;
-	align-items: center;
-	justify-content: center;
+	align-items: flex-start;
+	justify-content: flex-start;
 }
 
 /** CARD **/
