@@ -11,8 +11,8 @@ import {TranslateService} from '@core';
 @Component({
 	selector: 'app-root',
 	template: `
-		<router-outlet></router-outlet>
-		<app-toaster></app-toaster>
+		<router-outlet />
+		<app-toaster />
 	`,
 })
 export class AppPage {

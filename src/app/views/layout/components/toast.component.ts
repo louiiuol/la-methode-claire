@@ -4,13 +4,19 @@ import {Component, HostBinding, inject} from '@angular/core';
 import {NotificationService} from '@core/modules/notification';
 import {MessageComponent} from '@shared/components';
 
+/**
+ * Simple container for global notification
+ * Will display all notification emitted from `NotificationService`.notifications signal
+ *
+ * @author louiiuol
+ */
 @Component({
 	standalone: true,
 	imports: [MessageComponent, NgFor],
 	selector: 'app-toaster',
 	template: `
 		<app-message
-			*ngFor="let n of notifier.notifications()"
+			*ngFor="let n of notifications()"
 			[closable]="true"
 			[summary]="n.summary"
 			[details]="n.details"
@@ -21,5 +27,5 @@ export class ToasterComponent {
 	@HostBinding('class')
 	protected readonly class = 'absolute right-2 top-20 w-sm z-50 px-3';
 
-	protected readonly notifier = inject(NotificationService);
+	protected readonly notifications = inject(NotificationService).notifications;
 }
