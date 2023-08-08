@@ -1,6 +1,15 @@
-import {Component, HostBinding, forwardRef} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {Component, HostBinding, forwardRef, inject} from '@angular/core';
+import {Router, RouterModule} from '@angular/router';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+
+const MaterialModules = [MatSidenavModule, MatListModule];
+
 import {HeaderComponent} from './components';
+import {ButtonComponent, IconComponent} from '@shared/components';
+import {NgFor} from '@angular/common';
+import {TranslateModule} from '@core';
+import {navigationLinks} from './public.routes';
 
 /**
  * Public View Container, defines global layout.
@@ -12,18 +21,57 @@ import {HeaderComponent} from './components';
  */
 @Component({
 	standalone: true,
-	imports: [forwardRef(() => RouterModule), HeaderComponent],
+	imports: [
+		NgFor,
+		forwardRef(() => RouterModule),
+		forwardRef(() => TranslateModule),
+		forwardRef(() => RouterModule),
+		...MaterialModules,
+		HeaderComponent,
+		ButtonComponent,
+		IconComponent,
+	],
 	template: `
-		<app-public-header />
-		<main class="mt-16">
-			<router-outlet></router-outlet>
-		</main>
-		<p class="fixed bottom-0 w-full text-center p-4 -z-10">
-			© La méthode claire. {{ currentYear }}
-		</p>
+		<mat-drawer-container class="h-full" autosize>
+			<mat-drawer
+				class="flex flex-col items-start justify-start w-60 p-4"
+				#drawer
+				mode="over">
+				<app-icon class="w-48" svg="logo" />
+				<h2 class="text-4xl text-primary px-3 mb-4">
+					La Méthode <span class="text-orange">Claire</span>
+				</h2>
+				<hr class="mb-5" />
+				<mat-list role="list">
+					<mat-list-item
+						class="!cursor-pointer"
+						*ngFor="let link of navigationLinks"
+						color="primary"
+						[routerLink]="'/' + link">
+						{{ 'views.public.routes.' + link | translate }}
+					</mat-list-item>
+				</mat-list>
+
+				<span class="flex-1"></span>
+				<p class="text-center p-4">© La méthode claire. {{ currentYear }}</p>
+			</mat-drawer>
+			<app-public-header (toggledMobileMenu)="drawer.toggle()" />
+			<main class="mt-16">
+				<router-outlet></router-outlet>
+			</main>
+			<p class="fixed bottom-0 w-full text-center p-4 -z-10">
+				© La méthode claire. {{ currentYear }}
+			</p>
+		</mat-drawer-container>
 	`,
 })
 export class PublicPage {
 	@HostBinding('class') private readonly class = 'page';
 	protected readonly currentYear = new Date().getFullYear();
+
+	protected redirect(url: string) {
+		inject(Router).navigateByUrl(`/${url}`);
+	}
+
+	protected readonly navigationLinks = navigationLinks;
 }

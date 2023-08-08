@@ -17,7 +17,7 @@ export class HomePage {
 	@HostBinding('class')
 	protected readonly class = '!block bg-yellow-light mat-elevation-z4 mb-14';
 
-	methodExplanations = [
+	protected readonly methodExplanations = [
 		{
 			index: 1,
 			color: '#ac981a',

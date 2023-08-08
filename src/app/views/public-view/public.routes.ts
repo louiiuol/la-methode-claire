@@ -47,3 +47,11 @@ export const PUBLIC_ROUTES: Routes = [
 		],
 	},
 ];
+
+export const navigationLinks = [
+	'',
+	// 'method',
+	// 'explanation',
+	// 'who_is_claire',
+	// 'faq',
+];

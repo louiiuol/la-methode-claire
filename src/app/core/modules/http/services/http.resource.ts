@@ -31,7 +31,8 @@ export abstract class HttpResource {
 	protected readonly notifier = inject(NotificationService);
 	protected readonly translator = inject(TranslateService);
 
-	private readonly statusTranslation: {[key: number]: string} = {
+	private readonly statusTranslation: {[key: number | string]: string} = {
+		undefined: 'server_down',
 		0: 'server_down',
 		401: 'token_expired',
 		403: 'forbidden',
@@ -242,11 +243,10 @@ export abstract class HttpResource {
 		opt: RequestOptions | undefined
 	) => {
 		const res = response.error as ApiResponse<null>;
-		console.log(res);
 		const resource =
 			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
 		console.error(
-			`(${new Date().toLocaleDateString()}) [${res.code}] HTTP failed to ${
+			`(${new Date().toLocaleDateString()}) [${res.code ?? 0}] HTTP failed to ${
 				opt?.customAction ?? action
 			} on [${resource.toLocaleUpperCase()}]`,
 			res

@@ -1,22 +1,20 @@
-<mat-toolbar class="gap-3 h-16 justify-start mat-elevation-z1">
+<mat-toolbar class="gap-3 !h-16 justify-start mat-elevation-z1">
 	<app-button
-		*ngIf="isMobile()"
+		class="md:hidden"
 		(click)="toggledMobileMenu.emit()"
 		aria-label="Button to expand sidebar"
 		type="icon">
 		<app-icon>menu</app-icon>
 	</app-button>
-	<app-button href="/" class="w-32">
-		<app-icon class="w-32" svg="logo" />
-	</app-button>
-	<span class="flex-1"></span>
-	<ng-container *ngIf="!isMobile()">
-		<app-button
-			*ngFor="let link of navigationLinks"
-			color="primary"
-			[href]="'/' + link"
-			[label]="'views.public.routes.' + link" />
-	</ng-container>
+
+	<app-icon class="w-32 hidden md:inline-block" svg="logo" />
+
+	<app-button
+		class="hidden md:block"
+		*ngFor="let link of navigationLinks"
+		color="primary"
+		[href]="'/' + link"
+		[label]="'views.public.routes.' + link" />
 
 	<span class="flex-1"></span>
 	<app-button type="raised" href="/login" label="core.actions.login.action" />

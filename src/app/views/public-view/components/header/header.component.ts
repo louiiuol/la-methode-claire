@@ -4,6 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
+import {navigationLinks} from '../../public.routes';
 
 /**
  * Public views global header
@@ -26,12 +27,7 @@ export class HeaderComponent {
 	@HostBinding('class')
 	protected readonly class = 'fixed top-0 z-50 w-full';
 
-	protected readonly navigationLinks = [
-		'method',
-		'explanation',
-		'who_is_claire',
-		'faq',
-	];
+	protected readonly navigationLinks = navigationLinks;
 
 	isMobile = () => this.platform.isMobileView();
 

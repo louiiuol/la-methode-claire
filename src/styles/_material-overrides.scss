@@ -34,7 +34,7 @@
 	flex-direction: column;
 }
 
-mat-drawer-content {
+mat-drawer-container.flexed mat-drawer-content {
 	display: flex !important;
 	align-items: center;
 	justify-content: center;
