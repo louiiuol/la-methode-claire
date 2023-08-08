@@ -154,6 +154,7 @@
 	"views": {
 		"public": {
 			"routes": {
+				"": "Accueil",
 				"login": "Se connecter",
 				"register": "S'inscrire",
 				"forgot-password": "Mot de passe oublié ?",
