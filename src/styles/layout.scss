@@ -22,6 +22,8 @@ app-root .page {
 		display: flex;
 		flex-direction: column;
 		min-height: calc(100dvh - 64px);
+		width: 100%;
+		overflow-y: auto;
 		& > *:not(router-outlet) {
 			flex: 1 1 0%;
 			display: flex;

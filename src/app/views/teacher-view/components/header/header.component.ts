@@ -2,11 +2,11 @@ import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-
 const MaterialModules = [MatToolbarModule, MatMenuModule];
 
 import {AuthService, PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
+import {navigationLinks} from '../../teacher.routes';
 
 /**
  * Logged views global header
@@ -26,14 +26,9 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	@HostBinding('class') class = 'sticky top-0 z-50';
+	@HostBinding('class') class = 'w-full';
 
-	protected readonly navigationLinks = [
-		'dashboard',
-		'progression',
-		// 'faq',
-		// 'subscription',
-	];
+	protected readonly navigationLinks = navigationLinks;
 	protected readonly currentUser = this.authenticator.currentUser();
 
 	constructor(

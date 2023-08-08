@@ -2,7 +2,7 @@
 	*ngFor="let lesson of lessons"
 	style="scroll-snap-align: start"
 	[id]="'course-' + lesson.order"
-	class="rounded-full leading-none inline-block"
+	class="rounded-full leading-none inline-block bg-texture"
 	[class]="{
 		'bg-accent': lesson.order < currentLesson || lesson.order > currentLesson,
 		'font-bold': lesson.order === currentLesson,

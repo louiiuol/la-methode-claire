@@ -1,10 +1,4 @@
-import {
-	Component,
-	HostBinding,
-	ViewChild,
-	forwardRef,
-	inject,
-} from '@angular/core';
+import {Component, HostBinding, ViewChild, forwardRef} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
 import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
@@ -59,13 +53,16 @@ import {navigationLinks} from './public.routes';
 				</mat-list>
 
 				<span class="flex-1"></span>
-				<p class="text-center p-4">© La méthode claire. {{ currentYear }}</p>
+				<p class="text-center p-4 text-primary">
+					Copyright © {{ currentYear }} <b>La méthode claire</b>.
+				</p>
 			</mat-drawer>
 			<app-public-header (toggledMobileMenu)="drawer.toggle()" />
-			<main class="overflow-y-auto pb-16">
-				<router-outlet></router-outlet>
+			<main class="pb-16">
+				<router-outlet />
 			</main>
-			<p class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8">
+			<p
+				class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8 text-primary">
 				Copyright © {{ currentYear }} <b>La méthode claire</b>.
 			</p>
 		</mat-drawer-container>

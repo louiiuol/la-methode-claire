@@ -29,3 +29,10 @@ export const TEACHER_ROUTES: Routes = [
 		],
 	},
 ];
+
+export const navigationLinks = [
+	'dashboard',
+	'progression',
+	// 'faq',
+	// 'subscription',
+];
