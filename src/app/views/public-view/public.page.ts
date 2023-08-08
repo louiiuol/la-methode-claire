@@ -38,7 +38,7 @@ import {navigationLinks} from './public.routes';
 		IconComponent,
 	],
 	template: `
-		<mat-drawer-container class="h-full" autosize>
+		<mat-drawer-container class="h-full bg-yellow-light" autosize>
 			<mat-drawer
 				class="flex flex-col items-start justify-start w-60 p-4"
 				#drawer
@@ -65,8 +65,8 @@ import {navigationLinks} from './public.routes';
 			<main class="overflow-y-auto pb-16">
 				<router-outlet></router-outlet>
 			</main>
-			<p class="fixed bottom-0 w-full text-center p-4 -z-10 h-16">
-				© La méthode claire. {{ currentYear }}
+			<p class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8">
+				Copyright © {{ currentYear }} <b>La méthode claire</b>.
 			</p>
 		</mat-drawer-container>
 	`,
