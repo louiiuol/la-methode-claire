@@ -24,7 +24,7 @@ export interface RequestOptions {
 	/**
 	 * Forces displaying automated notification when request was successful
 	 */
-	notifyOnSuccess?: true;
+	notifyOnSuccess?: boolean;
 
 	/**
 	 * Disable displaying automated notification when request has errors
