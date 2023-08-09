@@ -66,7 +66,7 @@ export class ButtonComponent {
 	/**
 	 * Color of the button. (Default is primary)
 	 */
-	@Input() color: ThemePalette = 'primary';
+	@Input() color?: ThemePalette;
 
 	/**
 	 * Optional router Link to redirect user. If this props is set, this component

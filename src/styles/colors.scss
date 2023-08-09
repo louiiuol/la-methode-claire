@@ -175,11 +175,11 @@ $warn: mat.define-palette($md-orange);
 
 .bg-texture {
 	background-image: repeating-linear-gradient(
-		-45deg,
+		223deg,
 		rgba(255, 255, 255, 0.25),
 		rgba(255, 255, 255, 0.25) 1px,
-		transparent 1px,
-		transparent 6px
+		transparent 0px,
+		transparent 2px
 	);
-	background-size: 8px 8px;
+	background-size: 20px;
 }

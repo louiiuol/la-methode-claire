@@ -1,10 +1,12 @@
 <ng-container *ngIf="lessons$ | async as lessons">
 	<app-progress-bar
+		class="rounded-t-xl"
 		[currentLesson]="currentLesson"
 		[hasValidSubscription]="hasValidSubscription"
 		[lessons]="lessons"
 		(selectedLesson)="currentLesson = $event" />
 	<app-course-viewer
+		class="rounded-b-xl overflow-hidden"
 		[currentLessonIndex]="currentLesson"
 		[course]="lessons[currentLesson]"
 		(nextLesson)="currentLesson = $event" />

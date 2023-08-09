@@ -38,7 +38,7 @@ import {TranslateModule} from '@core';
 export class ProgressBarComponent implements AfterViewInit {
 	@HostBinding('class')
 	protected readonly class =
-		'w-full flex gap-2 items-center justify-start bg-slate-300 p-4 overflow-x-auto overscroll-x-contain';
+		'w-full flex gap-2 items-center justify-start bg-white p-4 overflow-x-auto overscroll-x-contain';
 
 	@Input({required: true}) lessons!: CourseViewDto[];
 	@Input({required: true}) currentLesson!: number;

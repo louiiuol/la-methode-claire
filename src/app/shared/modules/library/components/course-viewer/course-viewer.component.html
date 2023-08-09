@@ -8,7 +8,9 @@
 			class="w-60 p-4 !flex flex-col justify-start items-start"
 			mode="side"
 			opened>
-			<h2 class="text-2xl text-primary">Semaine {{ course.order + 1 }}</h2>
+			<h2 class="text-2xl" [style]="'color:' + course.color">
+				Semaine N° {{ course.order + 1 }}
+			</h2>
 			<mat-chip-listbox class="mb-2" aria-label="File selection">
 				<mat-chip-option
 					*ngFor="let phoneme of course.phonemes"
@@ -21,10 +23,17 @@
 				*ngIf="currentLessonIndex < course.order; else completedCourse"
 				type="raised"
 				color="primary"
-				(click)="completeLesson()"
+				(click)="setCurrentLesson(course.order + 1)"
 				label="modules.library.mark_as_finished">
 			</app-button>
-			<ng-template #completedCourse> Leçon terminée </ng-template>
+			<ng-template #completedCourse>
+				<app-message summary="Cette leçon est terminée" severity="note" />
+				<app-button
+					type="stroked"
+					color="primary"
+					label="Revenir à cette leçon"
+					(click)="setCurrentLesson(course.order)" />
+			</ng-template>
 
 			<hr class="mb-6 mt-3" />
 

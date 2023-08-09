@@ -11,5 +11,6 @@ export interface CourseViewDto {
 	text: boolean;
 	poster: boolean;
 	words: string[];
+	color: string;
 	[key: string]: any;
 }

@@ -28,6 +28,7 @@ import {
 	CardComponent,
 	IconComponent,
 	FileViewerComponent,
+	MessageComponent,
 } from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
@@ -49,6 +50,7 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		IconComponent,
 		CardComponent,
 		FileViewerComponent,
+		MessageComponent,
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
@@ -96,11 +98,10 @@ export class CourseViewerComponent {
 		private readonly authenticator: AuthService
 	) {}
 
-	completeLesson() {
-		const nextIndex = (this.course?.order ?? 0) + 1;
+	setCurrentLesson(index: number) {
 		this.library
-			.setCurrentLesson(nextIndex)
+			.setCurrentLesson(index)
 			.pipe(take(1))
-			.subscribe(res => !res.error && this.nextLesson.emit(nextIndex));
+			.subscribe(res => !res.error && this.nextLesson.emit(index));
 	}
 }

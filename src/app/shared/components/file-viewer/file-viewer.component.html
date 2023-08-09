@@ -1,7 +1,8 @@
+<!-- [src]="'assets/pdf/courses/' + file + '.pdf' | trustURL" -->
 <ng-container *ngIf="file; else noFileSelected">
 	<iframe
 		title="file viewer"
-		[src]="'assets/pdf/courses/' + file + '.pdf' | trustURL"
+		src="assets/pdf/courses/1/script.pdf"
 		class="flex-1 h-full">
 	</iframe>
 </ng-container>

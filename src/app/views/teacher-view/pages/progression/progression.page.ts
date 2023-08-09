@@ -1,18 +1,8 @@
-import {AsyncPipe, NgFor, NgIf, ViewportScroller} from '@angular/common';
-import {
-	AfterViewChecked,
-	Component,
-	ElementRef,
-	HostBinding,
-	OnInit,
-	ViewChild,
-	forwardRef,
-	inject,
-} from '@angular/core';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
+import {Component, HostBinding, forwardRef, inject} from '@angular/core';
 
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
 const MaterialModules = [MatBadgeModule, MatTooltipModule];
 
 import {AuthService, TranslateModule} from '@core';

@@ -1,13 +1,16 @@
 <app-button
 	*ngFor="let lesson of lessons"
-	style="scroll-snap-align: start"
+	style="scroll-snap-align: start; border: 1px solid currentColor"
 	[id]="'course-' + lesson.order"
 	class="rounded-full leading-none inline-block bg-texture"
+	[style]="
+		'color:' +
+		(lesson.order === currentLesson ? 'white' : lesson.color) +
+		'; background-color:' +
+		(lesson.order === currentLesson ? lesson.color : 'transparent')
+	"
 	[class]="{
-		'bg-accent': lesson.order < currentLesson || lesson.order > currentLesson,
 		'font-bold': lesson.order === currentLesson,
-		'bg-primary': lesson.order === currentLesson,
-		'text-white': lesson.order === currentLesson,
 		'opacity-60': lesson.order < currentLesson,
 		'opacity-30': lesson.order > 2 && !hasValidSubscription,
 		'cursor-not-allowed': lesson.order > 2 && !hasValidSubscription
@@ -16,13 +19,5 @@
 	[disabled]="lesson.order > 2 && !hasValidSubscription"
 	[matTooltip]="'modules.library.for_sub_only' | translate"
 	[matTooltipDisabled]="lesson.order < 3 || hasValidSubscription"
-	(click)="setCurrentLesson(lesson.order)">
-	<span
-		[class]="{
-			'text-primary':
-				lesson.order < currentLesson || lesson.order > currentLesson,
-			'text-accent': lesson.order === currentLesson
-		}">
-		{{ lesson.order + 1 }}
-	</span>
-</app-button>
+	(click)="setCurrentLesson(lesson.order)"
+	[label]="(lesson.order + 1).toFixed()" />
