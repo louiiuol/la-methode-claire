@@ -33,7 +33,7 @@ const MESSAGE_DICTIONARY = {
 			*ngIf="summary && severity"
 			class="flex items-start justify-start gap-3 mb-3 border-l-4 rounded-r px-4 py-3 shadow-md"
 			[class]="getMessageColor()">
-			<mat-icon class="my-1">
+			<mat-icon *ngIf="showIcon" class="my-1">
 				{{ getMessageIcon() }}
 			</mat-icon>
 			<div class="px-1">
@@ -56,6 +56,8 @@ export class MessageComponent {
 
 	/** Allow to dismiss message (set to false by default) */
 	@Input() closable?: boolean;
+
+	@Input() showIcon = true;
 
 	protected readonly getMessageIcon = () =>
 		this.severity ? MESSAGE_DICTIONARY[this.severity].icon : 'info';
