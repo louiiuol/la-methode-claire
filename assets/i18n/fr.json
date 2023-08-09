@@ -85,6 +85,8 @@
 				"verify_input(s)": "Formulaire invalide",
 				"server_down": "L'API est hors ligne. Merci de réessayer plus tard !",
 				"token_must_be_a_jwt_string": "Clé d'identification expirée",
+				"conflict": "Cette action ne peut être réalisée !",
+				"not_found": "Cette ressource n'existe pas !",
 				"UNIQUE": "Existe déjà",
 				"UNREACHABLE": "l'API ne répond pas 🔍"
 			},
