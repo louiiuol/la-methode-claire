@@ -11,11 +11,12 @@ import {CourseViewDto} from '../types/course-view.dto';
 export class LibraryResource extends HttpResource {
 	protected resource = 'courses';
 
-	getLibrary = () => this.getAll<CourseViewDto>();
+	getLibrary = () => this.getAll<CourseViewDto>({notifyOnSuccess: false});
 
 	setCurrentLessonIndex = (index: number) =>
-		this.get(null, {
-			path: 'next',
+		this.partialUpdate<number>(null, null, {
+			path: 'currentLesson',
 			params: {index},
+			notifyOnSuccess: false,
 		});
 }

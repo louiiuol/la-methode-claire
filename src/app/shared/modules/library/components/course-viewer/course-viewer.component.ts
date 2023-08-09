@@ -84,10 +84,13 @@ export class CourseViewerComponent {
 	@Output() nextLesson = new EventEmitter();
 
 	@HostBinding('class')
-	protected readonly class = 'flex-1';
+	protected readonly class = 'flex-1 bg-accent';
 
 	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.hasValidSubscription;
+
+	protected currentUserLesson =
+		this.authenticator?.currentUser()?.currentLesson ?? 0;
 
 	protected filesAvailable: string[] = [];
 
@@ -102,6 +105,13 @@ export class CourseViewerComponent {
 		this.library
 			.setCurrentLesson(index)
 			.pipe(take(1))
-			.subscribe(res => !res.error && this.nextLesson.emit(index));
+			.subscribe(res => {
+				if (!res.error) {
+					this.currentLessonIndex = index;
+					this.currentUserLesson = index;
+					this.nextLesson.emit(index);
+					this.authenticator.updateCurrentUser({currentLesson: index});
+				}
+			});
 	}
 }
