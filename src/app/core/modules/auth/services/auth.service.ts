@@ -110,6 +110,8 @@ export class AuthService {
 	 * Updates current user in local storage and observable shared between components and services.
 	 * @param user entity to be stored
 	 */
-	private updateCurrentUser = (user: CurrentUser): void =>
-		this.currentUser.set(this.userStore.saveUser(user));
+	updateCurrentUser = (user: Partial<CurrentUser>): void =>
+		this.currentUser.set(
+			this.userStore.saveUser(Object.assign({}, this.currentUser(), user))
+		);
 }
