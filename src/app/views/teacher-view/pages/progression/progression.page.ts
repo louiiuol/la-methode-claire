@@ -25,7 +25,7 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 })
 export class ProgressionPage {
 	@HostBinding('class')
-	protected readonly class = 'p-6';
+	protected readonly class = 'm-6';
 
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
 	protected readonly hasValidSubscription =

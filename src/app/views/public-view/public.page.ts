@@ -54,7 +54,8 @@ import {navigationLinks} from './public.routes';
 
 				<span class="flex-1"></span>
 				<p class="text-center p-4 text-primary">
-					Copyright © {{ currentYear }} <b>La méthode claire</b>.
+					Copyright © {{ currentYear }} <br />
+					<b>La méthode claire</b>.
 				</p>
 			</mat-drawer>
 			<app-public-header (toggledMobileMenu)="drawer.toggle()" />

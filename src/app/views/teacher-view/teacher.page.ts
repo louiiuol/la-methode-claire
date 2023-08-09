@@ -50,7 +50,8 @@ import {navigationLinks} from './teacher.routes';
 
 				<span class="flex-1"></span>
 				<p class="text-center p-4 text-primary">
-					Copyright © {{ currentYear }} <b>La méthode claire</b>.
+					Copyright © {{ currentYear }} <br />
+					<b>La méthode claire</b>.
 				</p>
 			</mat-drawer>
 			<app-logged-header (toggledMobileMenu)="drawer.toggle()" />
