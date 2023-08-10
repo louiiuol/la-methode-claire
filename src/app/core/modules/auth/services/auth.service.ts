@@ -49,18 +49,7 @@ export class AuthService {
 	 * - if the request is successful, the user must confirm his email, so no actions follow.
 	 * - If an error occurred, user will be notified with explaining notification.
 	 */
-	signUp = (info: RegisterDto) =>
-		this.http.signUp(info).pipe(
-			tap(res => {
-				if (!res.error) {
-					this.router
-						.navigate(['/login'])
-						.catch(err =>
-							console.error('Failed to Redirect to [LoginPage]', err)
-						);
-				}
-			})
-		);
+	signUp = (info: RegisterDto) => this.http.signUp(info);
 
 	/**
 	 * Tries to authenticate the user with given credentials:

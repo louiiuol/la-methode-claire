@@ -1,16 +1,31 @@
 <app-card
+	*ngIf="!emailSent; else: checkYourEmail"
 	class="w-full max-w-3xl animate__animated animate__fadeInDown"
 	title="views.public.pages.register.title"
 	subtitle="views.public.pages.register.subtitle">
 	<app-form
 		action="register"
 		[submitted]="register"
+		(sent)="emailSent = $event"
 		[fields]="fields"
 		[validators]="validators" />
 	<ng-template #cardFooter>
 		<p class="mt-1">
 			{{'modules.account.already_account' | translate}}
-			<app-button href="/login" label="core.actions.login.action" />
+			<app-button
+				color="primary"
+				href="/login"
+				label="core.actions.login.action" />
 		</p>
 	</ng-template>
 </app-card>
+<ng-template #checkYourEmail>
+	<app-card
+		title="Bienvenue sur la méthode claire"
+		subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
+		<img
+			class="max-w-xs"
+			src="assets/img/email_sent.png"
+			alt="verification's email sent" />
+	</app-card>
+</ng-template>

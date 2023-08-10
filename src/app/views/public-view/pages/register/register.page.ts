@@ -1,3 +1,4 @@
+import {NgIf} from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -15,6 +16,7 @@ import {
 @Component({
 	standalone: true,
 	imports: [
+		NgIf,
 		CardComponent,
 		FormComponent,
 		ButtonComponent,
@@ -30,7 +32,6 @@ export class RegisterPage {
 	protected readonly register = inject(AuthService).signUp;
 	protected readonly fields = [
 		{preset: 'user.email', props: {required: true}},
-
 		{
 			preset: 'user.password',
 			props: {
@@ -46,9 +47,10 @@ export class RegisterPage {
 			props: {required: true},
 			className: 'inline-block w-1/2',
 		},
-
 		{preset: 'user.agree', props: {required: true}},
 	];
 	protected readonly validators = ['passwordMatch'];
 	protected readonly navigationLinks = ['register', 'forgot-password'];
+
+	protected emailSent = false;
 }

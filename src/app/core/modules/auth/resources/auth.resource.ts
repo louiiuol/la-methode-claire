@@ -19,7 +19,6 @@ export class AuthResource extends HttpResource {
 		this.create<Partial<User>>(dto, {
 			path: 'register',
 			customAction: 'register',
-			notifyOnSuccess: true,
 		});
 
 	logIn = (dto: LoginDto) =>
