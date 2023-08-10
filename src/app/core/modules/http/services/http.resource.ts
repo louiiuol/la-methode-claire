@@ -222,7 +222,10 @@ export abstract class HttpResource {
 	): HttpOutput<T> => {
 		const resource =
 			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
-		if (opt?.notifyOnSuccess)
+		if (
+			opt?.notifyOnSuccess ||
+			(opt?.notifyOnSuccess != false && action == 'update')
+		)
 			this.notifier.success(`core.api.resources.${resource}`, {
 				key: 'core.states.success',
 				param: {
