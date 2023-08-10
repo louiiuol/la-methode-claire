@@ -1,5 +1,7 @@
 # La Méthode Claire 👓
 
+[![Github Page status](https://github.com/louiiuol/la-methode-claire/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/louiiuol/la-methode-claire/actions/workflows/pages/pages-build-deployment)
+
 > A simple yet neat and effective reading methodology for school teachers. This project allows:
 >
 > - Public to discover the project, and sign up
