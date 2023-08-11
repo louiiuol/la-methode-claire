@@ -228,6 +228,15 @@
 				"profile": "Profil",
 				"subscription": "Abonnement",
 				"faq": "F.A.Q"
+			},
+			"pages": {
+				"profile": {
+					"title": "Mise à jour de vos informations",
+					"tabs": {
+						"personal": "Informations personnelles",
+						"password": "Mot de passe"
+					}
+				}
 			}
 		}
 	},
@@ -249,12 +258,27 @@
 				"exercice": "Exercice",
 				"poster": "Poster"
 			},
-			"mark_as_finished": "Marquer comme terminée",
-			"for_sub_only": "Cette leçon est réservée aux abonnées",
-			"no_file_selected": {
-				"title": "Aucun fichier sélectionné",
-				"description": "Merci de sélectionner un fichier sur la droite pour en visualiser le contenu"
+			"viewer": {
+				"mark_as_finished": "Marquer comme terminée",
+				"for_sub_only": "Cette leçon est réservée aux abonnées",
+				"completed_course": "Cette leçon est terminée",
+				"back_to_course": "Revenir à cette leçon",
+				"words_list": "Liste des mots",
+				"no_word_associated": "Aucun mot associé à cette semaine",
+				"files_list": "Liste des fichiers",
+				"no_file_selected": {
+					"title": "Aucun fichier sélectionné",
+					"description": "Merci de sélectionner un fichier sur la droite pour en visualiser le contenu"
+				},
+				"progress": {
+					"week": "Semaine N°{{number}}"
+				},
+				"restricted_lesson": "Cette leçon n'est accessible uniquement pour les membres abonnés!",
+				"sub_to_access": "Pour accéder à cette leçon, abonnez-vous !"
 			}
+		},
+		"subscription": {
+			"see_sub": "Voir l'abonnement"
 		}
 	}
 }
