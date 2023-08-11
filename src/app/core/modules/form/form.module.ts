@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 
 import {TranslateService as NgxTranslateService} from '@ngx-translate/core';
-import {TranslateModule} from '../translation/translate.module';
 
 import {FORMLY_CONFIG, FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
@@ -22,18 +21,12 @@ import {formlyValidationConfig} from './config/formly-validation-config.fn';
  * @internal
  */
 @NgModule({
-	imports: [
-		ReactiveFormsModule,
-		FormlyModule.forRoot(),
-		FormlyMaterialModule,
-		TranslateModule,
-	],
+	imports: [ReactiveFormsModule, FormlyModule.forRoot(), FormlyMaterialModule],
 	exports: [
 		CommonModule,
 		ReactiveFormsModule,
 		FormlyModule,
 		FormlyMaterialModule,
-		TranslateModule,
 	],
 	providers: [
 		{

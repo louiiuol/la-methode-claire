@@ -1,6 +1,6 @@
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {Component, HostBinding, forwardRef, inject} from '@angular/core';
-import {AuthService} from '@core';
+import {AuthService, TranslatePipe} from '@core';
 import {ButtonComponent} from '@shared/components';
 import {LibraryModule} from '@shared/modules/library/library.module';
 import {LibraryService} from '@shared/modules/library/services/library.service';
@@ -13,6 +13,7 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		NgFor,
 		forwardRef(() => LibraryModule),
 		ButtonComponent,
+		TranslatePipe,
 	],
 	templateUrl: './dashboard.page.html',
 })

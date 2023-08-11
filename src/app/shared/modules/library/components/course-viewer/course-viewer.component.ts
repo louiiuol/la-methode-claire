@@ -21,7 +21,7 @@ const MaterialModules = [
 
 import {take} from 'rxjs';
 
-import {AuthService, TranslateModule, isBoolean} from '@core';
+import {AuthService, isBoolean} from '@core';
 import {TrustUrlPipe} from '@shared/pipes';
 import {
 	ButtonComponent,
@@ -46,7 +46,6 @@ import {TranslatePipe} from '@core/modules/translation/pipes/translate.pipe';
 		NgFor,
 		TrustUrlPipe,
 		...MaterialModules,
-		// TranslatePipe,
 		ButtonComponent,
 		IconComponent,
 		CardComponent,

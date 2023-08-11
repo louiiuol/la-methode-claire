@@ -21,6 +21,7 @@ import {
 	TranslateService,
 	APP_FORM_GROUPS,
 	takeUntilDestroyed,
+	TranslatePipe,
 } from '@core';
 
 /**
@@ -54,6 +55,7 @@ import {
 		MatButtonModule,
 		MatTooltipModule,
 		MessageComponent,
+		TranslatePipe,
 	],
 	selector: 'app-form',
 	templateUrl: './form.component.html',

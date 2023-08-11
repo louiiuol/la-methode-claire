@@ -7,7 +7,7 @@ import {
 	TemplateRef,
 } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
-import {TranslateModule} from '@core';
+import {TranslatePipe} from '@core';
 
 /**
  * Inherit material card with pre-configuration to ease its integration.
@@ -19,7 +19,7 @@ import {TranslateModule} from '@core';
 @Component({
 	selector: 'app-card',
 	standalone: true,
-	imports: [NgIf, NgTemplateOutlet, MatCardModule, TranslateModule],
+	imports: [NgIf, NgTemplateOutlet, MatCardModule, TranslatePipe],
 	templateUrl: './card.component.html',
 })
 export class CardComponent {

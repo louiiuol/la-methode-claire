@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TranslateService as NgxTranslateModule} from '@ngx-translate/core';
+import {TranslateService as NgxTranslateService} from '@ngx-translate/core';
 import {TranslateKey} from '../types/translate-key';
 
 /**
@@ -25,7 +25,7 @@ export class TranslateService {
 	 */
 	currentLang = this.translator.currentLang;
 
-	constructor(private translator: NgxTranslateModule) {}
+	constructor(private translator: NgxTranslateService) {}
 
 	init() {
 		this.translator.addLangs(['fr']);
