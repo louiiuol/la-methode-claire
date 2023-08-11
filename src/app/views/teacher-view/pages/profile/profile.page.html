@@ -1,10 +1,12 @@
 <h1 class="text-2xl text-center mt-4 mb-6 text-primary">
-	Mise à jour de vos informations
+	{{'views.teacher.pages.profile.title' | translate}}
 </h1>
 <mat-accordion>
 	<mat-expansion-panel expanded>
 		<mat-expansion-panel-header>
-			<mat-panel-title> Informations personnelles </mat-panel-title>
+			<mat-panel-title>
+				{{'views.teacher.pages.profile.tabs.personal' | translate}}
+			</mat-panel-title>
 		</mat-expansion-panel-header>
 		<app-form
 			*ngIf="model$ | async as model"
@@ -15,7 +17,9 @@
 	</mat-expansion-panel>
 	<mat-expansion-panel>
 		<mat-expansion-panel-header>
-			<mat-panel-title> Mot de passe </mat-panel-title>
+			<mat-panel-title>
+				{{'views.teacher.pages.profile.tabs.password' | translate}}
+			</mat-panel-title>
 		</mat-expansion-panel-header>
 
 		<app-form

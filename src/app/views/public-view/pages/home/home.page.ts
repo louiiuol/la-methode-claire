@@ -1,16 +1,11 @@
 import {NgFor} from '@angular/common';
-import {Component, HostBinding, forwardRef} from '@angular/core';
-import {TranslateModule} from '@core';
+import {Component, HostBinding} from '@angular/core';
+import {TranslatePipe} from '@core';
 import {ButtonComponent, CardComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [
-		NgFor,
-		forwardRef(() => TranslateModule),
-		CardComponent,
-		ButtonComponent,
-	],
+	imports: [NgFor, TranslatePipe, CardComponent, ButtonComponent],
 	templateUrl: 'home.page.html',
 })
 export class HomePage {

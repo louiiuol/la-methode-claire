@@ -5,7 +5,7 @@ import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
 const MaterialModules = [MatSidenavModule, MatListModule];
 import {IconComponent} from '@shared/components';
 import {MatListModule} from '@angular/material/list';
-import {TranslateModule} from '@core';
+import {TranslatePipe} from '@core';
 import {NgFor} from '@angular/common';
 import {navigationLinks} from './teacher.routes';
 
@@ -22,7 +22,7 @@ import {navigationLinks} from './teacher.routes';
 	imports: [
 		NgFor,
 		forwardRef(() => RouterModule),
-		forwardRef(() => TranslateModule),
+		TranslatePipe,
 		HeaderComponent,
 		...MaterialModules,
 		IconComponent,

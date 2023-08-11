@@ -5,7 +5,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatTooltipModule} from '@angular/material/tooltip';
 const MaterialModules = [MatBadgeModule, MatTooltipModule];
 
-import {AuthService, TranslateModule} from '@core';
+import {AuthService, TranslatePipe} from '@core';
 import {ButtonComponent} from '@shared/components';
 import {LibraryModule} from '@shared/modules/library/library.module';
 import {LibraryService} from '@shared/modules/library/services/library.service';
@@ -17,7 +17,7 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		AsyncPipe,
 		NgFor,
 		forwardRef(() => LibraryModule),
-		forwardRef(() => TranslateModule),
+		TranslatePipe,
 		ButtonComponent,
 		...MaterialModules,
 	],

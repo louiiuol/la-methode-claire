@@ -8,10 +8,8 @@ import {
 import {
 	ChangeDetectionStrategy,
 	Component,
-	HostBinding,
 	HostListener,
 	Input,
-	forwardRef,
 } from '@angular/core';
 import {RouterModule} from '@angular/router';
 
@@ -21,7 +19,7 @@ import {MatMenuModule} from '@angular/material/menu';
 const MaterialModules = [MatButtonModule, MatIconModule, MatMenuModule];
 import {ThemePalette} from '@angular/material/core';
 
-import {TranslateModule} from '@core';
+import {TranslatePipe} from '@core';
 
 type ButtonType =
 	| 'basic'
@@ -50,7 +48,7 @@ type ButtonType =
 		NgTemplateOutlet,
 		...MaterialModules,
 		RouterModule,
-		forwardRef(() => TranslateModule),
+		TranslatePipe,
 	],
 	selector: 'app-button',
 	templateUrl: 'button.component.html',

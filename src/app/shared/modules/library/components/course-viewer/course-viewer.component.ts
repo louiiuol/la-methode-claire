@@ -32,6 +32,7 @@ import {
 } from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
+import {TranslatePipe} from '@core/modules/translation/pipes/translate.pipe';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -45,12 +46,13 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		NgFor,
 		TrustUrlPipe,
 		...MaterialModules,
-		forwardRef(() => TranslateModule),
+		// TranslatePipe,
 		ButtonComponent,
 		IconComponent,
 		CardComponent,
 		FileViewerComponent,
 		MessageComponent,
+		TranslatePipe,
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
@@ -61,11 +63,14 @@ export class CourseViewerComponent {
 	 * this method will populate `filesAvailable` field with given course's files.
 	 */
 	@Input({required: true}) set course(course: CourseViewDto | undefined) {
-		this._course = course;
-		this.filesAvailable = [];
-		for (let prop in course)
-			if (isBoolean(course[prop]) && !!course[prop])
-				this.filesAvailable.push(prop);
+		if (course) {
+			course.phonemes.sort((a, b) => a.name.localeCompare(b.name));
+			this._course = course;
+			this.filesAvailable = [];
+			for (let prop in course)
+				if (isBoolean(course[prop]) && !!course[prop])
+					this.filesAvailable.push(prop);
+		}
 	}
 
 	get course(): CourseViewDto | undefined {

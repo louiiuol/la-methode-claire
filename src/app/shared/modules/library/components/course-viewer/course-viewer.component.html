@@ -9,7 +9,10 @@
 			mode="side"
 			opened>
 			<h2 class="text-2xl" [style]="'color:' + course.color">
-				Semaine N° {{ course.order + 1 }}
+				{{
+					'modules.library.viewer.progress.week'
+						| translate: {number: (course.order + 1).toFixed()}
+				}}
 			</h2>
 			<mat-chip-listbox class="mb-2" aria-label="File selection">
 				<mat-chip-option
@@ -24,20 +27,23 @@
 				type="raised"
 				color="primary"
 				(click)="setCurrentLesson(course.order + 1)"
-				label="modules.library.mark_as_finished">
-			</app-button>
+				label="modules.library.viewer.mark_as_finished" />
 			<ng-template #completedCourse>
-				<app-message summary="Cette leçon est terminée" severity="note" />
+				<app-message
+					summary="modules.library.viewer.completed_course"
+					severity="note" />
 				<app-button
 					type="stroked"
 					color="primary"
-					label="Revenir à cette leçon"
+					label="modules.library.viewer.back_to_course"
 					(click)="setCurrentLesson(course.order)" />
 			</ng-template>
 
 			<hr class="my-3" />
 
-			<h3 class="text-xl !mb-1">Liste des mots</h3>
+			<h3 class="text-xl !mb-1">
+				{{ 'modules.library.viewer.words_list' | translate }}
+			</h3>
 			<mat-chip-listbox
 				*ngIf="course.words?.length; else noWordsAssociated"
 				class="mb-2"
@@ -52,11 +58,13 @@
 			<ng-template #noWordsAssociated>
 				<app-message
 					[showIcon]="false"
-					summary="Aucun mot associé à cette semaine"
+					summary="modules.library.viewer.no_word_associated"
 					severity="warn" />
 			</ng-template>
 			<hr class="mb-6" />
-			<h3 class="text-xl">Liste des fichiers</h3>
+			<h3 class="text-xl">
+				{{ 'modules.library.viewer.files_list' | translate }}
+			</h3>
 			<mat-selection-list #files [multiple]="false">
 				<mat-list-option
 					*ngFor="let file of filesAvailable"
@@ -74,14 +82,16 @@
 	<ng-template #unauthorizedLesson>
 		<app-card
 			class="mt-6 max-w-md"
-			title="Accès non autorisé"
-			subtitle="Cette leçon n'est accessible uniquement pour les membres abonnés!">
+			title="core.api.status.403"
+			subtitle="modules.library.viewer.restricted_lesson">
 			<img src="assets/img/access-denied.gif" alt="access-denied" />
-			<p class="text-lg text-primary">
-				Pour accéder à cette leçon, abonnez-vous !
+			<p class="text-lg text-primary" translated>
+				{{ 'modules.library.viewer.sub_to_access' | translate }}
 			</p>
-			<app-button type="raised" class="mt-3">Voir l'abonnement</app-button>
+			<app-button
+				type="raised"
+				class="mt-3"
+				label="modules.subscription.see_sub" />
 		</app-card>
-		<p></p>
 	</ng-template>
 </ng-container>

@@ -11,7 +11,7 @@ import {
 	CardComponent,
 	ButtonComponent,
 } from '@shared/components';
-import {AuthService, TranslateModule, FieldConfig} from '@core';
+import {AuthService, FieldConfig, TranslatePipe} from '@core';
 
 /**
  * Login View, allows user to enter their credentials to authenticate and access
@@ -20,12 +20,7 @@ import {AuthService, TranslateModule, FieldConfig} from '@core';
  */
 @Component({
 	standalone: true,
-	imports: [
-		CardComponent,
-		FormComponent,
-		ButtonComponent,
-		forwardRef(() => TranslateModule),
-	],
+	imports: [CardComponent, FormComponent, ButtonComponent, TranslatePipe],
 	templateUrl: './login.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -8,8 +8,9 @@ import {
 	inject,
 	signal,
 } from '@angular/core';
-import {TranslateModule} from '@ngx-translate/core';
-import {FieldConfig} from '@core';
+import {ActivatedRoute} from '@angular/router';
+
+import {FieldConfig, TranslatePipe} from '@core';
 import {
 	CardComponent,
 	FormComponent,
@@ -17,7 +18,6 @@ import {
 	MessageComponent,
 } from '@shared/components';
 import {PasswordService, PasswordModule} from '@shared/modules/password';
-import {ActivatedRoute} from '@angular/router';
 
 /**
  * Forgot password form, allows user to enter their credential to receive a email that
@@ -31,7 +31,7 @@ import {ActivatedRoute} from '@angular/router';
 		FormComponent,
 		ButtonComponent,
 		MessageComponent,
-		forwardRef(() => TranslateModule),
+		TranslatePipe,
 		forwardRef(() => PasswordModule),
 	],
 	templateUrl: './reset-password.page.html',

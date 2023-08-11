@@ -3,11 +3,10 @@ import {
 	Component,
 	HostBinding,
 	Input,
-	forwardRef,
 } from '@angular/core';
 import {NgIf} from '@angular/common';
 import {TrustUrlPipe} from '@shared/pipes';
-import {TranslateModule} from '@core';
+import {TranslatePipe} from '@core';
 
 /**
  * Simple component to display a file into an iframe based on given file name.
@@ -18,7 +17,7 @@ import {TranslateModule} from '@core';
 @Component({
 	standalone: true,
 	selector: 'app-file-viewer',
-	imports: [NgIf, TrustUrlPipe, forwardRef(() => TranslateModule)],
+	imports: [NgIf, TrustUrlPipe, TranslatePipe],
 	templateUrl: './file-viewer.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

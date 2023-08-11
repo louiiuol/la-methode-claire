@@ -7,23 +7,17 @@ import {
 	HostBinding,
 	Input,
 	Output,
-	forwardRef,
 } from '@angular/core';
-import {NgFor, ViewportScroller} from '@angular/common';
+import {NgFor} from '@angular/common';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {ButtonComponent} from '@shared/components';
 import {CourseViewDto} from '../../types/course-view.dto';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {TranslateModule} from '@core';
+import {TranslatePipe} from '@core';
 
 @Component({
 	selector: 'app-progress-bar',
 	standalone: true,
-	imports: [
-		NgFor,
-		ButtonComponent,
-		MatTooltipModule,
-		forwardRef(() => TranslateModule),
-	],
+	imports: [NgFor, ButtonComponent, MatTooltipModule, TranslatePipe],
 	templateUrl: './progress-bar.component.html',
 	styles: [
 		`

@@ -3,10 +3,9 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
-	forwardRef,
 	inject,
 } from '@angular/core';
-import {AuthService, TranslateModule} from '@core';
+import {AuthService, TranslatePipe} from '@core';
 import {
 	CardComponent,
 	FormComponent,
@@ -15,13 +14,7 @@ import {
 
 @Component({
 	standalone: true,
-	imports: [
-		NgIf,
-		CardComponent,
-		FormComponent,
-		ButtonComponent,
-		forwardRef(() => TranslateModule),
-	],
+	imports: [NgIf, CardComponent, FormComponent, ButtonComponent, TranslatePipe],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

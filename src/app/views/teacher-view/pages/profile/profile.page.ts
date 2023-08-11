@@ -4,7 +4,7 @@ import {AsyncPipe, NgIf} from '@angular/common';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 import {FormComponent, ButtonComponent} from '@shared/components';
-import {AuthService, TranslateModule, FieldConfig} from '@core';
+import {AuthService, FieldConfig, TranslatePipe} from '@core';
 import {PasswordModule, PasswordService} from '@shared/modules/password';
 
 const MaterialModules = [MatExpansionModule];
@@ -21,7 +21,7 @@ const MaterialModules = [MatExpansionModule];
 		ButtonComponent,
 		...MaterialModules,
 		forwardRef(() => PasswordModule),
-		forwardRef(() => TranslateModule),
+		TranslatePipe,
 	],
 	templateUrl: './profile.page.html',
 })
