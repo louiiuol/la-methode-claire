@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {LibraryResource} from './library.resource';
 import {map, of} from 'rxjs';
 import {CourseViewDto} from '../types/course-view.dto';
+import {HttpOutputEntity, HttpOutputArray} from '@core';
 
 /**
  * Provides methods to handle user's library
@@ -16,13 +17,15 @@ export class LibraryService {
 	getLibrary = () =>
 		this.lessons
 			? of(this.lessons)
-			: this.http.getLibrary().pipe(
-					map(lessons => {
-						const fetchedLessons = lessons.value;
-						this.lessons = fetchedLessons;
-						return fetchedLessons;
-					})
-			  );
+			: this.http.getLibrary().pipe(map(this.updateLocalLessons));
 
 	setCurrentLesson = (index: number) => this.http.setCurrentLessonIndex(index);
+
+	private updateLocalLessons = (
+		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>
+	) => {
+		const fetchedLessons = lessons.value;
+		this.lessons = fetchedLessons;
+		return fetchedLessons;
+	};
 }
