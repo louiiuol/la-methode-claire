@@ -1,5 +1,4 @@
 import {Component, HostBinding, HostListener} from '@angular/core';
-import {TranslateService} from '@core';
 
 /**
  * Root component of the Application, responsible for:
@@ -11,8 +10,8 @@ import {TranslateService} from '@core';
 @Component({
 	selector: 'app-root',
 	template: `
-		<router-outlet />
 		<app-toaster />
+		<router-outlet />
 	`,
 })
 export class AppPage {
@@ -27,8 +26,4 @@ export class AppPage {
 
 	@HostBinding('class')
 	protected readonly class = 'relative';
-
-	constructor(translator: TranslateService) {
-		translator.init();
-	}
 }
