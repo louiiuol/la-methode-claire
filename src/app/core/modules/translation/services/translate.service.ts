@@ -25,7 +25,9 @@ export class TranslateService {
 	 */
 	currentLang = this.translator.currentLang;
 
-	constructor(private translator: NgxTranslateService) {}
+	constructor(private translator: NgxTranslateService) {
+		this.init();
+	}
 
 	init() {
 		this.translator.addLangs(['fr']);
