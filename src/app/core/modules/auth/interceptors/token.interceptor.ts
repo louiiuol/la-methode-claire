@@ -1,19 +1,19 @@
 import {
 	HttpRequest,
 	HttpHandler,
-	HttpEvent,
 	HttpInterceptor,
 	HttpErrorResponse,
 } from '@angular/common/http';
 import {Injectable, inject} from '@angular/core';
-import {Router} from '@angular/router';
 
 import {Observable, of, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
+import {ApiResponse} from '@core/modules/http';
 import {TokenStore} from '../stores/token.store';
-import {AuthService} from '../services/auth.service';
+import {Router} from '@angular/router';
+import {UserStore} from '../stores';
 
 /**
  * Intercepts every HTTP requests made by the Application thanks to `HttpInterceptor`, and adds the following logic:
@@ -26,14 +26,13 @@ import {AuthService} from '../services/auth.service';
 export class TokenInterceptor implements HttpInterceptor {
 	private readonly appUrlDomain = environment.root_url;
 	private readonly tokenStore = inject(TokenStore);
+	private readonly userStore = inject(UserStore);
+	private readonly router = inject(Router);
 
-	intercept(
-		req: HttpRequest<any>,
-		next: HttpHandler
-	): Observable<HttpEvent<any>> {
+	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
 		if (this.tokenStore.checkToken() && req.url.includes(this.appUrlDomain))
 			req = this.addHeader(req, this.tokenStore.getToken());
-		return next.handle(req).pipe(catchError(this.handleAuthError));
+		return next.handle(req).pipe(catchError(err => this.handleAuthError(err)));
 	}
 
 	/**
@@ -42,13 +41,12 @@ export class TokenInterceptor implements HttpInterceptor {
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request
 	 */
-	private handleAuthError(err: HttpErrorResponse): Observable<any> {
+	private handleAuthError(err: HttpErrorResponse): Observable<unknown> {
 		if (
-			this &&
-			err.status === 401 &&
+			(err.error as ApiResponse<null>)?.code === 401 &&
 			err.url !== this.appUrlDomain + '/login'
 		) {
-			inject(AuthService).logOut();
+			this.logOut();
 			return of(err?.message); // or EMPTY may be appropriate here
 		}
 		return throwError(() => err);
@@ -65,4 +63,12 @@ export class TokenInterceptor implements HttpInterceptor {
 		token: string | null
 	): HttpRequest<any> =>
 		req.clone(token ? {setHeaders: {Authorization: 'Bearer ' + token}} : {});
+
+	private logOut = () => {
+		this.tokenStore.clearToken();
+		this.userStore.clearUser();
+		this.router
+			.navigate(['/login'])
+			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
+	};
 }
