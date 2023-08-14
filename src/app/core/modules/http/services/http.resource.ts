@@ -245,11 +245,13 @@ export abstract class HttpResource {
 		action: RequestActions,
 		opt: RequestOptions | undefined
 	) => {
-		const res = response.error as ApiResponse<null>;
+		const res = (response.error as ApiResponse<null>) ?? response;
 		const resource =
 			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
 		console.error(
-			`(${new Date().toLocaleDateString()}) [${res.code ?? 0}] HTTP failed to ${
+			`(${new Date().toLocaleDateString()}) [${
+				res?.code ?? 0
+			}] HTTP failed to ${
 				opt?.customAction ?? action
 			} on [${resource.toLocaleUpperCase()}]`,
 			res
