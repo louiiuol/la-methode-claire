@@ -85,6 +85,7 @@
 				"verify_input(s)": "Formulaire invalide",
 				"server_down": "L'API est hors ligne. Merci de réessayer plus tard !",
 				"token_must_be_a_jwt_string": "Clé d'identification expirée",
+				"token_expired": "Clé d'identification expirée ! Merci de vous reconnecter",
 				"conflict": "Cette action ne peut être réalisée !",
 				"not_found": "Cette ressource n'existe pas !",
 				"UNIQUE": "Existe déjà",
@@ -162,7 +163,7 @@
 				"forgot-password": "Mot de passe oublié ?",
 				"method": "La méthode",
 				"explanation": "Éclaircissement",
-				"who_is_claire": "Qui est claire ?",
+				"about": "Qui est claire ?",
 				"faq": "F.A.Q"
 			},
 			"pages": {
@@ -256,7 +257,8 @@
 				"text": "Histoire",
 				"lesson": "Leçon",
 				"exercice": "Exercice",
-				"poster": "Poster"
+				"poster": "Affiche",
+				"phoneme_poster": "Affiche {{phoneme}}"
 			},
 			"viewer": {
 				"mark_as_finished": "Marquer comme terminée",
