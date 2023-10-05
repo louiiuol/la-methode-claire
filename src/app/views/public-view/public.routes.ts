@@ -39,6 +39,11 @@ export const PUBLIC_ROUTES: Routes = [
 						m => m.ResetPasswordPage
 					),
 			},
+			{
+				path: 'about',
+				loadComponent: () =>
+					import('./pages/about/about.page').then(m => m.AboutPage),
+			},
 			// {
 			// 	path: 'contact',
 			// 	loadComponent: () =>
@@ -50,6 +55,7 @@ export const PUBLIC_ROUTES: Routes = [
 
 export const navigationLinks = [
 	'',
+	'about',
 	// 'method',
 	// 'explanation',
 	// 'who_is_claire',
