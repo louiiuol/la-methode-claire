@@ -73,10 +73,19 @@
 					{{ 'modules.library.files.' + file | translate }}
 				</mat-list-option>
 			</mat-selection-list>
+			<mat-selection-list #posters [multiple]="false">
+				<mat-list-option
+					*ngFor="let phoneme of phonemePosters"
+					[value]="phoneme">
+					{{ 'modules.library.files.phoneme_poster' | translate: {phoneme} }}
+				</mat-list-option>
+			</mat-selection-list>
 			<span class="flex-1"></span>
 		</mat-drawer>
 		<app-file-viewer
-			*ngIf="files.selectedOptions.selected[0] as selectedFile"
+			*ngIf="
+				files.selectedOptions.selected[0] ?? filesAvailable[0] as selectedFile
+			"
 			[file]="[course.order, selectedFile.value].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>

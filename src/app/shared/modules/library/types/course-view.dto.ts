@@ -4,7 +4,7 @@
 export interface CourseViewDto {
 	uuid: string;
 	order: number;
-	phonemes: {uuid: string; name: string}[];
+	phonemes: {uuid: string; name: string; poster?: boolean}[];
 	script: boolean;
 	lesson: boolean;
 	exercice: boolean;

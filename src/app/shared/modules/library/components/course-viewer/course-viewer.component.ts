@@ -69,6 +69,8 @@ export class CourseViewerComponent {
 			for (let prop in course)
 				if (isBoolean(course[prop]) && !!course[prop])
 					this.filesAvailable.push(prop);
+			this.phonemePosters =
+				this.course?.phonemes?.filter(p => p.poster).map(p => p.name) ?? [];
 		}
 	}
 
@@ -97,6 +99,8 @@ export class CourseViewerComponent {
 		this.authenticator?.currentUser()?.currentLesson ?? 0;
 
 	protected filesAvailable: string[] = [];
+
+	protected phonemePosters: string[] = [];
 
 	private _course?: CourseViewDto;
 
