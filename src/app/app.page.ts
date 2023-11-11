@@ -25,5 +25,5 @@ export class AppPage {
 	}
 
 	@HostBinding('class')
-	protected readonly class = 'relative';
+	protected readonly class = 'relative text-xl';
 }

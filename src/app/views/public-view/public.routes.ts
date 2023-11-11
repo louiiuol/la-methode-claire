@@ -44,6 +44,11 @@ export const PUBLIC_ROUTES: Routes = [
 				loadComponent: () =>
 					import('./pages/about/about.page').then(m => m.AboutPage),
 			},
+			{
+				path: 'method',
+				loadComponent: () =>
+					import('./pages/method/method.page').then(m => m.MethodPage),
+			},
 			// {
 			// 	path: 'contact',
 			// 	loadComponent: () =>
@@ -55,9 +60,7 @@ export const PUBLIC_ROUTES: Routes = [
 
 export const navigationLinks = [
 	'',
+	'method',
 	'about',
-	// 'method',
-	// 'explanation',
-	// 'who_is_claire',
 	// 'faq',
 ];
