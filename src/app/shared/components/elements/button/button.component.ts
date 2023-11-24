@@ -19,8 +19,6 @@ import {MatMenuModule} from '@angular/material/menu';
 const MaterialModules = [MatButtonModule, MatIconModule, MatMenuModule];
 import {ThemePalette} from '@angular/material/core';
 
-import {TranslatePipe} from '@core';
-
 type ButtonType =
 	| 'basic'
 	| 'raised'
@@ -48,7 +46,6 @@ type ButtonType =
 		NgTemplateOutlet,
 		...MaterialModules,
 		RouterModule,
-		TranslatePipe,
 	],
 	selector: 'app-button',
 	templateUrl: 'button.component.html',

@@ -1,11 +1,14 @@
 <ng-template #content>
 	<ng-content></ng-content>
-	<ng-container *ngIf="label">{{ label | translate }}</ng-container>
+	<ng-container *ngIf="label">{{ label }}</ng-container>
 </ng-template>
 
 <ng-container *ngIf="href; else buttonTemplate" [ngSwitch]="type">
 	<a
+		class="w-full"
 		[routerLink]="href"
+		routerLinkActive="font-bold"
+		[routerLinkActiveOptions]="{exact: true}"
 		[fragment]="fragment"
 		[queryParams]="params"
 		*ngSwitchCase="'raised'"
@@ -16,7 +19,10 @@
 	</a>
 
 	<a
+		class="w-full"
 		[routerLink]="href"
+		routerLinkActive="font-bold"
+		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
 		*ngSwitchCase="'stroked'"
@@ -27,7 +33,10 @@
 	</a>
 
 	<a
+		class="w-full"
 		[routerLink]="href"
+		routerLinkActive="font-bold"
+		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
 		*ngSwitchCase="'flat'"
@@ -38,7 +47,10 @@
 	</a>
 
 	<a
+		class="w-full"
 		[routerLink]="href"
+		routerLinkActive="font-bold"
+		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
 		*ngSwitchCase="'icon'"
@@ -49,7 +61,10 @@
 	</a>
 
 	<a
+		class="w-full"
 		[routerLink]="href"
+		routerLinkActive="font-bold"
+		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
 		*ngSwitchCase="'menu-item'"
@@ -60,9 +75,12 @@
 	</a>
 
 	<a
+		class="w-full"
 		*ngSwitchDefault
 		mat-button
 		[routerLink]="href"
+		routerLinkActive="font-bold"
+		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
 		[color]="color"
@@ -73,6 +91,7 @@
 
 <ng-template #buttonTemplate [ngSwitch]="type">
 	<button
+		class="w-full"
 		*ngSwitchCase="'raised'"
 		mat-raised-button
 		[color]="color"
@@ -81,6 +100,7 @@
 	</button>
 
 	<button
+		class="w-full"
 		*ngSwitchCase="'stroked'"
 		mat-stroked-button
 		[color]="color"
@@ -89,6 +109,7 @@
 	</button>
 
 	<button
+		class="w-full"
 		*ngSwitchCase="'flat'"
 		mat-flat-button
 		[color]="color"
@@ -97,6 +118,7 @@
 	</button>
 
 	<button
+		class="w-full"
 		*ngSwitchCase="'icon'"
 		mat-icon-button
 		[color]="color"
@@ -105,6 +127,7 @@
 	</button>
 
 	<button
+		class="w-full"
 		*ngSwitchCase="'menu-item'"
 		mat-menu-item
 		[class]="'text-' + color"
@@ -112,7 +135,12 @@
 		<ng-container *ngTemplateOutlet="content"></ng-container>
 	</button>
 
-	<button *ngSwitchDefault mat-button [color]="color" [disabled]="disabled">
+	<button
+		class="w-full"
+		*ngSwitchDefault
+		mat-button
+		[color]="color"
+		[disabled]="disabled">
 		<ng-container *ngTemplateOutlet="content"></ng-container>
 	</button>
 </ng-template>

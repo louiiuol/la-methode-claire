@@ -1,20 +1,17 @@
 <app-card
 	class="w-full max-w-3xl animate__animated animate__fadeInDown"
-	title="views.public.pages.login.title"
-	subtitle="views.public.pages.login.subtitle">
+	title="Connectez vous à votre compte"
+	subtitle="Retrouvez votre progression et bien d'autres contenu">
 	<app-form action="login" [submitted]="logIn" [fields]="fields" />
 	<ng-template #cardFooter>
 		<div class="my-3 text-center">
 			<app-button
 				color="accent"
 				href="/forgot-password"
-				label="views.public.routes.forgot-password" />
+				label="Mot de passe oublié ?" />
 			<p class="mt-2">
-				{{'modules.account.no_account' | translate}}
-				<app-button
-					color="primary"
-					href="/register"
-					label="core.actions.register.action" />
+				Pas encore de compte ?
+				<app-button color="primary" href="/register" label="S'inscrire" />
 			</p>
 		</div>
 	</ng-template>

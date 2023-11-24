@@ -2,7 +2,6 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
-	forwardRef,
 	inject,
 } from '@angular/core';
 
@@ -11,7 +10,7 @@ import {
 	CardComponent,
 	ButtonComponent,
 } from '@shared/components';
-import {AuthService, FieldConfig, TranslatePipe} from '@core';
+import {AuthService, FieldConfig} from '@core';
 
 /**
  * Login View, allows user to enter their credentials to authenticate and access
@@ -20,7 +19,7 @@ import {AuthService, FieldConfig, TranslatePipe} from '@core';
  */
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, ButtonComponent, TranslatePipe],
+	imports: [CardComponent, FormComponent, ButtonComponent],
 	templateUrl: './login.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

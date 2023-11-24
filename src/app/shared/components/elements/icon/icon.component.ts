@@ -41,7 +41,7 @@ export class IconComponent implements OnChanges {
 	@Input() svg?: string;
 
 	@HostBinding('class')
-	protected readonly class = 'inline mx-auto';
+	protected readonly class = 'inline-flex items-center mx-auto';
 
 	protected fetched$?: Observable<boolean>;
 

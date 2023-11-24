@@ -4,7 +4,7 @@ import {AsyncPipe, NgIf} from '@angular/common';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 import {FormComponent, ButtonComponent} from '@shared/components';
-import {AuthService, FieldConfig, TranslatePipe} from '@core';
+import {AuthService, FieldConfig} from '@core';
 import {PasswordModule, PasswordService} from '@shared/modules/password';
 
 const MaterialModules = [MatExpansionModule];
@@ -21,7 +21,6 @@ const MaterialModules = [MatExpansionModule];
 		ButtonComponent,
 		...MaterialModules,
 		forwardRef(() => PasswordModule),
-		TranslatePipe,
 	],
 	templateUrl: './profile.page.html',
 })
@@ -44,8 +43,7 @@ export class ProfilePage {
 	protected passwordValidators = ['passwordMatch'];
 
 	protected readonly model$ = this.authenticator.getProfile();
+	protected readonly updateProfile = this.authenticator.updateProfile;
 
 	constructor(private readonly authenticator: AuthService) {}
-
-	protected readonly updateProfile = this.authenticator.updateProfile;
 }

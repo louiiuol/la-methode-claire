@@ -1,43 +1,48 @@
-<section id="intro" class="slide bg-primary relative">
+<section id="intro" class="bg-primary relative pt-9 pb-36">
 	<h1
-		class="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl w-full sm:p-4 !leading-loose !mx-auto text-white flex flex-col justify-center h-full gap-2 text-center text-balance overflow-hidden">
+		style="line-height: 1.7"
+		class="p-6 pb-24 text-2xl xs:text-3xl md:text-5xl lg:text-6xl xl:text-7xl w-full sm:p-4 !mx-auto flex flex-col justify-center h-full gap-2 text-center text-balance overflow-hidden text-white">
 		<span class="animate__animated animate__fadeInDown">
 			La méthode Claire est
 			<b
-				class="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__pulse animate__delay-1s inline-block">
+				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__pulse animate__delay-1s inline-block">
 				claire </b
 			>,
 		</span>
 		<span class="animate__animated animate__fadeInLeft animate__delay-1s">
 			parce qu'elle ne se contente pas de vous dire
 			<b
-				class="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__pulse animate__delay-2s inline-block">
+				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__pulse animate__delay-2s inline-block">
 				quoi faire </b
 			>,
 		</span>
 		<span class="animate__animated animate__fadeInLeft animate__delay-2s">
 			mais aussi
 			<b
-				class="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__pulse animate__delay-3s inline-block">
+				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__pulse animate__delay-3s inline-block">
 				comment faire
 			</b>
 		</span>
 		<span class="animate__animated animate__fadeInUp animate__delay-3s">
 			et surtout, <br />
 			<b
-				class="text-accent text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl animate__animated animate__heartBeat animate__delay-4s inline-block">
+				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__heartBeat animate__delay-4s inline-block">
 				elle le fait avec vous !
 			</b>
 		</span>
 	</h1>
-</section>
-<section class="w-full text-center bg-accent text-xl sm:text-2xl p-3">
-	<p class="!mb-0">{{'views.public.pages.home.intro' | translate}}</p>
+	<section
+		class="w-full text-center bg-accent text-xl xs:text-2xl sm:text-3xl px-12 py-6 absolute bottom-0">
+		<p class="!mb-0">
+			La méthode claire vous explique, vous guide et vous soutient tout au long
+			de l'année !
+		</p>
+	</section>
 </section>
 
 <section id="method" class="mb-10 [&>*:nth-child(even)]:flex-row-reverse mt-10">
 	<h2 class="text-4xl text-center mt-3 mb-2 text-balance px-2">
-		{{'views.public.pages.home.method.title' | translate}}
+		Devenez un expert en apprentissage de la lecture
 	</h2>
 	<article
 		class="flex justify-center items-center gap-10 sm:w-3/4 mx-auto !my-6 px-5"
@@ -46,39 +51,40 @@
 			<span [style]="{'color': explanation.color}" class="text-5xl">
 				{{explanation.index}}
 			</span>
-			<h3 class="text-3xl">
-				{{'views.public.pages.home.method.explanations.' + explanation.index +
-				'.title' | translate }}
-			</h3>
-			<p class="max-w-xs">
-				{{('views.public.pages.home.method.explanations.' + explanation.index +
-				'.description' ) | translate}}
-			</p>
-			<app-button
-				href="method/#{{explanation.title}}"
-				[disabled]="true"
-				color="accent"
-				label="core.expressions.learn_more"
-				class="text-end w-full underline inline-block" />
+			<h3 class="text-3xl">{{explanation.title}}</h3>
+			<p class="max-w-xs">{{explanation.description}}</p>
 		</div>
 		<img
 			class="w-1/3 md:max-w-xs"
 			[src]="'assets/img/illustrations/' + explanation.title + '.png'"
-			[alt]="explanation.title + '\'s illustration'" />
+			[alt]="'Illustration à propos de ' +explanation.title" />
 	</article>
 </section>
-<section
-	id="cta-register"
-	class="flex justify-center items-center gap-7 p-7 bg-accent">
-	<div>
-		<h2 class="text-3xl">
-			{{'views.public.pages.home.cta-register.title' | translate}}
-		</h2>
-		<p class="text-lg">
-			{{'views.public.pages.home.cta-register.description' | translate}}
+<section id="cta-register" class="bg-accent">
+	<div class="max-w-2xl mx-auto pt-9 pb-6 px-6">
+		<h2 class="text-5xl text-primary mb-4">Envie de découvrir la méthode ?</h2>
+		<p class="text-2xl">
+			Vous pouvez créer un compte gratuitement et bénéficié d’un aperçu de la
+			méthode !
 		</p>
+		<div class="py-6 max-w-md mx-auto flex justify-evenly gap-3 flex-wrap">
+			<app-button
+				class="flex-1"
+				type="stroked"
+				href="/method"
+				label="En savoir plus" />
+			<app-button
+				class="flex-1"
+				type="raised"
+				color="warn"
+				href="/about"
+				label="Qui est Claire ?" />
+			<app-button
+				class="w-full"
+				type="raised"
+				color="primary"
+				href="/register"
+				label="Créer un compte gratuitement" />
+		</div>
 	</div>
-	<app-button class="disable" type="raised" href="/register">
-		{{ 'core.actions.register.action' | translate }}
-	</app-button>
 </section>

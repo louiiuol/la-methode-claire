@@ -12,7 +12,7 @@
 		[form]="form"
 		[options]="options"
 		[fields]="formFields ?? []"
-		[model]="formModel"></formly-form>
+		[model]="formModel" />
 	<footer class="mt-4 flex w-full justify-center gap-5">
 		<button
 			type="button"
@@ -20,16 +20,16 @@
 			(click)="reset()"
 			[disabled]="pristine()"
 			color="primary">
-			{{ 'core.actions.reset.action' | translate }}
+			Réinitialiser
 		</button>
 		<button
 			mat-flat-button
 			color="primary"
 			type="submit"
-			matTooltip="Form is invalid"
+			matTooltip="Le formulaire est invalide"
 			[matTooltipDisabled]="form.valid"
 			[disabled]="!isValidForm()">
-			{{ 'core.actions.' + action + '.action' | translate }}
+			{{ action }}
 		</button>
 	</footer>
 </form>

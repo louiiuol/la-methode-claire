@@ -5,7 +5,7 @@ import {
 	HostBinding,
 	inject,
 } from '@angular/core';
-import {AuthService, TranslatePipe} from '@core';
+import {AuthService} from '@core';
 import {
 	CardComponent,
 	FormComponent,
@@ -14,7 +14,7 @@ import {
 
 @Component({
 	standalone: true,
-	imports: [NgIf, CardComponent, FormComponent, ButtonComponent, TranslatePipe],
+	imports: [NgIf, CardComponent, FormComponent, ButtonComponent],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -43,7 +43,10 @@ export class RegisterPage {
 		{preset: 'user.agree', props: {required: true}},
 	];
 	protected readonly validators = ['passwordMatch'];
-	protected readonly navigationLinks = ['register', 'forgot-password'];
+	protected readonly navigationLinks = [
+		{path: 'register', name: "S'inscrire"},
+		{path: 'forgot-password', name: 'Mot de passe oublié ?'},
+	];
 
 	protected emailSent = false;
 }

@@ -12,12 +12,11 @@ import {NgFor} from '@angular/common';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ButtonComponent} from '@shared/components';
 import {CourseViewDto} from '../../types/course-view.dto';
-import {TranslatePipe} from '@core';
 
 @Component({
 	selector: 'app-progress-bar',
 	standalone: true,
-	imports: [NgFor, ButtonComponent, MatTooltipModule, TranslatePipe],
+	imports: [NgFor, ButtonComponent, MatTooltipModule],
 	templateUrl: './progress-bar.component.html',
 	styles: [
 		`

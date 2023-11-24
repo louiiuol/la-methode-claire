@@ -1,7 +1,6 @@
 import {NgIf} from '@angular/common';
 import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import {TranslatePipe} from '@core';
 
 import {NotificationSeverity} from '@core/modules/notification';
 
@@ -27,7 +26,7 @@ const MESSAGE_DICTIONARY = {
  */
 @Component({
 	standalone: true,
-	imports: [NgIf, MatIconModule, TranslatePipe],
+	imports: [NgIf, MatIconModule],
 	selector: 'app-message',
 	template: `
 		<div
@@ -38,11 +37,8 @@ const MESSAGE_DICTIONARY = {
 				{{ getMessageIcon() }}
 			</mat-icon>
 			<div class="px-1">
-				<p class="font-bold">{{ summary | translate }}</p>
-				<p
-					class="text-sm"
-					*ngIf="details"
-					[innerHTML]="details | translate"></p>
+				<p class="font-bold" [innerHTML]="summary"></p>
+				<p class="text-sm" *ngIf="details" [innerHTML]="details"></p>
 			</div>
 		</div>
 	`,

@@ -1,14 +1,12 @@
-<mat-card
-	[title]="title ?? '' | translate"
-	class="mx-auto w-fit px-5 max-w-full">
+<mat-card [title]="title ?? ''" class="mx-auto w-fit px-5 max-w-full">
 	<mat-card-header *ngIf="title || subtitle" class="text-primary !pt-8 !pb-2">
 		<mat-card-title class="text-center !text-2xl" *ngIf="!!title">
-			{{ title | translate }}
+			{{ title }}
 		</mat-card-title>
 		<mat-card-subtitle
 			class="text-center text-balance !text-lg"
 			*ngIf="!!subtitle">
-			{{ subtitle | translate }}
+			{{ subtitle }}
 		</mat-card-subtitle>
 	</mat-card-header>
 

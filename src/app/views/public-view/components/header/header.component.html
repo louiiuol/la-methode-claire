@@ -2,7 +2,7 @@
 	<app-button
 		class="md:hidden"
 		(click)="toggledMobileMenu.emit()"
-		aria-label="Button to expand sidebar"
+		aria-label="Afficher le menu pour mobile"
 		type="icon">
 		<app-icon>menu</app-icon>
 	</app-button>
@@ -13,18 +13,18 @@
 		class="hidden md:block"
 		*ngFor="let link of navigationLinks"
 		color="primary"
-		[href]="'/' + link"
-		[label]="'views.public.routes.' + link" />
+		[href]="'/' + link.path"
+		[label]="link.name" />
 
 	<span class="flex-1"></span>
 	<app-button
 		type="raised"
 		color="primary"
 		href="/login"
-		label="core.actions.login.action" />
+		label="se connecter" />
 	<app-button
 		type="raised"
 		color="accent"
 		href="/register"
-		label="core.actions.register.action" />
+		label="s'inscrire" />
 </mat-toolbar>

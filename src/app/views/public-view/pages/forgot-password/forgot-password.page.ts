@@ -5,7 +5,7 @@ import {
 	HostBinding,
 	inject,
 } from '@angular/core';
-import {FieldConfig, TranslatePipe} from '@core';
+import {FieldConfig} from '@core';
 import {
 	CardComponent,
 	FormComponent,
@@ -24,7 +24,6 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 		CardComponent,
 		FormComponent,
 		ButtonComponent,
-		TranslatePipe,
 		PasswordModule,
 	],
 	templateUrl: './forgot-password.page.html',
@@ -38,7 +37,10 @@ export class ForgotPasswordPage {
 		{preset: 'user.email', props: {required: true}},
 	];
 	protected readonly forgotPassword = inject(PasswordService).forgotPassword;
-	protected readonly navigationLinks = ['register', 'login'];
+	protected readonly navigationLinks = [
+		{path: 'register', name: "s'inscrire"},
+		{path: 'login', name: 'se connecter'},
+	];
 
 	protected emailSent = false;
 }

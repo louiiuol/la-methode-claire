@@ -59,8 +59,7 @@ export const PUBLIC_ROUTES: Routes = [
 ];
 
 export const navigationLinks = [
-	'',
-	'method',
-	'about',
-	// 'faq',
+	{path: '', name: 'accueil'},
+	{path: 'method', name: 'La méthode'},
+	{path: 'about', name: 'Qui est claire ?'},
 ];

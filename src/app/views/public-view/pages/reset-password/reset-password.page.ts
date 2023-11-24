@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import {FieldConfig, TranslatePipe} from '@core';
+import {FieldConfig} from '@core';
 import {
 	CardComponent,
 	FormComponent,
@@ -31,7 +31,6 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 		FormComponent,
 		ButtonComponent,
 		MessageComponent,
-		TranslatePipe,
 		forwardRef(() => PasswordModule),
 	],
 	templateUrl: './reset-password.page.html',

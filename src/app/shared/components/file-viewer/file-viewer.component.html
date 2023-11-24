@@ -1,4 +1,3 @@
-<!-- [src]="'assets/pdf/courses/' + file + '.pdf' | trustURL" -->
 <ng-container *ngIf="file; else noFileSelected">
 	<iframe
 		title="file viewer"
@@ -8,11 +7,10 @@
 </ng-container>
 <ng-template #noFileSelected>
 	<div class="w-90">
-		<h3 class="text-3xl text-primary">
-			{{ 'modules.library.no_file_selected.title' | translate }}
-		</h3>
+		<h3 class="text-3xl text-primary">Aucun fichier sélectionné</h3>
 		<p class="text-lg text-slate-500">
-			{{ 'modules.library.no_file_selected.description' | translate }}
+			Merci de sélectionner un fichier sur la droite pour en visualiser le
+			contenu
 		</p>
 	</div>
 </ng-template>

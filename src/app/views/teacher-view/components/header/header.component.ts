@@ -6,7 +6,6 @@ const MaterialModules = [MatToolbarModule, MatMenuModule];
 
 import {AuthService, PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
-import {navigationLinks} from '../../teacher.routes';
 
 /**
  * Logged views global header
@@ -28,7 +27,6 @@ export class HeaderComponent {
 
 	@HostBinding('class') class = 'w-full';
 
-	protected readonly navigationLinks = navigationLinks;
 	protected readonly currentUser = this.authenticator.currentUser();
 
 	constructor(

@@ -11,11 +11,7 @@ export const TEACHER_ROUTES: Routes = [
 		children: [
 			{
 				path: 'dashboard',
-				loadComponent: () =>
-					import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
-			},
-			{
-				path: 'progression',
+				pathMatch: 'full',
 				loadComponent: () =>
 					import('./pages/progression/progression.page').then(
 						m => m.ProgressionPage

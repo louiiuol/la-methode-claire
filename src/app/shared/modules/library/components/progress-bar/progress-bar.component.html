@@ -17,7 +17,7 @@
 	}"
 	type="icon"
 	[disabled]="lesson.order > 2 && !hasValidSubscription"
-	[matTooltip]="'modules.library.viewer.for_sub_only' | translate"
+	matTooltip="Cette leçon est réservée aux abonnées"
 	[matTooltipDisabled]="lesson.order < 3 || hasValidSubscription"
 	(click)="setCurrentLesson(lesson.order)"
 	[label]="(lesson.order + 1).toFixed()" />

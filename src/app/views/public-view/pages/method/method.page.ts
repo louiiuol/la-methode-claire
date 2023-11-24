@@ -6,5 +6,5 @@ import {Component, HostBinding} from '@angular/core';
 })
 export class MethodPage {
 	@HostBinding('class')
-	protected readonly class = 'px-10';
+	protected readonly class = 'bg-yellow-light text-primary px-10 text-2xl';
 }

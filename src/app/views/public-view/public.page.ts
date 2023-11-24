@@ -24,8 +24,6 @@ import {navigationLinks} from './public.routes';
 	imports: [
 		NgFor,
 		forwardRef(() => RouterModule),
-		TranslatePipe,
-		forwardRef(() => RouterModule),
 		...MaterialModules,
 		HeaderComponent,
 		ButtonComponent,
@@ -47,8 +45,8 @@ import {navigationLinks} from './public.routes';
 						class="!cursor-pointer"
 						*ngFor="let link of navigationLinks"
 						color="primary"
-						(click)="redirect(link)">
-						{{ 'views.public.routes.' + link | translate }}
+						(click)="redirect(link.path)">
+						{{ link.name }}
 					</mat-list-item>
 				</mat-list>
 

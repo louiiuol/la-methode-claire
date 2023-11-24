@@ -1,19 +1,7 @@
-<mat-toolbar class="gap-3 h-16 justify-start mat-elevation-z1">
-	<app-button
-		*ngIf="platform.isMobileView()"
-		(click)="toggledMobileMenu.emit()"
-		aria-label="Button to expand sidebar"
-		type="icon">
-		<app-icon>menu</app-icon>
-	</app-button>
-	<app-icon class="w-12" svg="logo" />
-	<ng-container *ngIf="!platform.isMobileView()">
-		<app-button
-			*ngFor="let link of navigationLinks"
-			color="primary"
-			[href]="'/app/' + link"
-			[label]="'views.teacher.routes.' + link" />
-	</ng-container>
+<mat-toolbar class="gap-3 h-16 justify-start items-center mat-elevation-z1">
+	<app-icon class="w-16" svg="logo" />
+
+	<app-button color="primary" href="/app/dashboard" label="Tableau de bord" />
 
 	<span class="flex-1"></span>
 
@@ -26,10 +14,7 @@
 		</span>
 	</app-button>
 	<mat-menu #userMenu="matMenu">
-		<app-button
-			type="menu-item"
-			href="/app/profile"
-			label="views.teacher.routes.profile">
+		<app-button type="menu-item" href="/app/profile" label="profil">
 			<app-icon>person</app-icon>
 		</app-button>
 
@@ -37,7 +22,7 @@
 			type="menu-item"
 			color="warn"
 			(click)="logOut()"
-			label="core.actions.logout.action">
+			label="se déconnecter">
 			<app-icon>logout</app-icon>
 		</app-button>
 	</mat-menu>
