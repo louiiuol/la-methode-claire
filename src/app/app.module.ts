@@ -6,7 +6,7 @@ import {CORE_MODULES} from '@core/modules';
 
 import {AppPage} from './app.page';
 import {APP_ROUTES} from './app.routes';
-import {ToasterComponent} from './views/layout/components/toast.component';
+import {ToasterComponent} from './shared/components';
 import {environment} from '@env/environment';
 
 /**
