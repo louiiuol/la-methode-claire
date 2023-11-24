@@ -25,6 +25,7 @@ import {environment} from '@env/environment';
 		RouterModule.forRoot(APP_ROUTES, {
 			bindToComponentInputs: true,
 			useHash: environment.production,
+			scrollPositionRestoration: 'enabled',
 		}),
 		CoreModule.forRoot(),
 		...CORE_MODULES,
