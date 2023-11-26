@@ -1,11 +1,14 @@
 import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
-import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
 import {navigationLinks} from '../../public.routes';
 
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+
+const MaterialModules = [MatMenuModule, MatToolbarModule];
 /**
  * Public views global header
  *
@@ -13,7 +16,7 @@ import {navigationLinks} from '../../public.routes';
  */
 @Component({
 	standalone: true,
-	imports: [NgIf, NgFor, MatToolbarModule, IconComponent, ButtonComponent],
+	imports: [NgIf, NgFor, ...MaterialModules, IconComponent, ButtonComponent],
 	selector: 'app-public-header',
 	templateUrl: './header.component.html',
 })
@@ -25,7 +28,7 @@ export class HeaderComponent {
 	@Output() toggledMobileMenu = new EventEmitter();
 
 	@HostBinding('class')
-	protected readonly class = 'w-full mat-elevation-z2 relative';
+	protected readonly class = 'w-full fixed top-0 mat-elevation-z2 z-50';
 
 	protected readonly navigationLinks = navigationLinks;
 

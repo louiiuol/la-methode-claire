@@ -5,9 +5,9 @@
 
 <ng-container *ngIf="href; else buttonTemplate" [ngSwitch]="type">
 	<a
-		class="w-full"
+		class="w-full font-normal"
 		[routerLink]="href"
-		routerLinkActive="font-bold"
+		routerLinkActive="!font-bold underline underline-offset-2"
 		[routerLinkActiveOptions]="{exact: true}"
 		[fragment]="fragment"
 		[queryParams]="params"
@@ -19,9 +19,9 @@
 	</a>
 
 	<a
-		class="w-full"
+		class="w-full font-normal"
 		[routerLink]="href"
-		routerLinkActive="font-bold"
+		routerLinkActive="!font-bold underline underline-offset-2"
 		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
@@ -33,9 +33,9 @@
 	</a>
 
 	<a
-		class="w-full"
+		class="w-full font-normal"
 		[routerLink]="href"
-		routerLinkActive="font-bold"
+		routerLinkActive="!font-bold underline underline-offset-2"
 		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
@@ -47,9 +47,9 @@
 	</a>
 
 	<a
-		class="w-full"
+		class="w-full font-normal"
 		[routerLink]="href"
-		routerLinkActive="font-bold"
+		routerLinkActive="!font-bold underline underline-offset-2"
 		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
@@ -61,9 +61,9 @@
 	</a>
 
 	<a
-		class="w-full"
+		class="w-full font-normal"
 		[routerLink]="href"
-		routerLinkActive="font-bold"
+		routerLinkActive="!font-bold underline underline-offset-2"
 		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
@@ -75,11 +75,11 @@
 	</a>
 
 	<a
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchDefault
 		mat-button
 		[routerLink]="href"
-		routerLinkActive="font-bold"
+		routerLinkActive="!font-bold underline underline-offset-2"
 		[routerLinkActiveOptions]="{exact: true}"
 		[queryParams]="params"
 		[fragment]="fragment"
@@ -91,7 +91,7 @@
 
 <ng-template #buttonTemplate [ngSwitch]="type">
 	<button
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchCase="'raised'"
 		mat-raised-button
 		[color]="color"
@@ -100,7 +100,7 @@
 	</button>
 
 	<button
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchCase="'stroked'"
 		mat-stroked-button
 		[color]="color"
@@ -109,7 +109,7 @@
 	</button>
 
 	<button
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchCase="'flat'"
 		mat-flat-button
 		[color]="color"
@@ -118,7 +118,7 @@
 	</button>
 
 	<button
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchCase="'icon'"
 		mat-icon-button
 		[color]="color"
@@ -127,7 +127,7 @@
 	</button>
 
 	<button
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchCase="'menu-item'"
 		mat-menu-item
 		[class]="'text-' + color"
@@ -136,7 +136,7 @@
 	</button>
 
 	<button
-		class="w-full"
+		class="w-full font-normal"
 		*ngSwitchDefault
 		mat-button
 		[color]="color"

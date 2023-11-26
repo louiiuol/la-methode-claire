@@ -2,6 +2,15 @@ import {Routes} from '@angular/router';
 import {PublicPage} from './public.page';
 
 /**
+ * Main public routes
+ */
+export const navigationLinks = [
+	{path: '', name: 'Accueil'},
+	{path: 'method', name: 'La méthode'},
+	{path: 'about', name: 'Qui est claire ?'},
+];
+
+/**
  * Views for unauthenticated users.
  */
 export const PUBLIC_ROUTES: Routes = [
@@ -49,17 +58,6 @@ export const PUBLIC_ROUTES: Routes = [
 				loadComponent: () =>
 					import('./pages/method/method.page').then(m => m.MethodPage),
 			},
-			// {
-			// 	path: 'contact',
-			// 	loadComponent: () =>
-			// 		import('./pages/contact/contact.page').then(m => m.ContactPage),
-			// },
 		],
 	},
-];
-
-export const navigationLinks = [
-	{path: '', name: 'accueil'},
-	{path: 'method', name: 'La méthode'},
-	{path: 'about', name: 'Qui est claire ?'},
 ];

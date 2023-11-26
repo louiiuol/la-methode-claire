@@ -1,83 +1,80 @@
-<section id="intro" class="bg-primary relative pt-9 pb-36">
-	<h1
-		style="line-height: 1.7"
-		class="p-6 pb-24 text-2xl xs:text-3xl md:text-5xl lg:text-6xl xl:text-7xl w-full sm:p-4 !mx-auto flex flex-col justify-center h-full gap-2 text-center text-balance overflow-hidden text-white">
-		<span class="animate__animated animate__fadeInDown">
-			La méthode Claire est
-			<b
-				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__pulse animate__delay-1s inline-block">
-				claire </b
-			>,
-		</span>
-		<span class="animate__animated animate__fadeInLeft animate__delay-1s">
-			parce qu'elle ne se contente pas de vous dire
-			<b
-				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__pulse animate__delay-2s inline-block">
-				quoi faire </b
-			>,
-		</span>
-		<span class="animate__animated animate__fadeInLeft animate__delay-2s">
-			mais aussi
-			<b
-				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__pulse animate__delay-3s inline-block">
-				comment faire
-			</b>
-		</span>
-		<span class="animate__animated animate__fadeInUp animate__delay-3s">
-			et surtout, <br />
-			<b
-				class="text-accent text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl animate__animated animate__heartBeat animate__delay-4s inline-block">
-				elle le fait avec vous !
-			</b>
-		</span>
-	</h1>
-	<section
-		class="w-full text-center bg-accent text-xl xs:text-2xl sm:text-3xl px-12 py-6 absolute bottom-0">
-		<p class="!mb-0">
-			La méthode claire vous explique, vous guide et vous soutient tout au long
-			de l'année !
-		</p>
-	</section>
+<p
+	style="line-height: 1.4"
+	class="!my-0 !py-12 bg-primary text-xl xs:text-2xl md:text-3xl lg:text-4xl w-full sm:p-4 !mx-auto flex flex-col justify-center h-full gap-1 text-center text-white">
+	<span class="animate__animated animate__fadeInDown">
+		La méthode Claire est
+		<b
+			class="text-accent font-semibold animate__animated animate__pulse animate__delay-1s inline-block">
+			claire </b
+		>,
+	</span>
+	<span class="animate__animated animate__fadeInLeft animate__delay-1s">
+		parce qu'elle ne se contente pas <br />
+		de vous dire
+		<b
+			class="text-accent font-semibold animate__animated animate__pulse animate__delay-2s inline-block">
+			quoi faire </b
+		>,
+	</span>
+	<span class="animate__animated animate__fadeInLeft animate__delay-2s">
+		mais aussi
+		<b
+			class="text-accent font-semibold animate__animated animate__pulse animate__delay-3s inline-block">
+			comment faire
+		</b>
+	</span>
+	<span class="animate__animated animate__fadeInUp animate__delay-3s">
+		et surtout, <br />
+		<b
+			class="text-accent font-semibold animate__animated animate__heartBeat animate__delay-4s inline-block">
+			elle le fait avec vous !
+		</b>
+	</span>
+</p>
+<section class="w-full bg-accent text-xl xs:text-2xl px-12 pt-4 pb-6 italic">
+	<h3 class="text-center">
+		La méthode claire vous explique, vous guide et vous soutient tout au long de
+		l'année !
+	</h3>
 </section>
 
-<section id="method" class="mb-10 [&>*:nth-child(even)]:flex-row-reverse mt-10">
-	<h2 class="text-4xl text-center mt-3 mb-2 text-balance px-2">
-		Devenez un expert en apprentissage de la lecture
-	</h2>
+<section
+	id="method"
+	class="[&>*:nth-child(even)]:flex-row-reverse my-10 px-3 sm:px-10 max-w-3xl mx-auto pb-9">
+	<h2>Devenez un expert en apprentissage de la lecture</h2>
 	<article
-		class="flex justify-center items-center gap-10 sm:w-3/4 mx-auto !my-6 px-5"
+		class="flex flex-wrap justify-center items-center gap-10 w-full !my-24 px-5 mb-12 md:mb-0"
 		*ngFor="let explanation of methodExplanations">
 		<div>
-			<span [style]="{'color': explanation.color}" class="text-5xl">
+			<span [style]="{color: explanation.color}" class="text-5xl">
 				{{explanation.index}}
 			</span>
-			<h3 class="text-3xl">{{explanation.title}}</h3>
+			<h3 class="text-3xl mb-3">{{explanation.title}}</h3>
 			<p class="max-w-xs">{{explanation.description}}</p>
 		</div>
 		<img
-			class="w-1/3 md:max-w-xs"
+			class="w-2/3 md:w-1/3 md:max-w-xs"
 			[src]="'assets/img/illustrations/' + explanation.name + '.png'"
 			[alt]="'Illustration à propos de ' +explanation.name" />
 	</article>
 </section>
 <section id="cta-register" class="bg-accent">
-	<div class="max-w-2xl mx-auto pt-9 pb-6 px-6">
-		<h2 class="text-5xl text-primary mb-4">Envie de découvrir la méthode ?</h2>
-		<p class="text-2xl">
-			Vous pouvez créer un compte gratuitement et bénéficier d’un aperçu de la
-			méthode !
+	<div class="max-w-xl mx-auto p-6">
+		<h2>Envie de découvrir la méthode ?</h2>
+		<p class="text-2xl text-center">
+			Vous pouvez dès à présent créer un compte <b>gratuitement</b> et
+			bénéficier d’un aperçu de la méthode!
 		</p>
-		<div class="py-6 max-w-md mx-auto flex justify-evenly gap-3 flex-wrap">
+		<div class="pb-6 flex justify-evenly gap-3 flex-wrap">
 			<app-button
 				class="flex-1"
-				type="stroked"
 				href="/method"
+				color="primary"
 				label="En savoir plus" />
 			<app-button
 				class="flex-1"
-				type="raised"
-				color="warn"
 				href="/about"
+				color="primary"
 				label="Qui est Claire ?" />
 			<app-button
 				class="w-full"

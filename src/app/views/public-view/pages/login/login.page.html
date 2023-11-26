@@ -2,14 +2,14 @@
 	class="w-full max-w-3xl animate__animated animate__fadeInDown"
 	title="Connectez vous à votre compte"
 	subtitle="Retrouvez votre progression et bien d'autres contenu">
-	<app-form action="login" [submitted]="logIn" [fields]="fields" />
+	<app-form action="se connecter" [submitted]="logIn" [fields]="fields" />
 	<ng-template #cardFooter>
-		<div class="my-3 text-center">
+		<div>
 			<app-button
 				color="accent"
 				href="/forgot-password"
 				label="Mot de passe oublié ?" />
-			<p class="mt-2">
+			<p class="flex items-center gap-3 mt-1 w-full text-center text-sm italic">
 				Pas encore de compte ?
 				<app-button color="primary" href="/register" label="S'inscrire" />
 			</p>

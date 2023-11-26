@@ -1,13 +1,21 @@
 <mat-toolbar class="gap-3 !h-16 justify-start">
 	<app-button
 		class="md:hidden"
-		(click)="toggledMobileMenu.emit()"
+		[matMenuTriggerFor]="navigationMenu"
 		aria-label="Afficher le menu pour mobile"
 		type="icon">
 		<app-icon>menu</app-icon>
 	</app-button>
+	<mat-menu #navigationMenu="matMenu">
+		<a
+			mat-menu-item
+			*ngFor="let link of navigationLinks"
+			[href]="'/' + link.path"
+			>{{ link.name }}</a
+		>
+	</mat-menu>
 
-	<app-icon class="w-12 hidden md:inline-block" svg="logo" />
+	<app-icon class="w-16" svg="logo" />
 
 	<app-button
 		class="hidden md:block"
@@ -18,6 +26,7 @@
 
 	<span class="flex-1"></span>
 	<app-button
+		class="hidden xs:block"
 		type="raised"
 		color="primary"
 		href="/login"

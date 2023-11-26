@@ -21,7 +21,6 @@ import {
 	TranslateService,
 	APP_FORM_GROUPS,
 	takeUntilDestroyed,
-	TranslatePipe,
 } from '@core';
 
 /**
@@ -55,7 +54,6 @@ import {
 		MatButtonModule,
 		MatTooltipModule,
 		MessageComponent,
-		TranslatePipe,
 	],
 	selector: 'app-form',
 	templateUrl: './form.component.html',
@@ -181,8 +179,7 @@ export class FormComponent implements OnInit {
 	pristine = () =>
 		JSON.stringify(this._initialModel) === JSON.stringify(this.formModel);
 
-	isValidForm = () =>
-		this.form.valid && (!this.pristine() || this.action !== 'update');
+	isValidForm = () => this.form.valid && !this.pristine();
 
 	// private format = ({error}: HttpOutput<null>) => {
 	// 	if (!error) return [];
@@ -200,7 +197,9 @@ export class FormComponent implements OnInit {
 		const preset =
 			resource && presetName ? this.getPreset(resource, presetName) : {};
 		const translationPath = `core.form.fields.${field.key ?? preset.key}.`;
-		return Object.assign({}, preset, field, {
+		return {
+			...preset,
+			...field,
 			type:
 				field.type ??
 				preset.type ??
@@ -221,7 +220,7 @@ export class FormComponent implements OnInit {
 					translationPath + 'description'
 				),
 			},
-		});
+		};
 	};
 
 	private generateMessage = (summary: string | string[]) =>

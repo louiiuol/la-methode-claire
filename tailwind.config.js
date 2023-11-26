@@ -4,7 +4,8 @@ module.exports = {
 	theme: {
 		extend: {
 			screens: {
-				xs: '360px',
+				xxs: '360px',
+				xs: '480px',
 			},
 			listStyleType: {
 				circle: 'circle',

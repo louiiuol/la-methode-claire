@@ -1,4 +1,4 @@
-import {Component, HostBinding, HostListener} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 
 /**
  * Root component of the Application, responsible for:
@@ -15,15 +15,5 @@ import {Component, HostBinding, HostListener} from '@angular/core';
 	`,
 })
 export class AppPage {
-	/**
-	 * Checks if current window can be safely closed .. For example, no request must be in progress
-	 * @returns True if component allows redirection, false otherwise
-	 */
-	@HostListener('window:beforeunload', ['$event'])
-	private beforeunloadHandler(): boolean {
-		return true; //this.queue.canDeactivate.value;
-	}
-
-	@HostBinding('class')
-	protected readonly class = 'relative text-xl';
+	@HostBinding('class') protected readonly class = 'relative antialiased';
 }

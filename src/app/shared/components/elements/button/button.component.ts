@@ -8,6 +8,7 @@ import {
 import {
 	ChangeDetectionStrategy,
 	Component,
+	HostBinding,
 	HostListener,
 	Input,
 } from '@angular/core';
@@ -98,4 +99,6 @@ export class ButtonComponent {
 			e.stopImmediatePropagation();
 		}
 	}
+
+	@HostBinding('class') protected readonly class = '!font-semibold';
 }
