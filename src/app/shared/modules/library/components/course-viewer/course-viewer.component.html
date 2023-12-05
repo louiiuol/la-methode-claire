@@ -6,15 +6,12 @@
 		<mat-drawer
 			#drawer
 			class="w-60 p-4 !flex flex-col justify-start items-start"
-			mode="side"
+			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
 			<h2 class="text-2xl" [style]="'color:' + course.color">
-				{{
-					'modules.library.viewer.progress.week'
-						| translate: {number: (course.order + 1).toFixed()}
-				}}
+				Semaine N°{{ (course.order + 1).toFixed() }}
 			</h2>
-			<mat-chip-listbox class="mb-2" aria-label="File selection">
+			<mat-chip-listbox class="mb-2" aria-label="Phonèmes associés">
 				<mat-chip-option
 					*ngFor="let phoneme of course.phonemes"
 					selectable="false"
@@ -27,27 +24,23 @@
 				type="raised"
 				color="primary"
 				(click)="setCurrentLesson(course.order + 1)"
-				label="modules.library.viewer.mark_as_finished" />
+				label="Marquer comme terminée" />
 			<ng-template #completedCourse>
-				<app-message
-					summary="modules.library.viewer.completed_course"
-					severity="note" />
+				<app-message summary="Cette leçon est terminée" severity="note" />
 				<app-button
 					type="stroked"
 					color="primary"
-					label="modules.library.viewer.back_to_course"
+					label="Revenir à cette leçon"
 					(click)="setCurrentLesson(course.order)" />
 			</ng-template>
 
 			<hr class="my-3" />
 
-			<h3 class="text-xl !mb-1">
-				{{ 'modules.library.viewer.words_list' | translate }}
-			</h3>
+			<h3 class="text-xl !mb-1">Liste des mots</h3>
 			<mat-chip-listbox
 				*ngIf="course.words?.length; else noWordsAssociated"
 				class="mb-2"
-				aria-label="File selection">
+				aria-label="Mots associés">
 				<mat-chip-option
 					*ngFor="let word of course.words"
 					selectable="false"
@@ -58,26 +51,17 @@
 			<ng-template #noWordsAssociated>
 				<app-message
 					[showIcon]="false"
-					summary="modules.library.viewer.no_word_associated"
+					summary="Aucun mot associé à cette semaine"
 					severity="warn" />
 			</ng-template>
 			<hr class="mb-6" />
-			<h3 class="text-xl">
-				{{ 'modules.library.viewer.files_list' | translate }}
-			</h3>
+			<h3 class="text-xl">Liste des fichiers</h3>
 			<mat-selection-list #files [multiple]="false">
 				<mat-list-option
 					*ngFor="let file of filesAvailable"
-					[value]="file"
+					[value]="file.path"
 					[selected]="file === filesAvailable[0]">
-					{{ 'modules.library.files.' + file | translate }}
-				</mat-list-option>
-			</mat-selection-list>
-			<mat-selection-list #posters [multiple]="false">
-				<mat-list-option
-					*ngFor="let phoneme of phonemePosters"
-					[value]="phoneme">
-					{{ 'modules.library.files.phoneme_poster' | translate: {phoneme} }}
+					{{ file.name }}
 				</mat-list-option>
 			</mat-selection-list>
 			<span class="flex-1"></span>
@@ -86,21 +70,18 @@
 			*ngIf="
 				files.selectedOptions.selected[0] ?? filesAvailable[0] as selectedFile
 			"
-			[file]="[course.order, selectedFile.value].join('/')" />
+			[fileName]="[course.order + 1, selectedFile.value].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>
 		<app-card
 			class="mt-6 max-w-md"
-			title="core.api.status.403"
-			subtitle="modules.library.viewer.restricted_lesson">
-			<img src="assets/img/access-denied.gif" alt="access-denied" />
-			<p class="text-lg text-primary" translated>
-				{{ 'modules.library.viewer.sub_to_access' | translate }}
+			title="Accès interdit"
+			subtitle="Cette leçon n'est accessible uniquement pour les membres abonnés!">
+			<img src="assets/img/access-denied.gif" alt="Accès non autorisé" />
+			<p class="text-lg text-primary">
+				Pour accéder à cette leçon, abonnez-vous !
 			</p>
-			<app-button
-				type="raised"
-				class="mt-3"
-				label="modules.subscription.see_sub" />
+			<app-button type="raised" class="mt-3" label="Voir l'abonnement" />
 		</app-card>
 	</ng-template>
 </ng-container>

@@ -15,4 +15,5 @@ export interface User {
 	password: string;
 	role: UserRole;
 	uuid: string;
+	subscribed: boolean;
 }

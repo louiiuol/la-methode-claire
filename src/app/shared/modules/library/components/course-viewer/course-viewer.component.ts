@@ -4,7 +4,6 @@ import {
 	HostBinding,
 	Input,
 	Output,
-	forwardRef,
 } from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 
@@ -21,18 +20,17 @@ const MaterialModules = [
 
 import {take} from 'rxjs';
 
-import {AuthService, isBoolean} from '@core';
+import {AuthService, PlatformService, isBoolean} from '@core';
 import {TrustUrlPipe} from '@shared/pipes';
 import {
 	ButtonComponent,
 	CardComponent,
 	IconComponent,
-	FileViewerComponent,
 	MessageComponent,
 } from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
-import {TranslatePipe} from '@core/modules/translation/pipes/translate.pipe';
+import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -51,7 +49,6 @@ import {TranslatePipe} from '@core/modules/translation/pipes/translate.pipe';
 		CardComponent,
 		FileViewerComponent,
 		MessageComponent,
-		TranslatePipe,
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
@@ -68,9 +65,22 @@ export class CourseViewerComponent {
 			this.filesAvailable = [];
 			for (let prop in course)
 				if (isBoolean(course[prop]) && !!course[prop])
-					this.filesAvailable.push(prop);
-			this.phonemePosters =
-				this.course?.phonemes?.filter(p => p.poster).map(p => p.name) ?? [];
+					this.filesAvailable.push({
+						name: this.filesName[prop].name,
+						path: this.filesName[prop].fileName,
+					});
+			this.filesAvailable.push(
+				...course.phonemes
+					.filter(p => p.poster)
+					.map(p => ({
+						name: 'Affiche ' + p.name,
+						path: 'Affiche-' + p.name.toLocaleUpperCase(),
+					})),
+				...(course.sounds?.map(s => ({
+					name: 'Son ' + s,
+					path: 'Affiche-son' + s.toLocaleUpperCase(),
+				})) ?? [])
+			);
 		}
 	}
 
@@ -93,20 +103,28 @@ export class CourseViewerComponent {
 	protected readonly class = 'flex-1 bg-accent';
 
 	protected readonly hasValidSubscription =
-		!!this.authenticator?.currentUser()?.hasValidSubscription;
+		!!this.authenticator?.currentUser()?.subscribed;
 
 	protected currentUserLesson =
 		this.authenticator?.currentUser()?.currentLesson ?? 0;
 
-	protected filesAvailable: string[] = [];
-
-	protected phonemePosters: string[] = [];
+	protected filesAvailable: {name: string; path: string}[] = [];
 
 	private _course?: CourseViewDto;
 
+	protected readonly filesName: {
+		[key: string]: {name: string; fileName: string};
+	} = {
+		script: {name: 'Script', fileName: 'Script'},
+		lesson: {name: 'Leçon', fileName: 'leçon'},
+		exercice: {name: 'Exercices', fileName: 'exercices'},
+		poster: {name: 'Affiche', fileName: 'affiche'},
+	};
+
 	constructor(
 		private readonly library: LibraryService,
-		private readonly authenticator: AuthService
+		private readonly authenticator: AuthService,
+		protected readonly platform: PlatformService
 	) {}
 
 	setCurrentLesson(index: number) {

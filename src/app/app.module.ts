@@ -8,6 +8,7 @@ import {AppPage} from './app.page';
 import {APP_ROUTES} from './app.routes';
 import {ToasterComponent} from './shared/components';
 import {environment} from '@env/environment';
+import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
 
 /**
  * Root module of this application.
@@ -30,6 +31,7 @@ import {environment} from '@env/environment';
 		CoreModule.forRoot(),
 		...CORE_MODULES,
 		ToasterComponent,
+		NgxExtendedPdfViewerModule,
 	],
 	bootstrap: [AppPage],
 })

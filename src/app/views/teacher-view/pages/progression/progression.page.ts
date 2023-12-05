@@ -25,11 +25,11 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 })
 export class ProgressionPage {
 	@HostBinding('class')
-	protected readonly class = 'm-6';
+	protected readonly class = 'mx-6 mt-4 block';
 
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
 	protected readonly hasValidSubscription =
-		!!this.authenticator?.currentUser()?.hasValidSubscription;
+		!!this.authenticator?.currentUser()?.subscribed;
 
 	protected currentLesson =
 		this.authenticator?.currentUser()?.currentLesson ?? 0;

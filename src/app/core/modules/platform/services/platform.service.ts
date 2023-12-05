@@ -62,10 +62,10 @@ export class PlatformService {
 		this.isMobileView() ? mobileSize : this.getLargeSize(mediumSize, largeSize);
 
 	/**
-	 *  Checks if currentSize if smaller or equal to 'md' size (768px)
-	 * @returns True if viewport is smaller or equal to 'md' size, false otherwise
+	 *  Checks if currentSize if smaller or equal to 'sm' size
+	 * @returns True if viewport is smaller or equal to 'sm' size, false otherwise
 	 */
-	isMobileView = () => this.isSmallerOrEqual('md');
+	isMobileView = () => this.isSmallerOrEqual('sm');
 
 	/**
 	 * Checks if current browser size (width) is bigger than the size given.

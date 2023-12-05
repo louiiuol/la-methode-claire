@@ -7,3 +7,13 @@ body {
 	margin: 0;
 	font-family: 'proxima-soft-condensed', Arial, Helvetica, sans-serif;
 }
+
+.page {
+	min-height: calc(100dvh - 64px);
+}
+
+.centered-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

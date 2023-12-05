@@ -2,7 +2,6 @@ import {Component, HostBinding, forwardRef} from '@angular/core';
 import {RouterModule} from '@angular/router';
 
 import {HeaderComponent} from './components';
-import {ButtonComponent, IconComponent} from '@shared/components';
 import {NgFor} from '@angular/common';
 
 /**
@@ -15,21 +14,15 @@ import {NgFor} from '@angular/common';
  */
 @Component({
 	standalone: true,
-	imports: [
-		NgFor,
-		forwardRef(() => RouterModule),
-		HeaderComponent,
-		ButtonComponent,
-		IconComponent,
-	],
+	imports: [NgFor, forwardRef(() => RouterModule), HeaderComponent],
 	template: `
 		<app-public-header />
 		<main class="pb-16 mt-16">
 			<router-outlet />
 		</main>
 		<p
-			class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8 text-primary">
-			Copyright © {{ currentYear }} <b>La méthode claire</b>.
+			class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8 text-primary text-sm">
+			© {{ currentYear }} <b>La méthode claire</b>.
 		</p>
 	`,
 })

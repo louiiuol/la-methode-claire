@@ -6,7 +6,8 @@
 		[lessons]="lessons"
 		(selectedLesson)="currentLesson = $event" />
 	<app-course-viewer
-		class="rounded-b-xl overflow-hidden mat-elevation-z2"
+		style="height: 80vh"
+		class="rounded-b-xl overflow-hidden mat-elevation-z2 block"
 		[currentLessonIndex]="currentLesson"
 		[course]="lessons[currentLesson]"
 		(nextLesson)="currentLesson = $event" />

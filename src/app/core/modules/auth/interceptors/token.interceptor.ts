@@ -30,8 +30,9 @@ export class TokenInterceptor implements HttpInterceptor {
 	private readonly router = inject(Router);
 
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
-		if (this.tokenStore.checkToken() && req.url.includes(this.appUrlDomain))
+		if (this.tokenStore.checkToken() && req.url.includes(this.appUrlDomain)) {
 			req = this.addHeader(req, this.tokenStore.getToken());
+		}
 		return next.handle(req).pipe(catchError(err => this.handleAuthError(err)));
 	}
 

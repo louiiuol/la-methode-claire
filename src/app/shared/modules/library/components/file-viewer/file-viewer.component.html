@@ -1,0 +1,17 @@
+<ng-container *ngIf="pdf$() as pdf; else noFileSelected">
+	<iframe
+		class="w-full"
+		[src]="pdf | trustURL"
+		title="visualiser le pdf"></iframe>
+</ng-container>
+<ng-template #noFileSelected>
+	<div class="w-96 mx-auto mt-8">
+		<h3 class="text-3xl text-primary text-center mb-4">
+			Aucun fichier sélectionné
+		</h3>
+		<app-message
+			class="text-lg text-slate-500"
+			severity="info"
+			summary="Merci de sélectionner un fichier pour en visualiser le contenu" />
+	</div>
+</ng-template>

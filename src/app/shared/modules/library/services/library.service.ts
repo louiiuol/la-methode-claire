@@ -21,6 +21,8 @@ export class LibraryService {
 
 	setCurrentLesson = (index: number) => this.http.setCurrentLessonIndex(index);
 
+	getPdf = (fileName: string) => this.http.getPdf(fileName);
+
 	private updateLocalLessons = (
 		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>
 	) => {

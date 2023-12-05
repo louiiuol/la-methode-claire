@@ -3,6 +3,7 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 
 import {NotificationSeverity} from '@core/modules/notification';
+import {IconComponent} from '../icon/icon.component';
 
 const MESSAGE_DICTIONARY = {
 	info: {icon: 'info', color: 'bg-blue-100 border-blue-500 text-blue-900'},
@@ -26,19 +27,19 @@ const MESSAGE_DICTIONARY = {
  */
 @Component({
 	standalone: true,
-	imports: [NgIf, MatIconModule],
+	imports: [NgIf, IconComponent],
 	selector: 'app-message',
 	template: `
 		<div
 			*ngIf="summary && severity"
 			class="flex items-start justify-start gap-3 mb-3 border-l-4 rounded-r px-4 py-3 shadow-md"
 			[class]="getMessageColor()">
-			<mat-icon *ngIf="showIcon" class="my-1">
+			<app-icon *ngIf="showIcon" class="my-1">
 				{{ getMessageIcon() }}
-			</mat-icon>
+			</app-icon>
 			<div class="px-1">
-				<p class="font-bold" [innerHTML]="summary"></p>
-				<p class="text-sm" *ngIf="details" [innerHTML]="details"></p>
+				<span class="font-bold" [innerHTML]="summary"></span>
+				<span class="text-sm" *ngIf="details" [innerHTML]="details"></span>
 			</div>
 		</div>
 	`,

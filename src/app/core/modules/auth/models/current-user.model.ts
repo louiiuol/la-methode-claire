@@ -18,7 +18,7 @@ export class CurrentUser {
 	currentLesson: number;
 	role: UserRole;
 	uuid: string;
-	hasValidSubscription = false;
+	subscribed: boolean;
 
 	constructor(user: UserPreviewDto) {
 		this.uuid = user.uuid;
@@ -29,6 +29,7 @@ export class CurrentUser {
 		this.isAdmin = user.role === 'ADMIN';
 		this.role = user.role;
 		this.currentLesson = user.currentLessonIndex;
+		this.subscribed = user.subscribed;
 	}
 
 	private formatInitials(

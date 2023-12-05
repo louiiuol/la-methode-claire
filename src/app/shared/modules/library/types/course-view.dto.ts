@@ -5,12 +5,12 @@ export interface CourseViewDto {
 	uuid: string;
 	order: number;
 	phonemes: {uuid: string; name: string; poster?: boolean}[];
-	script: boolean;
-	lesson: boolean;
-	exercice: boolean;
-	text: boolean;
-	poster: boolean;
-	words: string[];
 	color: string;
+	script?: boolean;
+	lesson?: boolean;
+	exercice?: boolean;
+	poster?: boolean;
+	sounds?: string[];
+	words?: string[];
 	[key: string]: any;
 }
