@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 
+import {take} from 'rxjs';
+
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
@@ -18,14 +20,10 @@ const MaterialModules = [
 	MatRadioModule,
 ];
 
-import {take} from 'rxjs';
-
 import {AuthService, PlatformService, isBoolean} from '@core';
-import {TrustUrlPipe} from '@shared/pipes';
 import {
 	ButtonComponent,
 	CardComponent,
-	IconComponent,
 	MessageComponent,
 } from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
@@ -42,10 +40,8 @@ import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 	imports: [
 		NgIf,
 		NgFor,
-		TrustUrlPipe,
 		...MaterialModules,
 		ButtonComponent,
-		IconComponent,
 		CardComponent,
 		FileViewerComponent,
 		MessageComponent,

@@ -1,11 +1,9 @@
 import {Component, HostBinding, Input, signal} from '@angular/core';
 import {NgIf} from '@angular/common';
-import {TrustUrlPipe} from '@shared/pipes';
-import {TranslatePipe, takeUntilDestroyed} from '@core';
-import {LibraryService} from '@shared/modules/library/services/library.service';
-import {MessageComponent} from '../../../../components/elements';
-import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
 import {take} from 'rxjs';
+import {TrustUrlPipe} from '@shared/pipes';
+import {LibraryService} from '@shared/modules/library/services/library.service';
+import {MessageComponent} from '@shared/components/elements';
 
 /**
  * Simple component to display a file into an iframe based on given file name.
@@ -16,13 +14,7 @@ import {take} from 'rxjs';
 @Component({
 	standalone: true,
 	selector: 'app-file-viewer',
-	imports: [
-		NgIf,
-		TrustUrlPipe,
-		TranslatePipe,
-		NgxExtendedPdfViewerModule,
-		MessageComponent,
-	],
+	imports: [NgIf, TrustUrlPipe, MessageComponent],
 	templateUrl: './file-viewer.component.html',
 })
 export class FileViewerComponent {

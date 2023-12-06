@@ -6,5 +6,5 @@ import {Component, HostBinding} from '@angular/core';
 })
 export class AboutPage {
 	@HostBinding('class')
-	protected readonly class = 'bg-accent text-primary px-9 sm:px-12 block';
+	protected readonly class = 'block pb-16';
 }

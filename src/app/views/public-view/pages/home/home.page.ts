@@ -10,7 +10,7 @@ import {ButtonComponent, CardComponent} from '@shared/components';
 })
 export class HomePage {
 	@HostBinding('class')
-	protected readonly class = 'bg-white text-primary block';
+	protected readonly class = 'block pb-16';
 
 	protected readonly methodExplanations = [
 		{

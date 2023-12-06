@@ -17,17 +17,17 @@ import {NgFor} from '@angular/common';
 	imports: [NgFor, forwardRef(() => RouterModule), HeaderComponent],
 	template: `
 		<app-public-header />
-		<main class="pb-16 mt-16">
+		<main class="mt-16">
 			<router-outlet />
 		</main>
 		<p
-			class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8 text-primary text-sm">
+			class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8 text-sm">
 			© {{ currentYear }} <b>La méthode claire</b>.
 		</p>
 	`,
 })
 export class PublicPage {
-	@HostBinding('class') protected readonly class = 'text-2xl';
+	@HostBinding('class') protected readonly class = 'text-2xl text-primary';
 
 	protected readonly currentYear = new Date().getFullYear();
 }
