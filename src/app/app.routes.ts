@@ -21,3 +21,15 @@ export const APP_ROUTES: Routes = [
 			import('./views/teacher-view/teacher.module').then(m => m.TeacherModule),
 	},
 ];
+
+export const navigationLinks = {
+	public: [
+		{path: '', name: 'Accueil'},
+		{path: 'method', name: 'La méthode'},
+		{path: 'about', name: 'Qui est claire ?'},
+	],
+	logged: [
+		{path: 'app/dashboard', name: 'Tableau de bord'},
+		{path: 'app/subscription', name: 'La formule'},
+	],
+};

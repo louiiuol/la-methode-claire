@@ -20,7 +20,7 @@ import {
 })
 export class RegisterPage {
 	@HostBinding('class')
-	protected readonly class = 'page centered-content';
+	protected readonly class = 'page centered-content bg-accent';
 
 	protected readonly register = inject(AuthService).signUp;
 	protected readonly fields = [

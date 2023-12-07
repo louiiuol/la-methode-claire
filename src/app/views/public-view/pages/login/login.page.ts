@@ -25,7 +25,7 @@ import {AuthService, FieldConfig} from '@core';
 })
 export class LoginPage {
 	@HostBinding('class')
-	protected readonly class = 'page centered-content';
+	protected readonly class = 'page centered-content bg-primary';
 
 	protected readonly fields: FieldConfig[] = [
 		{preset: 'user.email', props: {required: true}},

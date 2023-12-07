@@ -13,22 +13,20 @@ export const TEACHER_ROUTES: Routes = [
 				path: 'dashboard',
 				pathMatch: 'full',
 				loadComponent: () =>
-					import('./pages/progression/progression.page').then(
-						m => m.ProgressionPage
-					),
+					import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
 			},
 			{
 				path: 'profile',
 				loadComponent: () =>
 					import('./pages/profile/profile.page').then(m => m.ProfilePage),
 			},
+			{
+				path: 'subscription',
+				loadComponent: () =>
+					import('./pages/subscription/subscription.page').then(
+						m => m.SubscriptionPage
+					),
+			},
 		],
 	},
-];
-
-export const navigationLinks = [
-	'dashboard',
-	'progression',
-	// 'faq',
-	// 'subscription',
 ];

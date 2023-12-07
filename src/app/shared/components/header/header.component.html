@@ -1,0 +1,66 @@
+<mat-toolbar class="gap-3 !h-16 justify-start">
+	<app-button
+		class="md:hidden"
+		[matMenuTriggerFor]="navigationMenu"
+		aria-label="Afficher le menu pour mobile"
+		type="icon">
+		<app-icon>menu</app-icon>
+	</app-button>
+	<mat-menu #navigationMenu="matMenu">
+		<app-button
+			type="menu-item"
+			*ngFor="
+				let link of navigationLinks[!currentUser?.uuid ? 'public' : 'logged']
+			"
+			[href]="'/' + link.path"
+			[label]="link.name" />
+	</mat-menu>
+
+	<app-icon class="w-16" svg="logo" />
+
+	<app-button
+		class="hidden md:block"
+		*ngFor="
+			let link of navigationLinks[!currentUser?.uuid ? 'public' : 'logged']
+		"
+		color="primary"
+		[href]="'/' + link.path"
+		[label]="link.name" />
+
+	<span class="flex-1"></span>
+
+	<ng-container *ngIf="!currentUser?.uuid; else userMenuSection">
+		<app-button
+			class="hidden xs:block"
+			type="raised"
+			color="primary"
+			href="/login"
+			label="se connecter" />
+		<app-button
+			type="raised"
+			color="accent"
+			href="/register"
+			label="s'inscrire" />
+	</ng-container>
+	<ng-template #userMenuSection>
+		<app-button
+			[matMenuTriggerFor]="userMenu"
+			class="bg-primary rounded-full text-white text-sm"
+			type="icon">
+			{{ currentUser?.initials?.toLocaleUpperCase() }}
+		</app-button>
+		<mat-menu #userMenu="matMenu">
+			<app-button type="menu-item" href="/app/profile" label="profil">
+				<app-icon>person</app-icon>
+			</app-button>
+
+			<app-button
+				type="menu-item"
+				color="warn"
+				(click)="logOut()"
+				label="se déconnecter">
+				<app-icon>logout</app-icon>
+			</app-button>
+		</mat-menu>
+	</ng-template>
+</mat-toolbar>

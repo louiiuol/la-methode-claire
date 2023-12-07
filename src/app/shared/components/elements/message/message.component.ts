@@ -39,6 +39,7 @@ const MESSAGE_DICTIONARY = {
 			</app-icon>
 			<div class="px-1">
 				<span class="font-bold" [innerHTML]="summary"></span>
+				<br />
 				<span class="text-sm" *ngIf="details" [innerHTML]="details"></span>
 			</div>
 		</div>

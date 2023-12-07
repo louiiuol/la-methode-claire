@@ -38,7 +38,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 })
 export class ResetPasswordPage {
 	@HostBinding('class')
-	protected readonly class = 'centered-content';
+	protected readonly class = 'page centered-content bg-yellow-light';
 
 	protected token = signal<string | null>(null);
 	protected user = signal<string | null>(null);

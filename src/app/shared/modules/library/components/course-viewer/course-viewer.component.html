@@ -73,15 +73,18 @@
 			[fileName]="[course.order + 1, selectedFile.value].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>
-		<app-card
-			class="mt-6 max-w-md"
-			title="Accès interdit"
-			subtitle="Cette leçon n'est accessible uniquement pour les membres abonnés!">
+		<h2 class="text-center text-white">Accès réservé aux abonnés !</h2>
+		<div class="max-w-md mx-auto">
 			<img src="assets/img/access-denied.gif" alt="Accès non autorisé" />
-			<p class="text-lg text-primary">
-				Pour accéder à cette leçon, abonnez-vous !
+			<p class="text-lg text-primary text-balance text-center">
+				Cette leçon n'est accessible uniquement pour les membres abonnés! Pour
+				accéder au reste du contenu, abonnez-vous !
 			</p>
-			<app-button type="raised" class="mt-3" label="Voir l'abonnement" />
-		</app-card>
+			<app-button
+				type="raised"
+				class="mt-3"
+				label="Voir l'abonnement"
+				href="/app/subscription" />
+		</div>
 	</ng-template>
 </ng-container>

@@ -1,8 +1,7 @@
-import {Component, HostBinding, forwardRef} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {Component, HostBinding} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 
-import {HeaderComponent} from './components';
-import {NgFor} from '@angular/common';
+import {HeaderComponent} from '@shared/components';
 
 /**
  * Public View Container, defines global layout.
@@ -14,9 +13,9 @@ import {NgFor} from '@angular/common';
  */
 @Component({
 	standalone: true,
-	imports: [NgFor, forwardRef(() => RouterModule), HeaderComponent],
+	imports: [RouterOutlet, HeaderComponent],
 	template: `
-		<app-public-header />
+		<app-header />
 		<main class="mt-16">
 			<router-outlet />
 		</main>

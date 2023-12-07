@@ -6,6 +6,7 @@ const MaterialModules = [MatToolbarModule, MatMenuModule];
 
 import {AuthService, PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
+import {navigationLinks} from 'src/app/app.routes';
 
 /**
  * Logged views global header
@@ -15,7 +16,7 @@ import {ButtonComponent, IconComponent} from '@shared/components';
 @Component({
 	standalone: true,
 	imports: [NgIf, NgFor, ...MaterialModules, IconComponent, ButtonComponent],
-	selector: 'app-logged-header',
+	selector: 'app-header',
 	templateUrl: './header.component.html',
 })
 export class HeaderComponent {
@@ -25,14 +26,18 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	@HostBinding('class') class = 'w-full';
+	protected currentUser = this.authenticator.currentUser();
 
-	protected readonly currentUser = this.authenticator.currentUser();
+	@HostBinding('class')
+	protected class = 'w-full fixed top-0 mat-elevation-z2 z-50';
+
+	protected readonly navigationLinks = navigationLinks;
 
 	constructor(
 		public platform: PlatformService,
 		private authenticator: AuthService
 	) {}
 
+	protected isMobile = () => this.platform.isMobileView();
 	protected logOut = () => this.authenticator.logOut();
 }

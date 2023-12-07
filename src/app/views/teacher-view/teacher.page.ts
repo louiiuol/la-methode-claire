@@ -1,13 +1,6 @@
-import {Component, HostBinding, ViewChild, forwardRef} from '@angular/core';
-import {Router, RouterModule} from '@angular/router';
-import {HeaderComponent} from './components';
-import {MatDrawer, MatSidenavModule} from '@angular/material/sidenav';
-const MaterialModules = [MatSidenavModule, MatListModule];
-import {IconComponent} from '@shared/components';
-import {MatListModule} from '@angular/material/list';
-import {TranslatePipe} from '@core';
-import {NgFor} from '@angular/common';
-import {navigationLinks} from './teacher.routes';
+import {Component, HostBinding} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {HeaderComponent} from '@shared/components';
 
 /**
  * Teacher View Container, defines global layout.
@@ -19,17 +12,10 @@ import {navigationLinks} from './teacher.routes';
  */
 @Component({
 	standalone: true,
-	imports: [
-		NgFor,
-		forwardRef(() => RouterModule),
-		TranslatePipe,
-		HeaderComponent,
-		...MaterialModules,
-		IconComponent,
-	],
+	imports: [RouterOutlet, HeaderComponent],
 	template: `
-		<app-logged-header />
-		<main>
+		<app-header />
+		<main class="pt-16">
 			<router-outlet />
 		</main>
 	`,
@@ -39,9 +25,4 @@ export class TeacherPage {
 	protected readonly class = 'block h-full bg-yellow-light';
 	@HostBinding('id')
 	protected readonly key = 'teacher-view';
-
-	protected readonly currentYear = new Date().getFullYear();
-	protected readonly navigationLinks = navigationLinks;
-
-	constructor(private readonly router: Router) {}
 }

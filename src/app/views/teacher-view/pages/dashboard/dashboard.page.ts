@@ -21,9 +21,9 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		ButtonComponent,
 		...MaterialModules,
 	],
-	templateUrl: './progression.page.html',
+	templateUrl: './dashboard.page.html',
 })
-export class ProgressionPage {
+export class DashboardPage {
 	@HostBinding('class')
 	protected readonly class = 'mx-6 mt-4 block';
 

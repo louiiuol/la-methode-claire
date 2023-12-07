@@ -1,7 +1,7 @@
 <h1 class="text-2xl text-center mt-4 mb-6 text-primary">
 	Mise à jour de vos informations
 </h1>
-<mat-accordion class="max-w-3xl mx-auto">
+<mat-accordion class="block max-w-3xl mx-auto">
 	<mat-expansion-panel expanded>
 		<mat-expansion-panel-header>
 			<mat-panel-title> Informations personnelles </mat-panel-title>
@@ -9,7 +9,7 @@
 		<app-form
 			*ngIf="model$ | async as model"
 			[model]="model.value"
-			action="update"
+			action="Mettre à jour"
 			[submitted]="updateProfile"
 			[fields]="profileFields" />
 	</mat-expansion-panel>
@@ -19,7 +19,7 @@
 		</mat-expansion-panel-header>
 
 		<app-form
-			action="update"
+			action="Mettre à jour"
 			[submitted]="updatePassword"
 			[fields]="passwordFields"
 			[validators]="passwordValidators" />

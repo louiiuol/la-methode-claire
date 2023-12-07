@@ -2,15 +2,6 @@ import {Routes} from '@angular/router';
 import {PublicPage} from './public.page';
 
 /**
- * Main public routes
- */
-export const navigationLinks = [
-	{path: '', name: 'Accueil'},
-	{path: 'method', name: 'La méthode'},
-	{path: 'about', name: 'Qui est claire ?'},
-];
-
-/**
  * Views for unauthenticated users.
  */
 export const PUBLIC_ROUTES: Routes = [
@@ -23,6 +14,16 @@ export const PUBLIC_ROUTES: Routes = [
 				pathMatch: 'full',
 				loadComponent: () =>
 					import('./pages/home/home.page').then(m => m.HomePage),
+			},
+			{
+				path: 'method',
+				loadComponent: () =>
+					import('./pages/method/method.page').then(m => m.MethodPage),
+			},
+			{
+				path: 'about',
+				loadComponent: () =>
+					import('./pages/about/about.page').then(m => m.AboutPage),
 			},
 			{
 				path: 'login',
@@ -47,16 +48,6 @@ export const PUBLIC_ROUTES: Routes = [
 					import('./pages/reset-password/reset-password.page').then(
 						m => m.ResetPasswordPage
 					),
-			},
-			{
-				path: 'about',
-				loadComponent: () =>
-					import('./pages/about/about.page').then(m => m.AboutPage),
-			},
-			{
-				path: 'method',
-				loadComponent: () =>
-					import('./pages/method/method.page').then(m => m.MethodPage),
 			},
 		],
 	},

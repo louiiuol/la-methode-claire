@@ -31,7 +31,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 })
 export class ForgotPasswordPage {
 	@HostBinding('class')
-	protected readonly class = 'centered-content';
+	protected readonly class = 'page centered-content bg-yellow-light';
 
 	protected readonly fields: FieldConfig[] = [
 		{preset: 'user.email', props: {required: true}},
