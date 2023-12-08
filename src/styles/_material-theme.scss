@@ -21,3 +21,51 @@ $lmc-light-theme: mat.define-light-theme(
 );
 @include mat.all-component-themes($lmc-light-theme);
 @include mat.typography-hierarchy($typography-config);
+
+.text-primary {
+	color: mat.get-color-from-palette($primary) !important;
+}
+
+.bg-primary {
+	background-color: mat.get-color-from-palette($primary) !important;
+}
+.text-accent {
+	color: mat.get-color-from-palette($accent) !important;
+}
+.bg-accent {
+	background-color: mat.get-color-from-palette($accent) !important;
+}
+
+.text-warn {
+	color: mat.get-color-from-palette($warn) !important;
+}
+.bg-warn {
+	background-color: mat.get-color-from-palette($warn) !important;
+}
+.text-success {
+	color: #26da35 !important;
+}
+.bg-success {
+	background-color: #26da35 !important;
+}
+.text-orange {
+	color: #cc6930 !important;
+}
+.bg-orange {
+	background-color: #cc6930 !important;
+}
+
+.bg-yellow-light {
+	background-color: #f6f8ed !important;
+}
+
+.bg-texture {
+	background-image: repeating-linear-gradient(
+		223deg,
+		rgba(255, 255, 255, 0.25),
+		rgba(255, 255, 255, 0.25) 1px,
+		transparent 0px,
+		transparent 2px
+	);
+	background-size: 20px;
+}
