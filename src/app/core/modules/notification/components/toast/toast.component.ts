@@ -24,8 +24,7 @@ import {MessageComponent} from '@shared/components';
 	`,
 })
 export class ToasterComponent {
-	@HostBinding('class')
-	protected readonly class = 'absolute right-2 top-20 w-sm z-50 px-3';
+	@HostBinding('class') class = 'absolute right-2 top-16 z-50';
 
 	protected readonly notifications = inject(NotificationService).notifications;
 }
