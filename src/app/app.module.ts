@@ -1,11 +1,4 @@
 import {NgModule, Component, HostBinding} from '@angular/core';
-import {RouterModule} from '@angular/router';
-
-import {environment} from '@env/environment';
-
-import {CoreModule} from '@core/core.module';
-import {CORE_MODULES} from '@core/modules';
-import {ToasterComponent} from '@core/modules/notification';
 
 /**
  * Root component of the Application, responsible for:
@@ -24,6 +17,14 @@ import {ToasterComponent} from '@core/modules/notification';
 export class AppShell {
 	@HostBinding('class') class = 'relative antialiased text-primary';
 }
+
+import {RouterModule} from '@angular/router';
+
+import {environment} from '@env/environment';
+
+import {CoreModule} from '@core/core.module';
+import {CORE_MODULES} from '@core/modules';
+import {ToasterComponent} from '@core/modules/notification';
 
 import {APP_ROUTES} from './app.routes';
 
