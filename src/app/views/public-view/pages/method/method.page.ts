@@ -5,6 +5,5 @@ import {Component, HostBinding} from '@angular/core';
 	templateUrl: 'method.page.html',
 })
 export class MethodPage {
-	@HostBinding('class')
-	protected readonly class = 'block pb-16';
+	@HostBinding('class') class = 'block pb-16';
 }

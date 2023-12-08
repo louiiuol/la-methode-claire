@@ -12,6 +12,7 @@ import {HeaderComponent} from '@shared/components';
  */
 @Component({
 	standalone: true,
+	selector: 'app-teacher-view',
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
 		<app-header />
@@ -20,9 +21,6 @@ import {HeaderComponent} from '@shared/components';
 		</main>
 	`,
 })
-export class TeacherPage {
-	@HostBinding('class')
-	protected readonly class = 'block h-full bg-yellow-light';
-	@HostBinding('id')
-	protected readonly key = 'teacher-view';
+export class TeacherView {
+	@HostBinding('class') class = 'app-view bg-yellow-light';
 }

@@ -13,6 +13,7 @@ import {HeaderComponent} from '@shared/components';
  */
 @Component({
 	standalone: true,
+	selector: 'app-public-view',
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
 		<app-header />
@@ -25,8 +26,8 @@ import {HeaderComponent} from '@shared/components';
 		</p>
 	`,
 })
-export class PublicPage {
-	@HostBinding('class') protected readonly class = 'text-2xl text-primary';
+export class PublicView {
+	@HostBinding('class') class = 'app-view';
 
 	protected readonly currentYear = new Date().getFullYear();
 }

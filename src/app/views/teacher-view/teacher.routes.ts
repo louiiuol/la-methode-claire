@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {TeacherPage} from './teacher.page';
+import {TeacherView} from './teacher.view';
 
 /**
  * Views for authenticated users.
@@ -7,7 +7,7 @@ import {TeacherPage} from './teacher.page';
 export const TEACHER_ROUTES: Routes = [
 	{
 		path: '',
-		component: TeacherPage,
+		component: TeacherView,
 		children: [
 			{
 				path: 'dashboard',

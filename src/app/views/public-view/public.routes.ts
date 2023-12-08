@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {PublicPage} from './public.page';
+import {PublicView} from './public.view';
 
 /**
  * Views for unauthenticated users.
@@ -7,7 +7,7 @@ import {PublicPage} from './public.page';
 export const PUBLIC_ROUTES: Routes = [
 	{
 		path: '',
-		component: PublicPage,
+		component: PublicView,
 		children: [
 			{
 				path: '',

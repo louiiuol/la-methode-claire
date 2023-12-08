@@ -12,16 +12,19 @@ export const APP_ROUTES: Routes = [
 		path: '',
 		canActivate: [VisitorGuard],
 		loadChildren: () =>
-			import('./views/public-view/public.module').then(m => m.PublicModule),
+			import('./views/public-view/public.routes').then(m => m.PUBLIC_ROUTES),
 	},
 	{
 		path: 'app',
 		canActivate: [TeacherGuard],
 		loadChildren: () =>
-			import('./views/teacher-view/teacher.module').then(m => m.TeacherModule),
+			import('./views/teacher-view/teacher.routes').then(m => m.TEACHER_ROUTES),
 	},
 ];
 
+/**
+ * Main routes available, grouped by spaces (logged or not, or as admin)
+ */
 export const navigationLinks = {
 	public: [
 		{path: '', name: 'Accueil'},

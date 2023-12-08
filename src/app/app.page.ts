@@ -15,5 +15,5 @@ import {Component, HostBinding} from '@angular/core';
 	`,
 })
 export class AppPage {
-	@HostBinding('class') protected readonly class = 'relative antialiased';
+	@HostBinding('class') class = 'relative antialiased text-primary';
 }
