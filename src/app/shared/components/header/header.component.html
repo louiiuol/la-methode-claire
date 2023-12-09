@@ -55,6 +55,15 @@
 			</app-button>
 
 			<app-button
+				*ngIf="currentUser?.isAdmin"
+				type="menu-item"
+				href="/back-office/dashboard"
+				label="back-office"
+				color="accent">
+				<app-icon>settings</app-icon>
+			</app-button>
+
+			<app-button
 				type="menu-item"
 				color="warn"
 				(click)="logOut()"

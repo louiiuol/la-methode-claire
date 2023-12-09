@@ -1,5 +1,9 @@
 import {Routes} from '@angular/router';
-import {VisitorGuard, TeacherGuard} from '@core/modules/auth/guards';
+import {
+	VisitorGuard,
+	TeacherGuard,
+	AdminGuard,
+} from '@core/modules/auth/guards';
 
 /**
  * Global Routes of the application, defines all root sections:
@@ -19,6 +23,12 @@ export const APP_ROUTES: Routes = [
 		canActivate: [TeacherGuard],
 		loadChildren: () =>
 			import('./views/teacher-view/teacher.routes').then(m => m.TEACHER_ROUTES),
+	},
+	{
+		path: 'back-office',
+		canActivate: [AdminGuard],
+		loadChildren: () =>
+			import('./views/admin-view/admin.routes').then(m => m.ADMIN_ROUTES),
 	},
 ];
 

@@ -25,4 +25,6 @@ export class LibraryResource extends HttpResource {
 		this.http.get([environment.root_url, 'courses', fileName].join('/'), {
 			responseType: 'arraybuffer',
 		});
+
+	refreshLibrary = () => this.create(null);
 }

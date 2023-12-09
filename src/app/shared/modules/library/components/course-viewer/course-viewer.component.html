@@ -5,57 +5,97 @@
 		*ngIf="course.order < 3 || hasValidSubscription; else unauthorizedLesson">
 		<mat-drawer
 			#drawer
-			class="w-60 p-4 !flex flex-col justify-start items-start"
+			class="w-60 px-4 !flex flex-col justify-start items-start"
 			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
-			<h2 class="text-2xl" [style]="'color:' + course.color">
+			<h2 class="text-2xl my-2" [style]="'color:' + course.color">
 				Semaine N°{{ (course.order + 1).toFixed() }}
+				<app-icon></app-icon>
 			</h2>
-			<mat-chip-listbox class="mb-2" aria-label="Phonèmes associés">
-				<mat-chip-option
-					*ngFor="let phoneme of course.phonemes"
-					selectable="false"
-					color="primary">
-					{{ phoneme.name }}
-				</mat-chip-option>
-			</mat-chip-listbox>
-			<app-button
-				*ngIf="course.order >= currentUserLesson; else completedCourse"
-				type="raised"
-				color="primary"
-				(click)="setCurrentLesson(course.order + 1)"
-				label="Marquer comme terminée" />
-			<ng-template #completedCourse>
-				<app-message summary="Cette leçon est terminée" severity="note" />
-				<app-button
-					type="stroked"
-					color="primary"
-					label="Revenir à cette leçon"
-					(click)="setCurrentLesson(course.order)" />
+			<div
+				class="mb-2 flex gap-3 items-center justify-start"
+				*ngIf="course.order < currentUserLesson; else onGoingCourse">
+				<span
+					class="px-2 py-1 bg-green-400 text-white rounded-md w-fit text-sm italic">
+					Terminée
+				</span>
+
+				<app-icon
+					class="cursor-pointer mx-0"
+					color="accent"
+					(click)="setCurrentLesson(course.order)"
+					matTooltip="Revenir à cette leçon">
+					restart_alt
+				</app-icon>
+			</div>
+			<ng-template #onGoingCourse>
+				<ng-container
+					*ngIf="course.order > currentUserLesson; else pendingCourse">
+					<div class="mb-2 flex gap-3 items-center justify-start">
+						<span
+							class="px-2 py-1 bg-slate-300 text-gray-700 rounded-md w-fit text-sm italic">
+							En attente
+						</span>
+
+						<app-icon
+							class="cursor-pointer mx-0"
+							color="accent"
+							(click)="setCurrentLesson(course.order)"
+							matTooltip="Passer à cette leçon">
+							restart_alt
+						</app-icon>
+					</div>
+				</ng-container>
+				<ng-template #pendingCourse>
+					<div class="mb-2 flex gap-3 items-center justify-start">
+						<span
+							class="px-2 py-1 bg-primary text-white rounded-md w-fit text-sm italic">
+							En cours
+						</span>
+
+						<app-icon
+							class="cursor-pointer mx-0"
+							(click)="setCurrentLesson(course.order + 1)"
+							matTooltip="Marquer comme terminée">
+							check
+						</app-icon>
+					</div>
+				</ng-template>
 			</ng-template>
 
 			<hr class="my-3" />
 
-			<h3 class="text-xl !mb-1">Liste des mots</h3>
-			<mat-chip-listbox
-				*ngIf="course.words?.length; else noWordsAssociated"
-				class="mb-2"
-				aria-label="Mots associés">
-				<mat-chip-option
-					*ngFor="let word of course.words"
-					selectable="false"
-					color="primary">
+			<h3 class="text-sm italic !mb-1">Phonème(s) associé(s)</h3>
+			<p class="text-primary">
+				<span *ngFor="let phoneme of course.phonemes" class="mx-1">
+					{{ phoneme.name }}
+				</span>
+			</p>
+
+			<hr class="my-3" />
+
+			<h3 class="text-sm italic !mb-1">Liste des mot(s)</h3>
+			<ng-container *ngIf="course.words?.length; else noWordsAssociated">
+				<span *ngFor="let word of course.words" class="mx-1 text-primary">
 					{{ word }}
-				</mat-chip-option>
-			</mat-chip-listbox>
+				</span>
+			</ng-container>
+
 			<ng-template #noWordsAssociated>
-				<app-message
-					[showIcon]="false"
-					summary="Aucun mot associé à cette semaine"
-					severity="warn" />
+				<small class="italic py-2">Aucun mot associé à cette semaine</small>
 			</ng-template>
-			<hr class="mb-6" />
-			<h3 class="text-xl">Liste des fichiers</h3>
+
+			<hr class="my-3" />
+
+			<div class="flex items-center justify-between">
+				<h3 class="text-sm italic !mb-1">Liste des fichiers</h3>
+				<app-icon
+					class="cursor-pointer mx-0 mr-4 mt-1"
+					color="accent"
+					matTooltip="Télécharger tout les pdfs">
+					download
+				</app-icon>
+			</div>
 			<mat-selection-list #files [multiple]="false">
 				<mat-list-option
 					*ngFor="let file of filesAvailable"
@@ -66,6 +106,7 @@
 			</mat-selection-list>
 			<span class="flex-1"></span>
 		</mat-drawer>
+
 		<app-file-viewer
 			*ngIf="
 				files.selectedOptions.selected[0] ?? filesAvailable[0] as selectedFile

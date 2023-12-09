@@ -5,8 +5,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatTooltipModule} from '@angular/material/tooltip';
 const MaterialModules = [MatBadgeModule, MatTooltipModule];
 
-import {AuthService, TranslatePipe} from '@core';
-import {ButtonComponent} from '@shared/components';
+import {AuthService} from '@core';
+import {ButtonComponent, CardComponent} from '@shared/components';
 import {LibraryModule} from '@shared/modules/library/library.module';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 
@@ -17,15 +17,14 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		AsyncPipe,
 		NgFor,
 		forwardRef(() => LibraryModule),
-		TranslatePipe,
 		ButtonComponent,
+		CardComponent,
 		...MaterialModules,
 	],
 	templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {
-	@HostBinding('class')
-	protected readonly class = 'mx-6 mt-4 block';
+	@HostBinding('class') class = 'px-6 mt-4 block max-w-7xl mx-auto';
 
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
 	protected readonly hasValidSubscription =

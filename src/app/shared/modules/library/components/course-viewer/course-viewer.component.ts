@@ -18,17 +18,20 @@ const MaterialModules = [
 	MatSidenavModule,
 	MatListModule,
 	MatRadioModule,
+	MatTooltipModule,
 ];
 
 import {AuthService, PlatformService, isBoolean} from '@core';
 import {
 	ButtonComponent,
 	CardComponent,
+	IconComponent,
 	MessageComponent,
 } from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -42,6 +45,7 @@ import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 		NgFor,
 		...MaterialModules,
 		ButtonComponent,
+		IconComponent,
 		CardComponent,
 		FileViewerComponent,
 		MessageComponent,
@@ -124,16 +128,13 @@ export class CourseViewerComponent {
 	) {}
 
 	setCurrentLesson(index: number) {
-		this.library
-			.setCurrentLesson(index)
-			.pipe(take(1))
-			.subscribe(res => {
-				if (!res.error) {
-					this.currentLessonIndex = index;
-					this.currentUserLesson = index;
-					this.nextLesson.emit(index);
-					this.authenticator.updateCurrentUser({currentLesson: index});
-				}
-			});
+		this.library.setCurrentLesson(index).subscribe(res => {
+			if (!res.error) {
+				this.currentLessonIndex = index;
+				this.currentUserLesson = index;
+				this.nextLesson.emit(index);
+				this.authenticator.updateCurrentUser({currentLesson: index});
+			}
+		});
 	}
 }

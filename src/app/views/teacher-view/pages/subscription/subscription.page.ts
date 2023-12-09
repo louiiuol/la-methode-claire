@@ -8,10 +8,10 @@ import {FormulaCardComponent} from './formula-card/formula-card.component';
 	imports: [CardComponent, FormulaCardComponent],
 	template: `<app-formula-card />
 		<section>
-			<h2 class="text-primary">S'abonner</h2>
+			<h2 class="text-primary">Comment s'abonner ?</h2>
 			<div class="w-80 h-96 bg-slate-400 mx-auto rounded-md">
 				<p class="text-white h-full text-center pt-10 text-lg">
-					Intégration du formulaire à venir
+					Pour bénéficier du contenu de la méthode, il vous suffit d
 				</p>
 			</div>
 		</section>`,

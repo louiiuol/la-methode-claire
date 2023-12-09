@@ -1,4 +1,4 @@
-<mat-card [title]="title ?? ''" class="mx-auto w-fit px-5 max-w-full">
+<mat-card [title]="title ?? ''" class="mx-auto w-fit px-5 pb-8 max-w-full">
 	<mat-card-header *ngIf="title || subtitle" class="text-primary !pt-8 !pb-2">
 		<mat-card-title class="text-center !text-2xl" *ngIf="!!title">
 			{{ title }}
@@ -11,7 +11,7 @@
 	</mat-card-header>
 
 	<mat-card-content
-		class="relative !p-4 !flex flex-col items-center justify-start"
+		class="relative !px-4 !pt-6 !flex flex-col items-center justify-start !h-fit"
 		style="min-width: 200px; min-height: 50px">
 		<ng-content></ng-content>
 	</mat-card-content>

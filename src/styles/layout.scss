@@ -12,6 +12,11 @@ body {
 	min-height: calc(100dvh - 64px);
 }
 
+.app-view {
+	display: block;
+	height: 100%;
+}
+
 .centered-content {
 	display: flex;
 	align-items: center;
