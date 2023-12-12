@@ -95,12 +95,10 @@
 		},
 		"form": {
 			"validation": {
-				"required": "Ce champ est requis!",
 				"minLength": "Texte trop court ({{actual}}/{{min}} caractères) !",
 				"maxLength": "Texte trop long ({{actual}}/{{max}} caractères) !",
 				"max": "La valeur doit être inférieure à {{max}} !",
 				"min": "La valeur doit être supérieure à {{min}} !",
-				"email": "Format d'email invalide !",
 				"pattern": "Format invalide ! ce champs accepte {{format}}",
 				"password_not_matching": "Le mot de passe est différent !"
 			},
