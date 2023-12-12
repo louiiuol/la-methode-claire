@@ -6,6 +6,21 @@ import {
 } from '@core/modules/auth/guards';
 
 /**
+ * Main routes available, grouped by spaces (logged or not, or as admin)
+ */
+export const navigationLinks = {
+	public: [
+		{path: '', name: 'Accueil'},
+		{path: 'method', name: 'La méthode'},
+		{path: 'about', name: 'Qui est claire ?'},
+	],
+	logged: [
+		{path: 'app/dashboard', name: 'Tableau de bord'},
+		{path: 'app/subscription', name: 'La formule'},
+	],
+};
+
+/**
  * Global Routes of the application, defines all root sections:
  * - Public (not logged users)
  * - Customer (Teachers dashboard)
@@ -31,18 +46,3 @@ export const APP_ROUTES: Routes = [
 			import('./views/admin-view/admin.routes').then(m => m.ADMIN_ROUTES),
 	},
 ];
-
-/**
- * Main routes available, grouped by spaces (logged or not, or as admin)
- */
-export const navigationLinks = {
-	public: [
-		{path: '', name: 'Accueil'},
-		{path: 'method', name: 'La méthode'},
-		{path: 'about', name: 'Qui est claire ?'},
-	],
-	logged: [
-		{path: 'app/dashboard', name: 'Tableau de bord'},
-		{path: 'app/subscription', name: 'La formule'},
-	],
-};

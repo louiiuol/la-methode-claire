@@ -9,7 +9,6 @@ import {NotificationService} from '@core/modules/notification';
 
 import {LibraryResource} from '@shared/modules/library/services/library.resource';
 import {NgIf} from '@angular/common';
-import {catchError, tap} from 'rxjs';
 
 @Component({
 	standalone: true,

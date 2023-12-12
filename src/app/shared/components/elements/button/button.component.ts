@@ -12,7 +12,7 @@ import {
 	HostListener,
 	Input,
 } from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterModule} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';

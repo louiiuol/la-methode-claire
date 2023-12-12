@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 
-import {take} from 'rxjs';
-
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';

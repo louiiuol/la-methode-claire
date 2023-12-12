@@ -8,6 +8,8 @@ import {HeaderComponent} from '@shared/components';
  * - <router-outlet> to display children in maximized box (overflow not handled)
  *
  * **This container must only contain teacher's actions; At this point, user must be authenticated !**
+ *
+ * @author louiiuol
  */
 @Component({
 	standalone: true,

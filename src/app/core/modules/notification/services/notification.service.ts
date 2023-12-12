@@ -25,8 +25,8 @@ export class NotificationService {
 	 */
 	notify(
 		summary: string,
-		details: string,
-		severity: NotificationSeverity,
+		details?: string,
+		severity: NotificationSeverity = 'info',
 		life: number = 4000
 	) {
 		const uuid: string = uuidV4();
@@ -46,7 +46,7 @@ export class NotificationService {
 	 * @param message key to be displayed for description of the notification
 	 * @param key id of the container to display notification in
 	 */
-	success = (title: string, message: string) =>
+	success = (title: string, message?: string) =>
 		this.notify(title, message, 'success');
 
 	/**
@@ -55,7 +55,7 @@ export class NotificationService {
 	 * @param message key to be displayed for description of the notification
 	 * @param key id of the container to display notification in
 	 */
-	error = (title: string, message: string) =>
+	error = (title: string, message?: string) =>
 		this.notify(title, message, 'error');
 
 	/**

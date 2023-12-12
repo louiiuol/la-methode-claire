@@ -1,9 +1,8 @@
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {Component, HostBinding, forwardRef, inject} from '@angular/core';
 
-import {MatBadgeModule} from '@angular/material/badge';
 import {MatTooltipModule} from '@angular/material/tooltip';
-const MaterialModules = [MatBadgeModule, MatTooltipModule];
+const MaterialModules = [MatTooltipModule];
 
 import {AuthService} from '@core';
 import {ButtonComponent, CardComponent} from '@shared/components';

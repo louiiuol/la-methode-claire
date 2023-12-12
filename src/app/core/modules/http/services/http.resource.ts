@@ -14,7 +14,8 @@ import {
 	HttpOutputPaginated,
 	HttpOutput,
 } from '../types';
-import {clean} from '@core/helpers';
+import {capitalize, clean} from '@core/helpers';
+import {common_actions} from '../models/http-errors';
 
 /**
  * Abstract class to automate workflow for every REST requests performed by the application
@@ -220,14 +221,13 @@ export abstract class HttpResource {
 		action: RequestActions,
 		opt: RequestOptions | undefined
 	): HttpOutput<T> => {
-		const resource =
-			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
 		if (
 			opt?.notifyOnSuccess ||
 			(opt?.notifyOnSuccess != false && action == 'update')
 		)
-			this.notifier.success(resource, `${action} effectué(e) avec succès 🎉`);
-
+			this.notifier.success(
+				`${capitalize(common_actions[action])} effectuée avec succès 🎉`
+			);
 		return {
 			value: res.data ?? (res as any),
 		};
@@ -239,20 +239,19 @@ export abstract class HttpResource {
 		opt: RequestOptions | undefined
 	) => {
 		const res = (response.error as ApiResponse<null>) ?? response;
-		const resource =
-			opt?.customResource ?? this.resource === '' ? 'auth' : this.resource;
+
 		console.error(
 			`(${new Date().toLocaleDateString()}) [${
 				res?.code ?? 0
 			}] HTTP failed to ${
 				opt?.customAction ?? action
-			} on [${resource.toLocaleUpperCase()}]`,
+			} on [${this.resource.toLocaleUpperCase()}]`,
 			res
 		);
 
 		const commonErrorMessage = this.statusTranslation[res.code];
-		if (commonErrorMessage && opt?.notifyOnError !== false) {
-			this.notifier.error('Un problème est survenu', commonErrorMessage);
+		if (commonErrorMessage) {
+			if (opt?.notifyOnError !== false) this.notifier.error(commonErrorMessage);
 			return of({
 				error: commonErrorMessage,
 			} as HttpOutputEntity<null>);
@@ -264,7 +263,9 @@ export abstract class HttpResource {
 		}
 
 		if (opt?.notifyOnError !== false)
-			this.notifier.error(resource, `Impossible de ${action}`);
+			this.notifier.error(
+				`Une erreur est survenu lors de la ${common_actions[action]} des informations.`
+			);
 		return of({
 			error: res.message,
 		} as HttpOutputEntity<null>);
