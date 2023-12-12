@@ -12,7 +12,7 @@ import {
 	HostListener,
 	Input,
 } from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterModule} from '@angular/router';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -46,13 +46,16 @@ type ButtonType =
 		NgSwitchDefault,
 		NgTemplateOutlet,
 		...MaterialModules,
-		RouterModule,
+		RouterLink,
+		RouterLinkActive,
 	],
 	selector: 'app-button',
 	templateUrl: 'button.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
+	@HostBinding('class') class = '!font-semibold';
+
 	/**
 	 * All types (appearances) available for this component. This props only change the theme of the button
 	 * @see {@link https://material.angular.io/components/button/examples#button-types | Material buttons types}
@@ -76,7 +79,7 @@ export class ButtonComponent {
 	@Input() params?: {[key: string]: string | string[]};
 
 	/**
-	 * Optional label (must match a translation key)
+	 * Optional label
 	 */
 	@Input() label?: string;
 
@@ -99,6 +102,4 @@ export class ButtonComponent {
 			e.stopImmediatePropagation();
 		}
 	}
-
-	@HostBinding('class') protected readonly class = '!font-semibold';
 }

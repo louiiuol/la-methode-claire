@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 /**
  * Simple component to render a loader (with CSS only).
@@ -8,9 +8,8 @@ import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
  * @author louiiuol
  */
 @Component({
-	selector: 'app-loader',
 	standalone: true,
-	imports: [],
+	selector: 'app-loader',
 	template: `<span class="text-primary"></span>`,
 	styleUrls: ['./loader.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

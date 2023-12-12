@@ -32,13 +32,13 @@ export abstract class HttpResource {
 	protected readonly translator = inject(TranslateService);
 
 	private readonly statusTranslation: {[key: number | string]: string} = {
-		undefined: 'server_down',
-		0: 'server_down',
-		401: 'token_expired',
-		403: 'forbidden',
-		404: 'not_found',
-		409: 'conflict',
-		502: 'server_restarting',
+		undefined: "L'API est hors ligne. Merci de réessayer plus tard !",
+		0: "L'API est hors ligne. Merci de réessayer plus tard !",
+		401: 'Identifiants incorrects',
+		403: 'Accès non autorisé',
+		404: "Cette ressource n'existe pas !",
+		409: 'Cette action est impossible à réaliser!',
+		502: "L'API est en cours de redémarrage, Merci de réessayer plus tard!",
 	};
 
 	/**
@@ -226,14 +226,7 @@ export abstract class HttpResource {
 			opt?.notifyOnSuccess ||
 			(opt?.notifyOnSuccess != false && action == 'update')
 		)
-			this.notifier.success(`core.api.resources.${resource}`, {
-				key: 'core.states.success',
-				param: {
-					action: this.translator.instant(
-						`core.actions.${opt?.customAction ?? action}.done`
-					),
-				},
-			});
+			this.notifier.success(resource, `${action} effectué(e) avec succès 🎉`);
 
 		return {
 			value: res.data ?? (res as any),
@@ -259,12 +252,9 @@ export abstract class HttpResource {
 
 		const commonErrorMessage = this.statusTranslation[res.code];
 		if (commonErrorMessage && opt?.notifyOnError !== false) {
-			this.notifier.error(
-				'core.api.errors.generic',
-				`core.api.errors.${commonErrorMessage}`
-			);
+			this.notifier.error('Un problème est survenu', commonErrorMessage);
 			return of({
-				error: null,
+				error: commonErrorMessage,
 			} as HttpOutputEntity<null>);
 		}
 
@@ -274,14 +264,7 @@ export abstract class HttpResource {
 		}
 
 		if (opt?.notifyOnError !== false)
-			this.notifier.error(`core.api.resources.${resource}`, {
-				key: 'core.states.failed',
-				param: {
-					action: this.translator.instant(
-						`core.actions.${opt?.customAction ?? action}.action`
-					),
-				},
-			});
+			this.notifier.error(resource, `Impossible de ${action}`);
 		return of({
 			error: res.message,
 		} as HttpOutputEntity<null>);

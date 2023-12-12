@@ -1,88 +1,61 @@
-import {TranslateService as NgxTranslateService} from '@ngx-translate/core';
-
-import {ConfigOption, FormlyFieldConfig} from '@ngx-formly/core';
-import {getName} from '../models/patterns';
+import {ConfigOption} from '@ngx-formly/core';
+import {getPatternDescription} from '../models/patterns';
 import {passwordMatchValidator} from '../validators/password-match.validator';
 
 /**
- * Overrides Formly Validation config in order to display validation messages translated to customer
- * These messages need to be declared in translation files at `core.form.validation.{name}` with {name} equal to validation's name
- *
+ * Overrides Formly Validation config in order to display validation messages
  * @internal
- * @param translate Service used to translate messages
- * @returns translated validationMessages
+ * @returns Validation messages
  *
  * @author louiiuol
  */
-export function formlyValidationConfig(
-	translator: NgxTranslateService
-): ConfigOption {
+export function formlyValidationConfig(): ConfigOption {
 	return {
 		validators: [{name: 'passwordMatch', validation: passwordMatchValidator}],
 		validationMessages: [
 			{
 				name: 'required',
-				message() {
-					return translator.stream('core.form.validation.required');
-				},
+				message: 'Ce champ est requis!',
 			},
 			{
 				name: 'email',
-				message() {
-					return translator.instant('core.form.validation.email');
-				},
+				message: "Format d'email invalide !",
 			},
 			{
 				name: 'minLength',
-				message(field: FormlyFieldConfig) {
-					return translator.instant('core.form.validation.minLength', {
-						min: (field as any).requiredLength,
-						actual: (field as any).actualLength,
-					});
+				message(field: any) {
+					return `Texte trop court (${field.actualLength}/${field.requiredLength} caractères) !`;
 				},
 			},
 			{
 				name: 'maxLength',
-				message(field: FormlyFieldConfig) {
-					return translator.instant('core.form.validation.maxLength', {
-						max: (field as any).requiredLength,
-						actual: (field as any).actualLength,
-					});
+				message(field: any) {
+					return `Texte trop long (${field.actualLength}/${field.requiredLength} caractères) !`;
 				},
 			},
 			{
 				name: 'max',
-				message(field: FormlyFieldConfig) {
-					return translator.instant('core.form.validation.max', {
-						max: (field as any).max,
-					});
+				message(field: any) {
+					return `La valeur doit être inférieure à ${field.max} !`;
 				},
 			},
 			{
 				name: 'min',
-				message(field: FormlyFieldConfig) {
-					return translator.instant('core.form.validation.min', {
-						min: (field as any).min,
-					});
+				message(field: any) {
+					return `La valeur doit être supérieure à ${field.min} !`;
 				},
 			},
 			{
 				name: 'pattern',
 				message(field: any) {
-					return translator.instant('core.form.validation.pattern', {
-						format: translator.instant(
-							'core.form.patterns.' + getName(field.requiredPattern)
-						),
-					});
+					return `Format invalide; ${getPatternDescription(
+						field.requiredPattern
+					)} `;
 				},
 			},
 			{
 				name: 'passwordMatch',
-				message() {
-					return translator.instant(
-						'core.form.validation.password_not_matching'
-					);
-				},
+				message: 'Le mot de passe est différent !',
 			},
 		],
 	};

@@ -20,6 +20,8 @@ export const APP_FORM_GROUPS: {[key: string]: FieldConfig[]} = {
 			validators: [Validators.email],
 			props: {
 				type: 'email',
+				placeholder: 'example@mail.com',
+				label: 'Adresse email',
 			},
 		},
 		{
@@ -27,24 +29,38 @@ export const APP_FORM_GROUPS: {[key: string]: FieldConfig[]} = {
 			validators: [getPattern('password')],
 			props: {
 				type: 'password',
+				label: 'Mot de passe',
+				description: 'Doit être un mot de passe sécurisé',
+				placeholder: '******',
 			},
 		},
 		{
 			key: 'passwordConfirm',
 			props: {
 				type: 'password',
+				label: 'Confirmation du mot de passe',
+				description: 'Doit être identique au mot de passe',
+				placeholder: '******',
 			},
 		},
 		{
 			key: 'agree',
 			type: 'checkbox',
 			defaultValue: false,
+			props: {
+				label: "Je confirme avoir lu les conditions d'utilisation",
+				description:
+					"Vous devez accepter les conditions d'utilisation pour vous inscrire",
+			},
 		},
 		{
 			key: 'firstName',
 			validators: [Validators.min(1), Validators.max(100)],
 			props: {
 				type: 'text',
+				label: 'Prénom',
+				placeholder: 'Jean',
+				description: '',
 			},
 		},
 		{
@@ -52,6 +68,9 @@ export const APP_FORM_GROUPS: {[key: string]: FieldConfig[]} = {
 			validators: [Validators.min(1), Validators.max(100)],
 			props: {
 				type: 'text',
+				label: 'Nom',
+				placeholder: 'Dupont',
+				description: '',
 			},
 		},
 	],

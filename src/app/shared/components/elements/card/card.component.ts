@@ -22,6 +22,8 @@ import {MatCardModule} from '@angular/material/card';
 	templateUrl: './card.component.html',
 })
 export class CardComponent {
+	@HostBinding('class') class = 'block mx-auto px-4';
+
 	/**
 	 * Title to be displayed in the card
 	 */
@@ -32,9 +34,5 @@ export class CardComponent {
 	 */
 	@Input() subtitle?: string;
 
-	@ContentChild('cardFooter')
-	protected cardFooter?: TemplateRef<any>;
-
-	@HostBinding('class')
-	protected readonly class = 'block mx-auto px-4';
+	@ContentChild('cardFooter') protected cardFooter?: TemplateRef<any>;
 }

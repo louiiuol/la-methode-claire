@@ -6,31 +6,27 @@
 	<app-message
 		severity="error"
 		*ngFor="let message of errorMessages"
-		[summary]="message"
-		[closable]="true" />
+		[summary]="message" />
 	<formly-form
 		[form]="form"
 		[options]="options"
 		[fields]="formFields ?? []"
 		[model]="formModel" />
 	<footer class="mt-4 flex w-full justify-center gap-5">
-		<button
-			type="button"
-			mat-stroked-button
+		<app-button
+			type="stroked"
 			(click)="reset()"
 			[disabled]="pristine()"
-			color="primary">
-			Réinitialiser
-		</button>
-		<button
+			color="primary"
+			label="Réinitialiser" />
+		<app-button
 			mat-flat-button
 			color="primary"
-			type="submit"
+			type="flat"
 			matTooltip="Le formulaire est invalide"
 			[matTooltipDisabled]="form.valid"
-			[disabled]="!isValidForm()">
-			{{ action }}
-		</button>
+			[disabled]="!isValidForm()"
+			[label]="action" />
 	</footer>
 </form>
 <ng-template #loadingTemplate>

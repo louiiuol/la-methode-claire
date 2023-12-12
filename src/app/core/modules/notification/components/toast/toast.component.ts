@@ -17,7 +17,6 @@ import {MessageComponent} from '@shared/components';
 	template: `
 		<app-message
 			*ngFor="let n of notifications()"
-			[closable]="n.closable"
 			[summary]="n.summary"
 			[details]="n.details"
 			[severity]="n.severity" />

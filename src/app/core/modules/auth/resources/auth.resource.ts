@@ -5,6 +5,7 @@ import {Token} from '../types/token.dto';
 import {LoginDto} from '../types/login.dto';
 import {HttpResource} from '@core/modules/http/services/http.resource';
 import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.dto';
+import {catchError, tap} from 'rxjs';
 
 /**
  * CRUD requests related to user's authentication.
@@ -26,7 +27,7 @@ export class AuthResource extends HttpResource {
 			customResource: 'auth',
 			path: 'login',
 			customAction: 'login',
-		});
+		}).pipe(tap(res => console.log(res)));
 
 	whoAmI = () => this.get<UserPreviewDto>(null, {path: 'me'});
 

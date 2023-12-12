@@ -1,6 +1,10 @@
 import {NgIf} from '@angular/common';
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
+import {
+	Component,
+	Input,
+	ChangeDetectionStrategy,
+	HostBinding,
+} from '@angular/core';
 
 import {NotificationSeverity} from '@core/modules/notification';
 import {IconComponent} from '../icon/icon.component';
@@ -32,21 +36,24 @@ const MESSAGE_DICTIONARY = {
 	template: `
 		<div
 			*ngIf="summary && severity"
-			class="flex items-start justify-start gap-3 mb-3 border-l-4 rounded-r px-4 py-3 shadow-md"
+			class="flex items-center justify-between gap-3 border-l-4 rounded-r px-4 shadow-md"
 			[class]="getMessageColor()">
-			<app-icon *ngIf="showIcon" class="my-1">
-				{{ getMessageIcon() }}
-			</app-icon>
-			<div class="px-1">
-				<span class="font-bold" [innerHTML]="summary"></span>
-				<br />
-				<span class="text-sm" *ngIf="details" [innerHTML]="details"></span>
+			<div class="flex-1 flex items-start justify-start py-2">
+				<app-icon *ngIf="showIcon" class="my-1 !mx-0">
+					{{ getMessageIcon() }}
+				</app-icon>
+				<div class="p-1">
+					<span [class]="{'font-bold': !!details}" [innerHTML]="summary"></span>
+					<br />
+					<span class="text-sm" *ngIf="details" [innerHTML]="details"></span>
+				</div>
 			</div>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageComponent {
+	@HostBinding('class') class = '';
 	/** Primary message of the notification */
 	@Input({required: true}) summary!: string;
 
@@ -55,9 +62,6 @@ export class MessageComponent {
 
 	/** Secondary message, provide more context (can be omitted) */
 	@Input() details?: string;
-
-	/** Allow to dismiss message (set to false by default) */
-	@Input() closable?: boolean;
 
 	@Input() showIcon = true;
 

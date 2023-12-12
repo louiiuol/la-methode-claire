@@ -60,7 +60,6 @@ export class AuthService {
 		this.http.logIn(dto).pipe(
 			map(res => {
 				if (!res.error) this.tokenStore.saveToken(res.value?.accessToken);
-				else res.error = 'Invalid credentials.';
 				return res;
 			}),
 			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),

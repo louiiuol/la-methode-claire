@@ -8,7 +8,11 @@ import {
 	Output,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {LoaderComponent, MessageComponent} from '@shared/components';
+import {
+	ButtonComponent,
+	LoaderComponent,
+	MessageComponent,
+} from '@shared/components';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
@@ -18,7 +22,6 @@ import {
 	APP_FORM_VALIDATORS,
 	FieldConfig,
 	FormModule,
-	TranslateService,
 	APP_FORM_GROUPS,
 	takeUntilDestroyed,
 } from '@core';
@@ -51,7 +54,7 @@ import {
 	imports: [
 		FormModule,
 		LoaderComponent,
-		MatButtonModule,
+		ButtonComponent,
 		MatTooltipModule,
 		MessageComponent,
 	],
@@ -107,7 +110,7 @@ export class FormComponent implements OnInit {
 	 *
 	 * The given key must exists translation files: 'core.actions.{key}'
 	 */
-	@Input() action = 'submit';
+	@Input() action = 'envoyer';
 
 	/**
 	 * Model of the form, could be useful to perform side actions.
@@ -137,10 +140,7 @@ export class FormComponent implements OnInit {
 	private untilDestroyed$ = takeUntilDestroyed();
 	private _initialModel: any;
 
-	constructor(
-		private translator: TranslateService,
-		private ref: ChangeDetectorRef
-	) {}
+	constructor(private ref: ChangeDetectorRef) {}
 
 	/**
 	 * If no model is given, will init form with empty object
@@ -179,7 +179,7 @@ export class FormComponent implements OnInit {
 	pristine = () =>
 		JSON.stringify(this._initialModel) === JSON.stringify(this.formModel);
 
-	isValidForm = () => this.form.valid && !this.pristine();
+	isValidForm = () => (this.form.valid && !this.pristine()) || this.pristine();
 
 	// private format = ({error}: HttpOutput<null>) => {
 	// 	if (!error) return [];
@@ -196,7 +196,6 @@ export class FormComponent implements OnInit {
 		const [resource, presetName] = field.preset?.split('.') ?? [];
 		const preset =
 			resource && presetName ? this.getPreset(resource, presetName) : {};
-		const translationPath = `core.form.fields.${field.key ?? preset.key}.`;
 		return {
 			...preset,
 			...field,
@@ -209,31 +208,13 @@ export class FormComponent implements OnInit {
 			validation: [],
 			validators: {validation: field.validators ?? preset.validators ?? []},
 			expressions: {
-				// apply expressionProperty for disabled based on formState
 				'props.disabled': 'formState.disabled',
-				// apply meta data about field with translation
-				'props.label': this.translator.stream(translationPath + 'label'),
-				'props.placeholder': this.translator.stream(
-					translationPath + 'placeholder'
-				),
-				'props.description': this.translator.stream(
-					translationPath + 'description'
-				),
 			},
 		};
 	};
 
 	private generateMessage = (summary: string | string[]) =>
-		this.translateMessage(Array.isArray(summary) ? summary : [summary]);
-
-	private translateMessage = (summary: string[]) =>
-		summary.map(
-			str =>
-				this.translator.translate(
-					'core.api.errors.' +
-						str.replaceAll('.', '').replaceAll(' ', '_').toLowerCase()
-				) as string
-		);
+		Array.isArray(summary) ? summary : [summary];
 
 	private load(obs: Observable<any>, fn: any) {
 		this.toggleDisabled();

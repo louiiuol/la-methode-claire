@@ -1,15 +1,10 @@
 import {Injectable, signal} from '@angular/core';
 import {Notification, NotificationSeverity} from '../types/notification';
-import {TranslateKey, TranslateService} from '@core/modules/translation';
 import {v4 as uuidV4} from 'uuid';
 
 /**
- * Provides methods to notify translated information to the user.
- *
- * You can define the translation of the messages in two ways:
- * - passing a `string` that core correspond to a translation path
- * - passing a {@link TranslateKey} which contains a `key` (translation path)
- * and params. (more information on `TranslateKey` type's documentation)
+ * Provides methods to notify information to the user. These notifications will be shown
+ * in the app-toaster injected in the root component.
  *
  * @author louiiuol
  */
@@ -21,8 +16,6 @@ export class NotificationService {
 	 */
 	notifications = signal<Notification[]>([]);
 
-	constructor(private translator: TranslateService) {}
-
 	/**
 	 * Send notification with given params to the user.
 	 * @param title key to be displayed for title of the notification
@@ -31,13 +24,11 @@ export class NotificationService {
 	 * @param key id of the container to display notification in
 	 */
 	notify(
-		title: TranslateKey | string,
-		message: TranslateKey | string,
+		summary: string,
+		details: string,
 		severity: NotificationSeverity,
 		life: number = 4000
 	) {
-		const summary = this.translator.translate(title);
-		const details = this.translator.translate(message);
 		const uuid: string = uuidV4();
 		this.notifications().push({
 			uuid,
@@ -55,7 +46,7 @@ export class NotificationService {
 	 * @param message key to be displayed for description of the notification
 	 * @param key id of the container to display notification in
 	 */
-	success = (title: TranslateKey | string, message: TranslateKey | string) =>
+	success = (title: string, message: string) =>
 		this.notify(title, message, 'success');
 
 	/**
@@ -64,7 +55,7 @@ export class NotificationService {
 	 * @param message key to be displayed for description of the notification
 	 * @param key id of the container to display notification in
 	 */
-	error = (title: TranslateKey | string, message: TranslateKey | string) =>
+	error = (title: string, message: string) =>
 		this.notify(title, message, 'error');
 
 	/**
