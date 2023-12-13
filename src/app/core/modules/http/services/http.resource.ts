@@ -1,8 +1,6 @@
 import {inject} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, map, of} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
-
 import {environment} from '@env/environment';
 import {NotificationService} from '@core/modules/notification/services/notification.service';
 import {
@@ -30,7 +28,6 @@ export abstract class HttpResource {
 	protected readonly path = environment.root_url;
 	protected readonly http = inject(HttpClient);
 	protected readonly notifier = inject(NotificationService);
-	protected readonly translator = inject(TranslateService);
 
 	private readonly statusTranslation: {[key: number | string]: string} = {
 		undefined: "L'API est hors ligne. Merci de réessayer plus tard !",
