@@ -72,9 +72,6 @@ MIT
 @ngx-formly/material
 MIT
 
-@ngx-translate/core
-SEE LICENSE IN LICENSE
-
 animate.css
 MIT
 The MIT License (MIT)
