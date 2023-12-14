@@ -198,15 +198,10 @@ export abstract class HttpResource {
 	protected generateURI = (
 		uuid?: string | null,
 		opt?: RequestOptions
-	): string => {
-		let result = this.path;
-		if (opt?.customResource) result += `/${opt.customResource}`;
-		else if (opt?.customResource !== '' && this.resource !== '')
-			result += `/${this.resource}`;
-		if (uuid) result += `/${uuid}`;
-		if (opt?.path) result += `/${opt.path}`;
-		return result;
-	};
+	): string =>
+		[this.path, opt?.customResource, this.resource, uuid, opt?.path]
+			.filter(x => !!x)
+			.join('/');
 
 	private getRequestOptions = (opt?: RequestOptions) => ({
 		headers: opt?.headers,
