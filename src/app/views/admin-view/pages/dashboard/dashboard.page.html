@@ -1,0 +1,15 @@
+<app-users-list class="flex-1" />
+<app-card
+	class="max-w-md"
+	title="Rafraîchir la bibliothèque"
+	subtitle="Si un problème est détecté concernant la librairie, il est possible de la re-générer.">
+	<app-button
+		[disabled]="loading()"
+		type="raised"
+		color="primary"
+		label="Rafraîchir la bibliothèque"
+		(click)="refresh()" />
+	<ng-template #loadingTemplate>
+		<app-loader />
+	</ng-template>
+</app-card>

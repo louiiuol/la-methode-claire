@@ -1,4 +1,10 @@
-import {Component, EventEmitter, HostBinding, Output} from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	HostBinding,
+	Input,
+	Output,
+} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
@@ -26,16 +32,17 @@ export class HeaderComponent {
 	 */
 	@Output() toggledMobileMenu = new EventEmitter();
 
-	protected currentUser = this.authenticator.currentUser();
+	@Input({required: true}) type!: 'public' | 'logged' | 'admin';
 
 	@HostBinding('class')
 	protected class = 'w-full fixed top-0 mat-elevation-z2 z-50';
 
+	protected currentUser = this.authenticator.currentUser();
 	protected readonly navigationLinks = navigationLinks;
 
 	constructor(
-		public platform: PlatformService,
-		private authenticator: AuthService
+		private readonly platform: PlatformService,
+		private readonly authenticator: AuthService
 	) {}
 
 	protected isMobile = () => this.platform.isMobileView();

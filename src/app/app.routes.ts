@@ -18,6 +18,7 @@ export const navigationLinks = {
 		{path: 'app/dashboard', name: 'Tableau de bord'},
 		{path: 'app/subscription', name: 'La formule'},
 	],
+	admin: [{path: 'back-office/dashboard', name: 'Tableau de bord'}],
 };
 
 /**

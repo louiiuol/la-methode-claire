@@ -1,7 +1,7 @@
 export const environment = {
 	production: false,
 	hmr: true,
-	root_url: 'https://lmc.louiiuol.dev/api',
+	root_url: 'http://localhost:3333/api',
 };
 
 /*

@@ -16,7 +16,7 @@ import {HeaderComponent} from '@shared/components';
 	selector: 'app-teacher-view',
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
-		<app-header />
+		<app-header type="logged" />
 		<main class="pt-16">
 			<router-outlet />
 		</main>

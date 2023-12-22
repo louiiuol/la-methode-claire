@@ -9,30 +9,18 @@ import {NotificationService} from '@core/modules/notification';
 
 import {LibraryResource} from '@shared/modules/library/services/library.resource';
 import {NgIf} from '@angular/common';
+import {UsersTable} from './components/users-table/users.table';
+import {UsersResource} from '../../services/users.resource';
 
 @Component({
 	standalone: true,
 	selector: 'app-dashboard',
-	imports: [NgIf, CardComponent, ButtonComponent, LoaderComponent],
-	providers: [LibraryService, LibraryResource],
-
-	template: `<app-card
-		title="Rafraîchir la bibliothèque"
-		subtitle="Si un problème est détecté concernant la librairie, il est possible de la re-générer."
-		class="mt-12">
-		<app-button
-			[disabled]="loading()"
-			type="raised"
-			color="primary"
-			label="Rafraîchir la bibliothèque"
-			(click)="refresh()" />
-		<ng-template #loadingTemplate>
-			<app-loader />
-		</ng-template>
-	</app-card>`,
+	imports: [NgIf, CardComponent, ButtonComponent, LoaderComponent, UsersTable],
+	providers: [LibraryService, LibraryResource, UsersResource],
+	templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {
-	@HostBinding('class') class = 'mt-6';
+	@HostBinding('class') class = 'mt-6 flex flex-wrap gap-6 px-6';
 
 	loading = signal(false);
 
@@ -45,7 +33,6 @@ export class DashboardPage {
 		this.loading.set(true);
 		this.library.refresh().subscribe(res => {
 			this.loading.set(false);
-			console.log(res);
 			this.notifier.success(
 				'Mis à jour avec succès!',
 				'La méthode est maintenant à jour!'

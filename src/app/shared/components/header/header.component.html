@@ -9,9 +9,7 @@
 	<mat-menu #navigationMenu="matMenu">
 		<app-button
 			type="menu-item"
-			*ngFor="
-				let link of navigationLinks[!currentUser?.uuid ? 'public' : 'logged']
-			"
+			*ngFor="let link of navigationLinks[type]"
 			[href]="'/' + link.path"
 			[label]="link.name" />
 	</mat-menu>
@@ -20,9 +18,7 @@
 
 	<app-button
 		class="hidden md:block"
-		*ngFor="
-			let link of navigationLinks[!currentUser?.uuid ? 'public' : 'logged']
-		"
+		*ngFor="let link of navigationLinks[type]"
 		color="primary"
 		[href]="'/' + link.path"
 		[label]="link.name" />

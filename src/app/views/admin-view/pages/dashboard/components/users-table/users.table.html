@@ -1,0 +1,71 @@
+<div class="example-container mat-elevation-z8">
+	<ng-container *ngIf="isLoadingResults || isRateLimitReached">
+		<div class="example-loading-shade">
+			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+			<div *ngIf="isRateLimitReached" class="example-rate-limit-reached">
+				Aucun résultat disponible
+			</div>
+		</div>
+	</ng-container>
+
+	<div class="example-table-container">
+		<table
+			mat-table
+			[dataSource]="data"
+			class="example-table"
+			matSort
+			matSortActive="createdAt"
+			matSortDisableClear
+			aria-describedby="Liste des utilisateurs de l'application"
+			matSortDirection="desc">
+			<!-- Email Column -->
+			<ng-container matColumnDef="email">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
+				<td mat-cell *matCellDef="let row">{{row.email}}</td>
+			</ng-container>
+
+			<!-- Active Column -->
+			<ng-container matColumnDef="active">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Actif</th>
+				<td mat-cell *matCellDef="let row">
+					<mat-slide-toggle
+						color="primary"
+						[checked]="row.isActive"
+						(click)="toggleAccount(row)" />
+				</td>
+			</ng-container>
+
+			<!-- Subscribed Column -->
+			<ng-container matColumnDef="subscribed">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Abonné</th>
+				<td mat-cell *matCellDef="let row">
+					<mat-slide-toggle color="primary" [checked]="row.subscribed" />
+				</td>
+			</ng-container>
+
+			<!-- CurrentLesson Column -->
+			<ng-container matColumnDef="currentLesson">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>
+					Leçon courante
+				</th>
+				<td mat-cell *matCellDef="let row">{{row.currentLessonIndex}}</td>
+			</ng-container>
+
+			<!-- LastConnection Column -->
+			<ng-container matColumnDef="createdAt">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+					Date d'inscription
+				</th>
+				<td mat-cell *matCellDef="let row">{{row.createdAt | date}}</td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+	</div>
+
+	<mat-paginator
+		[length]="resultsLength"
+		[pageSize]="30"
+		aria-label="Select page of GitHub search results"></mat-paginator>
+</div>

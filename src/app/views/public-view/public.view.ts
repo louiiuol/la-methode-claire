@@ -16,7 +16,7 @@ import {HeaderComponent} from '@shared/components';
 	selector: 'app-public-view',
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
-		<app-header />
+		<app-header type="public" />
 		<main class="mt-16">
 			<router-outlet />
 		</main>

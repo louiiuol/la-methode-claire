@@ -199,7 +199,7 @@ export abstract class HttpResource {
 		uuid?: string | null,
 		opt?: RequestOptions
 	): string =>
-		[this.path, opt?.customResource, this.resource, uuid, opt?.path]
+		[this.path, opt?.customResource ?? this.resource, uuid, opt?.path]
 			.filter(x => !!x)
 			.join('/');
 

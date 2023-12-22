@@ -9,11 +9,12 @@ export interface User {
 	email: string;
 	firstName: string | null;
 	isActive: boolean;
-	lastConnection: Date;
 	currentLessonIndex: number;
 	lastName: string | null;
 	password: string;
 	role: UserRole;
 	uuid: string;
 	subscribed: boolean;
+	createdAt: Date;
+	updatedAt: Date;
 }

@@ -25,5 +25,8 @@ export class PasswordResource extends HttpResource {
 		});
 
 	updatePassword = (dto: PasswordUpdateDto) =>
-		this.partialUpdate(null, dto, {path: 'update-password'});
+		this.partialUpdate(null, dto, {
+			customResource: '',
+			path: 'update-password',
+		});
 }
