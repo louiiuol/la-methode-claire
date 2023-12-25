@@ -53,7 +53,7 @@ const MESSAGE_DICTIONARY = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageComponent {
-	@HostBinding('class') class = '';
+	@HostBinding('class') class = 'block';
 	/** Primary message of the notification */
 	@Input({required: true}) summary!: string;
 

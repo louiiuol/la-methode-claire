@@ -11,10 +11,6 @@ import {UserPreviewDto} from '@shared/modules';
 export class UsersResource extends HttpResource {
 	protected resource = 'users';
 
-	// const requestUrl = `${href}?q=repo:angular/components&sort=${sort}&order=${order}&page=${
-	//   page + 1
-	// }`;
-
 	getUsers = (active: string, direction: string, page: number) =>
 		this.getAll<UserPreviewDto>({
 			notifyOnSuccess: false,
@@ -22,10 +18,10 @@ export class UsersResource extends HttpResource {
 		});
 
 	toggleActivation = (user: UserPreviewDto) =>
-		this.partialUpdate<UserPreviewDto>(user.uuid, {isActive: user.isActive});
+		this.partialUpdate<UserPreviewDto>(user.uuid, {isActive: !user.isActive});
 
 	toggleSubscription = (user: UserPreviewDto) =>
 		this.partialUpdate<UserPreviewDto>(user.uuid, {
-			subscribed: user.subscribed,
+			subscribed: !user.subscribed,
 		});
 }

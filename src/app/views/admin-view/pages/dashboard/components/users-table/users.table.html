@@ -30,6 +30,7 @@
 				<td mat-cell *matCellDef="let row">
 					<mat-slide-toggle
 						color="primary"
+						[disabled]="row.role === 'ADMIN'"
 						[checked]="row.isActive"
 						(click)="toggleAccount(row)" />
 				</td>
@@ -39,7 +40,10 @@
 			<ng-container matColumnDef="subscribed">
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>Abonné</th>
 				<td mat-cell *matCellDef="let row">
-					<mat-slide-toggle color="primary" [checked]="row.subscribed" />
+					<mat-slide-toggle
+						color="primary"
+						[checked]="row.subscribed"
+						(click)="toggleSubscription(row)" />
 				</td>
 			</ng-container>
 

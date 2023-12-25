@@ -79,10 +79,11 @@ export class UsersTable implements AfterViewInit {
 			.subscribe(data => (this.data = data));
 	}
 
-	// Toggle activation of user
 	toggleAccount(user: UserPreviewDto) {
-		this.users.toggleActivation(user).subscribe(res => console.log(res));
+		this.users.toggleActivation(user).subscribe();
 	}
 
-	// Toggle subscription of user
+	toggleSubscription(user: UserPreviewDto) {
+		this.users.toggleSubscription(user).subscribe();
+	}
 }

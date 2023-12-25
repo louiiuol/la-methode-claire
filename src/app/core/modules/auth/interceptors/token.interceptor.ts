@@ -44,7 +44,6 @@ export class TokenInterceptor implements HttpInterceptor {
 	 */
 	private handleAuthError(err: HttpErrorResponse): Observable<unknown> {
 		if (
-			this.tokenStore.getToken() &&
 			(err.error as ApiResponse<null>)?.code === 401 &&
 			err.url !== this.appUrlDomain + '/login'
 		) {

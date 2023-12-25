@@ -16,6 +16,7 @@ import {MessageComponent} from '@shared/components';
 	selector: 'app-toaster',
 	template: `
 		<app-message
+			class="mt-3"
 			*ngFor="let n of notifications()"
 			[summary]="n.summary"
 			[details]="n.details"
