@@ -30,8 +30,8 @@ export class UsersTable implements AfterViewInit {
 	displayedColumns: string[] = [
 		'email',
 		'createdAt',
-		'currentLesson',
-		'active',
+		'currentLessonIndex',
+		'isActive',
 		'subscribed',
 	];
 	data: UserPreviewDto[] = [];
@@ -57,7 +57,8 @@ export class UsersTable implements AfterViewInit {
 					return this.users.getUsers(
 						this.sort.active,
 						this.sort.direction,
-						this.paginator.pageIndex
+						this.paginator.pageIndex,
+						this.paginator.pageSize
 					);
 				}),
 				map(res => {
@@ -69,11 +70,13 @@ export class UsersTable implements AfterViewInit {
 						return [];
 					}
 
+					console.log(res);
+
 					// Only refresh the result length if there is new data. In case of rate
 					// limit errors, we do not want to reset the paginator to zero, as that
 					// would prevent users from re-triggering requests.
-					this.resultsLength = res.value?.length ?? 0;
-					return res.value ?? [];
+					this.resultsLength = res.value?.items?.length ?? 0;
+					return res?.value?.items ?? [];
 				})
 			)
 			.subscribe(data => (this.data = data));

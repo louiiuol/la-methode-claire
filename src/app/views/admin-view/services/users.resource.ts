@@ -11,10 +11,16 @@ import {UserPreviewDto} from '@shared/modules';
 export class UsersResource extends HttpResource {
 	protected resource = 'users';
 
-	getUsers = (active: string, direction: string, page: number) =>
-		this.getAll<UserPreviewDto>({
+	getUsers = (sort: string, direction: string, page: number, size: number) =>
+		this.getAllPaginated<UserPreviewDto>({
 			notifyOnSuccess: false,
-			params: {active, direction, page: page + 1},
+			params: {
+				sort: `${sort}:${direction}`,
+				direction,
+				page,
+				size,
+				//filter: 'email:like:louiiuol',
+			},
 		});
 
 	toggleActivation = (user: UserPreviewDto) =>
