@@ -11,7 +11,13 @@ import {UserPreviewDto} from '@shared/modules';
 export class UsersResource extends HttpResource {
 	protected resource = 'users';
 
-	getUsers = (sort: string, direction: string, page: number, size: number) =>
+	getUsers = (
+		sort: string,
+		direction: string,
+		page: number,
+		size: number,
+		filter?: string | null
+	) =>
 		this.getAllPaginated<UserPreviewDto>({
 			notifyOnSuccess: false,
 			params: {
@@ -19,7 +25,7 @@ export class UsersResource extends HttpResource {
 				direction,
 				page,
 				size,
-				//filter: 'email:like:louiiuol',
+				filter,
 			},
 		});
 

@@ -14,7 +14,16 @@ export interface RequestOptions {
 	/**
 	 * HttpParams for the request
 	 */
-	params?: {[param: string]: string | string[] | number | number[] | boolean};
+	params?: {
+		[param: string]:
+			| string
+			| string[]
+			| number
+			| number[]
+			| boolean
+			| null
+			| undefined;
+	};
 
 	/**
 	 * HttpHeader for the request

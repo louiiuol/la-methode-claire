@@ -1,0 +1,17 @@
+<mat-form-field class="!p-0 no-subscript">
+	<mat-label>{{ label }}</mat-label>
+	<input
+		matInput
+		type="search"
+		[(ngModel)]="searchValue"
+		(keyup.enter)="searchEvent.emit(searchValue)" />
+	<app-button
+		matSuffix
+		id="search-button"
+		type="icon"
+		color="primary"
+		(click)="searchEvent.emit(searchValue)"
+		[disabled]="isLoading">
+		<app-icon>search</app-icon>
+	</app-button>
+</mat-form-field>

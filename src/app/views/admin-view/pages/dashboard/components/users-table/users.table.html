@@ -1,4 +1,11 @@
 <div class="example-container mat-elevation-z8">
+	<nav class="flex gap-3">
+		<app-input-search
+			[initialSearchValue]="searchValue"
+			label="Filtrer par email" />
+		<mat-slide-toggle color="primary">Membres actifs</mat-slide-toggle>
+	</nav>
+
 	<ng-container *ngIf="isLoadingResults || isRateLimitReached">
 		<div class="example-loading-shade">
 			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -68,8 +75,5 @@
 		</table>
 	</div>
 
-	<mat-paginator
-		[length]="resultsLength"
-		[pageSize]="30"
-		aria-label="Select page of GitHub search results"></mat-paginator>
+	<mat-paginator [length]="resultsLength" [pageSize]="30" />
 </div>
