@@ -31,7 +31,6 @@ export class LoginPage {
 		{preset: 'user.email', props: {required: true}},
 		{
 			preset: 'user.password',
-			validators: [],
 			props: {required: true, attributes: {autocomplete: 'on'}},
 		},
 	];

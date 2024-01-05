@@ -24,4 +24,17 @@
 			[fields]="passwordFields"
 			[validators]="passwordValidators" />
 	</mat-expansion-panel>
+
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title> Newsletter </mat-panel-title>
+		</mat-expansion-panel-header>
+
+		<app-form
+			action="Mettre à jour"
+			*ngIf="model$ | async as model"
+			[model]="model.value"
+			[submitted]="updateProfile"
+			[fields]="newsletterField" />
+	</mat-expansion-panel>
 </mat-accordion>

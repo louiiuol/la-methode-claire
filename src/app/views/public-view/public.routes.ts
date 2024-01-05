@@ -49,6 +49,11 @@ export const PUBLIC_ROUTES: Routes = [
 						m => m.ResetPasswordPage
 					),
 			},
+			{
+				path: 'faq',
+				loadComponent: () =>
+					import('@shared/components/pages/faq.page').then(m => m.FaqPage),
+			},
 		],
 	},
 ];

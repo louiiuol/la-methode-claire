@@ -16,6 +16,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {UsersResource} from '../../../../services/users.resource';
 import {UserPreviewDto} from '@shared/modules';
 import {InputSearchComponent} from '@shared/components/form';
+import {MatMenuModule} from '@angular/material/menu';
+import {ButtonComponent, IconComponent} from '@shared/components';
+import {FiltersMenuComponent} from './filters-menu/filters-menu.component';
 
 const MaterialModules = [
 	MatProgressSpinnerModule,
@@ -23,12 +26,37 @@ const MaterialModules = [
 	MatSortModule,
 	MatPaginatorModule,
 	MatSlideToggleModule,
+	MatMenuModule,
 ];
+
+type TableConfig = {
+	pagination: {
+		index: number;
+		size: number;
+	};
+	sortOptions: {
+		active: string | null;
+		direction: 'asc' | 'desc' | '';
+	};
+	filterOptions: {
+		email: string | null;
+		isActive: boolean | null;
+		subscribed: boolean | null;
+	};
+};
 
 @Component({
 	standalone: true,
 	selector: 'app-users-list',
-	imports: [NgIf, ...MaterialModules, DatePipe, InputSearchComponent],
+	imports: [
+		NgIf,
+		...MaterialModules,
+		DatePipe,
+		ButtonComponent,
+		IconComponent,
+		InputSearchComponent,
+		FiltersMenuComponent,
+	],
 	templateUrl: 'users.table.html',
 })
 export class UsersTable implements AfterViewInit {
@@ -49,7 +77,7 @@ export class UsersTable implements AfterViewInit {
 
 	searchValue = '';
 
-	protected readonly config = signal({
+	protected readonly config = signal<TableConfig>({
 		pagination: {
 			index: 0,
 			size: 30,
@@ -64,6 +92,8 @@ export class UsersTable implements AfterViewInit {
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 	@ViewChild(InputSearchComponent) search!: InputSearchComponent;
+	@ViewChild(FiltersMenuComponent) filterss!: FiltersMenuComponent;
+	filters = {noFilter: true, isActive: null, subscribed: null};
 
 	constructor(private readonly users: UsersResource) {}
 
@@ -75,9 +105,10 @@ export class UsersTable implements AfterViewInit {
 			.pipe(
 				startWith({}),
 				switchMap(() => {
+					// Save config and sync with url
 					this.isLoadingResults = true;
-					const filter = this.search.searchValue
-						? `email:like:${this.search.searchValue}`
+					const filter = this.search.value
+						? `email:like:${this.search.value}`
 						: null;
 					return this.users.getUsers(
 						this.sort.active,
@@ -103,6 +134,35 @@ export class UsersTable implements AfterViewInit {
 			.subscribe(data => (this.data = data));
 	}
 
+	// Get Filters
+	getFilters = () => ({
+		email: this.search.value,
+		isActive: this.filters.isActive,
+		subscribed: this.filters.subscribed,
+	});
+
+	// Set config
+	saveConfig(input: Partial<TableConfig>) {
+		const config = this.config();
+		// this.sort.sortChange, this.paginator.page, this.search.searchEvent
+		this.config.set({
+			pagination: {
+				index: this.paginator.pageIndex,
+				size: this.paginator.pageSize,
+			},
+			sortOptions: {active: this.sort.active, direction: this.sort.direction},
+			filterOptions: {
+				email: this.search.value,
+				subscribed: config.filterOptions.subscribed,
+				isActive: null,
+			},
+		});
+		// Sync with url
+		return this.config();
+	}
+
+	// Refresh view
+
 	toggleAccount(user: UserPreviewDto) {
 		// TODO Revert if failed to update
 		this.users.toggleActivation(user).subscribe();
@@ -110,5 +170,13 @@ export class UsersTable implements AfterViewInit {
 
 	toggleSubscription(user: UserPreviewDto) {
 		this.users.toggleSubscription(user).subscribe();
+	}
+
+	resetSubscription() {
+		this.users.resetSubscription().subscribe(res => {
+			if (res.value) {
+				this.ngAfterViewInit();
+			}
+		});
 	}
 }

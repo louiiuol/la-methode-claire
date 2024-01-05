@@ -40,7 +40,7 @@ export class RegisterPage {
 			props: {required: true},
 			className: 'inline-block w-1/2',
 		},
-		{preset: 'user.agree', props: {required: true}},
+		{preset: 'user.newsletter', props: {required: true}},
 	];
 	protected readonly validators = ['passwordMatch'];
 	protected readonly navigationLinks = [

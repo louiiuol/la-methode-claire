@@ -39,6 +39,10 @@ export class ProfilePage {
 		{preset: 'user.passwordConfirm', props: {required: true}},
 	];
 
+	protected readonly newsletterField = [
+		{preset: 'user.newsletter', props: {required: true}},
+	];
+
 	protected readonly updatePassword = inject(PasswordService).updatePassword;
 	protected passwordValidators = ['passwordMatch'];
 

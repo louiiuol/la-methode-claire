@@ -15,7 +15,7 @@ import {NgModule, Component, HostBinding} from '@angular/core';
 	`,
 })
 export class AppShell {
-	@HostBinding('class') class = 'relative antialiased text-primary';
+	@HostBinding('class') class = 'relative antialiased text-primary text-lg';
 }
 
 import {RouterModule} from '@angular/router';

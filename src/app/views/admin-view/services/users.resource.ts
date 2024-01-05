@@ -36,4 +36,11 @@ export class UsersResource extends HttpResource {
 		this.partialUpdate<UserPreviewDto>(user.uuid, {
 			subscribed: !user.subscribed,
 		});
+
+	resetSubscription = () =>
+		this.get(null, {
+			customResource: '',
+			path: 'reset-subscription',
+			customAction: 'update',
+		});
 }

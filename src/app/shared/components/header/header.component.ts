@@ -13,6 +13,7 @@ const MaterialModules = [MatToolbarModule, MatMenuModule];
 import {AuthService, PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
 import {navigationLinks} from 'src/app/app.routes';
+import {RouterLink} from '@angular/router';
 
 /**
  * Logged views global header
@@ -21,7 +22,14 @@ import {navigationLinks} from 'src/app/app.routes';
  */
 @Component({
 	standalone: true,
-	imports: [NgIf, NgFor, ...MaterialModules, IconComponent, ButtonComponent],
+	imports: [
+		NgIf,
+		NgFor,
+		...MaterialModules,
+		IconComponent,
+		ButtonComponent,
+		RouterLink,
+	],
 	selector: 'app-header',
 	templateUrl: './header.component.html',
 })

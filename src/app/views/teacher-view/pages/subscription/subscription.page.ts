@@ -7,25 +7,28 @@ import {FormulaCardComponent} from './formula-card/formula-card.component';
 	selector: 'app-subscription',
 	imports: [CardComponent, FormulaCardComponent],
 	template: `<app-formula-card />
-		<section>
-			<h2 class="text-primary text-2xl">Comment s'abonner ?</h2>
-			<div class="w-80 h-96 bg-slate-400 mx-auto rounded-md">
-				<p class="text-white h-full text-center pt-10 text-lg">
-					Pour bénéficier du contenu de la méthode, il vous suffit de nous
-					envoyer un chèque à l'adresse ci-dessous:
-				</p>
 
-				<h4>1 hameau de la chalmelle 51120 La Forestière</h4>
-				<p>à l'ordre de <em>Claire Delavaux</em></p>
-
-				<hr />
-
-				<p>
-					Dès réception de votre chèque, vous activerons manuellement votre
-					abonnement pour l'année courante.
-				</p>
+		<div
+			class="p-3 max-w-sm bg-slate-400 rounded-md flex flex-col justify-between text-white gap-6">
+			<h2 class="text-3xl text-center">Comment s'abonner ?</h2>
+			<p class="italic text-balance text-center">
+				Il vous suffit d'envoyer un chèque à l'ordre d'
+				<strong>Anne Moreau </strong>
+				(responsable de l'illustration et de l'édition de La Méthode claire) à
+				l'adresse ci-dessous :
+			</p>
+			<div
+				id="address"
+				class="flex flex-col bg-slate-100 text-primary w-fit mx-auto p-3 rounded-sm">
+				<span>La Méthode claire</span>
+				<span>1, hameau de La Chalmelle</span>
+				<span>51120 La Forestière</span>
 			</div>
-		</section>`,
+
+			<p class="text-sm italic text-center">
+				Votre abonnement sera activé à réception du règlement.
+			</p>
+		</div>`,
 })
 export class SubscriptionPage {
 	@HostBinding('class')

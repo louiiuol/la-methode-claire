@@ -1,10 +1,11 @@
 import {NgFor} from '@angular/common';
 import {Component, HostBinding} from '@angular/core';
 import {ButtonComponent, CardComponent} from '@shared/components';
+import {FormulaCardComponent} from 'src/app/views/teacher-view/pages/subscription/formula-card/formula-card.component';
 
 @Component({
 	standalone: true,
-	imports: [NgFor, CardComponent, ButtonComponent],
+	imports: [NgFor, CardComponent, ButtonComponent, FormulaCardComponent],
 	templateUrl: 'home.page.html',
 })
 export class HomePage {

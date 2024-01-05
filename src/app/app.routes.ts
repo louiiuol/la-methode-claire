@@ -10,15 +10,16 @@ import {
  */
 export const navigationLinks = {
 	public: [
-		{path: '', name: 'Accueil'},
-		{path: 'method', name: 'La méthode'},
-		{path: 'about', name: 'Qui est claire ?'},
+		{path: '/method', name: 'La méthode'},
+		{path: '/about', name: 'Qui est claire ?'},
+		{path: '/faq', name: 'FAQ'},
 	],
 	logged: [
-		{path: 'app/dashboard', name: 'Tableau de bord'},
-		{path: 'app/subscription', name: 'La formule'},
+		{path: '/app/dashboard', name: 'tableau de bord'},
+		{path: '/app/subscription', name: 'abonnement'},
+		{path: '/app/profile', name: 'Profil'},
 	],
-	admin: [{path: 'back-office/dashboard', name: 'Tableau de bord'}],
+	admin: [{path: '/back-office/dashboard', name: 'Back Office'}],
 };
 
 /**
@@ -30,7 +31,6 @@ export const navigationLinks = {
 export const APP_ROUTES: Routes = [
 	{
 		path: '',
-		canActivate: [VisitorGuard],
 		loadChildren: () =>
 			import('./views/public-view/public.routes').then(m => m.PUBLIC_ROUTES),
 	},

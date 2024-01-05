@@ -1,6 +1,6 @@
 <header
 	style="height: calc(100dvh - 64px)"
-	class="relative !py-12 bg-primary text-xl xs:text-2xl md:text-3xl lg:text-4xl w-full flex flex-col justify-center gap-2 text-center text-white">
+	class="relative pb-12 bg-primary text-xl xs:text-2xl md:text-3xl lg:text-4xl w-full flex flex-col justify-center gap-2 text-center text-white">
 	<span class="leading-loose animate__animated animate__fadeInDown">
 		La méthode Claire est
 		<b
@@ -34,7 +34,7 @@
 		</b>
 	</span>
 	<section
-		class="w-full bg-accent text-xl xs:text-2xl px-12 pt-8 md:pt-4 pb-6 italic absolute bottom-0">
+		class="w-full bg-accent text-xl xs:text-2xl px-12 pt-8 md:pt-4 pb-4 italic absolute bottom-0">
 		<h3 class="text-center">
 			La méthode claire vous explique, vous guide et vous soutient tout au long
 			de l'année !
@@ -54,7 +54,7 @@
 				{{explanation.index}}
 			</span>
 			<h3 class="text-3xl mb-3">{{explanation.title}}</h3>
-			<p class="max-w-xs">{{explanation.description}}</p>
+			<p class="max-w-xs text-xl">{{explanation.description}}</p>
 		</div>
 		<img
 			class="w-2/3 md:w-1/3 md:max-w-xs"
@@ -62,6 +62,27 @@
 			[alt]="'Illustration à propos de ' +explanation.name" />
 	</article>
 </section>
+
+<section
+	class="bg-yellow-light flex flex-wrap gap-6 p-4 py-6 items-center justify-center">
+	<app-formula-card />
+	<app-card
+		title="Et au fait pourquoi une méthode en ligne ?"
+		class="max-w-sm !mx-0">
+		<ul class="list-disc">
+			<li>
+				Parce qu'étant mise en pratique par Claire et les enseignants qui
+				travaillent avec elle, elle ne cesse de s'enrichir.
+			</li>
+			<li>Parce qu'elle donne un accès facile à la dernière version.</li>
+			<li>
+				Parce qu'elle permet une interaction avec les abonnés. et de se sentir
+				moins seuls !
+			</li>
+		</ul>
+	</app-card>
+</section>
+
 <section id="cta-register" class="bg-accent">
 	<div class="max-w-xl mx-auto p-6">
 		<h2>Envie de découvrir la méthode ?</h2>

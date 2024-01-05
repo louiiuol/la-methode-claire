@@ -54,6 +54,16 @@ export const APP_FORM_GROUPS: {[key: string]: FieldConfig[]} = {
 			},
 		},
 		{
+			key: 'newsletter',
+			type: 'checkbox',
+			defaultValue: false,
+			props: {
+				label: "Je souhaite m'abonner à la newsletter",
+				description:
+					'En vous abonnant, vous aurez accès à du contenu exclusif.',
+			},
+		},
+		{
 			key: 'firstName',
 			validators: [Validators.min(1), Validators.max(100)],
 			props: {

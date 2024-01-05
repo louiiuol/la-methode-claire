@@ -74,7 +74,7 @@
 
 			<hr class="my-3" />
 
-			<h3 class="text-sm italic !mb-1">Liste des mot(s)</h3>
+			<!-- <h3 class="text-sm italic !mb-1">Liste des mot(s)</h3>
 			<ng-container *ngIf="course.words?.length; else noWordsAssociated">
 				<span *ngFor="let word of course.words" class="mx-1 text-primary">
 					{{ word }}
@@ -85,16 +85,16 @@
 				<small class="italic py-2">Aucun mot associé à cette semaine</small>
 			</ng-template>
 
-			<hr class="my-3" />
+			<hr class="my-3" /> -->
 
 			<div class="flex items-center justify-between">
 				<h3 class="text-sm italic !mb-1">Liste des fichiers</h3>
-				<app-icon
+				<!-- <app-icon
 					class="cursor-pointer !mx-0 mr-4 mt-1"
 					color="accent"
 					matTooltip="Télécharger tout les pdfs">
 					download
-				</app-icon>
+				</app-icon> -->
 			</div>
 			<mat-selection-list #files [multiple]="false">
 				<mat-list-option

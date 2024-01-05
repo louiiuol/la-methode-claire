@@ -1,9 +1,13 @@
-<div class="example-container mat-elevation-z8">
-	<nav class="flex gap-3">
+<div class="example-container">
+	<nav class="flex gap-3 items-center justify-between px-1">
 		<app-input-search
-			[initialSearchValue]="searchValue"
+			[value]="config().filterOptions.email"
 			label="Filtrer par email" />
-		<mat-slide-toggle color="primary">Membres actifs</mat-slide-toggle>
+		<app-button
+			label="Réinitialiser les abonnements"
+			(click)="resetSubscription()"
+			type="stroked" />
+		<app-filters-menu [filters]="config().filterOptions" />
 	</nav>
 
 	<ng-container *ngIf="isLoadingResults || isRateLimitReached">
@@ -15,11 +19,10 @@
 		</div>
 	</ng-container>
 
-	<div class="example-table-container">
+	<div class="mat-elevation-z8">
 		<table
 			mat-table
 			[dataSource]="data"
-			class="example-table"
 			matSort
 			matSortActive="createdAt"
 			matSortDisableClear

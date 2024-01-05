@@ -29,9 +29,9 @@ import {ButtonComponent, IconComponent} from '@shared/components/elements';
 export class InputSearchComponent {
 	@Input() isLoading = true;
 	@Input() label = '';
-	@Input() initialSearchValue = '';
+	@Input() value: string | null = '';
 
-	@Output() searchEvent = new EventEmitter<string>();
+	@Output() searchEvent = new EventEmitter<string | null>();
 
-	searchValue = this.initialSearchValue;
+	searchValue = this.value;
 }

@@ -72,11 +72,11 @@ export class CourseViewerComponent {
 					.filter(p => p.poster)
 					.map(p => ({
 						name: 'Affiche ' + p.name,
-						path: 'Affiche-' + p.name.toLocaleUpperCase(),
+						path: 'affiche-' + p.name.toLocaleUpperCase(),
 					})),
 				...(course.sounds?.map(s => ({
 					name: 'Son ' + s,
-					path: 'Affiche-son' + s.toLocaleUpperCase(),
+					path: 'affiche-son' + s.toLocaleUpperCase(),
 				})) ?? [])
 			);
 		}
@@ -114,7 +114,7 @@ export class CourseViewerComponent {
 		[key: string]: {name: string; fileName: string};
 	} = {
 		script: {name: 'Script', fileName: 'Script'},
-		lesson: {name: 'Leçon', fileName: 'leçon'},
+		lesson: {name: 'Leçon', fileName: 'lecÌ§on'},
 		exercice: {name: 'Exercices', fileName: 'exercices'},
 		poster: {name: 'Affiche', fileName: 'affiche'},
 	};
