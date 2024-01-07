@@ -98,7 +98,10 @@ export class CourseViewerComponent {
 	@Output() nextLesson = new EventEmitter();
 
 	@HostBinding('class')
-	protected readonly class = 'flex-1 bg-accent';
+	protected readonly class =
+		'flex-1 bg-accent rounded-b-xl overflow-hidden mat-elevation-z2 block h-96';
+
+	@HostBinding('style') style = 'height: min(568px, 70vh)';
 
 	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.subscribed;
@@ -113,8 +116,8 @@ export class CourseViewerComponent {
 	protected readonly filesName: {
 		[key: string]: {name: string; fileName: string};
 	} = {
-		script: {name: 'Script', fileName: 'Script'},
-		lesson: {name: 'Leçon', fileName: 'lecÌ§on'},
+		script: {name: 'Script', fileName: 'script'},
+		lesson: {name: 'Leçon', fileName: 'lecon'},
 		exercice: {name: 'Exercices', fileName: 'exercices'},
 		poster: {name: 'Affiche', fileName: 'affiche'},
 	};
