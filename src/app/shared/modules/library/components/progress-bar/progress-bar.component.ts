@@ -23,6 +23,7 @@ import {CourseViewDto} from '../../types/course-view.dto';
 			:host {
 				scroll-snap-type: inline mandatory;
 				scroll-padding-inline: 0.5rem;
+				scroll-behavior: smooth;
 			}
 		`,
 	],

@@ -99,9 +99,9 @@ export class CourseViewerComponent {
 
 	@HostBinding('class')
 	protected readonly class =
-		'flex-1 bg-accent rounded-b-xl overflow-hidden mat-elevation-z2 block h-96';
+		'flex-1 bg-accent rounded-b-xl overflow-auto mat-elevation-z2 block h-96';
 
-	@HostBinding('style') style = 'height: min(568px, 70vh)';
+	@HostBinding('style') style = 'height: min(1080px, 70vh)';
 
 	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.subscribed;

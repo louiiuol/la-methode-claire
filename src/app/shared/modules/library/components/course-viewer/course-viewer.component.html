@@ -114,18 +114,19 @@
 			[fileName]="[course.order + 1, selectedFile.value].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>
-		<h2 class="text-center text-white">Accès réservé aux abonnés !</h2>
-		<div class="max-w-md mx-auto">
+		<div class="max-w-md mx-auto mt-9 mb-4">
+			<h2 class="text-center text-2xl mb-3">Accès réservé aux abonnés !</h2>
 			<img
+				class="max-w-xs my-2 mx-auto"
 				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/access-denied.gif"
 				alt="Accès non autorisé" />
-			<p class="text-lg text-primary text-balance text-center">
+			<p class="text-lg text-primary text-balance text-center my-4">
 				Cette leçon n'est accessible uniquement pour les membres abonnés! Pour
 				accéder au reste du contenu, abonnez-vous !
 			</p>
 			<app-button
 				type="raised"
-				class="mt-3"
+				color="primary"
 				label="Voir l'abonnement"
 				href="/app/subscription" />
 		</div>
