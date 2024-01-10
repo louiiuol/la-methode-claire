@@ -4,7 +4,7 @@
 
 // Typography
 $typography-config: mat.define-typography-config(
-	$font-family: 'proxima-soft-condensed, sans serif',
+	$font-family: 'Poppins, sans serif',
 );
 @include mat.core();
 

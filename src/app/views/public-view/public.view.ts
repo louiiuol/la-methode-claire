@@ -22,7 +22,7 @@ import {HeaderComponent} from '@shared/components';
 		</main>
 		<p
 			class="fixed bottom-0 w-full text-center p-4 -z-10 h-16 leading-8 text-sm">
-			© {{ currentYear }} <b>La méthode claire</b>.
+			© {{ currentYear }} <b>La Méthode claire</b>.
 		</p>
 	`,
 })

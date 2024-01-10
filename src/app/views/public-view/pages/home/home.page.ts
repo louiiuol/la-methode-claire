@@ -19,7 +19,7 @@ export class HomePage {
 			name: 'scripts',
 			title: 'Scripts',
 			description:
-				'La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture.',
+				'La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout, ces scripts vous aident à comprendre les mécanismes de l’apprentissage de la lecture.',
 		},
 		{
 			index: 2,
@@ -27,7 +27,7 @@ export class HomePage {
 			name: 'lesson',
 			title: 'Leçons',
 			description:
-				'À imprimer et/ou projeter sur votre TBI, chaque leçon est conçue de la même façon : les enfants doivent d’abord lire des syllabes et/ou logatomes, des groupes nominaux et verbaux, des phrases, et à partir de la leçon 10, des histoires qui suivent la progression',
+				'À imprimer et/ou projeter sur votre TBI, chaque leçon est conçue de la même façon : les enfants doivent d’abord lire des syllabes et/ou logatomes, des groupes nominaux et verbaux, des phrases, et à partir de la leçon 11, des histoires qui suivent la progression.',
 		},
 		{
 			index: 3,
