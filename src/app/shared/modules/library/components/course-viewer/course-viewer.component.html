@@ -96,22 +96,26 @@
 					download
 				</app-icon> -->
 			</div>
-			<mat-selection-list #files [multiple]="false">
-				<mat-list-option
-					*ngFor="let file of filesAvailable"
-					[value]="file.path"
-					[selected]="file === filesAvailable[0]">
-					{{ file.name }}
-				</mat-list-option>
-			</mat-selection-list>
+			<mat-list #files role="list">
+				<mat-list-item *ngFor="let file of filesAvailable" class="!px-0">
+					<div class="w-full flex justify-between items-center gap-6">
+						{{ file.name }}
+						<div class="flex items-center justify-end flex-1">
+							<app-button (click)="setCurrentFile(file)" type="icon">
+								<app-icon color="primary">visibility</app-icon>
+							</app-button>
+							<app-button (click)="downloadFile(file)" type="icon">
+								<app-icon color="accent">download</app-icon>
+							</app-button>
+						</div>
+					</div>
+				</mat-list-item>
+			</mat-list>
 			<span class="flex-1"></span>
 		</mat-drawer>
 
 		<app-file-viewer
-			*ngIf="
-				files.selectedOptions.selected[0] ?? filesAvailable[0] as selectedFile
-			"
-			[fileName]="[course.order + 1, selectedFile.value].join('/')" />
+			[fileName]="[course.order + 1, selectedFile?.path].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>
 		<div class="max-w-md mx-auto mt-9 mb-4">

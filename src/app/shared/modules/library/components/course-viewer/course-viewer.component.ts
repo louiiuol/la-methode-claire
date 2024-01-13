@@ -110,6 +110,7 @@ export class CourseViewerComponent {
 		this.authenticator?.currentUser()?.currentLesson ?? 0;
 
 	protected filesAvailable: {name: string; path: string}[] = [];
+	protected selectedFile?: {name: string; path: string} | null;
 
 	private _course?: CourseViewDto;
 
@@ -137,5 +138,24 @@ export class CourseViewerComponent {
 				this.authenticator.updateCurrentUser({currentLesson: index});
 			}
 		});
+	}
+
+	setCurrentFile(file: {name: string; path: string}) {
+		this.selectedFile = file;
+	}
+
+	downloadFile(file: {name: string; path: string}) {
+		fetch(file.path)
+			.then(response => response.blob())
+			.then(blob => {
+				// Create a temporary link element
+				const link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = `${file.name}.pdf`;
+
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			});
 	}
 }

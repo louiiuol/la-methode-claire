@@ -24,11 +24,12 @@ import {Observable, map} from 'rxjs';
 	selector: 'app-icon',
 	template: ` <mat-icon
 			class="!w-full"
+			[color]="color"
 			inline
 			*ngIf="svg && fetched$ && (fetched$ | async)"
 			[svgIcon]="svg"
 			aria-hidden="false" />
-		<mat-icon *ngIf="!svg" class="!w-full" aria-hidden="false">
+		<mat-icon *ngIf="!svg" class="!w-full" aria-hidden="false" [color]="color">
 			<ng-content></ng-content>
 		</mat-icon>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,6 +40,8 @@ export class IconComponent implements OnChanges {
 	 * * Check assets/images/svg folder for available icons
 	 */
 	@Input() svg?: string;
+
+	@Input() color?: string;
 
 	@HostBinding('class')
 	protected readonly class = 'inline-flex items-center mx-auto';

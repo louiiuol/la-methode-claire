@@ -11,9 +11,7 @@ import {CardComponent} from '../elements';
 			subtitle="En attente de vos questions">
 			<img
 				class="max-w-sm"
-				[src]="
-					'https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png'
-				" />
+				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/faq.gif" />
 		</app-card>
 	`,
 })

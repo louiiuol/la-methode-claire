@@ -5,13 +5,27 @@
 		title="visualiser le pdf"></iframe>
 </ng-container>
 <ng-template #noFileSelected>
+	<ng-container *ngIf="!failedToLoad; else failedToLoadTemplate">
+		<div class="w-96 mx-auto mt-8">
+			<h3 class="text-3xl text-primary text-center mb-4">
+				Aucun fichier sélectionné
+			</h3>
+			<app-message
+				class="text-lg"
+				severity="info"
+				summary="Merci de sélectionner un fichier pour en visualiser le contenu" />
+		</div>
+	</ng-container>
+</ng-template>
+
+<ng-template #failedToLoadTemplate>
 	<div class="w-96 mx-auto mt-8">
 		<h3 class="text-3xl text-primary text-center mb-4">
-			Aucun fichier sélectionné
+			Impossible de récupérer le fichier
 		</h3>
 		<app-message
-			class="text-lg text-slate-500"
-			severity="info"
-			summary="Merci de sélectionner un fichier pour en visualiser le contenu" />
+			class="text-lg"
+			severity="error"
+			summary="Merci de réessayer ultérieurement" />
 	</div>
 </ng-template>

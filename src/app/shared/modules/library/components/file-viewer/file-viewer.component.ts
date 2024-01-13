@@ -1,6 +1,6 @@
 import {Component, HostBinding, Input, signal} from '@angular/core';
 import {NgIf} from '@angular/common';
-import {take} from 'rxjs';
+import {catchError, take} from 'rxjs';
 import {TrustUrlPipe} from '@shared/pipes';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {MessageComponent} from '@shared/components/elements';
@@ -26,6 +26,12 @@ export class FileViewerComponent {
 			this.libraryService
 				.getPdf(fileName)
 				.pipe(take(1))
+				.pipe(
+					catchError(res => {
+						this.failedToLoad = !res.ok;
+						throw res;
+					})
+				)
 				.subscribe(res => {
 					const blob = new Blob([new Uint8Array(res)], {
 						type: 'application/pdf',
@@ -35,6 +41,7 @@ export class FileViewerComponent {
 	}
 
 	protected pdf$ = signal<any>(null);
+	failedToLoad = false;
 
 	constructor(private readonly libraryService: LibraryService) {}
 }
