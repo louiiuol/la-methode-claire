@@ -1,4 +1,4 @@
-import {NgIf, DatePipe} from '@angular/common';
+import {NgIf, DatePipe, NgFor} from '@angular/common';
 import {
 	Component,
 	ViewChild,
@@ -13,6 +13,7 @@ import {map, startWith, switchMap} from 'rxjs/operators';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
 import {UsersResource} from '../../../../services/users.resource';
 import {UserPreviewDto} from '@shared/modules';
 import {InputSearchComponent} from '@shared/components/form';
@@ -27,6 +28,7 @@ const MaterialModules = [
 	MatPaginatorModule,
 	MatSlideToggleModule,
 	MatMenuModule,
+	MatSelectModule,
 ];
 
 type TableConfig = {
@@ -50,6 +52,7 @@ type TableConfig = {
 	selector: 'app-users-list',
 	imports: [
 		NgIf,
+		NgFor,
 		...MaterialModules,
 		DatePipe,
 		ButtonComponent,
@@ -63,7 +66,7 @@ export class UsersTable implements AfterViewInit {
 	@HostBinding('class') class = 'block mx-auto max-w-5xl';
 
 	displayedColumns: string[] = [
-		'email',
+		'name',
 		'createdAt',
 		'currentLessonIndex',
 		'isActive',
@@ -76,6 +79,11 @@ export class UsersTable implements AfterViewInit {
 	isRateLimitReached = false;
 
 	searchValue = '';
+	searchActiveField = {viewValue: 'Email', value: 'email'};
+	searchFields = [
+		{viewValue: 'Nom', value: 'lastName'},
+		{viewValue: 'Email', value: 'email'},
+	];
 
 	protected readonly config = signal<TableConfig>({
 		pagination: {
@@ -108,7 +116,7 @@ export class UsersTable implements AfterViewInit {
 					// Save config and sync with url
 					this.isLoadingResults = true;
 					const filter = this.search.value
-						? `email:like:${this.search.value}`
+						? `${this.searchActiveField.value}:like:${this.search.value}`
 						: null;
 					return this.users.getUsers(
 						this.sort.active,
@@ -178,5 +186,9 @@ export class UsersTable implements AfterViewInit {
 				this.ngAfterViewInit();
 			}
 		});
+	}
+
+	setActiveSearchField(field: {viewValue: string; value: string}) {
+		this.searchActiveField = field;
 	}
 }

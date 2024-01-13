@@ -8,12 +8,13 @@ import {
 import {NgFor, NgIf} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-const MaterialModules = [MatToolbarModule, MatMenuModule];
+const MaterialModules = [MatToolbarModule, MatMenuModule, MatButtonModule];
 
 import {AuthService, PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
 import {navigationLinks} from 'src/app/app.routes';
 import {RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
 
 /**
  * Logged views global header

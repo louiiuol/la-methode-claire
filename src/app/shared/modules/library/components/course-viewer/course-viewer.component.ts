@@ -79,6 +79,7 @@ export class CourseViewerComponent {
 					path: 'affiche-son' + s.toLocaleUpperCase(),
 				})) ?? [])
 			);
+			this.setCurrentFile(this.filesAvailable.at(0));
 		}
 	}
 
@@ -140,7 +141,7 @@ export class CourseViewerComponent {
 		});
 	}
 
-	setCurrentFile(file: {name: string; path: string}) {
+	setCurrentFile(file?: {name: string; path: string}) {
 		this.selectedFile = file;
 	}
 

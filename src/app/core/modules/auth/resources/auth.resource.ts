@@ -28,7 +28,7 @@ export class AuthResource extends HttpResource {
 			path: 'login',
 			customAction: 'login',
 			notifyOnError: false,
-		}).pipe(tap(res => console.log(res)));
+		});
 
 	whoAmI = () => this.get<UserPreviewDto>(null, {path: 'me'});
 

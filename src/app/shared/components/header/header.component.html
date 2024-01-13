@@ -50,14 +50,15 @@
 			label="s'inscrire" />
 	</ng-container>
 	<ng-template #userMenuSection>
-		<app-button
+		<button
 			[matMenuTriggerFor]="userMenu"
-			class="bg-primary rounded-full text-white"
-			type="icon">
-			<span class="text-md -mt-1 block">
+			mat-mini-fab
+			color="primary"
+			aria-label="menu utilisateur">
+			<span class="text-base block">
 				{{ currentUser?.initials?.toLocaleUpperCase() }}
 			</span>
-		</app-button>
+		</button>
 		<mat-menu #userMenu="matMenu">
 			<app-button
 				type="menu-item"

@@ -155,6 +155,7 @@ export class FormComponent implements OnInit {
 	onSubmit(model: any): void {
 		this.load(this.submitted$(model), (res: any) => {
 			let valid = false;
+
 			if (res.error) {
 				this.errorMessages = this.generateMessage(res.error);
 				// TODO add handle if error is typeof APIFormDetailsError..
@@ -221,6 +222,8 @@ export class FormComponent implements OnInit {
 		this.isLoading = true;
 		return obs.pipe(this.untilDestroyed$).subscribe(res => {
 			fn(res);
+
+			console.log(res);
 			this.toggleDisabled();
 			this.isLoading = false;
 			this.ref.detectChanges();

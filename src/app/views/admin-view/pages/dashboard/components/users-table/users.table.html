@@ -3,6 +3,17 @@
 		<app-input-search
 			[value]="config().filterOptions.email"
 			label="Filtrer par email" />
+		<mat-form-field appearance="fill">
+			<mat-label>Filter par:</mat-label>
+			<mat-select [(value)]="searchActiveField.value">
+				<mat-option
+					[value]="option.value"
+					(onSelectionChange)="setActiveSearchField(option)"
+					*ngFor="let option of searchFields">
+					{{ option.viewValue }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 		<app-button
 			label="Réinitialiser les abonnements"
 			(click)="resetSubscription()"
@@ -29,9 +40,12 @@
 			aria-describedby="Liste des utilisateurs de l'application"
 			matSortDirection="desc">
 			<!-- Email Column -->
-			<ng-container matColumnDef="email">
-				<th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
-				<td mat-cell *matCellDef="let row">{{row.email}}</td>
+			<ng-container matColumnDef="name">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Nom / Email</th>
+				<td mat-cell *matCellDef="let row">
+					{{row.firstName || row.lastName ?[ row.firstName, row.lastName].join('
+					') : row.email}}
+				</td>
 			</ng-container>
 
 			<!-- Active Column -->

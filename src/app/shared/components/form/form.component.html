@@ -4,6 +4,7 @@
 	(ngSubmit)="onSubmit(formModel)"
 	class="form-grid grid px-2 py-1 md:px-6 md:py-2">
 	<app-message
+		class="mb-3"
 		severity="error"
 		*ngFor="let message of errorMessages"
 		[summary]="message" />
