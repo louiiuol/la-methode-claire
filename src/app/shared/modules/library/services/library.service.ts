@@ -23,6 +23,11 @@ export class LibraryService {
 
 	getPdf = (fileName: string) => this.http.getPdf(fileName);
 
+	downloadPdf = (fileName: string) =>
+		this.http.downloadPdf(fileName).subscribe((data: ArrayBuffer) => {
+			this.saveFile(data, fileName);
+		});
+
 	private updateLocalLessons = (
 		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>
 	) => {
@@ -30,4 +35,14 @@ export class LibraryService {
 		this.lessons = fetchedLessons;
 		return fetchedLessons;
 	};
+
+	private saveFile(data: ArrayBuffer, fileName: string): void {
+		const blob = new Blob([data], {type: 'application/pdf'});
+		const link = document.createElement('a');
+
+		link.href = window.URL.createObjectURL(blob);
+		link.download = `${fileName}.pdf`; // Set the desired filename
+		link.click(); // Trigger download
+		window.URL.revokeObjectURL(link.href); // Clean up
+	}
 }

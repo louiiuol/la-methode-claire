@@ -27,5 +27,13 @@ export class LibraryResource extends HttpResource {
 			responseType: 'arraybuffer',
 		});
 
+	downloadPdf = (fileName: string) =>
+		this.http.get(
+			[environment.root_url, 'courses', fileName, 'download'].join('/'),
+			{
+				responseType: 'arraybuffer',
+			}
+		);
+
 	refreshLibrary = () => this.create(null);
 }
