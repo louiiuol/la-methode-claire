@@ -36,17 +36,21 @@ const MESSAGE_DICTIONARY = {
 	template: `
 		<div
 			*ngIf="summary && severity"
-			class="flex items-center justify-between gap-3 border-l-4 rounded-r px-4 shadow-md"
+			class="flex items-center justify-between gap-3 border-l-4 rounded-r px-3 py-2 shadow-md"
 			[class]="getMessageColor()">
-			<div class="flex-1 flex items-start justify-start py-2">
-				<app-icon *ngIf="showIcon" class="my-1 !mx-0">
-					{{ getMessageIcon() }}
-				</app-icon>
-				<div class="p-1">
-					<span [class]="{'font-bold': !!details}" [innerHTML]="summary"></span>
-					<br />
-					<span class="text-sm" *ngIf="details" [innerHTML]="details"></span>
-				</div>
+			<app-icon *ngIf="showIcon" class="my-1 !mx-0 text-xl">
+				{{ getMessageIcon() }}
+			</app-icon>
+			<div>
+				<span
+					class="text-balance w-full"
+					[class]="{'font-bold': !!details}"
+					[innerHTML]="summary"></span>
+				<br />
+				<span
+					class="text-sm text-balance"
+					*ngIf="details"
+					[innerHTML]="details"></span>
 			</div>
 		</div>
 	`,
