@@ -20,7 +20,10 @@ import {InputSearchComponent} from '@shared/components/form';
 import {MatMenuModule} from '@angular/material/menu';
 import {ButtonComponent, IconComponent} from '@shared/components';
 import {FiltersMenuComponent} from './filters-menu/filters-menu.component';
-
+import {SearchField} from '@shared/components/form/input-search/types/search-field';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {NotificationService} from '@core/modules/notification';
 const MaterialModules = [
 	MatProgressSpinnerModule,
 	MatTableModule,
@@ -29,6 +32,7 @@ const MaterialModules = [
 	MatSlideToggleModule,
 	MatMenuModule,
 	MatSelectModule,
+	ClipboardModule,
 ];
 
 type TableConfig = {
@@ -63,14 +67,17 @@ type TableConfig = {
 	templateUrl: 'users.table.html',
 })
 export class UsersTable implements AfterViewInit {
-	@HostBinding('class') class = 'block mx-auto max-w-5xl';
+	@HostBinding('class') class = 'block mx-auto max-w-5xl mt-3';
 
 	displayedColumns: string[] = [
-		'name',
+		'email',
+		'firstName',
+		'lastName',
 		'createdAt',
 		'currentLessonIndex',
 		'isActive',
 		'subscribed',
+		'newsletter',
 	];
 	data: UserPreviewDto[] = [];
 
@@ -79,31 +86,35 @@ export class UsersTable implements AfterViewInit {
 	isRateLimitReached = false;
 
 	searchValue = '';
-	searchActiveField = {viewValue: 'Email', value: 'email'};
+
 	searchFields = [
+		{viewValue: 'Prénom', value: 'firstName'},
 		{viewValue: 'Nom', value: 'lastName'},
 		{viewValue: 'Email', value: 'email'},
 	];
+	searchFieldActive = this.searchFields.at(2);
 
-	protected readonly config = signal<TableConfig>({
-		pagination: {
-			index: 0,
-			size: 30,
-		},
-		sortOptions: {
-			active: null,
-			direction: 'asc',
-		},
-		filterOptions: {email: null, isActive: null, subscribed: null},
-	});
+	// protected readonly config = signal<TableConfig>({
+	// 	pagination: {
+	// 		index: 0,
+	// 		size: 30,
+	// 	},
+	// 	sortOptions: {
+	// 		active: null,
+	// 		direction: 'asc',
+	// 	},
+	// 	filterOptions: {email: null, isActive: null, subscribed: null},
+	// });
 
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
 	@ViewChild(MatSort) sort!: MatSort;
 	@ViewChild(InputSearchComponent) search!: InputSearchComponent;
-	@ViewChild(FiltersMenuComponent) filterss!: FiltersMenuComponent;
-	filters = {noFilter: true, isActive: null, subscribed: null};
 
-	constructor(private readonly users: UsersResource) {}
+	constructor(
+		private readonly users: UsersResource,
+		private readonly notifier: NotificationService,
+		private readonly clipboard: Clipboard
+	) {}
 
 	ngAfterViewInit() {
 		// If the user changes the sort order, reset back to the first page.
@@ -115,15 +126,12 @@ export class UsersTable implements AfterViewInit {
 				switchMap(() => {
 					// Save config and sync with url
 					this.isLoadingResults = true;
-					const filter = this.search.value
-						? `${this.searchActiveField.value}:like:${this.search.value}`
-						: null;
 					return this.users.getUsers(
 						this.sort.active,
 						this.sort.direction,
 						this.paginator.pageIndex,
 						this.paginator.pageSize,
-						filter
+						this.search.searchRequest
 					);
 				}),
 				map(res => {
@@ -135,39 +143,32 @@ export class UsersTable implements AfterViewInit {
 
 					// Only refresh the result length if there is new data. In case of rate
 					// limit errors, we don't want to reset the paginator, as that would prevent re-triggering requests.
-					this.resultsLength = items.length;
+					this.resultsLength = res.value?.totalItems ?? 0;
 					return items;
 				})
 			)
 			.subscribe(data => (this.data = data));
 	}
 
-	// Get Filters
-	getFilters = () => ({
-		email: this.search.value,
-		isActive: this.filters.isActive,
-		subscribed: this.filters.subscribed,
-	});
-
-	// Set config
-	saveConfig(input: Partial<TableConfig>) {
-		const config = this.config();
-		// this.sort.sortChange, this.paginator.page, this.search.searchEvent
-		this.config.set({
-			pagination: {
-				index: this.paginator.pageIndex,
-				size: this.paginator.pageSize,
-			},
-			sortOptions: {active: this.sort.active, direction: this.sort.direction},
-			filterOptions: {
-				email: this.search.value,
-				subscribed: config.filterOptions.subscribed,
-				isActive: null,
-			},
-		});
-		// Sync with url
-		return this.config();
-	}
+	// // Set config
+	// saveConfig(input: Partial<TableConfig>) {
+	// 	const config = this.config();
+	// 	// this.sort.sortChange, this.paginator.page, this.search.searchEvent
+	// 	this.config.set({
+	// 		pagination: {
+	// 			index: this.paginator.pageIndex,
+	// 			size: this.paginator.pageSize,
+	// 		},
+	// 		sortOptions: {active: this.sort.active, direction: this.sort.direction},
+	// 		filterOptions: {
+	// 			email: this.search.value,
+	// 			subscribed: config.filterOptions.subscribed,
+	// 			isActive: null,
+	// 		},
+	// 	});
+	// 	// Sync with url
+	// 	return this.config();
+	// }
 
 	// Refresh view
 
@@ -180,15 +181,10 @@ export class UsersTable implements AfterViewInit {
 		this.users.toggleSubscription(user).subscribe();
 	}
 
-	resetSubscription() {
-		this.users.resetSubscription().subscribe(res => {
-			if (res.value) {
-				this.ngAfterViewInit();
-			}
+	exportEmails() {
+		this.users.exportEmails().subscribe(res => {
+			if (res.value?.emails) this.clipboard.copy(res.value.emails);
+			this.notifier.success("Liste d'email ajouté au presse-papier.");
 		});
-	}
-
-	setActiveSearchField(field: {viewValue: string; value: string}) {
-		this.searchActiveField = field;
 	}
 }

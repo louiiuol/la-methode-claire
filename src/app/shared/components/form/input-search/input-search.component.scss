@@ -1,20 +1,20 @@
 app-input-search {
 	width: fit-content;
+	height: 48px;
 	display: flex;
+	background-color: rgb(235, 235, 235);
 	box-sizing: border-box;
-	#search-button {
-		border-bottom-left-radius: 0;
-		border-top-left-radius: 0;
-		height: 100%;
-		width: 42px;
-		min-width: fit-content;
-	}
+	border-radius: 16px;
+	overflow: hidden;
+	margin-top: 4px;
+	margin-bottom: 8px;
 
 	mat-form-field,
 	.mat-mdc-form-field-wrapper,
 	.mat-mdc-form-field-flex,
 	.mat-mdc-form-field-outline {
 		width: fit-content;
+		height: 58px;
 		min-width: 84px;
 	}
 	.mat-mdc-form-field-infix {
@@ -22,5 +22,11 @@ app-input-search {
 	}
 	.mat-focused .mat-mdc-form-field-label {
 		transform: translateY(-1.2em) scale(0.75) !important;
+	}
+	.mat-mdc-form-field-subscript-wrapper {
+		position: absolute;
+	}
+	.mat-mdc-form-field-icon-prefix {
+		padding-inline: 8px;
 	}
 }

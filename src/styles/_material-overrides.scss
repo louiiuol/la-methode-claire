@@ -50,3 +50,10 @@
 .mat-mdc-icon-button {
 	color: currentColor !important;
 }
+
+.mat-mdc-tab-body-wrapper {
+	padding: 16px 24px;
+	height: 100%;
+	overflow-y: auto;
+	background-color: #fcfcfc;
+}

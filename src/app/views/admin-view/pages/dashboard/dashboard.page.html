@@ -1,15 +1,6 @@
-<app-users-list class="flex-1" />
-<app-card
-	class="max-w-md"
-	title="Rafraîchir la bibliothèque"
-	subtitle="Si un problème est détecté concernant la librairie, il est possible de la re-générer.">
-	<app-button
-		[disabled]="loading()"
-		type="raised"
-		color="primary"
-		label="Rafraîchir la bibliothèque"
-		(click)="refresh()" />
-	<ng-template #loadingTemplate>
-		<app-loader />
-	</ng-template>
-</app-card>
+<mat-tab-group class="w-full" style="height: calc(100dvh - 84px)">
+	<mat-tab label="Utilisateurs"> <app-users-list class="flex-1" /> </mat-tab>
+	<mat-tab label="Newsletter"> <app-newsletter-admin /> </mat-tab>
+	<mat-tab label="Bibliothèque"><app-library-admin /> </mat-tab>
+	<mat-tab label="Abonnement"> <app-subscriptions-admin /> </mat-tab>
+</mat-tab-group>

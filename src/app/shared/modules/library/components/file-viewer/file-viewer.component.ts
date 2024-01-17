@@ -3,18 +3,17 @@ import {NgIf} from '@angular/common';
 import {catchError, take} from 'rxjs';
 import {TrustUrlPipe} from '@shared/pipes';
 import {LibraryService} from '@shared/modules/library/services/library.service';
-import {MessageComponent} from '@shared/components/elements';
+import {LoaderComponent, MessageComponent} from '@shared/components/elements';
 
 /**
  * Simple component to display a file into an iframe based on given file name.
- * For now, files must be located in 'assets/pdf/courses/' and should be a `.pdf` file.
  *
  * @author louiiuol
  */
 @Component({
 	standalone: true,
 	selector: 'app-file-viewer',
-	imports: [NgIf, TrustUrlPipe, MessageComponent],
+	imports: [NgIf, TrustUrlPipe, MessageComponent, LoaderComponent],
 	templateUrl: './file-viewer.component.html',
 })
 export class FileViewerComponent {
@@ -36,11 +35,11 @@ export class FileViewerComponent {
 					const blob = new Blob([new Uint8Array(res)], {
 						type: 'application/pdf',
 					});
-					this.pdf$.set(URL.createObjectURL(blob));
+					this.pdf.set(URL.createObjectURL(blob));
 				});
 	}
 
-	protected pdf$ = signal<any>(null);
+	protected pdf = signal<any>(null);
 	failedToLoad = false;
 
 	constructor(private readonly libraryService: LibraryService) {}

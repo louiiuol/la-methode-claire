@@ -9,6 +9,8 @@
 		*ngFor="let message of errorMessages"
 		[summary]="message" />
 	<formly-form
+		style="max-height: 60vh"
+		class="overflow-y-auto"
 		[form]="form"
 		[options]="options"
 		[fields]="formFields ?? []"

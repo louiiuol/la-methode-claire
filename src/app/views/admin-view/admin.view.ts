@@ -12,7 +12,6 @@ import {HeaderComponent} from '@shared/components';
 @Component({
 	standalone: true,
 	selector: 'app-admin-view',
-
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
 		<app-header type="admin" />

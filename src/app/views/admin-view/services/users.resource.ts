@@ -16,7 +16,7 @@ export class UsersResource extends HttpResource {
 		direction: string,
 		page: number,
 		size: number,
-		filter?: string | null
+		filter?: string | string[] | null
 	) =>
 		this.getAllPaginated<UserPreviewDto>({
 			notifyOnSuccess: false,
@@ -37,10 +37,16 @@ export class UsersResource extends HttpResource {
 			subscribed: !user.subscribed,
 		});
 
-	resetSubscription = () =>
+	resetSubscriptions = () =>
 		this.get(null, {
 			customResource: '',
 			path: 'reset-subscription',
 			customAction: 'update',
+		});
+
+	exportEmails = () =>
+		this.get<{emails: string}>(null, {
+			customResource: '',
+			path: 'export-emails',
 		});
 }

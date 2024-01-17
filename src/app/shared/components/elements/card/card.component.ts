@@ -22,7 +22,7 @@ import {MatCardModule} from '@angular/material/card';
 	templateUrl: './card.component.html',
 })
 export class CardComponent {
-	@HostBinding('class') class = 'block mx-auto px-4';
+	@HostBinding('class') class = 'block mx-auto';
 
 	/**
 	 * Title to be displayed in the card

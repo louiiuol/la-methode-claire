@@ -41,7 +41,7 @@ const MESSAGE_DICTIONARY = {
 			<app-icon *ngIf="showIcon" class="my-1 !mx-0 text-xl">
 				{{ getMessageIcon() }}
 			</app-icon>
-			<div>
+			<div class="flex-1">
 				<span
 					class="text-balance w-full"
 					[class]="{'font-bold': !!details}"

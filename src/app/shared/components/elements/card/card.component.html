@@ -1,6 +1,8 @@
-<mat-card class="mx-auto w-fit px-5 pb-8 max-w-full">
+<mat-card class="mx-auto w-fit px-8 pb-8 max-w-full">
 	<mat-card-header *ngIf="title || subtitle" class="text-primary !pt-8 !pb-2">
-		<mat-card-title class="text-center !text-2xl" *ngIf="!!title">
+		<mat-card-title
+			class="text-center !text-2xl text-primary text-balance"
+			*ngIf="!!title">
 			{{ title }}
 		</mat-card-title>
 		<mat-card-subtitle
