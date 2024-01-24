@@ -1,10 +1,10 @@
 import {Component, HostBinding} from '@angular/core';
-import {CardComponent} from '@shared/components';
+import {ButtonComponent, CardComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
 	selector: 'app-formula-card',
-	imports: [CardComponent],
+	imports: [CardComponent, ButtonComponent],
 	template: `
 		<app-card
 			title="L'abonnement"
@@ -26,6 +26,10 @@ import {CardComponent} from '@shared/components';
 					cela enrichit la méthode.
 				</li>
 			</ul>
+			<p>
+				Pour vous abonner vous devrez d'abord vous
+				<a class="text-primary underline" href="/register">inscrire</a>.
+			</p>
 			<p>
 				Une question ?
 				<a

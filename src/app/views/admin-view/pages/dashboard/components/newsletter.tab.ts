@@ -17,7 +17,12 @@ import {FormlyMatTextAreaModule} from '@ngx-formly/material/textarea';
 	template: ` <app-card
 		title="Nouvelle newsletter"
 		subtitle="Envoyer un email aux utilisateurs abonnés à la méthode.">
-		<app-form action="Envoyer" [submitted]="sendNewsletter" [fields]="fields" />
+		<app-form
+			action="Envoyer"
+			[submitted]="sendNewsletter"
+			[fields]="fields"
+			[askConfirmation]="true"
+			[forceReset]="true" />
 	</app-card>`,
 })
 export class NewsletterTab {

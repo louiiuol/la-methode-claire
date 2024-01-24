@@ -75,6 +75,8 @@ export class FormComponent implements OnInit {
 		...args: any[]
 	) => Observable<any>;
 
+	@Input() forceReset = false;
+
 	/**
 	 * Groups defining fields to be injected. You can pick fields that you need
 	 * from {@link appFormGroups}. If no field match you need you add your own,
@@ -111,6 +113,10 @@ export class FormComponent implements OnInit {
 	 * The given key must exists translation files: 'core.actions.{key}'
 	 */
 	@Input() action = 'envoyer';
+
+	@Input() askConfirmation = false;
+	@Input() confirmationMessage =
+		'Êtes vous sûr de vouloir soumettre ce formulaire ? Cette action est irréversible';
 
 	/**
 	 * Model of the form, could be useful to perform side actions.
@@ -153,19 +159,21 @@ export class FormComponent implements OnInit {
 	 * Submit given request (with 'submitted' input)
 	 */
 	onSubmit(model: any): void {
-		this.load(this.submitted$(model), (res: any) => {
-			let valid = false;
+		if (this.askConfirmation ? confirm(this.confirmationMessage) : true)
+			this.load(this.submitted$(model), (res: any) => {
+				let valid = false;
 
-			if (res.error) {
-				this.errorMessages = this.generateMessage(res.error);
-				// TODO add handle if error is typeof APIFormDetailsError..
-				this.reset();
-			} else {
-				valid = true;
-				this._initialModel = structuredClone(this.model);
-			}
-			this.sent.emit(valid);
-		});
+				if (res.error) {
+					this.errorMessages = this.generateMessage(res.error);
+					// TODO add handle if error is typeof APIFormDetailsError..
+					this.reset();
+				} else {
+					if (this.forceReset) this.reset();
+					valid = true;
+					this._initialModel = structuredClone(this.model);
+				}
+				this.sent.emit(valid);
+			});
 	}
 
 	/**
