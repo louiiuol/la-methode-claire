@@ -1,10 +1,11 @@
-import {Component, HostBinding} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {Component, HostBinding, Input} from '@angular/core';
 import {ButtonComponent, CardComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
 	selector: 'app-formula-card',
-	imports: [CardComponent, ButtonComponent],
+	imports: [NgIf, CardComponent, ButtonComponent],
 	template: `
 		<app-card
 			title="L'abonnement"
@@ -26,10 +27,14 @@ import {ButtonComponent, CardComponent} from '@shared/components';
 					cela enrichit la méthode.
 				</li>
 			</ul>
-			<p>
-				Pour vous abonner vous devrez d'abord vous
-				<a class="text-primary underline" href="/register">inscrire</a>.
-			</p>
+			<ng-container *ngIf="!logged">
+				<p>
+					Pour vous abonner vous devrez d'abord vous
+					<a class="text-primary underline" href="/register">inscrire</a>.
+				</p>
+				<br />
+			</ng-container>
+
 			<p>
 				Une question ?
 				<a
@@ -43,4 +48,6 @@ import {ButtonComponent, CardComponent} from '@shared/components';
 })
 export class FormulaCardComponent {
 	@HostBinding('class') class = 'max-w-lg';
+
+	@Input() logged = false;
 }

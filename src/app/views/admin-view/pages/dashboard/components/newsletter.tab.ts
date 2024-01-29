@@ -1,18 +1,14 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NotificationService} from '@core/modules/notification';
-import {
-	ButtonComponent,
-	CardComponent,
-	FormComponent,
-} from '@shared/components';
+import {CardComponent, FormComponent} from '@shared/components';
 import {UsersResource} from '../../../services/users.resource';
 import {NewsletterService} from '../../../services/newsletter.service';
 import {FieldConfig} from '@core';
-import {FormlyMatTextAreaModule} from '@ngx-formly/material/textarea';
+
 @Component({
 	standalone: true,
 	selector: 'app-newsletter-admin',
-	imports: [CardComponent, FormComponent, FormlyMatTextAreaModule],
+	imports: [CardComponent, FormComponent],
 	providers: [NewsletterService],
 	template: ` <app-card
 		title="Nouvelle newsletter"
@@ -35,6 +31,7 @@ export class NewsletterTab {
 		{
 			key: 'subject',
 			props: {
+				required: true,
 				type: 'text',
 				label: 'Sujet de la Newsletter',
 			},
@@ -43,6 +40,7 @@ export class NewsletterTab {
 			key: 'intro',
 			type: 'textarea',
 			props: {
+				required: true,
 				autosize: true,
 				label: 'Introduction (visible sans abonnement à la méthode)',
 			},
@@ -51,6 +49,7 @@ export class NewsletterTab {
 			key: 'content',
 			type: 'textarea',
 			props: {
+				required: true,
 				autosize: true,
 				label: 'Contenu pour les abonnés',
 			},
