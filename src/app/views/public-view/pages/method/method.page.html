@@ -160,11 +160,165 @@
 				Pour chaque semaine, vous trouverez en pdf un script, une leçon, des
 				exercices et une ou plusieurs affiches.
 			</p>
-		</div>
+			<img
+				class="max-w-2xl mx-auto w-full"
+				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/method-content.png"
+				alt="Illustration du contenu de la Méthode" />
+			<h2>La Méthode : la progression</h2>
+			<p>
+				Le rythme est d’une leçon par semaine. Ainsi, aux vacances d’automne 15
+				lettres/digrammes auront été vus, comme le recommande le guide orange.
+				Nous avons en revanche fait le choix, mis à part pour les voyelles qui
+				elles, sont vues toutes ensemble la première semaine, de ne voir qu’une
+				lettre par semaine jusqu’aux vacances d’automne. Ces sept premières
+				semaines sont consacrées à rendre la combinatoire (vraiment) tout
+				terrain : les combinaisons délicates – dès lors qu’il s’agit de les
+				décoder mais dont tous sont absolument capables puisqu’ils parlent –
+				telles VC, VCC, VCV, CVCC, CVV, CCV sont donc intensément travaillées.
+				Cela demande un investissement important de la part des élèves. Ce n’est
+				donc pas le moment de surcharger leur mémoire de travail en leur
+				demandant de mémoriser le nom et le son de plusieurs lettres par
+				semaine.
+			</p>
 
-		<img
-			class="max-w-2xl mx-auto w-full"
-			src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/method-content.png"
-			alt="Illustration du contenu de la Méthode" />
+			<ng-container *ngIf="lessons$ | async as lessons">
+				<table
+					mat-table
+					[dataSource]="lessons"
+					class="w-fit !min-w-fit mx-auto mb-9">
+					<!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+					<!-- Position Column -->
+					<ng-container matColumnDef="index">
+						<th mat-header-cell *matHeaderCellDef class="font-bold">
+							Semaine / Leçon No.
+						</th>
+						<td
+							mat-cell
+							*matCellDef="let element"
+							[style]="{color: element.color}"
+							class="!text-center font-bold">
+							{{element.order}}
+						</td>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef class="font-bold">
+							Phonème(s) et digrammes vu(s)
+						</th>
+						<td
+							mat-cell
+							*matCellDef="let element"
+							class="text-lg"
+							[style]="{color: element.color}">
+							<span *ngFor="let item of element.phonemes" class="px-2">
+								{{item.name}}
+							</span>
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+			</ng-container>
+
+			<h3 class="my-3 font-bold">Précisions importantes</h3>
+			<div class="relative">
+				<span
+					style="background-color: #b2ced8"
+					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+				<div class="flex-1">
+					<p class="!mt-0">
+						Pas de semaine de révision réservée dans la mesure où ce travail de
+						révision est quotidien. Il est intégré à un rituel par lequel débute
+						tous les jours la séance de lecture (cf scripts).
+					</p>
+				</div>
+			</div>
+			<div class="relative">
+				<span
+					style="background-color: #ac981a"
+					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+				<div class="flex-1">
+					<p class="!mt-0">
+						Le k, le q, le œ et le w n’apparaissent dans aucune leçon et c’est
+						volontaire ! Nous voyons le qu (qui, que, qu’) tous les jours quand
+						nous relisons/écrivons les mots-outils et le k est si rare en
+						français que la balance avantage (ils connaissent le k) /
+						inconvénient (dès qu’ils le connaissent ils oublient le c et
+						encodent tous les [k] avec un…k !) penche nettement du côté pas de
+						leçon sur le k et mémorisation de l’orthographe des mots courants
+						qui le contiennent. C’est un peu radical, je sais, mais qu’est-ce
+						que ça fonctionne bien ! Ainsi écrira-t-on sur notre paperboard –
+						qui fait office de carnet de vocabulaire commun à toute la classe,
+						consultable à tout moment et dont les mots qui y figurent sont
+						l’objet de très fréquentes récupérations en mémoire – et au fur et à
+						mesure que nous les rencontrerons les mots qui contiennent un k.
+					</p>
+				</div>
+			</div>
+
+			<div class="relative">
+				<span
+					style="background-color: #ef7f96"
+					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+				<div class="flex-1">
+					<p class="!mt-0">
+						Pour <strong></strong> <strong>œ</strong> et <strong>w</strong>,
+						c’est leur fonctionnement aléatoire qui m’a convaincue de ne pas en
+						faire l’objet d’une leçon mais de les ‘paperboarder’ également. Des
+						mots assez courants tels
+						<strong>
+							sœur, cœur, œuf, œil, bœuf, nœud / wagon, clown, kiwi, cow-boy,
+							bowling, halloween, sandwich.
+						</strong>
+					</p>
+				</div>
+			</div>
+			<div class="relative">
+				<span
+					style="background-color: #fcdac6"
+					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+				<div class="flex-1">
+					<p class="!mt-0">
+						Certaines leçons qui apparaissent dans tous les manuels de lecture
+						n’apparaissent pas ici. Il s’agit de :
+					</p>
+					<ul>
+						<li>
+							- l’articulation de deux consonnes qui se suivent comme
+							<strong>
+								tr, br, bl, dr, cr, cl, pr, pl, fr, fl, vr, vl, gr, gl </strong
+							>;
+						</li>
+						<li>- l’articulation de deux voyelles qui se suivent ;</li>
+						<li>
+							- la lecture de syllabes / logatomes / groupes nominaux / groupes
+							verbaux / phrases / histoires (à partir de la semaine 11 seulement
+							pour les histoires) n’utilisant que les graphèmes / digrammes /
+							trigrammes / graphèmes complexes appris ;
+						</li>
+						<li>
+							- les combinaisons faisant apparaître un e devant deux consonnes
+							identiques ou non.
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<p>
+				Si elles n’apparaissent pas dans
+				<strong>La Méthode claire</strong> c’est que de la même façon que nous
+				ne programmons pas de semaines de révision mais révisons tout tous les
+				jours, nous ne programmons pas de leçons sur des combinaisons
+				particulières mais les travaillons toutes très régulièrement. Depuis le
+				tout début de l’année pour le e suivi de deux consonnes et les suites de
+				voyelles et à partir de la leçon 6 pour les suites de consonnes. Pour
+				les deux derniers cas, il n’y a rien à comprendre mais tout à articuler
+				: rien de mieux pour cela qu’un entraînement régulier.
+			</p>
+		</div>
 	</div>
 </section>

@@ -1,7 +1,7 @@
 <nav class="flex gap-3 items-center justify-between px-1">
 	<app-input-search [fields]="searchFields" label="" />
 	<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="outils admin">
-		<app-icon>more_vert</app-icon>
+		<app-icon color="primary">more_vert</app-icon>
 	</button>
 	<mat-menu #menu="matMenu" xPosition="before">
 		<button mat-menu-item (click)="exportEmails()">Exporter les emails</button>
