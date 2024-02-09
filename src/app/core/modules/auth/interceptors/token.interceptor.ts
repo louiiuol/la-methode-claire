@@ -42,18 +42,18 @@ export class TokenInterceptor implements HttpInterceptor {
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request
 	 */
-	private handleAuthError(err: HttpErrorResponse): Observable<unknown> {
+	private handleAuthError(error: any): Observable<unknown> {
+		const errorStatus = error.error?.code ?? error.code ?? error.status;
 		if (
-			((err.error as ApiResponse<null>)?.code === 401 ||
-				(err as any).code === 401) &&
-			err.url !== this.appUrlDomain + '/auth/login'
+			errorStatus === 401 &&
+			error.url !== this.appUrlDomain + '/auth/login'
 		) {
 			console.error('authentication expired');
 			// TODO: replace w/ refresh token mechanism
 			this.logOut();
-			return of(err?.message); // or EMPTY may be appropriate here
+			return of(error?.message); // or EMPTY may be appropriate here
 		}
-		return throwError(() => err);
+		return throwError(() => error);
 	}
 
 	/**
