@@ -48,6 +48,7 @@ export class TokenInterceptor implements HttpInterceptor {
 				(err as any).code === 401) &&
 			err.url !== this.appUrlDomain + '/auth/login'
 		) {
+			console.error('authentication expired');
 			// TODO: replace w/ refresh token mechanism
 			this.logOut();
 			return of(err?.message); // or EMPTY may be appropriate here
