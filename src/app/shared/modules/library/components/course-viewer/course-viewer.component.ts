@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor, NgIf} from '@angular/common';
+import {NgFor, NgIf, UpperCasePipe} from '@angular/common';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
@@ -47,6 +47,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 		CardComponent,
 		FileViewerComponent,
 		MessageComponent,
+		UpperCasePipe,
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
@@ -71,8 +72,8 @@ export class CourseViewerComponent {
 				...course.phonemes
 					.filter(p => p.poster)
 					.map(p => ({
-						name: 'Affiche ' + p.name,
-						path: 'affiche-' + p.name.toLocaleUpperCase(),
+						name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
+						path: 'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
 					})),
 				...(course.sounds?.map(s => ({
 					name: 'Son ' + s,

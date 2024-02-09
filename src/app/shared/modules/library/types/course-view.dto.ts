@@ -1,10 +1,12 @@
+import {PhonemeViewDto} from './phoneme-view.dto';
+
 /**
  * Representation of Course returned by API
  */
 export interface CourseViewDto {
 	uuid: string;
 	order: number;
-	phonemes: {uuid: string; name: string; poster?: boolean}[];
+	phonemes: PhonemeViewDto[];
 	color: string;
 	script?: boolean;
 	lesson?: boolean;

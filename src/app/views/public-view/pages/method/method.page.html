@@ -192,29 +192,38 @@
 					<!-- Position Column -->
 					<ng-container matColumnDef="index">
 						<th mat-header-cell *matHeaderCellDef class="font-bold">
-							Semaine / Leçon No.
+							Semaine / Leçon
 						</th>
 						<td
 							mat-cell
 							*matCellDef="let element"
 							[style]="{color: element.color}"
 							class="!text-center font-bold">
-							{{element.order}}
+							{{element.order + 1}}
 						</td>
 					</ng-container>
 
 					<!-- Name Column -->
 					<ng-container matColumnDef="name">
 						<th mat-header-cell *matHeaderCellDef class="font-bold">
-							Phonème(s) et digrammes vu(s)
+							Graphème(s)
 						</th>
 						<td
 							mat-cell
 							*matCellDef="let element"
 							class="text-lg"
 							[style]="{color: element.color}">
-							<span *ngFor="let item of element.phonemes" class="px-2">
-								{{item.name}}
+							<span *ngFor="let phoneme of element.phonemes" class="px-2">
+								<span *ngIf="phoneme.endOfWord">-</span>
+								{{phoneme.name | uppercase}}
+								<ng-container *ngIf="phoneme.sounds as sounds">
+									<span *ngFor="let sound of sounds" class="px-1 text-xs">
+										[{{ sound }}]
+									</span>
+								</ng-container>
+								<span *ngIf="phoneme.info" class="pl-1 text-sm">
+									({{ phoneme.info }})
+								</span>
 							</span>
 						</td>
 					</ng-container>
@@ -248,9 +257,9 @@
 						nous relisons/écrivons les mots-outils et le k est si rare en
 						français que la balance avantage (ils connaissent le k) /
 						inconvénient (dès qu’ils le connaissent ils oublient le c et
-						encodent tous les [k] avec un…k !) penche nettement du côté pas de
-						leçon sur le k et mémorisation de l’orthographe des mots courants
-						qui le contiennent. C’est un peu radical, je sais, mais qu’est-ce
+						encodent tous les [k] avec un…k !) penche nettement du côté "pas de
+						leçon sur le k" et "mémorisation de l’orthographe des mots courants
+						qui le contiennent". C’est un peu radical, je sais, mais qu’est-ce
 						que ça fonctionne bien ! Ainsi écrira-t-on sur notre paperboard –
 						qui fait office de carnet de vocabulaire commun à toute la classe,
 						consultable à tout moment et dont les mots qui y figurent sont
@@ -294,12 +303,6 @@
 							>;
 						</li>
 						<li>- l’articulation de deux voyelles qui se suivent ;</li>
-						<li>
-							- la lecture de syllabes / logatomes / groupes nominaux / groupes
-							verbaux / phrases / histoires (à partir de la semaine 11 seulement
-							pour les histoires) n’utilisant que les graphèmes / digrammes /
-							trigrammes / graphèmes complexes appris ;
-						</li>
 						<li>
 							- les combinaisons faisant apparaître un e devant deux consonnes
 							identiques ou non.

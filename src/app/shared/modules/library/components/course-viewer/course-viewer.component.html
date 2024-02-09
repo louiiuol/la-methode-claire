@@ -5,7 +5,8 @@
 		*ngIf="course.order < 3 || hasValidSubscription; else unauthorizedLesson">
 		<mat-drawer
 			#drawer
-			class="w-60 px-4 !flex flex-col justify-start items-start"
+			style="max-width: 20rem"
+			class="px-4 !flex flex-col justify-start items-start"
 			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
 			<h2 class="text-2xl my-2" [style]="'color:' + course.color">
@@ -16,8 +17,8 @@
 				class="mb-2 flex gap-3 items-center justify-start"
 				*ngIf="course.order < currentUserLesson; else onGoingCourse">
 				<span
-					class="px-2 py-1 bg-green-400 text-white rounded-md w-fit text-sm italic">
-					Terminée
+					class="px-2 py-1 bg-green-700 text-white rounded-md w-fit text-sm italic">
+					Leçon terminée
 				</span>
 
 				<app-icon
@@ -25,7 +26,7 @@
 					color="accent"
 					(click)="setCurrentLesson(course.order)"
 					matTooltip="Revenir à cette leçon">
-					restart_alt
+					skip_previous
 				</app-icon>
 			</div>
 			<ng-template #onGoingCourse>
@@ -42,7 +43,7 @@
 							color="accent"
 							(click)="setCurrentLesson(course.order)"
 							matTooltip="Passer à cette leçon">
-							restart_alt
+							skip_next
 						</app-icon>
 					</div>
 				</ng-container>
@@ -63,16 +64,27 @@
 				</ng-template>
 			</ng-template>
 
-			<hr class="my-3" />
+			<hr class="mt-3 mb-6" />
 
-			<h3 class="text-sm italic !mb-1">Phonème(s) associé(s)</h3>
-			<p class="text-primary">
-				<span *ngFor="let phoneme of course.phonemes" class="mx-1">
-					{{ phoneme.name }}
+			<h3 class="text-sm italic !mb-3">Graphème(s)</h3>
+			<div class="text-sm flex gap-3 flex-wrap">
+				<span
+					*ngFor="let phoneme of course.phonemes"
+					class="py-1 px-2 h-8 rounded-md bg-primary text-white flex items-center">
+					<span *ngIf="phoneme.endOfWord">-</span>
+					{{ phoneme.name | uppercase }}
+					<ng-container *ngIf="phoneme.sounds as sounds">
+						<span *ngFor="let sound of sounds" class="px-1 text-xs">
+							[{{ sound }}]
+						</span>
+					</ng-container>
+					<span *ngIf="phoneme.info" class="pl-1 text-sm"
+						>({{ phoneme.info }})</span
+					>
 				</span>
-			</p>
+			</div>
 
-			<hr class="my-3" />
+			<hr class="mt-3 mb-6" />
 
 			<!-- <h3 class="text-sm italic !mb-1">Liste des mot(s)</h3>
 			<ng-container *ngIf="course.words?.length; else noWordsAssociated">
