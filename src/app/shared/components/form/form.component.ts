@@ -118,6 +118,7 @@ export class FormComponent implements OnInit {
 	@Input() confirmationMessage =
 		'Êtes vous sûr de vouloir soumettre ce formulaire ? Cette action est irréversible';
 
+	@Input() resettable = true;
 	/**
 	 * Model of the form, could be useful to perform side actions.
 	 *
@@ -230,8 +231,6 @@ export class FormComponent implements OnInit {
 		this.isLoading = true;
 		return obs.pipe(this.untilDestroyed$).subscribe(res => {
 			fn(res);
-
-			console.log(res);
 			this.toggleDisabled();
 			this.isLoading = false;
 			this.ref.detectChanges();

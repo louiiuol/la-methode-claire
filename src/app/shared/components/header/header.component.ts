@@ -1,4 +1,5 @@
 import {
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	HostBinding,
@@ -51,9 +52,13 @@ export class HeaderComponent {
 
 	constructor(
 		private readonly platform: PlatformService,
-		private readonly authenticator: AuthService
+		private readonly authenticator: AuthService,
+		private readonly cd: ChangeDetectorRef
 	) {}
 
 	protected isMobile = () => this.platform.isMobileView();
-	protected logOut = () => this.authenticator.logOut();
+	protected logOut = () => {
+		this.authenticator.logOut();
+		this.cd.detectChanges();
+	};
 }

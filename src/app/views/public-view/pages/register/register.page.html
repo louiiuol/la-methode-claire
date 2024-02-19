@@ -7,11 +7,20 @@
 		action="s'inscrire"
 		[submitted]="register"
 		(sent)="emailSent = $event"
+		[resettable]="false"
 		[fields]="fields"
-		[validators]="validators" />
+		[validators]="validators">
+		<small>
+			En continuant, vous acceptez les
+			<a class="underline" target="_blank" href="assets/pdf/cgv.pdf"
+				>conditions d'utilisations</a
+			>
+			de La Méthode claire.
+		</small>
+	</app-form>
 	<ng-template #cardFooter>
 		<p
-			class="flex items-center justify-center gap-3 mt-1 w-full text-center text-sm italic">
+			class="flex items-center justify-center gap-3 mt-3 w-full text-center text-sm italic">
 			Vous possédez déjà un compte ?
 			<app-button color="primary" href="/login" label="se connecter" />
 		</p>

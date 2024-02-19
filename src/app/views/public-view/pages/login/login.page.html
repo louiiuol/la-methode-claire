@@ -1,7 +1,11 @@
 <app-card
 	class="w-full max-w-xl animate__animated animate__fadeInDown"
 	title="Connectez-vous">
-	<app-form action="se connecter" [submitted]="logIn" [fields]="fields" />
+	<app-form
+		action="se connecter"
+		[resettable]="false"
+		[submitted]="logIn"
+		[fields]="fields" />
 	<ng-template #cardFooter>
 		<div>
 			<app-button

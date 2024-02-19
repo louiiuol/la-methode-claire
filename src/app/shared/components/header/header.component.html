@@ -12,6 +12,9 @@
 			*ngFor="let link of navigationLinks['public']"
 			[href]="'/' + link.path"
 			[label]="link.name" />
+		<hr />
+		<app-button type="menu-item" href="/login" label="se connecter" />
+		<app-button type="menu-item" href="/register" label="s'inscrire" />
 	</mat-menu>
 
 	<app-icon
@@ -29,21 +32,38 @@
 
 	<span class="flex-1"></span>
 
-	<a
-		class="text-base border border-red-400 text-red-400 rounded-md px-3 py-1 hover:bg-red-400 hover:text-white"
-		href="mailto:methode.claire@gmail.com"
-		label="contact">
-		contact
-	</a>
+	<app-button
+		[matMenuTriggerFor]="helpMenu"
+		aria-label="Afficher le menu d'aide"
+		type="icon">
+		<app-icon color="accent">help</app-icon>
+	</app-button>
+
+	<mat-menu #helpMenu="matMenu">
+		<button mat-menu-item href="mailto:methode.claire@gmail.com">
+			<app-icon>mail</app-icon>
+			contact
+		</button>
+
+		<a mat-menu-item target="_blank" href="assets/pdf/cgv.pdf">
+			<app-icon>local_police</app-icon>
+			Conditions générales de ventes
+		</a>
+
+		<a mat-menu-item target="_blank" href="assets/pdf/mentions-legales.pdf">
+			<app-icon>gavel</app-icon>
+			Mentions légales
+		</a>
+	</mat-menu>
 
 	<ng-container *ngIf="!currentUser?.uuid; else userMenuSection">
 		<app-button
-			class="hidden xs:block"
 			type="raised"
 			color="primary"
 			href="/login"
 			label="se connecter" />
 		<app-button
+			class="hidden xs:block"
 			type="raised"
 			color="accent"
 			href="/register"
