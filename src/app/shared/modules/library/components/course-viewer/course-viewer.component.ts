@@ -30,6 +30,7 @@ import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {Subject} from 'rxjs';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -53,6 +54,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 	templateUrl: './course-viewer.component.html',
 })
 export class CourseViewerComponent {
+	@Input() loading = false;
 	/**
 	 * Defines current course to be shown. Depending on which course is given,
 	 * this method will populate `filesAvailable` field with given course's files.
@@ -99,11 +101,15 @@ export class CourseViewerComponent {
 	 */
 	@Output() nextLesson = new EventEmitter();
 
+	@Output() loaded = new EventEmitter();
+
 	@HostBinding('class')
 	protected readonly class =
-		'flex-1 bg-white rounded-b-xl overflow-auto mat-elevation-z2 block h-96';
+		'flex-1 bg-white rounded-b-xl overflow-auto mat-elevation-z2 block w-full';
 
 	@HostBinding('style') style = 'height: min(1080px, 70vh)';
+
+	reload$: Subject<void> = new Subject<void>();
 
 	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.subscribed;
@@ -132,14 +138,19 @@ export class CourseViewerComponent {
 	) {}
 
 	setCurrentLesson(index: number) {
-		this.library.setCurrentLesson(index).subscribe(res => {
-			if (!res.error) {
-				this.currentLessonIndex = index;
-				this.currentUserLesson = index;
-				this.nextLesson.emit(index);
-				this.authenticator.updateCurrentUser({currentLesson: index});
-			}
-		});
+		if (!this.loading) {
+			this.loading = true;
+			this.library.setCurrentLesson(index).subscribe(res => {
+				if (!res.error) {
+					this.currentLessonIndex = index;
+					this.currentUserLesson = index;
+					this.nextLesson.emit(index);
+					this.loaded.emit(false);
+					this.authenticator.updateCurrentUser({currentLesson: index});
+					this.loading = false;
+				}
+			});
+		}
 	}
 
 	setCurrentFile(file?: {name: string; path: string}) {
@@ -147,7 +158,24 @@ export class CourseViewerComponent {
 	}
 
 	downloadFile(file: {name: string; path: string}) {
-		const fileName = `${(this.course?.order ?? 0) + 1}/${file.path}`;
+		const fileName = `${(this.course?.order ?? 0) + 1}/files/${file.path}`;
 		this.library.downloadPdf(fileName);
+	}
+
+	downloadCourse() {
+		this.library.downloadCourse(this.currentLessonIndex).subscribe(res => {
+			const blob = new Blob([res], {type: 'application/zip'});
+
+			// Create a link element and trigger a click to download the file
+			const link = document.createElement('a');
+			link.href = window.URL.createObjectURL(blob);
+			link.download = `${this.currentLessonIndex + 1}.zip`;
+			link.click();
+		});
+	}
+
+	fileLoaded(loaded: boolean) {
+		this.loaded.emit(false);
+		this.loading = false;
 	}
 }

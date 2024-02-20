@@ -1,4 +1,11 @@
-import {Component, HostBinding, Input, signal} from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	HostBinding,
+	Input,
+	Output,
+	signal,
+} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {catchError, take} from 'rxjs';
 import {TrustUrlPipe} from '@shared/pipes';
@@ -21,6 +28,7 @@ export class FileViewerComponent {
 	protected readonly class = 'flex w-full h-full';
 
 	@Input({required: true}) set fileName(fileName: string) {
+		this.pdf.set(null);
 		if (fileName.length > 2)
 			this.libraryService
 				.getPdf(fileName)
@@ -28,16 +36,20 @@ export class FileViewerComponent {
 				.pipe(
 					catchError(res => {
 						this.failedToLoad = !res.ok;
+						this.fileLoaded.emit(false);
 						throw res;
 					})
 				)
-				.subscribe(res => {
+				.subscribe((res: any) => {
 					const blob = new Blob([new Uint8Array(res)], {
 						type: 'application/pdf',
 					});
 					this.pdf.set(URL.createObjectURL(blob));
+					this.fileLoaded.emit(true);
 				});
 	}
+
+	@Output() fileLoaded = new EventEmitter();
 
 	protected pdf = signal<any>(null);
 	failedToLoad = false;

@@ -167,7 +167,7 @@ export class FormComponent implements OnInit {
 				if (res.error) {
 					this.errorMessages = this.generateMessage(res.error);
 					// TODO add handle if error is typeof APIFormDetailsError..
-					this.reset();
+					// this.reset();
 				} else {
 					if (this.forceReset) this.reset();
 					valid = true;

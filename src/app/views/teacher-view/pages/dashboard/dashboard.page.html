@@ -1,15 +1,18 @@
-<ng-container *ngIf="lessons$ | async as lessons">
+<ng-container *ngIf="lessons$ | async as lessons; else: loadingTemplate">
 	<ng-container *ngIf="lessons.length; else: libraryUnavailable">
 		<app-progress-bar
 			class="rounded-t-xl mat-elevation-z2"
 			[currentLesson]="currentLesson"
 			[hasValidSubscription]="hasValidSubscription"
+			[loading]="isLoading"
 			[lessons]="lessons"
-			(selectedLesson)="currentLesson = $event" />
+			(selectedLesson)="changeLesson($event)" />
 		<app-course-viewer
 			[currentLessonIndex]="currentLesson"
+			[loading]="isLoading"
 			[course]="lessons[currentLesson]"
-			(nextLesson)="currentLesson = $event" />
+			(loaded)="setLoad($event)"
+			(nextLesson)="changeLesson($event)" />
 	</ng-container>
 	<ng-template #libraryUnavailable>
 		<app-card title="Méthode inaccessible" class="w-80 mt-7 text-center">
@@ -24,3 +27,9 @@
 		</app-card>
 	</ng-template>
 </ng-container>
+<ng-template #loadingTemplate>
+	<app-loader />
+	<p class="absolute left-1/2 top-2/3 -translate-x-1/2">
+		Chargement de la bibliothèque.
+	</p>
+</ng-template>

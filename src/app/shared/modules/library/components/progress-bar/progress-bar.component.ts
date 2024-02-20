@@ -37,10 +37,12 @@ export class ProgressBarComponent implements AfterViewInit {
 	@Input({required: true}) lessons!: CourseViewDto[];
 	@Input({required: true}) currentLesson!: number;
 	@Input({required: true}) hasValidSubscription!: boolean;
+	@Input({required: true}) loading!: boolean;
 
 	@Output() selectedLesson = new EventEmitter<number>();
 
 	constructor(private readonly hostElement: ElementRef) {}
+
 	ngAfterViewInit(): void {
 		this.hostElement.nativeElement.scrollTo((this.currentLesson - 1) * 48, 0);
 	}

@@ -28,6 +28,8 @@ export class LibraryService {
 			this.saveFile(data, fileName);
 		});
 
+	downloadCourse = (index: number) => this.http.downloadCourse(index);
+
 	private updateLocalLessons = (
 		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>
 	) => {

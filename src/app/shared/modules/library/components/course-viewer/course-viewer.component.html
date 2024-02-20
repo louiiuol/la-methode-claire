@@ -24,6 +24,7 @@
 				<app-icon
 					class="cursor-pointer !mx-0"
 					color="accent"
+					[class]="{'cursor-wait': loading}"
 					(click)="setCurrentLesson(course.order)"
 					matTooltip="Revenir à cette leçon">
 					skip_previous
@@ -41,6 +42,7 @@
 						<app-icon
 							class="cursor-pointer !mx-0"
 							color="accent"
+							[class]="{'cursor-wait': loading}"
 							(click)="setCurrentLesson(course.order)"
 							matTooltip="Passer à cette leçon">
 							skip_next
@@ -56,6 +58,7 @@
 
 						<app-icon
 							class="cursor-pointer !mx-0"
+							[class]="{'cursor-wait': loading}"
 							(click)="setCurrentLesson(course.order + 1)"
 							matTooltip="Marquer comme terminée">
 							check
@@ -86,48 +89,45 @@
 
 			<hr class="mt-3 mb-6" />
 
-			<!-- <h3 class="text-sm italic !mb-1">Liste des mot(s)</h3>
-			<ng-container *ngIf="course.words?.length; else noWordsAssociated">
-				<span *ngFor="let word of course.words" class="mx-1 text-primary">
-					{{ word }}
-				</span>
-			</ng-container>
-
-			<ng-template #noWordsAssociated>
-				<small class="italic py-2">Aucun mot associé à cette semaine</small>
-			</ng-template>
-
-			<hr class="my-3" /> -->
-
 			<div class="flex items-center justify-between">
 				<h3 class="text-sm italic !mb-1">Liste des fichiers</h3>
-				<!-- <app-icon
-					class="cursor-pointer !mx-0 mr-4 mt-1"
-					color="accent"
-					matTooltip="Télécharger tout les pdfs">
-					download
-				</app-icon> -->
 			</div>
 			<mat-list #files role="list">
 				<mat-list-item *ngFor="let file of filesAvailable" class="!px-0">
 					<div class="w-full flex justify-between items-center gap-6">
 						{{ file.name }}
 						<div class="flex items-center justify-end flex-1">
-							<app-button (click)="setCurrentFile(file)" type="icon">
+							<app-button
+								[disabled]="loading"
+								[class]="{'cursor-wait': loading}"
+								(click)="setCurrentFile(file)"
+								type="icon">
 								<app-icon color="primary">visibility</app-icon>
 							</app-button>
-							<app-button (click)="downloadFile(file)" type="icon">
+							<app-button
+								[disabled]="loading"
+								[class]="{'cursor-wait': loading}"
+								(click)="downloadFile(file)"
+								type="icon">
 								<app-icon color="accent">download</app-icon>
 							</app-button>
 						</div>
 					</div>
 				</mat-list-item>
 			</mat-list>
+			<app-button
+				class="mx-auto"
+				type="stroked"
+				(click)="downloadCourse()"
+				color="accent">
+				Tout télécharger
+			</app-button>
 			<span class="flex-1"></span>
 		</mat-drawer>
 
 		<app-file-viewer
-			[fileName]="[course.order + 1, selectedFile?.path].join('/')" />
+			(fileLoaded)="fileLoaded($event)"
+			[fileName]="[course.order + 1, 'files', selectedFile?.path].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>
 		<div class="max-w-md mx-auto mt-9 mb-4">

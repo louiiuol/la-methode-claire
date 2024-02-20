@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpResource} from '@core/modules/http/services/http.resource';
 import {CourseViewDto} from '../types/course-view.dto';
 import {environment} from '@env/environment';
-import {map} from 'rxjs';
 
 /**
  * CRUD requests related to library.
@@ -33,6 +32,12 @@ export class LibraryResource extends HttpResource {
 			{
 				responseType: 'arraybuffer',
 			}
+		);
+
+	downloadCourse = (index: number) =>
+		this.http.get(
+			[environment.root_url, 'courses', index, 'download'].join('/'),
+			{responseType: 'blob'}
 		);
 
 	refreshLibrary = () => this.create(null);
