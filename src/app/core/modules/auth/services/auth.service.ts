@@ -102,4 +102,9 @@ export class AuthService {
 		this.currentUser.set(
 			this.userStore.saveUser(Object.assign({}, this.currentUser(), user))
 		);
+
+	closeAccount = () =>
+		this.http.closeAccount().subscribe(res => {
+			if (res.value) this.logOut();
+		});
 }

@@ -154,6 +154,7 @@ export class CourseViewerComponent {
 	}
 
 	setCurrentFile(file?: {name: string; path: string}) {
+		this.loading = true;
 		this.selectedFile = file;
 	}
 

@@ -74,6 +74,7 @@ export class UsersTable implements AfterViewInit {
 		'firstName',
 		'lastName',
 		'createdAt',
+		'lastConnection',
 		'currentLessonIndex',
 		'isActive',
 		'subscribed',

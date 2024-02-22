@@ -50,4 +50,8 @@ export class ProfilePage {
 	protected readonly updateProfile = this.authenticator.updateProfile;
 
 	constructor(private readonly authenticator: AuthService) {}
+
+	closeAccount() {
+		this.authenticator.closeAccount();
+	}
 }

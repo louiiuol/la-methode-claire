@@ -36,4 +36,6 @@ export class AuthResource extends HttpResource {
 		this.partialUpdate<UserPreviewDto>(null, dto, {
 			path: 'me',
 		});
+
+	closeAccount = () => this.get(null, {path: 'close-account'});
 }

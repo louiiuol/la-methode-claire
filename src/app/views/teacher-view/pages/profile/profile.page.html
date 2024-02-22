@@ -37,4 +37,23 @@
 			[submitted]="updateProfile"
 			[fields]="newsletterField" />
 	</mat-expansion-panel>
+
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title> Fermeture du compte </mat-panel-title>
+		</mat-expansion-panel-header>
+
+		<p class="mb-4">
+			Si vous le souhaitez, vous pouvez fermer votre compte. Il sera alors
+			supprimé dans les 2 mois. <br />
+			Si vous souhaitez le rouvrir, il vous suffira de vous reconnecter.
+		</p>
+		<app-button
+			class="!w-fit block mx-auto my-3"
+			type="raised"
+			color="warn"
+			(click)="closeAccount()">
+			Fermer mon compte
+		</app-button>
+	</mat-expansion-panel>
 </mat-accordion>
