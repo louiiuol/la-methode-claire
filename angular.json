@@ -50,7 +50,14 @@
 						"polyfills": ["zone.js"],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
-						"assets": ["src/assets"],
+						"assets": [
+							"src/assets",
+							{
+								"glob": "**/*",
+								"input": "node_modules/ngx-extended-pdf-viewer/assets/",
+								"output": "/assets/"
+							}
+						],
 						"styles": ["src/styles.scss"],
 						"scripts": []
 					},

@@ -11,6 +11,7 @@ import {catchError, take} from 'rxjs';
 import {TrustUrlPipe} from '@shared/pipes';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {LoaderComponent, MessageComponent} from '@shared/components/elements';
+import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer';
 
 /**
  * Simple component to display a file into an iframe based on given file name.
@@ -20,7 +21,13 @@ import {LoaderComponent, MessageComponent} from '@shared/components/elements';
 @Component({
 	standalone: true,
 	selector: 'app-file-viewer',
-	imports: [NgIf, TrustUrlPipe, MessageComponent, LoaderComponent],
+	imports: [
+		NgIf,
+		TrustUrlPipe,
+		MessageComponent,
+		LoaderComponent,
+		NgxExtendedPdfViewerModule,
+	],
 	templateUrl: './file-viewer.component.html',
 })
 export class FileViewerComponent {
@@ -44,7 +51,7 @@ export class FileViewerComponent {
 					const blob = new Blob([new Uint8Array(res)], {
 						type: 'application/pdf',
 					});
-					this.pdf.set(URL.createObjectURL(blob));
+					this.pdf.set(blob);
 					this.fileLoaded.emit(true);
 					this.failedToLoad = false;
 				});
@@ -52,7 +59,7 @@ export class FileViewerComponent {
 
 	@Output() fileLoaded = new EventEmitter();
 
-	protected pdf = signal<any>(null);
+	protected pdf = signal<Blob | null>(null);
 	failedToLoad = false;
 
 	constructor(private readonly libraryService: LibraryService) {}
