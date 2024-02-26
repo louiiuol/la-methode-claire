@@ -1,20 +1,8 @@
 <ng-container *ngIf="pdf() as pdf; else noFileSelected">
-	<ngx-extended-pdf-viewer
-		class="block w-full"
-		[src]="pdf"
-		zoom="page-fit"
-		[showFindButton]="false"
-		[showSidebarButton]="false"
-		[showTextEditor]="false"
-		[showRotateButton]="false"
-		[showPagingButtons]="false"
-		[showOpenFileButton]="false"
-		[showDrawEditor]="false"
-		[showStampEditor]="false"
-		[showBookModeButton]="false"
-		[showHandToolButton]="false"
-		[showPresentationModeButton]="false"
-		[showDownloadButton]="false" />
+	<iframe
+		class="w-full"
+		[src]="pdf | trustURL"
+		title="visualiser le pdf"></iframe>
 </ng-container>
 <ng-template #noFileSelected>
 	<ng-container *ngIf="!failedToLoad; else failedToLoadTemplate">

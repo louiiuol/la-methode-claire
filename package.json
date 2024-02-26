@@ -26,7 +26,6 @@
 		"@ngx-translate/core": "^15.0.0",
 		"@ngx-translate/http-loader": "^8.0.0",
 		"animate.css": "^4.1.1",
-		"ngx-extended-pdf-viewer": "^19.4.0-alpha.1",
 		"rxjs": "~7.8.0",
 		"tailwindcss": "^3.3.3",
 		"tslib": "^2.3.0",
