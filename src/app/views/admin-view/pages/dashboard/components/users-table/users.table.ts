@@ -14,7 +14,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
-import {UsersResource} from '../../../../services/users.resource';
+import {UsersAdminService} from '../../../../services/users-admin.service';
 import {UserPreviewDto} from '@shared/modules';
 import {InputSearchComponent} from '@shared/components/form';
 import {MatMenuModule} from '@angular/material/menu';
@@ -112,7 +112,7 @@ export class UsersTable implements AfterViewInit {
 	@ViewChild(InputSearchComponent) search!: InputSearchComponent;
 
 	constructor(
-		private readonly users: UsersResource,
+		private readonly users: UsersAdminService,
 		private readonly notifier: NotificationService,
 		private readonly clipboard: Clipboard
 	) {}

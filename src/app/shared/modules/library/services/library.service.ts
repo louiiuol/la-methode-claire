@@ -1,34 +1,54 @@
 import {Injectable} from '@angular/core';
-import {LibraryResource} from './library.resource';
-import {map, of} from 'rxjs';
+import {HttpResource} from '@core/modules/http/services/http.resource';
 import {CourseViewDto} from '../types/course-view.dto';
+import {environment} from '@env/environment';
 import {HttpOutputEntity, HttpOutputArray} from '@core';
+import {of, map, take} from 'rxjs';
 
 /**
- * Provides methods to handle user's library
+ * CRUD requests related to library.
  *
  * @author louiiuol
  */
 @Injectable()
-export class LibraryService {
+export class LibraryService extends HttpResource {
+	protected resource = 'courses';
 	private lessons?: CourseViewDto[] | null;
-	constructor(private readonly http: LibraryResource) {}
 
 	getLibrary = () =>
 		this.lessons
 			? of(this.lessons)
-			: this.http.getLibrary().pipe(map(this.updateLocalLessons));
+			: this.getAll<CourseViewDto>({notifyOnSuccess: false}).pipe(
+					map(this.updateLocalLessons)
+			  );
 
-	setCurrentLesson = (index: number) => this.http.setCurrentLessonIndex(index);
-
-	getPdf = (fileName: string) => this.http.getPdf(fileName);
-
-	downloadPdf = (fileName: string) =>
-		this.http.downloadPdf(fileName).subscribe((data: ArrayBuffer) => {
-			this.saveFile(data, fileName);
+	setCurrentLesson = (index: number) =>
+		this.partialUpdate<number>(null, null, {
+			path: 'currentLesson',
+			params: {index},
+			notifyOnSuccess: false,
 		});
 
-	downloadCourse = (index: number) => this.http.downloadCourse(index);
+	getPdf = (fileName: string) =>
+		this.http.get([environment.root_url, 'courses', fileName].join('/'), {
+			responseType: 'arraybuffer',
+		});
+
+	downloadPdf = (fileName: string) =>
+		this.http
+			.get([environment.root_url, 'courses', fileName, 'download'].join('/'), {
+				responseType: 'arraybuffer',
+			})
+			.pipe(take(1))
+			.subscribe((data: ArrayBuffer) => {
+				this.saveFile(data, fileName);
+			});
+
+	downloadCourse = (index: number) =>
+		this.http.get(
+			[environment.root_url, 'courses', index, 'download'].join('/'),
+			{responseType: 'blob'}
+		);
 
 	private updateLocalLessons = (
 		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>

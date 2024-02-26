@@ -7,7 +7,9 @@ import {CookieStore} from '@core/modules/storage/services';
  */
 @Injectable()
 export class TokenStore {
-	private readonly cookieFieldName = 'token';
+	private readonly accessCookieField = 'access_token';
+	private readonly refreshCookieField = 'refresh_token';
+
 	constructor(private readonly storage: CookieStore) {}
 
 	/**
@@ -15,10 +17,22 @@ export class TokenStore {
 	 * @param user object to store
 	 * @returns stored token
 	 */
-	saveToken = (token: string | null | undefined): void => {
-		if (token) {
-			if (this.storage.check(this.cookieFieldName)) this.clearToken();
-			this.storage.set(this.cookieFieldName, token, this.parseJwt(token)?.exp);
+	saveTokens = (
+		input: {accessToken: string; refreshToken: string} | null | undefined
+	): void => {
+		if (input) {
+			if (this.storage.check(this.accessCookieField)) this.clearTokens();
+			this.storage.set(
+				this.accessCookieField,
+				input.accessToken,
+				this.parseJwt(input.accessToken)?.exp
+			);
+
+			this.storage.set(
+				this.refreshCookieField,
+				input.refreshToken,
+				this.parseJwt(input.refreshToken)?.exp
+			);
 		}
 	};
 
@@ -26,19 +40,28 @@ export class TokenStore {
 	 * Retrieves current user's token and return it, if found
 	 * @returns token as string
 	 */
-	checkToken = (): boolean => this.storage.check(this.cookieFieldName);
+	checkToken = (): boolean => this.storage.check(this.accessCookieField);
+
+	checkRefreshToken = (): boolean =>
+		this.storage.check(this.refreshCookieField);
 
 	/**
 	 * Checks if token exists in document.cookies
 	 * @returns True if token exists in storage, false otherwise
 	 */
 	getToken = () =>
-		this.checkToken() ? this.storage.get(this.cookieFieldName) : null;
+		this.checkToken() ? this.storage.get(this.accessCookieField) : null;
+
+	getRefreshToken = () =>
+		this.checkRefreshToken() ? this.storage.get(this.refreshCookieField) : null;
 
 	/**
 	 * Removes token from storage
 	 */
-	clearToken = (): void => this.storage.delete(this.cookieFieldName);
+	clearTokens = (): void => {
+		this.storage.delete(this.accessCookieField);
+		this.storage.delete(this.refreshCookieField);
+	};
 
 	private parseJwt = (token?: string): {exp: number} | null => {
 		if (!token) return null;

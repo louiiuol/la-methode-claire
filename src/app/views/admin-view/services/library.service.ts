@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {LibraryResource} from '@shared/modules/library/services/library.resource';
+import {HttpResource} from '@core';
 
 /**
  * Library Service for Admin only
  */
 @Injectable()
-export class LibraryService {
-	constructor(private readonly http: LibraryResource) {}
-	refresh = () => this.http.refreshLibrary();
+export class LibraryService extends HttpResource {
+	protected resource = 'admin';
+
+	refresh = () => this.post(null, {path: 'courses'});
 }

@@ -1,32 +1,40 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {HttpResource} from '@core/modules/http/services/http.resource';
+import {PasswordUpdateDto, PasswordResetDto} from '../types';
 import {map, tap} from 'rxjs';
-import {PasswordResource} from './password.resource';
-import {PasswordForgotDto, PasswordResetDto, PasswordUpdateDto} from '../types';
+import {Router} from '@angular/router';
 
 /**
- * Provides methods to handle user's password
+ * CRUD requests related to user's password.
  *
  * @author louiiuol
  */
 @Injectable()
-export class PasswordService {
-	constructor(
-		private http: PasswordResource,
-		private router: Router
-	) {}
+export class PasswordService extends HttpResource {
+	protected resource = 'users';
 
-	forgotPassword = (dto: PasswordForgotDto) =>
-		this.http.forgotPassword(dto).pipe(
+	constructor(private readonly router: Router) {
+		super();
+	}
+
+	forgotPassword = (dto: {email: string}) =>
+		this.post(dto, {
+			customResource: '',
+			path: 'forgot-password',
+			notifyOnError: false,
+			customAction: 'submit',
+		}).pipe(
 			map(res => {
 				if (res.error) res.error = 'unknown_email';
 				return res;
 			})
 		);
 
-	resetPassword = (input: PasswordResetDto) => {
+	resetPassword = (uuid: string, input: PasswordResetDto) => {
 		const {user, passwordConfirm, ...dto} = input;
-		return this.http.resetpassword(user, dto).pipe(
+		return this.update(uuid, dto, {
+			path: 'reset-password',
+		}).pipe(
 			tap(res => {
 				if (!res.error) {
 					this.router
@@ -39,5 +47,9 @@ export class PasswordService {
 		);
 	};
 
-	updatePassword = (dto: PasswordUpdateDto) => this.http.updatePassword(dto);
+	updatePassword = (dto: PasswordUpdateDto) =>
+		this.partialUpdate(null, dto, {
+			customResource: '',
+			path: 'update-password',
+		});
 }

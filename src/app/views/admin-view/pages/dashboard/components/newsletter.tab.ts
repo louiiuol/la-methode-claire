@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {NotificationService} from '@core/modules/notification';
 import {CardComponent, FormComponent} from '@shared/components';
-import {UsersResource} from '../../../services/users.resource';
+import {UsersAdminService} from '../../../services/users-admin.service';
 import {NewsletterService} from '../../../services/newsletter.service';
 import {FieldConfig} from '@core';
 
@@ -24,7 +24,7 @@ import {FieldConfig} from '@core';
 export class NewsletterTab {
 	constructor(
 		private readonly notifier: NotificationService,
-		private readonly users: UsersResource
+		private readonly users: UsersAdminService
 	) {}
 
 	protected readonly fields: FieldConfig[] = [

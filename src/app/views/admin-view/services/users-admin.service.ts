@@ -8,8 +8,8 @@ import {UserPreviewDto} from '@shared/modules';
  * @author louiiuol
  */
 @Injectable()
-export class UsersResource extends HttpResource {
-	protected resource = 'users';
+export class UsersAdminService extends HttpResource {
+	protected resource = 'admin';
 
 	getUsers = (
 		sort: string,
@@ -20,6 +20,7 @@ export class UsersResource extends HttpResource {
 	) =>
 		this.getAllPaginated<UserPreviewDto>({
 			notifyOnSuccess: false,
+			path: 'users',
 			params: {
 				sort: `${sort}:${direction}`,
 				direction,
@@ -30,12 +31,20 @@ export class UsersResource extends HttpResource {
 		});
 
 	toggleActivation = (user: UserPreviewDto) =>
-		this.partialUpdate<UserPreviewDto>(user.uuid, {isActive: !user.isActive});
+		this.partialUpdate<UserPreviewDto>(
+			user.uuid,
+			{isActive: !user.isActive},
+			{path: 'users'}
+		);
 
 	toggleSubscription = (user: UserPreviewDto) =>
-		this.partialUpdate<UserPreviewDto>(user.uuid, {
-			subscribed: !user.subscribed,
-		});
+		this.partialUpdate<UserPreviewDto>(
+			user.uuid,
+			{
+				subscribed: !user.subscribed,
+			},
+			{path: 'users'}
+		);
 
 	resetSubscriptions = () =>
 		this.get(null, {

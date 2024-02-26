@@ -6,11 +6,12 @@ import {map, mergeMap, tap} from 'rxjs/operators';
 
 import {TokenStore, UserStore} from '@core/modules/auth/stores';
 import {LoginDto, RegisterDto} from '@core/modules/auth/types';
-import {AuthResource} from '@core/modules/auth/resources/auth.resource';
 import {CurrentUser} from '@core/modules/auth/models/current-user.model';
 
-import {UserPreviewDto} from '@shared/modules';
+import {User, UserPreviewDto} from '@shared/modules';
 import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.dto';
+import {HttpResource} from '@core/modules/http';
+import {Token} from '../types/token.dto';
 
 /**
  * Provides methods and properties to handle current user's state in the application:
@@ -31,25 +32,31 @@ import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.
  * @author louiiuol
  */
 @Injectable()
-export class AuthService {
+export class AuthService extends HttpResource {
+	protected resource = 'auth';
 	readonly currentUser = signal(this.userStore.getUser());
 	readonly isLoggedIn$ = computed(
 		() => !!this.currentUser()?.uuid && this.tokenStore.checkToken()
 	);
 
 	constructor(
-		private readonly http: AuthResource,
 		private readonly router: Router,
 		private readonly tokenStore: TokenStore,
 		private readonly userStore: UserStore
-	) {}
+	) {
+		super();
+	}
 
 	/**
 	 * Tries to register the user with given information:
 	 * - if the request is successful, the user must confirm his email, so no actions follow.
 	 * - If an error occurred, user will be notified with explaining notification.
 	 */
-	signUp = (info: RegisterDto) => this.http.signUp(info);
+	signUp = (dto: RegisterDto) =>
+		this.post<Partial<User>>(dto, {
+			path: 'register',
+			customAction: 'register',
+		});
 
 	/**
 	 * Tries to authenticate the user with given credentials:
@@ -57,9 +64,14 @@ export class AuthService {
 	 * - If an error occurred, the LoginComponent will take car of displaying the error messages.
 	 */
 	logIn = (dto: LoginDto) =>
-		this.http.logIn(dto).pipe(
+		this.post<Token>(dto, {
+			customResource: 'auth',
+			path: 'login',
+			customAction: 'login',
+			notifyOnError: false,
+		}).pipe(
 			map(res => {
-				if (!res.error) this.tokenStore.saveToken(res.value?.accessToken);
+				if (!res.error) this.tokenStore.saveTokens(res.value);
 				return res;
 			}),
 			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
@@ -82,17 +94,24 @@ export class AuthService {
 	 * - Redirect to '/' (homepage)
 	 */
 	logOut = (): void => {
-		this.tokenStore.clearToken();
-		this.userStore.clearUser();
-		this.currentUser.set(null);
-		this.router
-			.navigate(['/login'])
-			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
+		this.get<unknown>(null, {path: 'logout'}).subscribe(() => {
+			this.tokenStore.clearTokens();
+			this.userStore.clearUser();
+			this.currentUser.set(null);
+			this.router
+				.navigate(['/login'])
+				.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
+		});
 	};
 
-	getProfile = () => this.http.whoAmI();
+	getProfile = () =>
+		this.get<UserPreviewDto>(null, {customResource: '', path: 'me'});
 
-	updateProfile = (dto: ProfileUpdateDto) => this.http.updateProfile(dto);
+	updateProfile = (dto: ProfileUpdateDto) =>
+		this.partialUpdate<UserPreviewDto>(null, dto, {
+			customResource: '',
+			path: 'me',
+		});
 
 	/**
 	 * Updates current user in local storage and observable shared between components and services.
@@ -104,7 +123,7 @@ export class AuthService {
 		);
 
 	closeAccount = () =>
-		this.http.closeAccount().subscribe(res => {
+		this.get(null, {path: 'close-account'}).subscribe(res => {
 			if (res.value) this.logOut();
 		});
 }

@@ -52,6 +52,18 @@ import {Subject} from 'rxjs';
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
+	// TODO replace with css var
+	styles: [
+		`
+			:host mat-list-item div.active {
+				background: #a19fb2;
+				color: white;
+				font-weight: bold;
+				padding: 0.75em 1em;
+				border-radius: 18px;
+			}
+		`,
+	],
 })
 export class CourseViewerComponent {
 	@Input() loading = false;
@@ -70,13 +82,33 @@ export class CourseViewerComponent {
 						name: this.filesName[prop].name,
 						path: this.filesName[prop].fileName,
 					});
+			const specificSounds: any[] = [];
 			this.filesAvailable.push(
 				...course.phonemes
 					.filter(p => p.poster)
-					.map(p => ({
-						name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
-						path: 'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
-					})),
+					.map(p => {
+						if (p.posterNames?.length) {
+							p.posterNames.forEach(posterName =>
+								specificSounds.push({
+									name:
+										'Affiche ' + (p.endOfWord ? `-${posterName}` : posterName),
+									path:
+										'affiche-' +
+										posterName.toLocaleUpperCase().replaceAll('/', '-'),
+								})
+							);
+						}
+						return p;
+					})
+					.filter(p => !p.posterNames?.length)
+					.map(p => {
+						return {
+							name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
+							path:
+								'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
+						};
+					}),
+				...specificSounds,
 				...(course.sounds?.map(s => ({
 					name: 'Son ' + s,
 					path: 'affiche-son' + s.toLocaleUpperCase(),
@@ -164,7 +196,7 @@ export class CourseViewerComponent {
 	}
 
 	downloadCourse() {
-		this.library.downloadCourse(this.currentLessonIndex).subscribe(res => {
+		this.library.downloadCourse(this.currentLessonIndex + 1).subscribe(res => {
 			const blob = new Blob([res], {type: 'application/zip'});
 
 			// Create a link element and trigger a click to download the file
@@ -175,7 +207,7 @@ export class CourseViewerComponent {
 		});
 	}
 
-	fileLoaded(loaded: boolean) {
+	fileLoaded() {
 		this.loaded.emit(false);
 		this.loading = false;
 	}

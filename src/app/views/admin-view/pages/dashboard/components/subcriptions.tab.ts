@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NotificationService} from '@core/modules/notification';
 import {ButtonComponent, CardComponent} from '@shared/components';
-import {UsersResource} from '../../../services/users.resource';
+import {UsersAdminService} from '../../../services/users-admin.service';
 
 @Component({
 	standalone: true,
@@ -23,7 +23,7 @@ import {UsersResource} from '../../../services/users.resource';
 export class SubscriptionTab {
 	constructor(
 		private readonly notifier: NotificationService,
-		private readonly users: UsersResource
+		private readonly users: UsersAdminService
 	) {}
 
 	protected resetSubscriptions() {

@@ -1,16 +1,13 @@
-import {Component, HostBinding, signal} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {
 	ButtonComponent,
 	CardComponent,
 	LoaderComponent,
 } from '@shared/components';
 import {LibraryService} from '../../services/library.service';
-import {NotificationService} from '@core/modules/notification';
-
-import {LibraryResource} from '@shared/modules/library/services/library.resource';
 import {NgIf} from '@angular/common';
 import {UsersTable} from './components/users-table/users.table';
-import {UsersResource} from '../../services/users.resource';
+import {UsersAdminService} from '../../services/users-admin.service';
 import {MatTabsModule} from '@angular/material/tabs';
 import {NewsletterTab} from './components/newsletter.tab';
 import {SubscriptionTab} from './components/subcriptions.tab';
@@ -29,7 +26,7 @@ import {LibraryTab} from './components/library.tab';
 		SubscriptionTab,
 		LibraryTab,
 	],
-	providers: [LibraryService, LibraryResource, UsersResource],
+	providers: [LibraryService, UsersAdminService],
 	templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {

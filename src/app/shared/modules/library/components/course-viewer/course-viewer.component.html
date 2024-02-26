@@ -5,7 +5,7 @@
 		*ngIf="course.order < 3 || hasValidSubscription; else unauthorizedLesson">
 		<mat-drawer
 			#drawer
-			style="max-width: 20rem"
+			style="max-width: 24rem"
 			class="px-4 !flex flex-col justify-start items-start"
 			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
@@ -13,6 +13,8 @@
 				Semaine N°{{ (course.order + 1).toFixed() }}
 				<app-icon></app-icon>
 			</h2>
+
+			<!-- Course States -->
 			<div
 				class="mb-2 flex gap-3 items-center justify-start"
 				*ngIf="course.order < currentUserLesson; else onGoingCourse">
@@ -35,8 +37,9 @@
 					*ngIf="course.order > currentUserLesson; else pendingCourse">
 					<div class="mb-2 flex gap-3 items-center justify-start">
 						<span
+							matTooltip="Vous êtes actuellement dans une leçon précédente à celle-ci"
 							class="px-2 py-1 bg-slate-300 text-gray-700 rounded-md w-fit text-sm italic">
-							En attente
+							Leçon en attente
 						</span>
 
 						<app-icon
@@ -53,7 +56,7 @@
 					<div class="mb-2 flex gap-3 items-center justify-start">
 						<span
 							class="px-2 py-1 bg-primary text-white rounded-md w-fit text-sm italic">
-							En cours
+							Leçon en cours
 						</span>
 
 						<app-icon
@@ -94,15 +97,31 @@
 			</div>
 			<mat-list #files role="list">
 				<mat-list-item *ngFor="let file of filesAvailable" class="!px-0">
-					<div class="w-full flex justify-between items-center gap-6">
-						{{ file.name }}
+					<div
+						class="flex justify-between items-center gap-6 px-4 hover:bg-slate-200"
+						[class]="{active: selectedFile?.name === file.name}">
+						<span
+							(click)="selectedFile?.name !== file.name && setCurrentFile(file)"
+							class="text-sm cursor-pointer"
+							>{{ file.name }}</span
+						>
 						<div class="flex items-center justify-end flex-1">
 							<app-button
-								[disabled]="loading"
-								[class]="{'cursor-wait': loading}"
-								(click)="setCurrentFile(file)"
+								[disabled]="loading || selectedFile?.name === file.name"
+								[class]="{
+									'cursor-wait': loading,
+									'text-slate-50': selectedFile?.name === file.name
+								}"
+								(click)="
+									selectedFile?.name !== file.name && setCurrentFile(file)
+								"
 								type="icon">
-								<app-icon color="primary">visibility</app-icon>
+								<app-icon
+									[color]="
+										selectedFile?.name !== file.name ? 'primary' : 'disabled'
+									"
+									>visibility</app-icon
+								>
 							</app-button>
 							<app-button
 								[disabled]="loading"
@@ -126,7 +145,7 @@
 		</mat-drawer>
 
 		<app-file-viewer
-			(fileLoaded)="fileLoaded($event)"
+			(fileLoaded)="fileLoaded()"
 			[fileName]="[course.order + 1, 'files', selectedFile?.path].join('/')" />
 	</mat-drawer-container>
 	<ng-template #unauthorizedLesson>

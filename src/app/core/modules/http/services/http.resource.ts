@@ -104,7 +104,7 @@ export abstract class HttpResource {
 	 * @param opt request options
 	 * @returns {HttpOutput} request formatted output
 	 */
-	protected create = <T>(dto: unknown, opt?: RequestOptions) =>
+	protected post = <T>(dto: unknown, opt?: RequestOptions) =>
 		this.http
 			.post<ApiResponse<T>>(
 				this.generateURI(null, opt),
@@ -221,7 +221,7 @@ export abstract class HttpResource {
 				`${capitalize(common_actions[action])} effectuée avec succès 🎉`
 			);
 		return {
-			value: res.data ?? (res as any),
+			value: res?.data ?? (res as any),
 		};
 	};
 

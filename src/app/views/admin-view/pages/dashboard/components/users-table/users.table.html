@@ -19,6 +19,7 @@
 	</ng-container>
 
 	<table
+		class="block w-full overflow-x-auto"
 		mat-table
 		[dataSource]="data"
 		matSort
@@ -98,7 +99,7 @@
 				Newsletter
 			</th>
 			<td mat-cell *matCellDef="let row" class="!text-center">
-				{{row.newsletter ? '✔️' : '✖️'}}
+				{{row.newsletter ? '✔️' : '❌'}}
 			</td>
 		</ng-container>
 

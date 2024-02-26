@@ -46,6 +46,7 @@ export class FileViewerComponent {
 					});
 					this.pdf.set(URL.createObjectURL(blob));
 					this.fileLoaded.emit(true);
+					this.failedToLoad = false;
 				});
 	}
 

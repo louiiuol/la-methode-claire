@@ -25,18 +25,13 @@ export class CurrentUser {
 		this.email = user.email;
 		this.firstName = user.firstName;
 		this.lastName = user.lastName;
-		this.initials = this.formatInitials(user);
+		this.initials =
+			user.firstName && user.lastName
+				? user.firstName.charAt(0) + user.lastName.charAt(0)
+				: user.email.charAt(0);
 		this.isAdmin = user.role === 'ADMIN';
 		this.role = user.role;
 		this.currentLesson = user.currentLessonIndex;
 		this.subscribed = user.subscribed;
-	}
-
-	private formatInitials(
-		user: Pick<User, 'email' | 'firstName' | 'lastName'>
-	): string {
-		return user.firstName && user.lastName
-			? user.firstName.charAt(0) + user.lastName.charAt(0)
-			: user.email.charAt(0);
 	}
 }

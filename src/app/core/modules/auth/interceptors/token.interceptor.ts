@@ -2,18 +2,18 @@ import {
 	HttpRequest,
 	HttpHandler,
 	HttpInterceptor,
-	HttpErrorResponse,
+	HttpClient,
 } from '@angular/common/http';
 import {Injectable, inject} from '@angular/core';
 
 import {Observable, of, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, switchMap} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
-import {ApiResponse} from '@core/modules/http';
 import {TokenStore} from '../stores/token.store';
 import {Router} from '@angular/router';
 import {UserStore} from '../stores';
+import {Token} from '../types/token.dto';
 
 /**
  * Intercepts every HTTP requests made by the Application thanks to `HttpInterceptor`, and adds the following logic:
@@ -28,12 +28,15 @@ export class TokenInterceptor implements HttpInterceptor {
 	private readonly tokenStore = inject(TokenStore);
 	private readonly userStore = inject(UserStore);
 	private readonly router = inject(Router);
+	private readonly http = inject(HttpClient);
 
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
 		if (this.tokenStore.checkToken() && req.url.includes(this.appUrlDomain)) {
 			req = this.addHeader(req, this.tokenStore.getToken());
 		}
-		return next.handle(req).pipe(catchError(err => this.handleAuthError(err)));
+		return next
+			.handle(req)
+			.pipe(catchError(err => this.handleAuthError(err, next)));
 	}
 
 	/**
@@ -42,16 +45,30 @@ export class TokenInterceptor implements HttpInterceptor {
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request
 	 */
-	private handleAuthError(error: any): Observable<unknown> {
+	private handleAuthError(error: any, next: HttpHandler): Observable<unknown> {
 		const errorStatus = error.error?.code ?? error.code ?? error.status;
 		if (
 			errorStatus === 401 &&
 			error.url !== this.appUrlDomain + '/auth/login'
 		) {
 			console.error('authentication expired');
-			// TODO: replace w/ refresh token mechanism
-			this.logOut();
-			return of(error?.message); // or EMPTY may be appropriate here
+			if (this.tokenStore.checkRefreshToken()) {
+				this.http.get<Token>(`${environment.root_url}/auth/refresh`).pipe(
+					switchMap(tokens => {
+						if (tokens) {
+							this.tokenStore.saveTokens(tokens);
+							return next.handle(
+								this.addHeader(error, this.tokenStore.getRefreshToken())
+							);
+						} else {
+							return of(error?.message);
+						}
+					})
+				);
+			} else {
+				this.logOut();
+				return of(error?.message); // or EMPTY may be appropriate here
+			}
 		}
 		return throwError(() => error);
 	}
@@ -69,7 +86,7 @@ export class TokenInterceptor implements HttpInterceptor {
 		req.clone(token ? {setHeaders: {Authorization: 'Bearer ' + token}} : {});
 
 	private logOut = () => {
-		this.tokenStore.clearToken();
+		this.tokenStore.clearTokens();
 		this.userStore.clearUser();
 		this.router
 			.navigate(['/login'])

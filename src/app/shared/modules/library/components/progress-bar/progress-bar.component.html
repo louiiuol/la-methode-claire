@@ -20,6 +20,8 @@
 	[disabled]="(lesson.order > 2 && !hasValidSubscription) || loading"
 	matTooltip="Cette leçon est réservée aux abonnés"
 	[matTooltipDisabled]="lesson.order < 3 || hasValidSubscription"
-	(click)="!loading && setCurrentLesson(lesson.order)">
+	(click)="
+		!loading && currentLesson !== lesson.order && setCurrentLesson(lesson.order)
+	">
 	{{ (lesson.order + 1).toFixed() }}
 </app-button>
