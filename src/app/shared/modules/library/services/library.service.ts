@@ -63,7 +63,7 @@ export class LibraryService extends HttpResource {
 		const link = document.createElement('a');
 
 		link.href = window.URL.createObjectURL(blob);
-		link.download = `${fileName}.pdf`; // Set the desired filename
+		link.download = `${fileName.replace('files/', '')}.pdf`; // Set the desired filename
 		link.click(); // Trigger download
 		window.URL.revokeObjectURL(link.href); // Clean up
 	}
