@@ -30,7 +30,7 @@ import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {Subject} from 'rxjs';
+import {Subject, take} from 'rxjs';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -52,11 +52,10 @@ import {Subject} from 'rxjs';
 	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
-	// TODO replace with css var
 	styles: [
 		`
 			:host mat-list-item div.active {
-				background: #a19fb2;
+				background: var(--lmc-primary-color);
 				color: white;
 				font-weight: bold;
 				padding: 0.75em 1em;
@@ -75,45 +74,7 @@ export class CourseViewerComponent {
 		if (course) {
 			course.phonemes.sort((a, b) => a.name.localeCompare(b.name));
 			this._course = course;
-			this.filesAvailable = [];
-			for (let prop in course)
-				if (isBoolean(course[prop]) && !!course[prop])
-					this.filesAvailable.push({
-						name: this.filesName[prop].name,
-						path: this.filesName[prop].fileName,
-					});
-			const specificSounds: any[] = [];
-			this.filesAvailable.push(
-				...course.phonemes
-					.filter(p => p.poster)
-					.map(p => {
-						if (p.posterNames?.length) {
-							p.posterNames.forEach(posterName =>
-								specificSounds.push({
-									name:
-										'Affiche ' + (p.endOfWord ? `-${posterName}` : posterName),
-									path:
-										'affiche-' +
-										posterName.toLocaleUpperCase().replaceAll('/', '-'),
-								})
-							);
-						}
-						return p;
-					})
-					.filter(p => !p.posterNames?.length)
-					.map(p => {
-						return {
-							name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
-							path:
-								'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
-						};
-					}),
-				...specificSounds,
-				...(course.sounds?.map(s => ({
-					name: 'Son ' + s,
-					path: 'affiche-son' + s.toLocaleUpperCase(),
-				})) ?? [])
-			);
+			this.refreshFilesAvailable(course);
 			this.setCurrentFile(this.filesAvailable.at(0));
 		}
 	}
@@ -133,15 +94,14 @@ export class CourseViewerComponent {
 	 */
 	@Output() nextLesson = new EventEmitter();
 
+	/**
+	 * Emits new value when file was loading status changes.
+	 */
 	@Output() loaded = new EventEmitter();
 
 	@HostBinding('class')
 	protected readonly class =
 		'flex-1 bg-white rounded-b-xl overflow-auto mat-elevation-z2 block w-full';
-
-	@HostBinding('style') style = 'height: min(1080px, 70vh)';
-
-	reload$: Subject<void> = new Subject<void>();
 
 	protected readonly hasValidSubscription =
 		!!this.authenticator?.currentUser()?.subscribed;
@@ -172,16 +132,19 @@ export class CourseViewerComponent {
 	setCurrentLesson(index: number) {
 		if (!this.loading) {
 			this.loading = true;
-			this.library.setCurrentLesson(index).subscribe(res => {
-				if (!res.error) {
-					this.currentLessonIndex = index;
-					this.currentUserLesson = index;
-					this.nextLesson.emit(index);
-					this.loaded.emit(false);
-					this.authenticator.updateCurrentUser({currentLesson: index});
-					this.loading = false;
-				}
-			});
+			this.library
+				.setCurrentLesson(index)
+				.pipe(take(1))
+				.subscribe(res => {
+					if (!res.error) {
+						this.currentLessonIndex = index;
+						this.currentUserLesson = index;
+						this.nextLesson.emit(index);
+						this.loaded.emit(true);
+						this.authenticator.updateCurrentUser({currentLesson: index});
+						this.loading = false;
+					}
+				});
 		}
 	}
 
@@ -191,24 +154,58 @@ export class CourseViewerComponent {
 	}
 
 	downloadFile(file: {name: string; path: string}) {
-		const fileName = `${(this.course?.order ?? 0) + 1}/files/${file.path}`;
-		this.library.downloadPdf(fileName);
+		this.library.downloadPdf(
+			`${(this.course?.order ?? 0) + 1}/files/${file.path}`
+		);
 	}
 
 	downloadCourse() {
-		this.library.downloadCourse(this.currentLessonIndex + 1).subscribe(res => {
-			const blob = new Blob([res], {type: 'application/zip'});
-
-			// Create a link element and trigger a click to download the file
-			const link = document.createElement('a');
-			link.href = window.URL.createObjectURL(blob);
-			link.download = `${this.currentLessonIndex + 1}.zip`;
-			link.click();
-		});
+		this.library.downloadCourse(this.currentLessonIndex + 1);
 	}
 
 	fileLoaded() {
 		this.loaded.emit(false);
 		this.loading = false;
+	}
+
+	private refreshFilesAvailable(course: CourseViewDto) {
+		this.filesAvailable = [];
+		for (let prop in course)
+			if (isBoolean(course[prop]) && !!course[prop])
+				this.filesAvailable.push({
+					name: this.filesName[prop].name,
+					path: this.filesName[prop].fileName,
+				});
+		const specificSounds: any[] = [];
+		this.filesAvailable.push(
+			...course.phonemes
+				.filter(p => p.poster)
+				.map(p => {
+					if (p.posterNames?.length) {
+						p.posterNames.forEach(posterName =>
+							specificSounds.push({
+								name:
+									'Affiche ' + (p.endOfWord ? `-${posterName}` : posterName),
+								path:
+									'affiche-' +
+									posterName.toLocaleUpperCase().replaceAll('/', '-'),
+							})
+						);
+					}
+					return p;
+				})
+				.filter(p => !p.posterNames?.length)
+				.map(p => {
+					return {
+						name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
+						path: 'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
+					};
+				}),
+			...specificSounds,
+			...(course.sounds?.map(s => ({
+				name: 'Son ' + s,
+				path: 'affiche-son' + s.toLocaleUpperCase(),
+			})) ?? [])
+		);
 	}
 }

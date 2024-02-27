@@ -39,6 +39,9 @@ export class ProgressBarComponent implements AfterViewInit {
 	@Input({required: true}) hasValidSubscription!: boolean;
 	@Input({required: true}) loading!: boolean;
 
+	/**
+	 * Emits new value when user select a new lesson (clicked on lesson button)
+	 */
 	@Output() selectedLesson = new EventEmitter<number>();
 
 	constructor(private readonly hostElement: ElementRef) {}

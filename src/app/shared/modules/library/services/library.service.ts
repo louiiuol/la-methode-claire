@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpResource} from '@core/modules/http/services/http.resource';
 import {CourseViewDto} from '../types/course-view.dto';
 import {environment} from '@env/environment';
-import {HttpOutputEntity, HttpOutputArray} from '@core';
+import {HttpOutputEntity, HttpOutputArray, saveFile} from '@core';
 import {of, map, take} from 'rxjs';
 
 /**
@@ -40,15 +40,14 @@ export class LibraryService extends HttpResource {
 				responseType: 'arraybuffer',
 			})
 			.pipe(take(1))
-			.subscribe((data: ArrayBuffer) => {
-				this.saveFile(data, fileName);
-			});
+			.subscribe((data: ArrayBuffer) => saveFile(data, fileName));
 
 	downloadCourse = (index: number) =>
-		this.http.get(
-			[environment.root_url, 'courses', index, 'download'].join('/'),
-			{responseType: 'blob'}
-		);
+		this.http
+			.get([environment.root_url, 'courses', index, 'download'].join('/'), {
+				responseType: 'blob',
+			})
+			.subscribe(res => saveFile(res, (index + 1).toString(), 'zip'));
 
 	private updateLocalLessons = (
 		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>
@@ -57,14 +56,4 @@ export class LibraryService extends HttpResource {
 		this.lessons = fetchedLessons;
 		return fetchedLessons;
 	};
-
-	private saveFile(data: ArrayBuffer, fileName: string): void {
-		const blob = new Blob([data], {type: 'application/pdf'});
-		const link = document.createElement('a');
-
-		link.href = window.URL.createObjectURL(blob);
-		link.download = `${fileName.replace('files/', '')}.pdf`; // Set the desired filename
-		link.click(); // Trigger download
-		window.URL.revokeObjectURL(link.href); // Clean up
-	}
 }

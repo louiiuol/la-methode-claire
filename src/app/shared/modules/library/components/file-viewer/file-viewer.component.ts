@@ -50,10 +50,13 @@ export class FileViewerComponent {
 				});
 	}
 
-	@Output() fileLoaded = new EventEmitter();
+	/**
+	 * Emits new value when file was loaded (or failed) based on boolean
+	 */
+	@Output() fileLoaded = new EventEmitter<boolean>();
 
-	protected pdf = signal<any>(null);
-	failedToLoad = false;
+	protected readonly pdf = signal<any>(null);
+	protected failedToLoad = false;
 
 	constructor(private readonly libraryService: LibraryService) {}
 }
