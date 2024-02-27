@@ -65,13 +65,13 @@ import {Subject, take} from 'rxjs';
 	],
 })
 export class CourseViewerComponent {
-	@Input() loading = false;
 	/**
 	 * Defines current course to be shown. Depending on which course is given,
 	 * this method will populate `filesAvailable` field with given course's files.
 	 */
 	@Input({required: true}) set course(course: CourseViewDto | undefined) {
 		if (course) {
+			this.loaded.emit(false);
 			course.phonemes.sort((a, b) => a.name.localeCompare(b.name));
 			this._course = course;
 			this.refreshFilesAvailable(course);
@@ -95,9 +95,9 @@ export class CourseViewerComponent {
 	@Output() nextLesson = new EventEmitter();
 
 	/**
-	 * Emits new value when file was loading status changes.
+	 * Emits new value when loading status changes.
 	 */
-	@Output() loaded = new EventEmitter();
+	@Output() loaded = new EventEmitter<boolean>();
 
 	@HostBinding('class')
 	protected readonly class =
@@ -123,6 +123,8 @@ export class CourseViewerComponent {
 		poster: {name: 'Affiche', fileName: 'affiche'},
 	};
 
+	protected loading = false;
+
 	constructor(
 		private readonly library: LibraryService,
 		private readonly authenticator: AuthService,
@@ -140,7 +142,7 @@ export class CourseViewerComponent {
 						this.currentLessonIndex = index;
 						this.currentUserLesson = index;
 						this.nextLesson.emit(index);
-						this.loaded.emit(true);
+						this.loaded.emit(false);
 						this.authenticator.updateCurrentUser({currentLesson: index});
 						this.loading = false;
 					}
@@ -150,6 +152,7 @@ export class CourseViewerComponent {
 
 	setCurrentFile(file?: {name: string; path: string}) {
 		this.loading = true;
+		this.loaded.emit(false);
 		this.selectedFile = file;
 	}
 
@@ -164,7 +167,7 @@ export class CourseViewerComponent {
 	}
 
 	fileLoaded() {
-		this.loaded.emit(false);
+		this.loaded.emit(true);
 		this.loading = false;
 	}
 

@@ -49,6 +49,6 @@ export class DashboardPage {
 	}
 
 	setLoad(loaded: boolean) {
-		this.isLoading = loaded;
+		this.isLoading = !loaded;
 	}
 }

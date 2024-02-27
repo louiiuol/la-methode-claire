@@ -51,7 +51,5 @@ export class ProfilePage {
 
 	constructor(private readonly authenticator: AuthService) {}
 
-	closeAccount() {
-		this.authenticator.closeAccount();
-	}
+	closeAccount = () => this.authenticator.closeAccount();
 }

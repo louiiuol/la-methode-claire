@@ -1,3 +1,4 @@
+{{isLoading}}
 <ng-container *ngIf="lessons$ | async as lessons; else: loadingTemplate">
 	<ng-container *ngIf="lessons.length; else: libraryUnavailable">
 		<app-progress-bar
@@ -9,7 +10,6 @@
 			(selectedLesson)="changeLesson($event)" />
 		<app-course-viewer
 			[currentLessonIndex]="currentLesson"
-			[loading]="isLoading"
 			[course]="lessons[currentLesson]"
 			(loaded)="setLoad($event)"
 			(nextLesson)="changeLesson($event)" />
