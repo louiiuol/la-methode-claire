@@ -1,9 +1,5 @@
 import {Routes} from '@angular/router';
-import {
-	VisitorGuard,
-	TeacherGuard,
-	AdminGuard,
-} from '@core/modules/auth/guards';
+import {TeacherGuard, AdminGuard} from '@core/modules/auth/guards';
 
 /**
  * Main routes available, grouped by spaces (logged or not, or as admin)
@@ -12,7 +8,6 @@ export const navigationLinks = {
 	public: [
 		{path: '/method', name: 'La méthode'},
 		{path: '/about', name: 'Qui est claire ?'},
-		{path: '/faq', name: 'FAQ'},
 	],
 	logged: [
 		{path: '/app/dashboard', name: 'tableau de bord'},

@@ -45,7 +45,7 @@ export class HeaderComponent {
 	@Input({required: true}) type!: 'public' | 'logged' | 'admin';
 
 	@HostBinding('class')
-	protected class = 'w-full fixed top-0 mat-elevation-z2 z-50';
+	protected class = 'w-full sticky top-0 mat-elevation-z2 z-50';
 
 	protected currentUser = this.authenticator.currentUser();
 	protected readonly navigationLinks = navigationLinks;

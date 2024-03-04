@@ -18,9 +18,10 @@ export class LibraryService extends HttpResource {
 	getLibrary = () =>
 		this.lessons
 			? of(this.lessons)
-			: this.getAll<CourseViewDto>({notifyOnSuccess: false}).pipe(
-					map(this.updateLocalLessons)
-			  );
+			: this.getAll<CourseViewDto>({
+					notifyOnSuccess: false,
+					notifyOnError: false,
+			  }).pipe(map(this.updateLocalLessons));
 
 	setCurrentLesson = (index: number) =>
 		this.partialUpdate<number>(null, null, {

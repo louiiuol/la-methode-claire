@@ -18,7 +18,7 @@ import {HeaderComponent} from '@shared/components';
 	imports: [RouterOutlet, HeaderComponent, NgFor],
 	template: `
 		<app-header type="public" />
-		<main class="mt-16">
+		<main class="flex-1">
 			<router-outlet />
 		</main>
 		<footer class="w-full text-center px-4 py-6 leading-8">
@@ -37,7 +37,7 @@ import {HeaderComponent} from '@shared/components';
 	`,
 })
 export class PublicView {
-	@HostBinding('class') class = 'app-view';
+	@HostBinding('class') class = 'flex flex-col h-full';
 
 	protected readonly currentYear = new Date().getFullYear();
 

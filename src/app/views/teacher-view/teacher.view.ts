@@ -17,11 +17,11 @@ import {HeaderComponent} from '@shared/components';
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
 		<app-header type="logged" />
-		<main class="pt-16 h-full">
+		<main class="flex-1">
 			<router-outlet />
 		</main>
 	`,
 })
 export class TeacherView {
-	@HostBinding('class') class = 'app-view bg-yellow-light';
+	@HostBinding('class') class = 'bg-yellow-light h-screen flex flex-col';
 }
