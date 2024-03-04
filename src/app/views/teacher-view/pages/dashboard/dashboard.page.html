@@ -10,7 +10,7 @@
 		<app-course-viewer
 			[currentLessonIndex]="currentLesson"
 			[course]="lessons[currentLesson]"
-			(loaded)="setLoad($event)"
+			(loaded)="isLoading = !$event"
 			(nextLesson)="changeLesson($event)" />
 	</ng-container>
 	<ng-template #libraryUnavailable>

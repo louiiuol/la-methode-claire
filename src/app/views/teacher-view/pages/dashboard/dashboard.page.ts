@@ -1,8 +1,7 @@
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {Component, HostBinding, forwardRef, inject} from '@angular/core';
+import {Component, HostBinding, inject} from '@angular/core';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
-const MaterialModules = [MatTooltipModule];
 
 import {AuthService} from '@core';
 import {
@@ -19,11 +18,11 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 		NgIf,
 		AsyncPipe,
 		NgFor,
-		forwardRef(() => LibraryModule),
+		LibraryModule,
 		ButtonComponent,
 		CardComponent,
 		LoaderComponent,
-		...MaterialModules,
+		MatTooltipModule,
 	],
 	templateUrl: './dashboard.page.html',
 })
@@ -34,21 +33,17 @@ export class DashboardPage {
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
 
 	protected readonly hasValidSubscription =
-		!!this.authenticator?.currentUser()?.subscribed;
+		!!this.authenticator.currentUser()?.subscribed;
 
 	protected currentLesson =
-		this.authenticator?.currentUser()?.currentLesson ?? 0;
+		this.authenticator.currentUser()?.currentLesson ?? 0;
 
-	isLoading = false;
+	protected isLoading = true;
 
 	constructor(private readonly authenticator: AuthService) {}
 
-	changeLesson(index: number) {
+	changeLesson = (index: number) => {
 		this.isLoading = true;
 		this.currentLesson = index;
-	}
-
-	setLoad(loaded: boolean) {
-		this.isLoading = !loaded;
-	}
+	};
 }
