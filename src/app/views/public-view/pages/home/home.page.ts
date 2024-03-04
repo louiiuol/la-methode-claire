@@ -10,7 +10,7 @@ import {FormulaCardComponent} from 'src/app/views/teacher-view/pages/subscriptio
 })
 export class HomePage {
 	@HostBinding('class')
-	protected readonly class = 'block pb-16';
+	protected readonly class = 'block';
 
 	protected readonly methodExplanations = [
 		{

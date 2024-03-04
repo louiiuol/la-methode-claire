@@ -12,9 +12,11 @@
 			*ngFor="let link of navigationLinks['public']"
 			[href]="'/' + link.path"
 			[label]="link.name" />
-		<hr />
-		<app-button type="menu-item" href="/login" label="se connecter" />
-		<app-button type="menu-item" href="/register" label="s'inscrire" />
+		<ng-container *ngIf="!currentUser?.uuid">
+			<hr />
+			<app-button type="menu-item" href="/login" label="se connecter" />
+			<app-button type="menu-item" href="/register" label="s'inscrire" />
+		</ng-container>
 	</mat-menu>
 
 	<app-icon

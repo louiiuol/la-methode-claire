@@ -10,7 +10,7 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 	templateUrl: 'method.page.html',
 })
 export class MethodPage {
-	@HostBinding('class') class = 'block pb-16';
+	@HostBinding('class') class = 'block';
 
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
 	protected readonly displayedColumns: string[] = ['index', 'name'];
