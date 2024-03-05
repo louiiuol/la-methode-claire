@@ -1,59 +1,63 @@
-<h1 class="text-2xl text-center mt-4 mb-6 text-primary">
-	Mise à jour de vos informations
-</h1>
-<mat-accordion class="block max-w-3xl mx-auto">
-	<mat-expansion-panel expanded>
-		<mat-expansion-panel-header>
-			<mat-panel-title> Informations personnelles </mat-panel-title>
-		</mat-expansion-panel-header>
-		<app-form
-			*ngIf="model$ | async as model"
-			[model]="model.value"
-			action="Mettre à jour"
-			[submitted]="updateProfile"
-			[fields]="profileFields" />
-	</mat-expansion-panel>
-	<mat-expansion-panel>
-		<mat-expansion-panel-header>
-			<mat-panel-title> Mot de passe </mat-panel-title>
-		</mat-expansion-panel-header>
+<ng-container *ngIf="model$ | async as model; else: loaderTemplate">
+	<h1 class="text-2xl text-center mt-4 mb-6 text-primary">
+		Profil utilisateur
+	</h1>
+	<mat-accordion class="block max-w-3xl mx-auto">
+		<mat-expansion-panel expanded>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Informations personnelles </mat-panel-title>
+			</mat-expansion-panel-header>
+			<app-form
+				[model]="model.value"
+				action="Mettre à jour"
+				[submitted]="updateProfile"
+				[fields]="profileFields" />
+		</mat-expansion-panel>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Mot de passe </mat-panel-title>
+			</mat-expansion-panel-header>
 
-		<app-form
-			action="Mettre à jour"
-			[submitted]="updatePassword"
-			[fields]="passwordFields"
-			[validators]="passwordValidators" />
-	</mat-expansion-panel>
+			<app-form
+				action="Mettre à jour"
+				[submitted]="updatePassword"
+				[fields]="passwordFields"
+				[validators]="passwordValidators" />
+		</mat-expansion-panel>
 
-	<mat-expansion-panel>
-		<mat-expansion-panel-header>
-			<mat-panel-title> Newsletter </mat-panel-title>
-		</mat-expansion-panel-header>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Newsletter </mat-panel-title>
+			</mat-expansion-panel-header>
 
-		<app-form
-			action="Mettre à jour"
-			*ngIf="model$ | async as model"
-			[model]="model.value"
-			[submitted]="updateProfile"
-			[fields]="newsletterField" />
-	</mat-expansion-panel>
+			<app-form
+				action="Mettre à jour"
+				[model]="model.value"
+				[submitted]="updateProfile"
+				[fields]="newsletterField" />
+		</mat-expansion-panel>
 
-	<mat-expansion-panel>
-		<mat-expansion-panel-header>
-			<mat-panel-title> Fermeture du compte </mat-panel-title>
-		</mat-expansion-panel-header>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Fermeture du compte </mat-panel-title>
+			</mat-expansion-panel-header>
 
-		<p class="mb-4">
-			Si vous le souhaitez, vous pouvez fermer votre compte. Il sera alors
-			supprimé dans les 2 mois. <br />
-			Si vous souhaitez le rouvrir, il vous suffira de vous reconnecter.
-		</p>
-		<app-button
-			class="!w-fit block mx-auto my-3"
-			type="raised"
-			color="warn"
-			(click)="closeAccount()">
-			Fermer mon compte
-		</app-button>
-	</mat-expansion-panel>
-</mat-accordion>
+			<p class="mb-4">
+				Si vous le souhaitez, vous pouvez fermer votre compte. Il sera alors
+				supprimé dans les 2 mois. <br />
+				Si vous souhaitez le rouvrir, il vous suffira de vous reconnecter.
+			</p>
+			<app-button
+				class="!w-fit block mx-auto my-3"
+				type="raised"
+				color="warn"
+				(click)="closeAccount()">
+				Fermer mon compte
+			</app-button>
+		</mat-expansion-panel>
+	</mat-accordion>
+</ng-container>
+
+<ng-template #loaderTemplate>
+	<app-loader>Chargement de vos informations</app-loader>
+</ng-template>

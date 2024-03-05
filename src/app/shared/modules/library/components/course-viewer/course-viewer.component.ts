@@ -30,7 +30,7 @@ import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {Subject, take} from 'rxjs';
+import {take} from 'rxjs';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`

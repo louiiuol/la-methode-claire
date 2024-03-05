@@ -1,5 +1,5 @@
-<ng-container *ngIf="lessons$ | async as lessons; else: loadingTemplate">
-	<ng-container *ngIf="lessons.length; else: libraryUnavailable">
+<ng-container *ngIf="lessons$ | async as lessons; else loadingTemplate">
+	<ng-container *ngIf="lessons.length; else libraryUnavailable">
 		<app-progress-bar
 			class="rounded-t-xl mat-elevation-z2"
 			[currentLesson]="currentLesson"

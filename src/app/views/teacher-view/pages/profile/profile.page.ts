@@ -1,13 +1,15 @@
-import {Component, HostBinding, forwardRef, inject} from '@angular/core';
+import {Component, HostBinding, inject} from '@angular/core';
 
 import {AsyncPipe, NgIf} from '@angular/common';
 import {MatExpansionModule} from '@angular/material/expansion';
 
-import {FormComponent, ButtonComponent} from '@shared/components';
+import {
+	FormComponent,
+	ButtonComponent,
+	LoaderComponent,
+} from '@shared/components';
 import {AuthService, FieldConfig} from '@core';
 import {PasswordModule, PasswordService} from '@shared/modules/password';
-
-const MaterialModules = [MatExpansionModule];
 
 /**
  * Profile View, allows user to see and update their information
@@ -19,8 +21,9 @@ const MaterialModules = [MatExpansionModule];
 		AsyncPipe,
 		FormComponent,
 		ButtonComponent,
-		...MaterialModules,
-		forwardRef(() => PasswordModule),
+		LoaderComponent,
+		MatExpansionModule,
+		PasswordModule,
 	],
 	templateUrl: './profile.page.html',
 })

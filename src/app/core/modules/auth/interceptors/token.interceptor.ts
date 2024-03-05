@@ -53,18 +53,24 @@ export class TokenInterceptor implements HttpInterceptor {
 		) {
 			console.error('authentication expired');
 			if (this.tokenStore.checkRefreshToken()) {
-				this.http.get<Token>(`${environment.root_url}/auth/refresh`).pipe(
-					switchMap(tokens => {
-						if (tokens) {
-							this.tokenStore.saveTokens(tokens);
-							return next.handle(
-								this.addHeader(error, this.tokenStore.getRefreshToken())
-							);
-						} else {
-							return of(error?.message);
-						}
-					})
-				);
+				console.log('Retrying fetch refresh token ...');
+				this.http
+					.get<Token>(`${environment.root_url}/auth/refresh`)
+					.pipe(
+						switchMap(tokens => {
+							if (tokens) {
+								console.log('Refresh token retrieved.');
+
+								this.tokenStore.saveTokens(tokens);
+								return next.handle(
+									this.addHeader(error, this.tokenStore.getRefreshToken())
+								);
+							} else {
+								return of(error?.message);
+							}
+						})
+					)
+					.subscribe();
 			} else {
 				this.logOut();
 				return of(error?.message); // or EMPTY may be appropriate here
