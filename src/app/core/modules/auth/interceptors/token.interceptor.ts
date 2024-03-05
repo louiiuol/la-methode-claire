@@ -58,13 +58,14 @@ export class TokenInterceptor implements HttpInterceptor {
 			error.url !== this.appUrlDomain + '/auth/login'
 		) {
 			console.error('authentication expired');
-			if (this.tokenStore.checkRefreshToken()) {
+			const refreshToken = this.tokenStore.getRefreshToken();
+			if (refreshToken) {
 				this.refreshingToken = true;
-				const refreshToken = this.tokenStore.getRefreshToken();
+
 				console.log('Retrying fetch refresh token ...', refreshToken);
 				this.http
 					.get<Token>(`${environment.root_url}/auth/refresh`, {
-						headers: {Authorization: 'Bearer ' + refreshToken},
+						headers: {Authorization: refreshToken},
 					})
 					.pipe(
 						switchMap(tokens => {
