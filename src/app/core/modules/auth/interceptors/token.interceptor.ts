@@ -7,7 +7,7 @@ import {
 import {Injectable, inject} from '@angular/core';
 
 import {Observable, of, throwError} from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators';
+import {catchError, switchMap, take} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
 import {TokenStore} from '../stores/token.store';
@@ -70,6 +70,7 @@ export class TokenInterceptor implements HttpInterceptor {
 							}
 						})
 					)
+					.pipe(take(1))
 					.subscribe();
 			} else {
 				this.logOut();
