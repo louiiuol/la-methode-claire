@@ -30,8 +30,14 @@ export class TokenInterceptor implements HttpInterceptor {
 	private readonly router = inject(Router);
 	private readonly http = inject(HttpClient);
 
+	private refreshingToken = false;
+
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
-		if (this.tokenStore.checkToken() && req.url.includes(this.appUrlDomain)) {
+		if (
+			this.tokenStore.checkToken() &&
+			req.url.includes(this.appUrlDomain) &&
+			!this.refreshingToken
+		) {
 			req = this.addHeader(req, this.tokenStore.getToken());
 		}
 		return next
@@ -53,8 +59,9 @@ export class TokenInterceptor implements HttpInterceptor {
 		) {
 			console.error('authentication expired');
 			if (this.tokenStore.checkRefreshToken()) {
-				console.log('Retrying fetch refresh token ...');
+				this.refreshingToken = true;
 				const refreshToken = this.tokenStore.getRefreshToken();
+				console.log('Retrying fetch refresh token ...', refreshToken);
 				this.http
 					.get<Token>(`${environment.root_url}/auth/refresh`, {
 						headers: {Authorization: 'Bearer ' + refreshToken},
