@@ -5,7 +5,7 @@
 		*ngIf="course.order < 3 || hasValidSubscription; else unauthorizedLesson">
 		<mat-drawer
 			#drawer
-			class="px-4 !flex flex-col justify-start items-start max-w-xs"
+			class="px-4 !flex flex-col justify-start items-start w-72"
 			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
 			<h2 class="text-2xl my-2" [style]="'color:' + course.color">
@@ -109,7 +109,7 @@
 							<span>{{ file.name }}</span>
 
 							<app-icon
-								class="mx-0"
+								class="!mx-0"
 								[color]="
 									selectedFile?.name !== file.name ? 'primary' : 'disabled'
 								">

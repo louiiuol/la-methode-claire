@@ -2,7 +2,7 @@ import {Injectable, computed, signal} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {iif, of} from 'rxjs';
-import {map, mergeMap, take, tap} from 'rxjs/operators';
+import {delay, map, mergeMap, take, tap} from 'rxjs/operators';
 
 import {TokenStore, UserStore} from '@core/modules/auth/stores';
 import {LoginDto, RegisterDto} from '@core/modules/auth/types';
@@ -70,6 +70,7 @@ export class AuthService extends HttpResource {
 				if (!res.error) this.tokenStore.saveTokens(res.value);
 				return res;
 			}),
+			delay(1000),
 			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
 			tap(res => {
 				if ((res?.value as UserPreviewDto)?.uuid) {
