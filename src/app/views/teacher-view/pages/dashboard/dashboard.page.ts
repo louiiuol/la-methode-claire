@@ -1,4 +1,4 @@
-import {Component, HostBinding} from '@angular/core';
+import {Component, HostBinding, inject} from '@angular/core';
 
 import {AuthService} from '@core';
 import {LessonsExplorerComponent} from '@shared/modules/library/components/lessons-explorer/lessons-explorer.component';
@@ -7,11 +7,16 @@ import {LessonsExplorerComponent} from '@shared/modules/library/components/lesso
 	standalone: true,
 	imports: [LessonsExplorerComponent],
 	template: `<app-lessons-explorer
-		[currentLesson]="authenticator.currentUser()?.currentLesson ?? 0"
-		[hasValidSubscription]="!!authenticator.currentUser()?.subscribed" />`,
+		[currentUserLesson]="currentUserLesson"
+		[currentLesson]="currentUserLesson"
+		[hasValidSubscription]="subscribed" />`,
 })
 export class DashboardPage {
 	@HostBinding('class') class = 'h-full';
 
-	constructor(protected readonly authenticator: AuthService) {}
+	protected readonly authenticator = inject(AuthService);
+	protected readonly currentUserLesson =
+		this.authenticator.currentUser()?.currentLessonIndex ?? 0;
+	protected readonly subscribed =
+		!!this.authenticator.currentUser()?.subscribed;
 }

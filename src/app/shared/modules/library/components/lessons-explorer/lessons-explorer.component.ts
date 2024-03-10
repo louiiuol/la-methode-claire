@@ -28,14 +28,15 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 	templateUrl: './lessons-explorer.component.html',
 })
 export class LessonsExplorerComponent {
+	@Input({required: true}) hasValidSubscription!: boolean;
+
+	@Input({required: true}) currentLesson!: number;
+	@Input({required: true}) currentUserLesson!: number;
+
 	@HostBinding('class') class =
 		'p-6 max-w-7xl mx-auto h-full flex flex-col items-center justify-center';
 
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
-
-	@Input({required: true}) hasValidSubscription!: boolean;
-
-	@Input({required: true}) currentLesson = 0;
 
 	protected isLoading = true;
 

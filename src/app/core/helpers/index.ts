@@ -3,3 +3,4 @@
  */
 export * from './fn';
 export * from './guards';
+export * from './types';

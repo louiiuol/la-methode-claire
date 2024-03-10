@@ -16,6 +16,7 @@ import {ButtonComponent, IconComponent} from '@shared/components';
 import {navigationLinks} from 'src/app/app.routes';
 import {RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
+import {InitialsPipe} from '../../pipes/initials.pipe';
 
 /**
  * Logged views global header
@@ -24,6 +25,8 @@ import {MatButtonModule} from '@angular/material/button';
  */
 @Component({
 	standalone: true,
+	selector: 'app-header',
+	templateUrl: './header.component.html',
 	imports: [
 		NgIf,
 		NgFor,
@@ -31,9 +34,8 @@ import {MatButtonModule} from '@angular/material/button';
 		IconComponent,
 		ButtonComponent,
 		RouterLink,
+		InitialsPipe,
 	],
-	selector: 'app-header',
-	templateUrl: './header.component.html',
 })
 export class HeaderComponent {
 	/**

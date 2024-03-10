@@ -8,7 +8,9 @@
 			[lessons]="lessons"
 			(selectedLesson)="changeLesson($event)" />
 		<app-course-viewer
+			[currentUserLesson]="currentUserLesson"
 			[currentLessonIndex]="currentLesson"
+			[hasValidSubscription]="hasValidSubscription"
 			[course]="lessons[currentLesson]"
 			(loaded)="isLoading = !$event"
 			(nextLesson)="changeLesson($event)" />

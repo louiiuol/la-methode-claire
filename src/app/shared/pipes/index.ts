@@ -3,3 +3,5 @@
  */
 export {TrustHtmlPipe} from './trust-html.pipe';
 export {TrustUrlPipe} from './trust-url.pipe';
+export {InitialsPipe} from './initials.pipe';
+export {SincePipe} from './since.pipe';

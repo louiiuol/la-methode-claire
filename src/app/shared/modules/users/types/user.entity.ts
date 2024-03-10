@@ -17,4 +17,8 @@ export interface User {
 	subscribed: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	lastConnection: Date;
+	closed: boolean;
+	closedAt: Date;
+	newsletter: boolean;
 }

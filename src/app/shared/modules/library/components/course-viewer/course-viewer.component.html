@@ -5,15 +5,13 @@
 		*ngIf="course.order < 3 || hasValidSubscription; else unauthorizedLesson">
 		<mat-drawer
 			#drawer
-			style="max-width: 24rem"
-			class="px-4 !flex flex-col justify-start items-start"
+			class="px-4 !flex flex-col justify-start items-start max-w-xs"
 			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
 			<h2 class="text-2xl my-2" [style]="'color:' + course.color">
 				Semaine N°{{ (course.order + 1).toFixed() }}
 				<app-icon></app-icon>
 			</h2>
-
 			<!-- Course States -->
 			<div
 				class="mb-2 flex gap-3 items-center justify-start"
@@ -97,40 +95,35 @@
 			</div>
 			<mat-list #files role="list">
 				<mat-list-item *ngFor="let file of filesAvailable" class="!px-0">
-					<div
-						class="flex justify-between items-center gap-6 px-4 hover:bg-slate-200"
-						[class]="{active: selectedFile?.name === file.name}">
-						<span
-							(click)="selectedFile?.name !== file.name && setCurrentFile(file)"
-							class="text-sm cursor-pointer"
-							>{{ file.name }}</span
-						>
-						<div class="flex items-center justify-end flex-1">
-							<app-button
-								[disabled]="loading || selectedFile?.name === file.name"
-								[class]="{
-									'cursor-wait': loading,
-									'text-slate-50': selectedFile?.name === file.name
-								}"
-								(click)="
-									selectedFile?.name !== file.name && setCurrentFile(file)
-								"
-								type="icon">
-								<app-icon
-									[color]="
-										selectedFile?.name !== file.name ? 'primary' : 'disabled'
-									"
-									>visibility</app-icon
-								>
-							</app-button>
-							<app-button
-								[disabled]="loading"
-								[class]="{'cursor-wait': loading}"
-								(click)="downloadFile(file)"
-								type="icon">
-								<app-icon color="accent">download</app-icon>
-							</app-button>
+					<div class="flex justify-between items-center gap-2">
+						<div
+							class="text-sm cursor-pointer flex items-center justify-between flex-1 hover:bg-slate-200 px-3 py-4 rounded-lg gap-3"
+							[class]="{
+								'cursor-wait': loading,
+								'active': selectedFile?.name === file.name
+							}"
+							(click)="
+								(loading || selectedFile?.name !== file.name) &&
+									setCurrentFile(file)
+							">
+							<span>{{ file.name }}</span>
+
+							<app-icon
+								class="mx-0"
+								[color]="
+									selectedFile?.name !== file.name ? 'primary' : 'disabled'
+								">
+								visibility
+							</app-icon>
 						</div>
+						<app-button
+							[disabled]="loading"
+							class="!w-fit"
+							[class]="{'cursor-wait': loading}"
+							(click)="downloadFile(file)"
+							type="icon">
+							<app-icon color="accent">download</app-icon>
+						</app-button>
 					</div>
 				</mat-list-item>
 			</mat-list>

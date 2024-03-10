@@ -3,11 +3,12 @@ import {
 	HttpHandler,
 	HttpInterceptor,
 	HttpClient,
+	HttpErrorResponse,
 } from '@angular/common/http';
 import {Injectable, inject} from '@angular/core';
 
-import {Observable, of, throwError} from 'rxjs';
-import {catchError, switchMap, take} from 'rxjs/operators';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {catchError, filter, switchMap, take} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
 import {TokenStore} from '../stores/token.store';
@@ -31,18 +32,33 @@ export class TokenInterceptor implements HttpInterceptor {
 	private readonly http = inject(HttpClient);
 
 	private refreshingToken = false;
+	private refreshTokenSubject: BehaviorSubject<string | null> =
+		new BehaviorSubject<string | null>(null);
 
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
+		let authReq = req;
+		const token = this.tokenStore.getToken();
 		if (
-			this.tokenStore.checkToken() &&
+			!!token &&
 			req.url.includes(this.appUrlDomain) &&
 			!this.refreshingToken
 		) {
-			req = this.addHeader(req, this.tokenStore.getToken());
+			authReq = this.addHeader(req, token);
 		}
-		return next
-			.handle(req)
-			.pipe(catchError(err => this.handleAuthError(err, next)));
+
+		return next.handle(authReq).pipe(
+			catchError(err => {
+				const errorStatus = err.error?.code ?? err.code ?? err.status;
+				if (
+					err instanceof HttpErrorResponse &&
+					!authReq.url.includes('auth/login') &&
+					errorStatus === 401
+				) {
+					return this.handleAuthError(authReq, next);
+				}
+				return throwError(() => err);
+			})
+		);
 	}
 
 	/**
@@ -51,44 +67,39 @@ export class TokenInterceptor implements HttpInterceptor {
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request
 	 */
-	private handleAuthError(error: any, next: HttpHandler): Observable<unknown> {
-		const errorStatus = error.error?.code ?? error.code ?? error.status;
-		if (
-			errorStatus === 401 &&
-			error.url !== this.appUrlDomain + '/auth/login'
-		) {
-			console.error('authentication expired');
+	private handleAuthError(
+		request: HttpRequest<any>,
+		next: HttpHandler
+	): Observable<unknown> {
+		if (!this.refreshingToken) {
+			this.refreshingToken = true;
+			this.refreshTokenSubject.next(null);
 			const refreshToken = this.tokenStore.getRefreshToken();
 			if (refreshToken) {
-				this.refreshingToken = true;
-
-				console.log('Retrying fetch refresh token ...', refreshToken);
-				this.http
+				return this.http
 					.get<Token>(`${environment.root_url}/auth/refresh`, {
-						headers: {Authorization: refreshToken},
+						headers: {Authorization: 'Bearer ' + refreshToken},
 					})
 					.pipe(
 						switchMap(tokens => {
-							if (tokens) {
-								console.log('Refresh token retrieved.');
-
-								this.tokenStore.saveTokens(tokens);
-								return next.handle(
-									this.addHeader(error, this.tokenStore.getToken())
-								);
-							} else {
-								return of(error?.message);
-							}
+							this.refreshingToken = false;
+							this.tokenStore.saveAccessToken(tokens.accessToken);
+							this.refreshTokenSubject.next(tokens.accessToken);
+							return next.handle(this.addHeader(request, tokens.accessToken));
+						}),
+						catchError(err => {
+							this.refreshingToken = false;
+							this.logOut();
+							return throwError(() => err);
 						})
-					)
-					.pipe(take(1))
-					.subscribe();
-			} else {
-				this.logOut();
-				return of(error?.message); // or EMPTY may be appropriate here
+					);
 			}
 		}
-		return throwError(() => error);
+		return this.refreshTokenSubject.pipe(
+			filter(token => token !== null),
+			take(1),
+			switchMap(token => next.handle(this.addHeader(request, token)))
+		);
 	}
 
 	/**

@@ -21,7 +21,7 @@ export class TokenStore {
 		input: {accessToken: string; refreshToken: string} | null | undefined
 	): void => {
 		if (input) {
-			if (this.storage.check(this.accessCookieField)) this.clearTokens();
+			this.clearTokens();
 			this.storage.set(
 				this.accessCookieField,
 				input.accessToken,
@@ -35,6 +35,11 @@ export class TokenStore {
 			);
 		}
 	};
+
+	saveAccessToken(token: string) {
+		this.clearAccessToken();
+		this.storage.set(this.accessCookieField, token, this.parseJwt(token)?.exp);
+	}
 
 	/**
 	 * Retrieves current user's token and return it, if found
@@ -59,9 +64,11 @@ export class TokenStore {
 	 * Removes token from storage
 	 */
 	clearTokens = (): void => {
-		this.storage.delete(this.accessCookieField);
+		this.clearAccessToken();
 		this.storage.delete(this.refreshCookieField);
 	};
+
+	clearAccessToken = () => this.storage.delete(this.accessCookieField);
 
 	private parseJwt = (token?: string): {exp: number} | null => {
 		if (!token) return null;

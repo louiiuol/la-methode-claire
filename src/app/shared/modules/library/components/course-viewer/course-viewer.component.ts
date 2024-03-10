@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor, NgIf, UpperCasePipe} from '@angular/common';
+import {JsonPipe, NgFor, NgIf, UpperCasePipe} from '@angular/common';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
@@ -19,7 +19,7 @@ const MaterialModules = [
 	MatTooltipModule,
 ];
 
-import {AuthService, PlatformService, isBoolean} from '@core';
+import {AuthService, PlatformService, isBoolean, nullish} from '@core';
 import {
 	ButtonComponent,
 	CardComponent,
@@ -42,6 +42,7 @@ import {take} from 'rxjs';
 	imports: [
 		NgIf,
 		NgFor,
+		JsonPipe,
 		...MaterialModules,
 		ButtonComponent,
 		IconComponent,
@@ -58,8 +59,6 @@ import {take} from 'rxjs';
 				background: var(--lmc-primary-color);
 				color: white;
 				font-weight: bold;
-				padding: 0.75em 1em;
-				border-radius: 18px;
 			}
 		`,
 	],
@@ -74,19 +73,27 @@ export class CourseViewerComponent {
 			this.loaded.emit(false);
 			course.phonemes.sort((a, b) => a.name.localeCompare(b.name));
 			this._course = course;
+			this.currentLessonIndex = course.order;
 			this.refreshFilesAvailable(course);
 			this.setCurrentFile(this.filesAvailable.at(0));
 		}
 	}
 
-	get course(): CourseViewDto | undefined {
-		return this._course;
-	}
+	/**
+	 * Defines if current user has valid subscription. Required to display all content.
+	 */
+	@Input({required: true}) hasValidSubscription!: boolean;
 
 	/**
 	 * Defines current lesson' index for user. This property will be used to check if user
 	 * has already seen this course or not.
 	 */
+	@Input({required: true}) currentUserLesson!: number;
+
+	get course(): CourseViewDto | undefined {
+		return this._course;
+	}
+
 	@Input({required: true}) currentLessonIndex!: number;
 
 	/**
@@ -103,14 +110,8 @@ export class CourseViewerComponent {
 	protected readonly class =
 		'flex-1 bg-white rounded-b-xl overflow-auto mat-elevation-z2 block w-full';
 
-	protected readonly hasValidSubscription =
-		!!this.authenticator?.currentUser()?.subscribed;
-
-	protected currentUserLesson =
-		this.authenticator?.currentUser()?.currentLesson ?? 0;
-
 	protected filesAvailable: {name: string; path: string}[] = [];
-	protected selectedFile?: {name: string; path: string} | null;
+	protected selectedFile: {name: string; path: string} | nullish;
 
 	private _course?: CourseViewDto;
 
@@ -133,7 +134,8 @@ export class CourseViewerComponent {
 
 	setCurrentLesson(index: number) {
 		if (!this.loading) {
-			this.loading = true;
+			const reload = index == this.currentLessonIndex;
+			this.loading = reload;
 			this.library
 				.setCurrentLesson(index)
 				.pipe(take(1))
@@ -142,8 +144,8 @@ export class CourseViewerComponent {
 						this.currentLessonIndex = index;
 						this.currentUserLesson = index;
 						this.nextLesson.emit(index);
-						this.loaded.emit(false);
-						this.authenticator.updateCurrentUser({currentLesson: index});
+						this.loaded.emit(reload);
+						this.authenticator.updateCurrentUser({currentLessonIndex: index});
 						this.loading = false;
 					}
 				});

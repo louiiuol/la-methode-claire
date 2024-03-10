@@ -36,7 +36,7 @@ export class LibraryTab {
 
 	protected refresh = () => {
 		this.loading.set(true);
-		this.library.refresh().subscribe(res => {
+		this.library.refresh().subscribe(() => {
 			this.loading.set(false);
 			this.notifier.success(
 				'Mis à jour avec succès!',

@@ -11,7 +11,7 @@ import {AuthService} from '../services/auth.service';
  */
 export const AdminGuard = () => {
 	const router = inject(Router);
-	return !inject(AuthService).currentUser()?.isAdmin
+	return inject(AuthService).currentUser()?.role !== 'ADMIN'
 		? router
 				.navigate(['/login'])
 				.catch(err =>

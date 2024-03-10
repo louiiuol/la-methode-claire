@@ -10,7 +10,7 @@ import {AuthService} from '../services/auth.service';
  */
 export const VisitorGuard = () => {
 	const router = inject(Router);
-	return inject(AuthService).isLoggedIn$()
+	return inject(AuthService).isLoggedIn()
 		? router
 				.navigate(['/app/dashboard'])
 				.catch(err =>

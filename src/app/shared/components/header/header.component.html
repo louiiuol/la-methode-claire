@@ -84,7 +84,7 @@
 			color="primary"
 			aria-label="menu utilisateur">
 			<span class="text-base block">
-				{{ currentUser?.initials?.toLocaleUpperCase() }}
+				{{ currentUser | initials }}
 			</span>
 		</button>
 		<mat-menu #userMenu="matMenu">
@@ -104,7 +104,7 @@
 			</app-button>
 
 			<app-button
-				*ngIf="currentUser?.isAdmin"
+				*ngIf="currentUser?.role === 'ADMIN'"
 				type="menu-item"
 				href="/back-office/dashboard"
 				label="back-office"
