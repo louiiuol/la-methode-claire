@@ -54,6 +54,13 @@ export const PUBLIC_ROUTES: Routes = [
 				loadComponent: () =>
 					import('@shared/components/pages/faq.page').then(m => m.FaqPage),
 			},
+			{
+				path: 'inactive-account/:email',
+				loadComponent: () =>
+					import('./pages/inactive-account/inactive-account.page').then(
+						m => m.InactiveAccountPage
+					),
+			},
 		],
 	},
 ];

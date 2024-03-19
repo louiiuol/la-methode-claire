@@ -26,6 +26,16 @@ export class RegisterPage {
 	protected readonly fields = [
 		{preset: 'user.email', props: {required: true}},
 		{
+			preset: 'user.firstName',
+			className: 'inline-block w-1/2',
+			props: {required: true},
+		},
+		{
+			preset: 'user.lastName',
+			className: 'inline-block w-1/2',
+			props: {required: true},
+		},
+		{
 			preset: 'user.password',
 			props: {
 				required: true,

@@ -8,6 +8,7 @@
 		severity="error"
 		*ngFor="let message of errorMessages"
 		[summary]="message" />
+	<mat-progress-bar *ngIf="isLoading" mode="indeterminate" />
 	<formly-form
 		style="max-height: 60vh"
 		class="overflow-y-auto"
@@ -29,7 +30,7 @@
 			color="primary"
 			type="flat"
 			matTooltip="Le formulaire est invalide"
-			[matTooltipDisabled]="form.valid"
+			[matTooltipDisabled]="isValidForm()"
 			[disabled]="!isValidForm()"
 			[label]="action" />
 	</footer>

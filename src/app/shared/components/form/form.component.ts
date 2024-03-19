@@ -13,7 +13,7 @@ import {
 	LoaderComponent,
 	MessageComponent,
 } from '@shared/components';
-import {MatButtonModule} from '@angular/material/button';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
 import {Observable} from 'rxjs';
@@ -56,6 +56,7 @@ import {
 		LoaderComponent,
 		ButtonComponent,
 		MatTooltipModule,
+		MatProgressBarModule,
 		MessageComponent,
 	],
 	selector: 'app-form',
@@ -164,7 +165,8 @@ export class FormComponent implements OnInit {
 			this.load(this.submitted$(model), (res: any) => {
 				let valid = false;
 
-				if (res.error) {
+				console.log(res);
+				if (res?.error) {
 					this.errorMessages = this.generateMessage(res.error);
 					// TODO add handle if error is typeof APIFormDetailsError..
 					// this.reset();

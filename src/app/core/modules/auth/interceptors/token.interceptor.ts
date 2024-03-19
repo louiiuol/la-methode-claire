@@ -62,7 +62,8 @@ export class TokenInterceptor implements HttpInterceptor {
 	}
 
 	/**
-	 * Checks if unauthorized request occurs (except for /login route which specific scenario handle in AuthService's login() method)
+	 * Checks if unauthorized request occurs (except for /login route which specific
+	 * scenario handle in AuthService's login() method)
 	 * If so, interceptor will log out currentUser and redirect him to login page
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request

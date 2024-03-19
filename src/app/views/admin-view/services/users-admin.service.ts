@@ -3,7 +3,7 @@ import {HttpResource} from '@core/modules/http/services/http.resource';
 import {UserPreviewDto} from '@shared/modules';
 
 /**
- * CRUD requests related to users.
+ * CRUD requests related to users. (For Admin only)
  *
  * @author louiiuol
  */

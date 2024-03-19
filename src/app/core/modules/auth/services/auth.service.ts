@@ -2,7 +2,7 @@ import {Injectable, computed, signal} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {iif, of} from 'rxjs';
-import {delay, map, mergeMap, take, tap} from 'rxjs/operators';
+import {map, mergeMap, take, tap} from 'rxjs/operators';
 
 import {TokenStore, UserStore} from '@core/modules/auth/stores';
 import {LoginDto, RegisterDto} from '@core/modules/auth/types';
@@ -66,13 +66,14 @@ export class AuthService extends HttpResource {
 			customAction: 'login',
 			notifyOnError: false,
 		}).pipe(
-			map(res => {
-				if (!res.error) this.tokenStore.saveTokens(res.value);
-				return res;
-			}),
-			delay(1000),
-			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
 			tap(res => {
+				if (res.code === 403) {
+					this.router.navigate(['/inactive-account', dto.email]);
+				}
+				if (!res.error) this.tokenStore.saveTokens(res.value);
+			}),
+			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
+			map(res => {
 				if ((res?.value as UserPreviewDto)?.uuid) {
 					this.updateCurrentUser(res.value as UserPreviewDto);
 					this.router
@@ -91,13 +92,13 @@ export class AuthService extends HttpResource {
 	 * - Redirect to '/' (homepage)
 	 */
 	logOut = (): void => {
+		this.get<void>(null, {path: 'logout'}).pipe(take(1)).subscribe();
 		this.tokenStore.clearTokens();
 		this.userStore.clearUser();
 		this.currentUser.set(null);
 		this.router
 			.navigate(['/login'])
 			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
-		this.get<unknown>(null, {path: 'logout'}).pipe(take(1)).subscribe();
 	};
 
 	/**
@@ -105,7 +106,10 @@ export class AuthService extends HttpResource {
 	 * @returns Current user informations
 	 */
 	getProfile = () =>
-		this.get<UserPreviewDto>(null, {customResource: '', path: 'me'});
+		this.get<UserPreviewDto>(null, {
+			customResource: '',
+			path: 'me',
+		});
 
 	/**
 	 * Updates current authenticated user informations and returns them after completion
@@ -120,7 +124,7 @@ export class AuthService extends HttpResource {
 
 	/**
 	 * Updates current user in local storage and observable shared between components and services.
-	 * @param user entity to be stored
+	 * @param user dto to be stored
 	 */
 	updateCurrentUser = (
 		user: Partial<UserPreviewDto> | undefined | null
@@ -144,4 +148,7 @@ export class AuthService extends HttpResource {
 		this.get(null, {path: 'close-account'}).subscribe(res => {
 			if (res.value) this.logOut();
 		});
+
+	sendConfirmationEmail = (email: string) =>
+		this.get(email, {path: 'account-reconfirmation'});
 }

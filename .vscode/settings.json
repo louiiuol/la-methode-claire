@@ -23,5 +23,10 @@
 		"theming",
 		"webp"
 	],
-	"scss.lint.unknownAtRules": "ignore"
+	"scss.lint.unknownAtRules": "ignore",
+	"angular-schematics.schematicsDefaultOptions": {
+		"angular-*": {
+			"inlineStyle": true
+		}
+	}
 }

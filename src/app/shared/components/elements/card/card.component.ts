@@ -27,7 +27,7 @@ export class CardComponent {
 	/**
 	 * Title to be displayed in the card
 	 */
-	@Input() title?: string;
+	@Input() cardTitle?: string;
 
 	/**
 	 * Description of the card

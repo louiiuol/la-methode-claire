@@ -1,7 +1,7 @@
 {
 	"name": "lmc-ui",
 	"author": "louiiuol",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
