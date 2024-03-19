@@ -13,6 +13,7 @@ import {FieldConfig} from '@core';
 	template: ` <app-card
 		title="Nouvelle newsletter"
 		subtitle="Envoyer un email aux utilisateurs abonnés à la méthode.">
+		<img src="assets/img/banner.png" alt="" />
 		<app-form
 			action="Envoyer"
 			[submitted]="sendNewsletter"
