@@ -3,21 +3,22 @@
 	<input
 		matInput
 		type="search"
+		[disabled]="isLoading"
 		[(ngModel)]="searchValue"
 		(keyup.enter)="notify()" />
 </mat-form-field>
 <mat-form-field class="w-36" *ngIf="searchFieldActive">
 	<mat-label>champ</mat-label>
-	<mat-select [(value)]="searchFieldActive.value">
+	<mat-select [disabled]="isLoading" [(value)]="searchFieldActive.value">
 		<mat-option [value]="option.value" *ngFor="let option of fields">
 			{{ option.viewValue }}
 		</mat-option>
 	</mat-select>
 </mat-form-field>
 <button
-	[class]="{'!bg-gray-500': !searchValue}"
-	[disabled]="!searchValue"
+	[class]="{'!bg-gray-500': isLoading}"
+	[disabled]="isLoading"
 	(click)="notify()"
-	class="bg-primary h-14 w-14">
+	class="bg-primary h-14 w-14 z-50">
 	<app-icon matPrefix> search </app-icon>
 </button>

@@ -3,12 +3,12 @@ import {Component, ViewChild, AfterViewInit, HostBinding} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 const MaterialModules = [
-	MatProgressSpinnerModule,
+	MatProgressBarModule,
 	MatTableModule,
 	MatSortModule,
 	MatPaginatorModule,
@@ -100,14 +100,17 @@ export class UsersTable implements AfterViewInit {
 			.pipe(
 				startWith({}),
 				switchMap(() => {
-					// Save config and sync with url
+					const filters = [this.search.searchRequest]
+						.filter(x => !!x)
+						.join('&');
+					// TODO Save config and sync with url
 					this.isLoadingResults = true;
 					return this.users.getUsers(
 						this.sort.active,
 						this.sort.direction,
 						this.paginator.pageIndex,
 						this.paginator.pageSize,
-						this.search.searchRequest
+						filters
 					);
 				}),
 				map(res => {

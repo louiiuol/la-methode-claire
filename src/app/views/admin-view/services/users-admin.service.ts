@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {nullish} from '@core';
 import {HttpResource} from '@core/modules/http/services/http.resource';
 import {UserPreviewDto} from '@shared/modules';
 
@@ -16,7 +17,7 @@ export class UsersAdminService extends HttpResource {
 		direction: string,
 		page: number,
 		size: number,
-		filter?: string | string[] | null
+		filter: string | number | boolean | string[] | number[] | nullish
 	) =>
 		this.getAllPaginated<UserPreviewDto>({
 			notifyOnSuccess: false,

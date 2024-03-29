@@ -164,8 +164,6 @@ export class FormComponent implements OnInit {
 		if (this.askConfirmation ? confirm(this.confirmationMessage) : true)
 			this.load(this.submitted$(model), (res: any) => {
 				let valid = false;
-
-				console.log(res);
 				if (res?.error) {
 					this.errorMessages = this.generateMessage(res.error);
 					// TODO add handle if error is typeof APIFormDetailsError..

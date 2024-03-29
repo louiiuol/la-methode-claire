@@ -1,5 +1,8 @@
 <nav class="flex gap-3 items-center justify-between px-1">
-	<app-input-search [fields]="searchFields" label="" />
+	<app-input-search
+		[activeField]="searchFieldActive"
+		[isLoading]="isLoadingResults"
+		[fields]="searchFields" />
 	<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="outils admin">
 		<app-icon color="primary">more_vert</app-icon>
 	</button>
@@ -9,18 +12,12 @@
 </nav>
 
 <div class="mat-elevation-z8">
-	<ng-container *ngIf="isLoadingResults">
-		<div class="example-loading-shade">
-			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-		</div>
-	</ng-container>
-
 	<table
 		class="block w-full overflow-x-auto"
 		mat-table
 		[dataSource]="data"
 		matSort
-		matSortActive="createdAt"
+		matSortActive="lastConnection"
 		matSortDisableClear
 		aria-describedby="Liste des utilisateurs de l'application"
 		matSortDirection="desc">
@@ -111,6 +108,10 @@
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 	</table>
+
+	<mat-progress-bar
+		*ngIf="isLoadingResults"
+		mode="indeterminate"></mat-progress-bar>
 
 	<mat-paginator [length]="resultsLength" [pageSize]="50" />
 </div>
