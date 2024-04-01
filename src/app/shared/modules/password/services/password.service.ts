@@ -30,11 +30,9 @@ export class PasswordService extends HttpResource {
 			})
 		);
 
-	resetPassword = (uuid: string, input: PasswordResetDto) => {
+	resetPassword = (input: PasswordResetDto) => {
 		const {user, passwordConfirm, ...dto} = input;
-		return this.update(uuid, dto, {
-			path: 'reset-password',
-		}).pipe(
+		return this.update(`${user}/reset-password`, dto).pipe(
 			tap(res => {
 				if (!res.error) {
 					this.router
