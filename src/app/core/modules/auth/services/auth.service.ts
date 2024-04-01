@@ -73,7 +73,7 @@ export class AuthService extends HttpResource {
 				if (!res.error) this.tokenStore.saveTokens(res.value);
 			}),
 			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
-			map(res => {
+			tap(res => {
 				if ((res?.value as UserPreviewDto)?.uuid) {
 					this.updateCurrentUser(res.value as UserPreviewDto);
 					this.router
