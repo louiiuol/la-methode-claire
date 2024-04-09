@@ -20,6 +20,7 @@
 /** MENU **/
 .mat-mdc-menu-item > span {
 	display: flex;
+	width: 100%;
 }
 
 .mat-mdc-menu-item > span,
@@ -52,10 +53,15 @@
 }
 
 .mat-mdc-tab-body-wrapper {
-	padding: 16px 24px;
+	padding: 8px 12px;
 	height: 100%;
 	overflow-y: auto;
 	background-color: #fcfcfc;
+}
+
+.mat-mdc-tab-body-content {
+	display: flex;
+	flex-direction: column;
 }
 
 .mat-expansion-indicator::after {

@@ -39,9 +39,9 @@ import {nullish} from '@core';
 })
 export class InputSearchComponent implements OnInit {
 	@Input({required: true}) isLoading = true;
-	@Input({required: true}) fields!: SearchField[];
+	@Input() fields?: SearchField[];
 
-	@Input() activeField?: SearchField;
+	@Input() defaultField?: SearchField;
 	@Input() initialValue?: string;
 	@Input() rule: SearchRules = 'like';
 
@@ -55,8 +55,19 @@ export class InputSearchComponent implements OnInit {
 	protected searchFieldActive?: SearchField;
 
 	ngOnInit(): void {
-		const activeField = this.activeField ?? this.fields.at(0);
+		const activeField = this.defaultField ?? this.fields?.at(0);
 		if (activeField) this.searchFieldActive = {...activeField};
+	}
+
+	setValues(filter: string | nullish) {
+		if (filter) {
+			const params = filter?.split(':');
+			this.searchFieldActive = this.fields?.find(f => f.value == params?.at(0));
+			this.searchValue = params?.at(2);
+		} else {
+			this.searchFieldActive = this.defaultField ?? this.fields?.at(0);
+			this.searchValue = '';
+		}
 	}
 
 	setActiveField = (field: SearchField) => {

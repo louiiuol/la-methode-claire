@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {nullish} from '@core';
+import {PaginationFilters} from '@core/helpers/types/pagination-filters';
 import {HttpResource} from '@core/modules/http/services/http.resource';
 import {UserPreviewDto} from '@shared/modules';
 
@@ -12,23 +12,11 @@ import {UserPreviewDto} from '@shared/modules';
 export class UsersAdminService extends HttpResource {
 	protected resource = 'admin';
 
-	getUsers = (
-		sort: string,
-		direction: string,
-		page: number,
-		size: number,
-		filter: string | number | boolean | string[] | number[] | nullish
-	) =>
+	getUsers = (params: PaginationFilters) =>
 		this.getAllPaginated<UserPreviewDto>({
 			notifyOnSuccess: false,
 			path: 'users',
-			params: {
-				sort: `${sort}:${direction}`,
-				direction,
-				page,
-				size,
-				filter,
-			},
+			params,
 		});
 
 	toggleActivation = (user: UserPreviewDto) =>
@@ -56,7 +44,6 @@ export class UsersAdminService extends HttpResource {
 
 	exportEmails = () =>
 		this.get<{emails: string}>(null, {
-			customResource: '',
 			path: 'export-emails',
 		});
 }

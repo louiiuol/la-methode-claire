@@ -1,119 +1,126 @@
-<nav class="flex gap-3 items-center justify-between px-1">
-	<app-input-search
-		[activeField]="searchFieldActive"
-		[isLoading]="isLoadingResults"
-		[fields]="searchFields" />
-	<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="outils admin">
+<nav class="flex gap-6 items-center justify-between px-1">
+	<app-filters [loading]="isLoadingResults" />
+	<div class="flex-1"></div>
+	<button
+		mat-icon-button
+		[matMenuTriggerFor]="adminTools"
+		aria-label="outils admin">
 		<app-icon color="primary">more_vert</app-icon>
 	</button>
-	<mat-menu #menu="matMenu" xPosition="before">
+	<mat-menu #adminTools="matMenu" xPosition="before">
 		<button mat-menu-item (click)="exportEmails()">Exporter les emails</button>
 	</mat-menu>
 </nav>
 
-<div class="mat-elevation-z8">
-	<table
-		class="block w-full overflow-x-auto"
-		mat-table
-		[dataSource]="data"
-		matSort
-		matSortActive="lastConnection"
-		matSortDisableClear
-		aria-describedby="Liste des utilisateurs de l'application"
-		matSortDirection="desc">
-		<!-- Email Column -->
-		<ng-container matColumnDef="email">
-			<th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
-			<td mat-cell *matCellDef="let row">{{row.email}}</td>
-		</ng-container>
+<section class="mat-elevation-z8">
+	<ng-template #checkedSymbol>✔️</ng-template>
+	<div class="overflow-auto" style="max-height: 60vh">
+		<table
+			mat-table
+			[dataSource]="data"
+			matSort="false"
+			matSortActive="lastConnection"
+			matSortDirection="desc"
+			matSortDisableClear
+			aria-describedby="Liste des utilisateurs de l'application">
+			<!-- Email Column -->
+			<ng-container matColumnDef="email" [sticky]="true">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
+				<td mat-cell *matCellDef="let row">{{row.email}}</td>
+			</ng-container>
 
-		<!-- First Name Column -->
-		<ng-container matColumnDef="firstName">
-			<th mat-header-cell mat-sort-header *matHeaderCellDef>Prénom</th>
-			<td mat-cell *matCellDef="let row">{{row.firstName ?? '--'}}</td>
-		</ng-container>
+			<!-- First Name Column -->
+			<ng-container matColumnDef="firstName">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Prénom</th>
+				<td mat-cell *matCellDef="let row">{{row.firstName ?? '--'}}</td>
+			</ng-container>
 
-		<!-- Last Name Column -->
-		<ng-container matColumnDef="lastName">
-			<th mat-header-cell mat-sort-header *matHeaderCellDef>Nom</th>
-			<td mat-cell *matCellDef="let row">{{row.lastName ?? '--'}}</td>
-		</ng-container>
+			<!-- Last Name Column -->
+			<ng-container matColumnDef="lastName">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Nom</th>
+				<td mat-cell *matCellDef="let row">{{row.lastName ?? '--'}}</td>
+			</ng-container>
 
-		<!-- Active Column -->
-		<ng-container matColumnDef="isActive">
-			<th mat-header-cell mat-sort-header *matHeaderCellDef>Actif</th>
-			<td mat-cell *matCellDef="let row" class="!text-center">
-				<mat-slide-toggle
-					*ngIf="row.role !=='ADMIN'; else: checkedSymbol"
-					color="primary"
-					[checked]="row.isActive"
-					(click)="toggleAccount(row)" />
-			</td>
-		</ng-container>
+			<!-- Active Column -->
+			<ng-container matColumnDef="isActive">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Actif</th>
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					<mat-slide-toggle
+						*ngIf="row.role !=='ADMIN'; else: checkedSymbol"
+						color="primary"
+						[checked]="row.isActive"
+						(click)="toggleAccount(row)" />
+				</td>
+			</ng-container>
 
-		<!-- Subscribed Column -->
-		<ng-container matColumnDef="subscribed">
-			<th mat-header-cell mat-sort-header *matHeaderCellDef>Abonné</th>
-			<td mat-cell *matCellDef="let row" class="!text-center">
-				<mat-slide-toggle
-					*ngIf="!row.subscribed; else: checkedSymbol"
-					color="primary"
-					[checked]="row.subscribed"
-					(click)="toggleSubscription(row)" />
-			</td>
-		</ng-container>
+			<!-- Subscribed Column -->
+			<ng-container matColumnDef="subscribed">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Abonné</th>
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					<mat-slide-toggle
+						*ngIf="!row.subscribed; else: checkedSymbol"
+						color="primary"
+						[checked]="row.subscribed"
+						(click)="toggleSubscription(row)" />
+				</td>
+			</ng-container>
 
-		<!-- CurrentLesson Column -->
-		<ng-container matColumnDef="currentLessonIndex">
-			<th mat-header-cell mat-sort-header *matHeaderCellDef>Leçon courante</th>
-			<td mat-cell *matCellDef="let row" class="!text-center">
-				{{row.currentLessonIndex}}
-			</td>
-		</ng-container>
+			<!-- CurrentLesson Column -->
+			<ng-container matColumnDef="currentLessonIndex">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>
+					Leçon courante
+				</th>
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					{{row.currentLessonIndex}}
+				</td>
+			</ng-container>
 
-		<!-- Created At Column -->
-		<ng-container matColumnDef="createdAt">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-				Date d'inscription
-			</th>
-			<td mat-cell *matCellDef="let row">
-				<span [matTooltip]="(row.createdAt | date) ?? '--'"
-					>{{row.createdAt | since}}</span
-				>
-			</td>
-		</ng-container>
+			<!-- Created At Column -->
+			<ng-container matColumnDef="createdAt">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					Date d'inscription
+				</th>
+				<td mat-cell *matCellDef="let row">
+					<span class="text-xs" [matTooltip]="(row.createdAt | date) ?? '--'"
+						>{{row.createdAt | since}}</span
+					>
+				</td>
+			</ng-container>
 
-		<!-- Last Connection Column -->
-		<ng-container matColumnDef="lastConnection">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-				Dernière connexion
-			</th>
-			<td mat-cell *matCellDef="let row">
-				<span [matTooltip]="(row.lastConnection | date) ?? '--'"
-					>{{row.lastConnection | since}}</span
-				>
-			</td>
-		</ng-container>
+			<!-- Last Connection Column -->
+			<ng-container matColumnDef="lastConnection">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					Dernière connexion
+				</th>
+				<td mat-cell *matCellDef="let row">
+					<span
+						class="text-xs"
+						[matTooltip]="(row.lastConnection | date) ?? '--'"
+						>{{row.lastConnection | since}}</span
+					>
+				</td>
+			</ng-container>
 
-		<!-- Newsletter Column -->
-		<ng-container matColumnDef="newsletter">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-				Newsletter
-			</th>
-			<td mat-cell *matCellDef="let row" class="!text-center">
-				{{row.newsletter ? '✔️' : '❌'}}
-			</td>
-		</ng-container>
+			<!-- Newsletter Column -->
+			<ng-container matColumnDef="newsletter">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+					Newsletter
+				</th>
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					{{row.newsletter ? '✔️' : '❌'}}
+				</td>
+			</ng-container>
 
-		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-	</table>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
 
-	<mat-progress-bar
-		*ngIf="isLoadingResults"
-		mode="indeterminate"></mat-progress-bar>
-
-	<mat-paginator [length]="resultsLength" [pageSize]="50" />
-</div>
-
-<ng-template #checkedSymbol>✔️</ng-template>
+		<mat-progress-bar
+			*ngIf="isLoadingResults"
+			mode="indeterminate"></mat-progress-bar>
+	</div>
+	<mat-paginator
+		[length]="resultsLength"
+		[pageSize]="filters.size"
+		[pageIndex]="filters.page" />
+</section>
