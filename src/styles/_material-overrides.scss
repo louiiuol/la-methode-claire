@@ -21,6 +21,9 @@
 .mat-mdc-menu-item > span {
 	display: flex;
 	width: 100%;
+	app-icon {
+		margin-inline: 0;
+	}
 }
 
 .mat-mdc-menu-item > span,
