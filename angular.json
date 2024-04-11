@@ -100,19 +100,19 @@
 						"port": 4201
 					},
 					"configurations": {
-						"production": {
-							"browserTarget": "lmc-ui:build:production"
+            "production": {
+              "buildTarget": "lmc-ui:build:production"
 						},
-						"development": {
-							"browserTarget": "lmc-ui:build:development"
+            "development": {
+              "buildTarget": "lmc-ui:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "lmc-ui:build"
+          "options": {
+            "buildTarget": "lmc-ui:build"
 					}
 				},
 				"test": {
