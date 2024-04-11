@@ -40,7 +40,7 @@ import {ButtonComponent, CardComponent} from '@shared/components';
 				<a
 					class="text-primary font-bold"
 					href="mailto:methode.claire@gmail.com">
-					methode.claire@gmail.com
+					methode.claire&#64;gmail.com
 				</a>
 			</p>
 		</app-card>
