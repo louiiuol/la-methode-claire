@@ -22,7 +22,8 @@
 		</mat-checkbox>
 	</div>
 
-	<div *ngIf="!hideAdvancedFilters">
+	@if (!hideAdvancedFilters) {
+	<div>
 		<div mat-menu-item (click)="$event.stopPropagation()">
 			<mat-checkbox
 				[(ngModel)]="advancedFilters.active"
@@ -41,6 +42,7 @@
 			</mat-checkbox>
 		</div>
 	</div>
+	}
 	<div mat-menu-item>
 		<div class="flex justify-center w-full">
 			<app-button

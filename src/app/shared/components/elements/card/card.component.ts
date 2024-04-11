@@ -1,4 +1,4 @@
-import {NgIf, NgTemplateOutlet} from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
 	Component,
 	ContentChild,
@@ -18,7 +18,7 @@ import {MatCardModule} from '@angular/material/card';
 @Component({
 	selector: 'app-card',
 	standalone: true,
-	imports: [NgIf, NgTemplateOutlet, MatCardModule],
+	imports: [NgTemplateOutlet, MatCardModule],
 	templateUrl: './card.component.html',
 })
 export class CardComponent {

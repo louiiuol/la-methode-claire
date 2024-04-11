@@ -1,103 +1,104 @@
-<ng-container *ngIf="course">
-	<mat-drawer-container
-		class="h-full w-full"
-		autosize
-		*ngIf="course.order < 3 || hasValidSubscription; else unauthorizedLesson">
-		<mat-drawer
-			#drawer
-			class="px-4 !flex flex-col justify-start items-start w-72"
-			[mode]="platform.isMobileView() ? 'over' : 'side'"
-			opened>
-			<h2 class="text-2xl my-2" [style]="'color:' + course.color">
-				Semaine N°{{ (course.order + 1).toFixed() }}
-				<app-icon></app-icon>
-			</h2>
-			<!-- Course States -->
-			<div
-				class="mb-2 flex gap-3 items-center justify-start"
-				*ngIf="course.order < currentUserLesson; else onGoingCourse">
-				<span
-					class="px-2 py-1 bg-green-700 text-white rounded-md w-fit text-sm italic">
-					Leçon terminée
-				</span>
-
-				<app-icon
-					class="cursor-pointer !mx-0"
-					color="accent"
-					[class]="{'cursor-wait': loading}"
-					(click)="setCurrentLesson(course.order)"
-					matTooltip="Revenir à cette leçon">
-					skip_previous
-				</app-icon>
-			</div>
-			<ng-template #onGoingCourse>
-				<ng-container
-					*ngIf="course.order > currentUserLesson; else pendingCourse">
-					<div class="mb-2 flex gap-3 items-center justify-start">
-						<span
-							matTooltip="Vous êtes actuellement dans une leçon précédente à celle-ci"
-							class="px-2 py-1 bg-slate-300 text-gray-700 rounded-md w-fit text-sm italic">
-							Leçon en attente
-						</span>
-
-						<app-icon
-							class="cursor-pointer !mx-0"
-							color="accent"
-							[class]="{'cursor-wait': loading}"
-							(click)="setCurrentLesson(course.order)"
-							matTooltip="Passer à cette leçon">
-							skip_next
-						</app-icon>
-					</div>
-				</ng-container>
-				<ng-template #pendingCourse>
-					<div class="mb-2 flex gap-3 items-center justify-start">
-						<span
-							class="px-2 py-1 bg-primary text-white rounded-md w-fit text-sm italic">
-							Leçon en cours
-						</span>
-
-						<app-icon
-							class="cursor-pointer !mx-0"
-							[class]="{'cursor-wait': loading}"
-							(click)="setCurrentLesson(course.order + 1)"
-							matTooltip="Marquer comme terminée">
-							check
-						</app-icon>
-					</div>
-				</ng-template>
-			</ng-template>
-
-			<hr class="mt-3 mb-6" />
-
-			<h3 class="text-sm italic !mb-3">Graphème(s)</h3>
-			<div class="text-sm flex gap-3 flex-wrap">
-				<span
-					*ngFor="let phoneme of course.phonemes"
-					class="py-1 px-2 h-8 rounded-md bg-primary text-white flex items-center">
-					<span *ngIf="phoneme.endOfWord">-</span>
-					{{ phoneme.name | uppercase }}
-					<ng-container *ngIf="phoneme.sounds as sounds">
-						<span *ngFor="let sound of sounds" class="px-1 text-xs">
-							[{{ sound }}]
-						</span>
-					</ng-container>
-					<span *ngIf="phoneme.info" class="pl-1 text-sm"
-						>({{ phoneme.info }})</span
-					>
-				</span>
-			</div>
-
-			<hr class="mt-3 mb-6" />
-
-			<div class="flex items-center justify-between">
-				<h3 class="text-sm italic !mb-1">Liste des fichiers</h3>
-			</div>
-			<mat-list #files role="list">
-				<mat-list-item *ngFor="let file of filesAvailable" class="!px-0">
-					<div class="flex justify-between items-center gap-2">
-						<div
-							class="text-sm cursor-pointer flex items-center justify-between flex-1 hover:bg-slate-200 px-3 py-4 rounded-lg gap-3"
+@if (course) {
+  @if (course.order < 3 || hasValidSubscription) {
+    <mat-drawer-container
+      class="h-full w-full"
+      autosize
+      >
+      <mat-drawer
+        #drawer
+        class="px-4 !flex flex-col justify-start items-start w-72"
+        [mode]="platform.isMobileView() ? 'over' : 'side'"
+        opened>
+        <h2 class="text-2xl my-2" [style]="'color:' + course.color">
+          Semaine N°{{ (course.order + 1).toFixed() }}
+          <app-icon></app-icon>
+        </h2>
+        <!-- Course States -->
+        @if (course.order < currentUserLesson) {
+          <div
+            class="mb-2 flex gap-3 items-center justify-start"
+            >
+            <span
+              class="px-2 py-1 bg-green-700 text-white rounded-md w-fit text-sm italic">
+              Leçon terminée
+            </span>
+            <app-icon
+              class="cursor-pointer !mx-0"
+              color="accent"
+              [class]="{'cursor-wait': loading}"
+              (click)="setCurrentLesson(course.order)"
+              matTooltip="Revenir à cette leçon">
+              skip_previous
+            </app-icon>
+          </div>
+        } @else {
+          @if (course.order > currentUserLesson) {
+            <div class="mb-2 flex gap-3 items-center justify-start">
+              <span
+                matTooltip="Vous êtes actuellement dans une leçon précédente à celle-ci"
+                class="px-2 py-1 bg-slate-300 text-gray-700 rounded-md w-fit text-sm italic">
+                Leçon en attente
+              </span>
+              <app-icon
+                class="cursor-pointer !mx-0"
+                color="accent"
+                [class]="{'cursor-wait': loading}"
+                (click)="setCurrentLesson(course.order)"
+                matTooltip="Passer à cette leçon">
+                skip_next
+              </app-icon>
+            </div>
+          } @else {
+            <div class="mb-2 flex gap-3 items-center justify-start">
+              <span
+                class="px-2 py-1 bg-primary text-white rounded-md w-fit text-sm italic">
+                Leçon en cours
+              </span>
+              <app-icon
+                class="cursor-pointer !mx-0"
+                [class]="{'cursor-wait': loading}"
+                (click)="setCurrentLesson(course.order + 1)"
+                matTooltip="Marquer comme terminée">
+                check
+              </app-icon>
+            </div>
+          }
+        }
+        <hr class="mt-3 mb-6" />
+        <h3 class="text-sm italic !mb-3">Graphème(s)</h3>
+        <div class="text-sm flex gap-3 flex-wrap">
+          @for (phoneme of course.phonemes; track phoneme) {
+            <span
+              class="py-1 px-2 h-8 rounded-md bg-primary text-white flex items-center">
+              @if (phoneme.endOfWord) {
+                <span>-</span>
+              }
+              {{ phoneme.name | uppercase }}
+              @if (phoneme.sounds; as sounds) {
+                @for (sound of sounds; track sound) {
+                  <span class="px-1 text-xs">
+                    [{{ sound }}]
+                  </span>
+                }
+              }
+              @if (phoneme.info) {
+                <span class="pl-1 text-sm"
+                  >({{ phoneme.info }})</span
+                  >
+                }
+              </span>
+            }
+          </div>
+          <hr class="mt-3 mb-6" />
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm italic !mb-1">Liste des fichiers</h3>
+          </div>
+          <mat-list #files role="list">
+            @for (file of filesAvailable; track file) {
+              <mat-list-item class="!px-0">
+                <div class="flex justify-between items-center gap-2">
+                  <div
+                    class="text-sm cursor-pointer flex items-center justify-between flex-1 hover:bg-slate-200 px-3 py-4 rounded-lg gap-3"
 							[class]="{
 								'cursor-wait': loading,
 								'active': selectedFile?.name === file.name
@@ -106,57 +107,56 @@
 								(loading || selectedFile?.name !== file.name) &&
 									setCurrentFile(file)
 							">
-							<span>{{ file.name }}</span>
-
-							<app-icon
-								class="!mx-0"
+                    <span>{{ file.name }}</span>
+                    <app-icon
+                      class="!mx-0"
 								[color]="
 									selectedFile?.name !== file.name ? 'primary' : 'disabled'
 								">
-								visibility
-							</app-icon>
-						</div>
-						<app-button
-							[disabled]="loading"
-							class="!w-fit"
-							[class]="{'cursor-wait': loading}"
-							(click)="downloadFile(file)"
-							type="icon">
-							<app-icon color="accent">download</app-icon>
-						</app-button>
-					</div>
-				</mat-list-item>
-			</mat-list>
-			<app-button
-				class="mx-auto"
-				type="stroked"
-				(click)="downloadCourse()"
-				color="accent">
-				Tout télécharger
-			</app-button>
-			<span class="flex-1"></span>
-		</mat-drawer>
-
-		<app-file-viewer
-			(fileLoaded)="fileLoaded()"
-			[fileName]="[course.order + 1, 'files', selectedFile?.path].join('/')" />
-	</mat-drawer-container>
-	<ng-template #unauthorizedLesson>
-		<div class="max-w-md mx-auto mt-9 mb-4">
-			<h2 class="text-center text-2xl mb-3">Accès réservé aux abonnés !</h2>
-			<img
-				class="max-w-xs my-2 mx-auto"
-				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/access-denied.gif"
-				alt="Accès non autorisé" />
-			<p class="text-lg text-primary text-balance text-center my-4">
-				Cette leçon n'est accessible uniquement pour les membres abonnés! Pour
-				accéder au reste du contenu, abonnez-vous !
-			</p>
-			<app-button
-				type="raised"
-				color="primary"
-				label="Voir l'abonnement"
-				href="/app/subscription" />
-		</div>
-	</ng-template>
-</ng-container>
+                      visibility
+                    </app-icon>
+                  </div>
+                  <app-button
+                    [disabled]="loading"
+                    class="!w-fit"
+                    [class]="{'cursor-wait': loading}"
+                    (click)="downloadFile(file)"
+                    type="icon">
+                    <app-icon color="accent">download</app-icon>
+                  </app-button>
+                </div>
+              </mat-list-item>
+            }
+          </mat-list>
+          <app-button
+            class="mx-auto"
+            type="stroked"
+            (click)="downloadCourse()"
+            color="accent">
+            Tout télécharger
+          </app-button>
+          <span class="flex-1"></span>
+        </mat-drawer>
+        <app-file-viewer
+          (fileLoaded)="fileLoaded()"
+          [fileName]="[course.order + 1, 'files', selectedFile?.path].join('/')" />
+        </mat-drawer-container>
+      } @else {
+        <div class="max-w-md mx-auto mt-9 mb-4">
+          <h2 class="text-center text-2xl mb-3">Accès réservé aux abonnés !</h2>
+          <img
+            class="max-w-xs my-2 mx-auto"
+            src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/access-denied.gif"
+            alt="Accès non autorisé" />
+            <p class="text-lg text-primary text-balance text-center my-4">
+              Cette leçon n'est accessible uniquement pour les membres abonnés! Pour
+              accéder au reste du contenu, abonnez-vous !
+            </p>
+            <app-button
+              type="raised"
+              color="primary"
+              label="Voir l'abonnement"
+              href="/app/subscription" />
+            </div>
+          }
+        }

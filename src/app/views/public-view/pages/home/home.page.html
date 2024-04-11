@@ -46,9 +46,9 @@
 	id="method"
 	class="[&>*:nth-child(even)]:flex-row-reverse py-10 px-3 sm:px-10 max-w-5xl mx-auto pb-9 bg-white">
 	<h2>Devenez un expert en apprentissage de la lecture</h2>
+	@for (explanation of methodExplanations; track explanation) {
 	<article
-		class="flex flex-wrap justify-center items-center gap-10 w-full !my-24 px-5 mb-12 md:mb-0"
-		*ngFor="let explanation of methodExplanations">
+		class="flex flex-wrap justify-center items-center gap-10 w-full !my-24 px-5 mb-12 md:mb-0">
 		<div>
 			<span [style]="{color: explanation.color}" class="text-5xl">
 				{{explanation.index}}
@@ -61,6 +61,7 @@
 			[src]="'https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/' + explanation.name + '.png'"
 			[alt]="'Illustration à propos de ' +explanation.name" />
 	</article>
+	}
 </section>
 
 <section

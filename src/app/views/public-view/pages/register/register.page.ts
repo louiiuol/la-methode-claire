@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -14,7 +14,7 @@ import {
 
 @Component({
 	standalone: true,
-	imports: [NgIf, CardComponent, FormComponent, ButtonComponent],
+	imports: [CardComponent, FormComponent, ButtonComponent],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

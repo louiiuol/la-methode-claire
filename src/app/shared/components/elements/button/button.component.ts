@@ -1,10 +1,4 @@
-import {
-	NgIf,
-	NgSwitch,
-	NgSwitchCase,
-	NgSwitchDefault,
-	NgTemplateOutlet,
-} from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -40,15 +34,11 @@ type ButtonType =
 @Component({
 	standalone: true,
 	imports: [
-		NgIf,
-		NgSwitch,
-		NgSwitchCase,
-		NgSwitchDefault,
-		NgTemplateOutlet,
-		...MaterialModules,
-		RouterLink,
-		RouterLinkActive,
-	],
+    NgTemplateOutlet,
+    ...MaterialModules,
+    RouterLink,
+    RouterLinkActive
+],
 	selector: 'app-button',
 	templateUrl: 'button.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

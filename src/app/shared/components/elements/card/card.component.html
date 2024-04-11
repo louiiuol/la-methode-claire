@@ -1,18 +1,17 @@
 <mat-card class="mx-auto w-fit px-8 pb-8 max-w-full">
-	<mat-card-header
-		*ngIf="cardTitle || subtitle"
-		class="text-primary !pt-8 !pb-2">
-		<mat-card-title
-			class="text-center !text-2xl text-primary text-balance"
-			*ngIf="!!cardTitle">
+	@if (cardTitle || subtitle) {
+	<mat-card-header class="text-primary !pt-8 !pb-2">
+		@if (!!cardTitle) {
+		<mat-card-title class="text-center !text-2xl text-primary text-balance">
 			{{ cardTitle }}
 		</mat-card-title>
-		<mat-card-subtitle
-			class="text-center text-balance !text-lg !mt-2"
-			*ngIf="!!subtitle">
+		} @if (!!subtitle) {
+		<mat-card-subtitle class="text-center text-balance !text-lg !mt-2">
 			{{ subtitle }}
 		</mat-card-subtitle>
+		}
 	</mat-card-header>
+	}
 
 	<mat-card-content
 		class="relative !px-4 !pt-6 !flex flex-col items-center justify-start !h-fit"
@@ -20,7 +19,9 @@
 		<ng-content></ng-content>
 	</mat-card-content>
 
-	<mat-card-actions *ngIf="!!cardFooter" class="justify-evenly !px-2">
+	@if (!!cardFooter) {
+	<mat-card-actions class="justify-evenly !px-2">
 		<ng-container [ngTemplateOutlet]="cardFooter"></ng-container>
 	</mat-card-actions>
+	}
 </mat-card>

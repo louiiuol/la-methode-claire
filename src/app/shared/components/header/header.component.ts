@@ -6,7 +6,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor, NgIf} from '@angular/common';
+
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 const MaterialModules = [MatToolbarModule, MatMenuModule, MatButtonModule];
@@ -28,8 +28,6 @@ import {InitialsPipe} from '../../pipes/initials.pipe';
 	selector: 'app-header',
 	templateUrl: './header.component.html',
 	imports: [
-		NgIf,
-		NgFor,
 		...MaterialModules,
 		IconComponent,
 		ButtonComponent,

@@ -1,6 +1,6 @@
 import {Component, HostBinding, inject} from '@angular/core';
 
-import {AsyncPipe, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 import {
@@ -17,14 +17,13 @@ import {PasswordModule, PasswordService} from '@shared/modules/password';
 @Component({
 	standalone: true,
 	imports: [
-		NgIf,
-		AsyncPipe,
-		FormComponent,
-		ButtonComponent,
-		LoaderComponent,
-		MatExpansionModule,
-		PasswordModule,
-	],
+    AsyncPipe,
+    FormComponent,
+    ButtonComponent,
+    LoaderComponent,
+    MatExpansionModule,
+    PasswordModule
+],
 	templateUrl: './profile.page.html',
 })
 export class ProfilePage {

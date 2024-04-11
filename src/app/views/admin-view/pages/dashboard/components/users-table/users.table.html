@@ -13,7 +13,6 @@
 </nav>
 
 <section class="mat-elevation-z8">
-	<ng-template #checkedSymbol>✔️</ng-template>
 	<div class="overflow-auto" style="max-height: 60vh">
 		<table
 			mat-table
@@ -45,11 +44,12 @@
 			<ng-container matColumnDef="isActive">
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>Actif</th>
 				<td mat-cell *matCellDef="let row" class="!text-center">
+					@if (row.role !=='ADMIN') {
 					<mat-slide-toggle
-						*ngIf="row.role !=='ADMIN'; else: checkedSymbol"
 						color="primary"
 						[checked]="row.isActive"
 						(click)="toggleAccount(row)" />
+					} @else { ✔️ }
 				</td>
 			</ng-container>
 
@@ -57,11 +57,12 @@
 			<ng-container matColumnDef="subscribed">
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>Abonné</th>
 				<td mat-cell *matCellDef="let row" class="!text-center">
+					@if (!row.subscribed) {
 					<mat-slide-toggle
-						*ngIf="!row.subscribed; else: checkedSymbol"
 						color="primary"
 						[checked]="row.subscribed"
 						(click)="toggleSubscription(row)" />
+					} @else { ✔️ }
 				</td>
 			</ng-container>
 
@@ -115,9 +116,9 @@
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
 
-		<mat-progress-bar
-			*ngIf="isLoadingResults"
-			mode="indeterminate"></mat-progress-bar>
+		@if (isLoadingResults) {
+		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+		}
 	</div>
 	<mat-paginator
 		[length]="resultsLength"

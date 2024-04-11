@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
@@ -21,15 +21,14 @@ import {InputSearchComponent} from '@shared/components/form';
 	standalone: true,
 	selector: 'app-filters',
 	imports: [
-		NgIf,
-		ButtonComponent,
-		IconComponent,
-		FormsModule,
-		InputSearchComponent,
-		MatCheckboxModule,
-		MatMenuModule,
-		MatTooltipModule,
-	],
+    ButtonComponent,
+    IconComponent,
+    FormsModule,
+    InputSearchComponent,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatTooltipModule
+],
 	templateUrl: 'filters.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

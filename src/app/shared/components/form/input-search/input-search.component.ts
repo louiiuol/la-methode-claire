@@ -1,4 +1,3 @@
-import {NgFor, NgIf} from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -22,8 +21,6 @@ import {nullish} from '@core';
 	standalone: true,
 	selector: 'app-input-search',
 	imports: [
-		NgIf,
-		NgFor,
 		FormsModule,
 		ReactiveFormsModule,
 		MatFormFieldModule,

@@ -1,4 +1,4 @@
-import {AsyncPipe, NgFor, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {Component, HostBinding, Input, inject} from '@angular/core';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -15,15 +15,13 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 	standalone: true,
 	selector: 'app-lessons-explorer',
 	imports: [
-		NgIf,
-		AsyncPipe,
-		NgFor,
-		LibraryModule,
-		ButtonComponent,
-		CardComponent,
-		LoaderComponent,
-		MatTooltipModule,
-	],
+    AsyncPipe,
+    LibraryModule,
+    ButtonComponent,
+    CardComponent,
+    LoaderComponent,
+    MatTooltipModule
+],
 	providers: [LibraryService],
 	templateUrl: './lessons-explorer.component.html',
 })

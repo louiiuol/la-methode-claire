@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {JsonPipe, NgFor, NgIf, UpperCasePipe} from '@angular/common';
+import { JsonPipe, UpperCasePipe } from '@angular/common';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
@@ -40,17 +40,15 @@ import {take} from 'rxjs';
 @Component({
 	standalone: true,
 	imports: [
-		NgIf,
-		NgFor,
-		JsonPipe,
-		...MaterialModules,
-		ButtonComponent,
-		IconComponent,
-		CardComponent,
-		FileViewerComponent,
-		MessageComponent,
-		UpperCasePipe,
-	],
+    JsonPipe,
+    ...MaterialModules,
+    ButtonComponent,
+    IconComponent,
+    CardComponent,
+    FileViewerComponent,
+    MessageComponent,
+    UpperCasePipe
+],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
 	styles: [

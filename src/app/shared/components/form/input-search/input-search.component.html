@@ -1,4 +1,5 @@
-<mat-form-field *ngIf="fields">
+@if (fields) {
+<mat-form-field>
 	<mat-label>Rechercher</mat-label>
 	<input
 		matInput
@@ -7,14 +8,18 @@
 		[(ngModel)]="searchValue"
 		(keyup.enter)="notify()" />
 </mat-form-field>
-<mat-form-field class="w-36" *ngIf="searchFieldActive">
+} @if (searchFieldActive) {
+<mat-form-field class="w-36">
 	<mat-label>champ</mat-label>
 	<mat-select [disabled]="isLoading" [(value)]="searchFieldActive.value">
-		<mat-option [value]="option.value" *ngFor="let option of fields">
+		@for (option of fields; track option) {
+		<mat-option [value]="option.value">
 			{{ option.viewValue }}
 		</mat-option>
+		}
 	</mat-select>
 </mat-form-field>
+}
 <button
 	[class]="{'!bg-gray-500': isLoading}"
 	[disabled]="isLoading"

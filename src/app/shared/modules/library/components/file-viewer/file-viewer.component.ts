@@ -6,7 +6,7 @@ import {
 	Output,
 	signal,
 } from '@angular/core';
-import {NgIf} from '@angular/common';
+
 import {catchError, take} from 'rxjs';
 import {TrustUrlPipe} from '@shared/pipes';
 import {LibraryService} from '@shared/modules/library/services/library.service';
@@ -20,7 +20,7 @@ import {LoaderComponent, MessageComponent} from '@shared/components/elements';
 @Component({
 	standalone: true,
 	selector: 'app-file-viewer',
-	imports: [NgIf, TrustUrlPipe, MessageComponent, LoaderComponent],
+	imports: [TrustUrlPipe, MessageComponent, LoaderComponent],
 	templateUrl: './file-viewer.component.html',
 })
 export class FileViewerComponent {

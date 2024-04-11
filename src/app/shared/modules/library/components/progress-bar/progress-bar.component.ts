@@ -8,7 +8,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor} from '@angular/common';
+
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ButtonComponent} from '@shared/components';
 import {CourseViewDto} from '../../types/course-view.dto';
@@ -16,7 +16,7 @@ import {CourseViewDto} from '../../types/course-view.dto';
 @Component({
 	selector: 'app-progress-bar',
 	standalone: true,
-	imports: [NgFor, ButtonComponent, MatTooltipModule],
+	imports: [ButtonComponent, MatTooltipModule],
 	templateUrl: './progress-bar.component.html',
 	styles: [
 		`

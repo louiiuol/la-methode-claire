@@ -1,5 +1,5 @@
+@if (!emailSent) {
 <app-card
-	*ngIf="!emailSent; else: checkYourEmail"
 	class="w-full max-w-3xl animate__animated animate__fadeInDown"
 	cardTitle="Bienvenue sur la méthode claire"
 	subtitle="Inscrivez-vous et commencez à utiliser la méthode !">
@@ -29,13 +29,13 @@
 		</p>
 	</ng-template>
 </app-card>
-<ng-template #checkYourEmail>
-	<app-card
-		title="Bienvenue sur la méthode claire"
-		subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
-		<img
-			class="max-w-xs"
-			src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
-			alt="email de vérification envoyé" />
-	</app-card>
-</ng-template>
+} @else {
+<app-card
+	title="Bienvenue sur la méthode claire"
+	subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
+	<img
+		class="max-w-xs"
+		src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
+		alt="email de vérification envoyé" />
+</app-card>
+}

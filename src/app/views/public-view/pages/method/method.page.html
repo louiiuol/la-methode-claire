@@ -181,57 +181,54 @@
 				semaine.
 			</p>
 
-			<ng-container *ngIf="lessons$ | async as lessons">
-				<table
-					mat-table
-					[dataSource]="lessons"
-					class="w-fit !min-w-fit mx-auto mb-9">
-					<!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-
-					<!-- Position Column -->
-					<ng-container matColumnDef="index">
-						<th mat-header-cell *matHeaderCellDef class="font-bold">
-							Semaine / Leçon
-						</th>
-						<td
-							mat-cell
-							*matCellDef="let element"
-							[style]="{color: element.color}"
-							class="!text-center font-bold">
-							{{element.order + 1}}
-						</td>
-					</ng-container>
-
-					<!-- Name Column -->
-					<ng-container matColumnDef="name">
-						<th mat-header-cell *matHeaderCellDef class="font-bold">
-							Graphème(s)
-						</th>
-						<td
-							mat-cell
-							*matCellDef="let element"
-							class="text-lg"
-							[style]="{color: element.color}">
-							<span *ngFor="let phoneme of element.phonemes" class="px-2">
-								<span *ngIf="phoneme.endOfWord">-</span>
-								{{phoneme.name | uppercase}}
-								<ng-container *ngIf="phoneme.sounds as sounds">
-									<span *ngFor="let sound of sounds" class="px-1 text-xs">
-										[{{ sound }}]
-									</span>
-								</ng-container>
-								<span *ngIf="phoneme.info" class="pl-1 text-sm">
-									({{ phoneme.info }})
-								</span>
-							</span>
-						</td>
-					</ng-container>
-
-					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-				</table>
-			</ng-container>
+			@if (lessons$ | async; as lessons) {
+			<table
+				mat-table
+				[dataSource]="lessons"
+				class="w-fit !min-w-fit mx-auto mb-9">
+				<!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+				<!-- Position Column -->
+				<ng-container matColumnDef="index">
+					<th mat-header-cell *matHeaderCellDef class="font-bold">
+						Semaine / Leçon
+					</th>
+					<td
+						mat-cell
+						*matCellDef="let element"
+						[style]="{color: element.color}"
+						class="!text-center font-bold">
+						{{element.order + 1}}
+					</td>
+				</ng-container>
+				<!-- Name Column -->
+				<ng-container matColumnDef="name">
+					<th mat-header-cell *matHeaderCellDef class="font-bold">
+						Graphème(s)
+					</th>
+					<td
+						mat-cell
+						*matCellDef="let element"
+						class="text-lg"
+						[style]="{color: element.color}">
+						@for (phoneme of element.phonemes; track phoneme) {
+						<span class="px-2">
+							@if (phoneme.endOfWord) {
+							<span>-</span>
+							} {{phoneme.name | uppercase}} @if (phoneme.sounds; as sounds) {
+							@for (sound of sounds; track sound) {
+							<span class="px-1 text-xs"> [{{ sound }}] </span>
+							} } @if (phoneme.info) {
+							<span class="pl-1 text-sm"> ({{ phoneme.info }}) </span>
+							}
+						</span>
+						}
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+			}
 
 			<h3 class="my-3 font-bold">Précisions importantes</h3>
 			<div class="relative">

@@ -1,4 +1,4 @@
-import {NgIf, DatePipe, NgFor} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
 	Component,
 	ViewChild,
@@ -45,15 +45,13 @@ import {FiltersComponent} from './filters/filters.component';
 	standalone: true,
 	selector: 'app-users-list',
 	imports: [
-		NgIf,
-		NgFor,
-		...MaterialModules,
-		DatePipe,
-		SincePipe,
-		ButtonComponent,
-		IconComponent,
-		FiltersComponent,
-	],
+    ...MaterialModules,
+    DatePipe,
+    SincePipe,
+    ButtonComponent,
+    IconComponent,
+    FiltersComponent
+],
 	templateUrl: 'users.table.html',
 })
 export class UsersTable implements OnInit, AfterViewInit {

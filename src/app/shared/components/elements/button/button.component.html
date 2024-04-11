@@ -1,146 +1,134 @@
 <ng-template #content>
 	<ng-content></ng-content>
-	<ng-container *ngIf="label">{{ label }}</ng-container>
+	@if (label) {
+	{{ label }}
+	}
 </ng-template>
 
-<ng-container *ngIf="href; else buttonTemplate" [ngSwitch]="type">
-	<a
-		class="w-full font-normal"
-		[routerLink]="href"
-		routerLinkActive="!font-bold underline underline-offset-2"
-		[routerLinkActiveOptions]="{exact: true}"
-		[fragment]="fragment"
-		[queryParams]="params"
-		*ngSwitchCase="'raised'"
-		mat-raised-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</a>
-
-	<a
-		class="w-full font-normal"
-		[routerLink]="href"
-		routerLinkActive="!font-bold underline underline-offset-2"
-		[routerLinkActiveOptions]="{exact: true}"
-		[queryParams]="params"
-		[fragment]="fragment"
-		*ngSwitchCase="'stroked'"
-		mat-stroked-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</a>
-
-	<a
-		class="w-full font-normal"
-		[routerLink]="href"
-		routerLinkActive="!font-bold underline underline-offset-2"
-		[routerLinkActiveOptions]="{exact: true}"
-		[queryParams]="params"
-		[fragment]="fragment"
-		*ngSwitchCase="'flat'"
-		mat-flat-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</a>
-
-	<a
-		class="w-full font-normal"
-		[routerLink]="href"
-		routerLinkActive="!font-bold underline underline-offset-2"
-		[routerLinkActiveOptions]="{exact: true}"
-		[queryParams]="params"
-		[fragment]="fragment"
-		*ngSwitchCase="'icon'"
-		mat-icon-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</a>
-
-	<a
-		class="w-full font-normal"
-		[routerLink]="href"
-		routerLinkActive="!font-bold underline underline-offset-2"
-		[routerLinkActiveOptions]="{exact: true}"
-		[queryParams]="params"
-		[fragment]="fragment"
-		*ngSwitchCase="'menu-item'"
-		mat-menu-item
-		[class]="'text-' + color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</a>
-
-	<a
-		class="w-full font-normal"
-		*ngSwitchDefault
-		mat-button
-		[routerLink]="href"
-		routerLinkActive="!font-bold underline underline-offset-2"
-		[routerLinkActiveOptions]="{exact: true}"
-		[queryParams]="params"
-		[fragment]="fragment"
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</a>
-</ng-container>
-
-<ng-template #buttonTemplate [ngSwitch]="type">
-	<button
-		class="w-full font-normal"
-		*ngSwitchCase="'raised'"
-		mat-raised-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</button>
-
-	<button
-		class="w-full font-normal"
-		*ngSwitchCase="'stroked'"
-		mat-stroked-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</button>
-
-	<button
-		class="w-full font-normal"
-		*ngSwitchCase="'flat'"
-		mat-flat-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</button>
-
-	<button
-		class="w-full font-normal"
-		*ngSwitchCase="'icon'"
-		mat-icon-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</button>
-
-	<button
-		class="w-full font-normal"
-		*ngSwitchCase="'menu-item'"
-		mat-menu-item
-		[class]="'text-' + color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</button>
-
-	<button
-		class="w-full font-normal"
-		*ngSwitchDefault
-		mat-button
-		[color]="color"
-		[disabled]="disabled">
-		<ng-container *ngTemplateOutlet="content" />
-	</button>
-</ng-template>
+@if (href) { @switch (type) { @case ('raised') {
+<a
+	class="w-full font-normal"
+	[routerLink]="href"
+	routerLinkActive="!font-bold underline underline-offset-2"
+	[routerLinkActiveOptions]="{exact: true}"
+	[fragment]="fragment"
+	[queryParams]="params"
+	mat-raised-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</a>
+} @case ('stroked') {
+<a
+	class="w-full font-normal"
+	[routerLink]="href"
+	routerLinkActive="!font-bold underline underline-offset-2"
+	[routerLinkActiveOptions]="{exact: true}"
+	[queryParams]="params"
+	[fragment]="fragment"
+	mat-stroked-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</a>
+} @case ('flat') {
+<a
+	class="w-full font-normal"
+	[routerLink]="href"
+	routerLinkActive="!font-bold underline underline-offset-2"
+	[routerLinkActiveOptions]="{exact: true}"
+	[queryParams]="params"
+	[fragment]="fragment"
+	mat-flat-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</a>
+} @case ('icon') {
+<a
+	class="w-full font-normal"
+	[routerLink]="href"
+	routerLinkActive="!font-bold underline underline-offset-2"
+	[routerLinkActiveOptions]="{exact: true}"
+	[queryParams]="params"
+	[fragment]="fragment"
+	mat-icon-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</a>
+} @case ('menu-item') {
+<a
+	class="w-full font-normal"
+	[routerLink]="href"
+	routerLinkActive="!font-bold underline underline-offset-2"
+	[routerLinkActiveOptions]="{exact: true}"
+	[queryParams]="params"
+	[fragment]="fragment"
+	mat-menu-item
+	[class]="'text-' + color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</a>
+} @default {
+<a
+	class="w-full font-normal"
+	mat-button
+	[routerLink]="href"
+	routerLinkActive="!font-bold underline underline-offset-2"
+	[routerLinkActiveOptions]="{exact: true}"
+	[queryParams]="params"
+	[fragment]="fragment"
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</a>
+} } } @else { @switch (type) { @case ('raised') {
+<button
+	class="w-full font-normal"
+	mat-raised-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</button>
+} @case ('stroked') {
+<button
+	class="w-full font-normal"
+	mat-stroked-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</button>
+} @case ('flat') {
+<button
+	class="w-full font-normal"
+	mat-flat-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</button>
+} @case ('icon') {
+<button
+	class="w-full font-normal"
+	mat-icon-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</button>
+} @case ('menu-item') {
+<button
+	class="w-full font-normal"
+	mat-menu-item
+	[class]="'text-' + color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</button>
+} @default {
+<button
+	class="w-full font-normal"
+	mat-button
+	[color]="color"
+	[disabled]="disabled">
+	<ng-container *ngTemplateOutlet="content" />
+</button>
+} } }
