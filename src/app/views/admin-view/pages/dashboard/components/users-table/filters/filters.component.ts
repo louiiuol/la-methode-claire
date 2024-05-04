@@ -1,4 +1,3 @@
-
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
@@ -17,18 +16,27 @@ import {nullish} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
 import {InputSearchComponent} from '@shared/components/form';
 
+export interface SearchFilter {
+	key: string;
+	name: string;
+	value: string | number | boolean | Date;
+	tooltip?: string;
+	type: 'input' | 'toggle' | 'date';
+	advanced: boolean;
+}
+
 @Component({
 	standalone: true,
 	selector: 'app-filters',
 	imports: [
-    ButtonComponent,
-    IconComponent,
-    FormsModule,
-    InputSearchComponent,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatTooltipModule
-],
+		ButtonComponent,
+		IconComponent,
+		FormsModule,
+		InputSearchComponent,
+		MatCheckboxModule,
+		MatMenuModule,
+		MatTooltipModule,
+	],
 	templateUrl: 'filters.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

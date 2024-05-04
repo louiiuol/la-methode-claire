@@ -4,13 +4,13 @@ import {
 	CardComponent,
 	LoaderComponent,
 } from '@shared/components';
-import {LibraryService} from '../../services/library.service';
+import {LibraryAdminService} from '../../services/library.service';
 
 import {UsersTable} from './components/users-table/users.table';
 import {UsersAdminService} from '../../services/users-admin.service';
 import {MatTabsModule} from '@angular/material/tabs';
 import {NewsletterTab} from './components/newsletter.tab';
-import {LibraryTab} from './components/library.tab';
+import {LibraryTable} from './components/library/library.table';
 @Component({
 	standalone: true,
 	selector: 'app-dashboard',
@@ -21,9 +21,9 @@ import {LibraryTab} from './components/library.tab';
 		UsersTable,
 		MatTabsModule,
 		NewsletterTab,
-		LibraryTab,
+		LibraryTable,
 	],
-	providers: [LibraryService, UsersAdminService],
+	providers: [LibraryAdminService, UsersAdminService],
 	templateUrl: './dashboard.page.html',
 })
 export class DashboardPage {

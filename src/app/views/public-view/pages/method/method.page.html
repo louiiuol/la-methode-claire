@@ -184,6 +184,7 @@
 			@if (lessons$ | async; as lessons) {
 			<table
 				mat-table
+				aria-describedby="Tableau des leçons de la méthode"
 				[dataSource]="lessons"
 				class="w-fit !min-w-fit mx-auto mb-9">
 				<!--- Note that these columns can be defined in any order.

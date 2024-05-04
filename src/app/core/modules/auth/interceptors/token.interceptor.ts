@@ -89,6 +89,7 @@ export class TokenInterceptor implements HttpInterceptor {
 							return next.handle(this.addHeader(request, tokens.accessToken));
 						}),
 						catchError(err => {
+							console.warn('Failed to refresh tokens, logging out.');
 							this.refreshingToken = false;
 							this.logOut();
 							return throwError(() => err);

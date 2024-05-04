@@ -44,6 +44,8 @@ export interface RequestOptions {
 	 */
 	notifyOnError?: false;
 
+	reportProgress?: boolean;
+
 	/**
    * Defines action performed by the request, this optional property is used by HttpResource
    * to notify user of what happened.

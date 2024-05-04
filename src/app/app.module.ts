@@ -1,4 +1,4 @@
-import {NgModule, Component, HostBinding} from '@angular/core';
+import {NgModule, Component, HostBinding, OnInit} from '@angular/core';
 
 /**
  * Root component of the Application, responsible for:
@@ -14,9 +14,13 @@ import {NgModule, Component, HostBinding} from '@angular/core';
 		<router-outlet />
 	`,
 })
-export class AppShell {
+export class AppShell implements OnInit {
 	@HostBinding('class') class =
 		'block relative antialiased text-primary text-lg h-screen';
+	private readonly version = '0.4.0';
+	ngOnInit(): void {
+		console.log(`Bienvenue sur la méthode claire ! (V${this.version})`);
+	}
 }
 
 import {RouterModule} from '@angular/router';
@@ -28,6 +32,7 @@ import {CORE_MODULES} from '@core/modules';
 import {ToasterComponent} from '@core/modules/notification';
 
 import {APP_ROUTES} from './app.routes';
+import {FileValueAccessor} from '@shared/directives/file-value-accessor.directive';
 
 /**
  * Root module of this application.
@@ -40,7 +45,6 @@ import {APP_ROUTES} from './app.routes';
  * @author louiiuol
  */
 @NgModule({
-	declarations: [AppShell],
 	imports: [
 		RouterModule.forRoot(APP_ROUTES, {
 			bindToComponentInputs: true,
@@ -51,6 +55,7 @@ import {APP_ROUTES} from './app.routes';
 		...CORE_MODULES,
 		ToasterComponent,
 	],
+	declarations: [AppShell, FileValueAccessor],
 	bootstrap: [AppShell],
 })
 export class AppModule {}
