@@ -1,17 +1,14 @@
-import {NgFor} from '@angular/common';
-import {Component, HostBinding} from '@angular/core';
+
+import {Component} from '@angular/core';
 import {ButtonComponent, CardComponent} from '@shared/components';
 import {FormulaCardComponent} from 'src/app/views/teacher-view/pages/subscription/formula-card/formula-card.component';
 
 @Component({
 	standalone: true,
-	imports: [NgFor, CardComponent, ButtonComponent, FormulaCardComponent],
+	imports: [CardComponent, ButtonComponent, FormulaCardComponent],
 	templateUrl: 'home.page.html',
 })
 export class HomePage {
-	@HostBinding('class')
-	protected readonly class = 'block pb-16';
-
 	protected readonly methodExplanations = [
 		{
 			index: 1,
@@ -19,7 +16,7 @@ export class HomePage {
 			name: 'scripts',
 			title: 'Scripts',
 			description:
-				'La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout ils vous aident à comprendre les mécanismes de l’apprentissage de la lecture.',
+				'La pierre angulaire de la méthode Tout y est décortiqué, expliqué. Mais avant tout, ces scripts vous aident à comprendre les mécanismes de l’apprentissage de la lecture.',
 		},
 		{
 			index: 2,
@@ -27,7 +24,7 @@ export class HomePage {
 			name: 'lesson',
 			title: 'Leçons',
 			description:
-				'À imprimer et/ou projeter sur votre TBI, chaque leçon est conçue de la même façon : les enfants doivent d’abord lire des syllabes et/ou logatomes, des groupes nominaux et verbaux, des phrases, et à partir de la leçon 10, des histoires qui suivent la progression',
+				'À imprimer et/ou projeter sur votre TBI, chaque leçon est conçue de la même façon : les enfants doivent d’abord lire des syllabes et/ou logatomes, des groupes nominaux et verbaux, des phrases, et à partir de la leçon 11, des histoires qui suivent la progression.',
 		},
 		{
 			index: 3,

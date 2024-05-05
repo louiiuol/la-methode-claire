@@ -71,22 +71,16 @@ export class MediaQuery implements OnInit, OnDestroy {
 		this.update(this.mediaQueryList.matches);
 	}
 
-	update(matches: boolean) {
-		if (this.isCreated) {
-			this.viewContainerRef.clear();
-		}
-
-		if (!matches) {
-			return;
-		}
-
-		const ref = this.viewContainerRef.createEmbeddedView(this.templateRef);
-		ref.markForCheck();
-		this.isCreated = true;
-	}
-
 	ngOnDestroy(): void {
 		this.destroy$.next();
 		this.destroy$.complete();
+	}
+
+	update(matches: boolean) {
+		if (this.isCreated) this.viewContainerRef.clear();
+		if (!matches) return;
+		const ref = this.viewContainerRef.createEmbeddedView(this.templateRef);
+		ref.markForCheck();
+		this.isCreated = true;
 	}
 }

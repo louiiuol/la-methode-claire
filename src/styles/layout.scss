@@ -5,16 +5,11 @@ body {
 }
 body {
 	margin: 0;
-	font-family: 'proxima-soft-condensed', Arial, Helvetica, sans-serif;
 }
 
 .page {
-	min-height: calc(100dvh - 64px);
-}
-
-.app-view {
-	display: block;
 	height: 100%;
+	padding: 1em 2em;
 }
 
 .centered-content {

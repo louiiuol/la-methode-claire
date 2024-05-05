@@ -1,36 +1,22 @@
-import {AsyncPipe, NgFor, NgIf} from '@angular/common';
-import {Component, HostBinding, forwardRef, inject} from '@angular/core';
-
-import {MatTooltipModule} from '@angular/material/tooltip';
-const MaterialModules = [MatTooltipModule];
+import {Component, HostBinding, inject} from '@angular/core';
 
 import {AuthService} from '@core';
-import {ButtonComponent, CardComponent} from '@shared/components';
-import {LibraryModule} from '@shared/modules/library/library.module';
-import {LibraryService} from '@shared/modules/library/services/library.service';
+import {LessonsExplorerComponent} from '@shared/modules/library/components/lessons-explorer/lessons-explorer.component';
 
 @Component({
 	standalone: true,
-	imports: [
-		NgIf,
-		AsyncPipe,
-		NgFor,
-		forwardRef(() => LibraryModule),
-		ButtonComponent,
-		CardComponent,
-		...MaterialModules,
-	],
-	templateUrl: './dashboard.page.html',
+	imports: [LessonsExplorerComponent],
+	template: `<app-lessons-explorer
+		[currentUserLesson]="currentUserLesson"
+		[currentLesson]="currentUserLesson"
+		[hasValidSubscription]="subscribed" />`,
 })
 export class DashboardPage {
-	@HostBinding('class') class = 'px-6 mt-4 block max-w-7xl mx-auto';
+	@HostBinding('class') class = 'h-full';
 
-	protected readonly lessons$ = inject(LibraryService).getLibrary();
-	protected readonly hasValidSubscription =
-		!!this.authenticator?.currentUser()?.subscribed;
-
-	protected currentLesson =
-		this.authenticator?.currentUser()?.currentLesson ?? 0;
-
-	constructor(private readonly authenticator: AuthService) {}
+	protected readonly authenticator = inject(AuthService);
+	protected readonly currentUserLesson =
+		this.authenticator.currentUser()?.currentLessonIndex ?? 0;
+	protected readonly subscribed =
+		!!this.authenticator.currentUser()?.subscribed;
 }

@@ -1,4 +1,3 @@
-import {NgIf} from '@angular/common';
 import {
 	Component,
 	Input,
@@ -31,25 +30,9 @@ const MESSAGE_DICTIONARY = {
  */
 @Component({
 	standalone: true,
-	imports: [NgIf, IconComponent],
+	imports: [IconComponent],
 	selector: 'app-message',
-	template: `
-		<div
-			*ngIf="summary && severity"
-			class="flex items-center justify-between gap-3 border-l-4 rounded-r px-4 shadow-md"
-			[class]="getMessageColor()">
-			<div class="flex-1 flex items-start justify-start py-2">
-				<app-icon *ngIf="showIcon" class="my-1 !mx-0">
-					{{ getMessageIcon() }}
-				</app-icon>
-				<div class="p-1">
-					<span [class]="{'font-bold': !!details}" [innerHTML]="summary"></span>
-					<br />
-					<span class="text-sm" *ngIf="details" [innerHTML]="details"></span>
-				</div>
-			</div>
-		</div>
-	`,
+	templateUrl: 'message.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageComponent {

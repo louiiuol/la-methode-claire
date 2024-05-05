@@ -16,6 +16,7 @@ export interface HttpOutput<T> {
  * @internal
  */
 export interface HttpOutputEntity<T> extends Pick<HttpOutput<T>, 'error'> {
+	code: number;
 	value?: T | null;
 }
 

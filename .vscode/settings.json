@@ -7,12 +7,17 @@
 		"statusBarItem.remoteForeground": "#15202b"
 	},
 	"cSpell.words": [
+		"CVCC",
+		"digrame",
 		"dto",
 		"dtos",
 		"figma",
 		"formly",
+		"halloween",
+		"lecon",
 		"logatomes",
 		"pageable",
+		"paperboarder",
 		"rebrassent",
 		"reseted",
 		"sonarlint",
@@ -22,5 +27,10 @@
 		"theming",
 		"webp"
 	],
-	"scss.lint.unknownAtRules": "ignore"
+	"scss.lint.unknownAtRules": "ignore",
+	"angular-schematics.schematicsDefaultOptions": {
+		"angular-*": {
+			"inlineStyle": true
+		}
+	}
 }

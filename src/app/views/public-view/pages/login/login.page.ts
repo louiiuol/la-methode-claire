@@ -30,8 +30,12 @@ export class LoginPage {
 	protected readonly fields: FieldConfig[] = [
 		{preset: 'user.email', props: {required: true}},
 		{
-			preset: 'user.password',
-			props: {required: true, attributes: {autocomplete: 'on'}},
+			key: 'password',
+			props: {
+				type: 'password',
+				label: 'Mot de passe',
+				placeholder: '******',
+			},
 		},
 	];
 	protected readonly logIn = inject(AuthService).logIn;

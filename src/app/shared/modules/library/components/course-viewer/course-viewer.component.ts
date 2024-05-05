@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor, NgIf} from '@angular/common';
+import { JsonPipe, UpperCasePipe } from '@angular/common';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
@@ -19,7 +19,7 @@ const MaterialModules = [
 	MatTooltipModule,
 ];
 
-import {AuthService, PlatformService, isBoolean} from '@core';
+import {AuthService, PlatformService, isBoolean, nullish} from '@core';
 import {
 	ButtonComponent,
 	CardComponent,
@@ -30,6 +30,7 @@ import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {take} from 'rxjs';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -39,17 +40,26 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 @Component({
 	standalone: true,
 	imports: [
-		NgIf,
-		NgFor,
-		...MaterialModules,
-		ButtonComponent,
-		IconComponent,
-		CardComponent,
-		FileViewerComponent,
-		MessageComponent,
-	],
+    JsonPipe,
+    ...MaterialModules,
+    ButtonComponent,
+    IconComponent,
+    CardComponent,
+    FileViewerComponent,
+    MessageComponent,
+    UpperCasePipe
+],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
+	styles: [
+		`
+			:host mat-list-item div.active {
+				background: var(--lmc-primary-color);
+				color: white;
+				font-weight: bold;
+			}
+		`,
+	],
 })
 export class CourseViewerComponent {
 	/**
@@ -58,38 +68,30 @@ export class CourseViewerComponent {
 	 */
 	@Input({required: true}) set course(course: CourseViewDto | undefined) {
 		if (course) {
+			this.loaded.emit(false);
 			course.phonemes.sort((a, b) => a.name.localeCompare(b.name));
 			this._course = course;
-			this.filesAvailable = [];
-			for (let prop in course)
-				if (isBoolean(course[prop]) && !!course[prop])
-					this.filesAvailable.push({
-						name: this.filesName[prop].name,
-						path: this.filesName[prop].fileName,
-					});
-			this.filesAvailable.push(
-				...course.phonemes
-					.filter(p => p.poster)
-					.map(p => ({
-						name: 'Affiche ' + p.name,
-						path: 'affiche-' + p.name.toLocaleUpperCase(),
-					})),
-				...(course.sounds?.map(s => ({
-					name: 'Son ' + s,
-					path: 'affiche-son' + s.toLocaleUpperCase(),
-				})) ?? [])
-			);
+			this.currentLessonIndex = course.order;
+			this.refreshFilesAvailable(course);
+			this.setCurrentFile(this.filesAvailable.at(0));
 		}
 	}
 
-	get course(): CourseViewDto | undefined {
-		return this._course;
-	}
+	/**
+	 * Defines if current user has valid subscription. Required to display all content.
+	 */
+	@Input({required: true}) hasValidSubscription!: boolean;
 
 	/**
 	 * Defines current lesson' index for user. This property will be used to check if user
 	 * has already seen this course or not.
 	 */
+	@Input({required: true}) currentUserLesson!: number;
+
+	get course(): CourseViewDto | undefined {
+		return this._course;
+	}
+
 	@Input({required: true}) currentLessonIndex!: number;
 
 	/**
@@ -97,19 +99,17 @@ export class CourseViewerComponent {
 	 */
 	@Output() nextLesson = new EventEmitter();
 
+	/**
+	 * Emits new value when loading status changes.
+	 */
+	@Output() loaded = new EventEmitter<boolean>();
+
 	@HostBinding('class')
 	protected readonly class =
-		'flex-1 bg-accent rounded-b-xl overflow-hidden mat-elevation-z2 block h-96';
-
-	@HostBinding('style') style = 'height: min(568px, 70vh)';
-
-	protected readonly hasValidSubscription =
-		!!this.authenticator?.currentUser()?.subscribed;
-
-	protected currentUserLesson =
-		this.authenticator?.currentUser()?.currentLesson ?? 0;
+		'flex-1 bg-white rounded-b-xl overflow-auto mat-elevation-z2 block w-full';
 
 	protected filesAvailable: {name: string; path: string}[] = [];
+	protected selectedFile: {name: string; path: string} | nullish;
 
 	private _course?: CourseViewDto;
 
@@ -122,6 +122,8 @@ export class CourseViewerComponent {
 		poster: {name: 'Affiche', fileName: 'affiche'},
 	};
 
+	protected loading = false;
+
 	constructor(
 		private readonly library: LibraryService,
 		private readonly authenticator: AuthService,
@@ -129,13 +131,84 @@ export class CourseViewerComponent {
 	) {}
 
 	setCurrentLesson(index: number) {
-		this.library.setCurrentLesson(index).subscribe(res => {
-			if (!res.error) {
-				this.currentLessonIndex = index;
-				this.currentUserLesson = index;
-				this.nextLesson.emit(index);
-				this.authenticator.updateCurrentUser({currentLesson: index});
-			}
-		});
+		if (!this.loading) {
+			const reload = index == this.currentLessonIndex;
+			this.loading = reload;
+			this.library
+				.setCurrentLesson(index)
+				.pipe(take(1))
+				.subscribe(res => {
+					if (!res.error) {
+						this.currentLessonIndex = index;
+						this.currentUserLesson = index;
+						this.nextLesson.emit(index);
+						this.loaded.emit(reload);
+						this.authenticator.updateCurrentUser({currentLessonIndex: index});
+						this.loading = false;
+					}
+				});
+		}
+	}
+
+	setCurrentFile(file?: {name: string; path: string}) {
+		this.loading = true;
+		this.loaded.emit(false);
+		this.selectedFile = file;
+	}
+
+	downloadFile(file: {name: string; path: string}) {
+		this.library.downloadPdf(
+			`${(this.course?.order ?? 0) + 1}/files/${file.path}`
+		);
+	}
+
+	downloadCourse() {
+		this.library.downloadCourse(this.currentLessonIndex + 1);
+	}
+
+	fileLoaded() {
+		this.loaded.emit(true);
+		this.loading = false;
+	}
+
+	private refreshFilesAvailable(course: CourseViewDto) {
+		this.filesAvailable = [];
+		for (let prop in course)
+			if (isBoolean(course[prop]) && !!course[prop])
+				this.filesAvailable.push({
+					name: this.filesName[prop].name,
+					path: this.filesName[prop].fileName,
+				});
+		const specificSounds: any[] = [];
+		this.filesAvailable.push(
+			...course.phonemes
+				.filter(p => p.poster)
+				.map(p => {
+					if (p.posterNames?.length) {
+						p.posterNames.forEach(posterName =>
+							specificSounds.push({
+								name:
+									'Affiche ' + (p.endOfWord ? `-${posterName}` : posterName),
+								path:
+									'affiche-' +
+									posterName.toLocaleUpperCase().replaceAll('/', '-'),
+							})
+						);
+					}
+					return p;
+				})
+				.filter(p => !p.posterNames?.length)
+				.map(p => {
+					return {
+						name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
+						path: 'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
+					};
+				}),
+			...specificSounds,
+			...(course.sounds?.map(s => ({
+				name: 'Son ' + s,
+				path: 'affiche-son' + s.toLocaleUpperCase(),
+			})) ?? [])
+		);
 	}
 }

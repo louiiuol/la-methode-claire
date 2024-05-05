@@ -30,7 +30,8 @@ export const APP_FORM_GROUPS: {[key: string]: FieldConfig[]} = {
 			props: {
 				type: 'password',
 				label: 'Mot de passe',
-				description: 'Doit être un mot de passe sécurisé',
+				description:
+					"Doit être composé d'au moins 8 caractères; mélange de majuscules, minuscules, de chiffres et de caractères spéciaux",
 				placeholder: '******',
 			},
 		},

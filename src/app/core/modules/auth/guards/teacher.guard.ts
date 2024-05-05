@@ -11,7 +11,7 @@ import {AuthService} from '../services/auth.service';
  */
 export const TeacherGuard = () => {
 	const router = inject(Router);
-	return !inject(AuthService).isLoggedIn$()
+	return !inject(AuthService).isLoggedIn()
 		? router
 				.navigate(['/login'])
 				.catch(err =>

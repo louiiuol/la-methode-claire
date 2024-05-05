@@ -8,7 +8,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor} from '@angular/common';
+
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ButtonComponent} from '@shared/components';
 import {CourseViewDto} from '../../types/course-view.dto';
@@ -16,13 +16,14 @@ import {CourseViewDto} from '../../types/course-view.dto';
 @Component({
 	selector: 'app-progress-bar',
 	standalone: true,
-	imports: [NgFor, ButtonComponent, MatTooltipModule],
+	imports: [ButtonComponent, MatTooltipModule],
 	templateUrl: './progress-bar.component.html',
 	styles: [
 		`
 			:host {
 				scroll-snap-type: inline mandatory;
 				scroll-padding-inline: 0.5rem;
+				scroll-behavior: smooth;
 			}
 		`,
 	],
@@ -36,10 +37,15 @@ export class ProgressBarComponent implements AfterViewInit {
 	@Input({required: true}) lessons!: CourseViewDto[];
 	@Input({required: true}) currentLesson!: number;
 	@Input({required: true}) hasValidSubscription!: boolean;
+	@Input({required: true}) loading!: boolean;
 
+	/**
+	 * Emits new value when user select a new lesson (clicked on lesson button)
+	 */
 	@Output() selectedLesson = new EventEmitter<number>();
 
 	constructor(private readonly hostElement: ElementRef) {}
+
 	ngAfterViewInit(): void {
 		this.hostElement.nativeElement.scrollTo((this.currentLesson - 1) * 48, 0);
 	}

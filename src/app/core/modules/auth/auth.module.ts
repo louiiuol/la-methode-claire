@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
 import {TokenInterceptor} from './interceptors/token.interceptor';
-import {AuthResource} from './resources/auth.resource';
 import {TokenStore, UserStore} from './stores';
 
 /**
@@ -19,7 +18,6 @@ import {TokenStore, UserStore} from './stores';
 @NgModule({
 	providers: [
 		AuthService,
-		AuthResource,
 		TokenStore,
 		UserStore,
 		{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},

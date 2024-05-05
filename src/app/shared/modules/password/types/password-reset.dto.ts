@@ -4,8 +4,3 @@ export interface PasswordResetDto {
 	password: string;
 	passwordConfirm: string;
 }
-
-export interface PasswordResetApiDto {
-	token: string;
-	password: string;
-}

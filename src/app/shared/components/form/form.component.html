@@ -1,34 +1,40 @@
+@if (form && formFields?.length) {
 <form
-	*ngIf="form && formFields?.length; else loadingTemplate"
 	[formGroup]="form"
 	(ngSubmit)="onSubmit(formModel)"
-	class="form-grid grid px-2 py-1 md:px-6 md:py-2">
-	<app-message
-		severity="error"
-		*ngFor="let message of errorMessages"
-		[summary]="message" />
+	class="form-grid grid px-2 py-1 md:px-6 md:py-2 gap-2">
+	@for (message of errorMessages; track message) {
+	<app-message class="mb-3" severity="error" [summary]="message" />
+	} @if (isLoading) {
+	<mat-progress-bar mode="indeterminate" />
+	}
 	<formly-form
+		style="max-height: 60vh"
+		class="overflow-y-auto"
 		[form]="form"
 		[options]="options"
 		[fields]="formFields ?? []"
 		[model]="formModel" />
+	<ng-content></ng-content>
 	<footer class="mt-4 flex w-full justify-center gap-5">
+		@if (resettable) {
 		<app-button
 			type="stroked"
 			(click)="reset()"
 			[disabled]="pristine()"
 			color="primary"
 			label="Réinitialiser" />
+		}
 		<app-button
 			mat-flat-button
 			color="primary"
 			type="flat"
 			matTooltip="Le formulaire est invalide"
-			[matTooltipDisabled]="form.valid"
+			[matTooltipDisabled]="isValidForm()"
 			[disabled]="!isValidForm()"
 			[label]="action" />
 	</footer>
 </form>
-<ng-template #loadingTemplate>
-	<app-loader></app-loader>
-</ng-template>
+} @else {
+<app-loader></app-loader>
+}

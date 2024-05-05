@@ -102,37 +102,10 @@ $md-orange: (
 $primary: mat.define-palette($md-blue);
 $primary-dark: mat.define-palette($md-sky);
 $accent: mat.define-palette($md-sky);
-$warn: mat.define-palette(
-	(
-		50: #fdede1,
-		100: #f9d2b4,
-		200: #f6b582,
-		300: #f29750,
-		400: #ef802b,
-		500: #ec6a05,
-		600: #ea6204,
-		700: #e75704,
-		800: #e44d03,
-		900: #df3c01,
-		A100: #ffffff,
-		A200: #ffdcd3,
-		A400: #ffb3a0,
-		A700: #ff9f86,
-		contrast: (
-			50: #000000,
-			100: #000000,
-			200: #000000,
-			300: #000000,
-			400: #000000,
-			500: #000000,
-			600: #ffffff,
-			700: #ffffff,
-			800: #ffffff,
-			900: #ffffff,
-			A100: #000000,
-			A200: #000000,
-			A400: #000000,
-			A700: #000000,
-		),
-	)
-);
+$warn: mat.define-palette($md-orange);
+
+:root {
+	--lmc-primary-color: #5e5c7c;
+	--lmc-accent-color: #b1ced8;
+	--lmc-orange-color: #ef802b;
+}

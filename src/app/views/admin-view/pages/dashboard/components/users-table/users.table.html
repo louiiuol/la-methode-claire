@@ -1,59 +1,68 @@
-<div class="example-container">
-	<nav class="flex gap-3 items-center justify-between px-1">
-		<app-input-search
-			[value]="config().filterOptions.email"
-			label="Filtrer par email" />
-		<app-button
-			label="Réinitialiser les abonnements"
-			(click)="resetSubscription()"
-			type="stroked" />
-		<app-filters-menu [filters]="config().filterOptions" />
-	</nav>
+<nav class="flex gap-6 items-center justify-between px-1">
+	<app-filters [loading]="isLoadingResults" />
+	<div class="flex-1"></div>
+	<button
+		mat-icon-button
+		[matMenuTriggerFor]="adminTools"
+		aria-label="outils admin">
+		<app-icon color="primary">more_vert</app-icon>
+	</button>
+	<mat-menu #adminTools="matMenu" xPosition="before">
+		<button mat-menu-item (click)="exportEmails()">Exporter les emails</button>
+	</mat-menu>
+</nav>
 
-	<ng-container *ngIf="isLoadingResults || isRateLimitReached">
-		<div class="example-loading-shade">
-			<mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-			<div *ngIf="isRateLimitReached" class="example-rate-limit-reached">
-				Aucun résultat disponible
-			</div>
-		</div>
-	</ng-container>
-
-	<div class="mat-elevation-z8">
+<section class="mat-elevation-z8">
+	<div class="overflow-auto" style="max-height: 60vh">
 		<table
 			mat-table
 			[dataSource]="data"
-			matSort
-			matSortActive="createdAt"
+			matSort="false"
+			matSortActive="lastConnection"
+			matSortDirection="desc"
 			matSortDisableClear
-			aria-describedby="Liste des utilisateurs de l'application"
-			matSortDirection="desc">
+			aria-describedby="Liste des utilisateurs de l'application">
 			<!-- Email Column -->
-			<ng-container matColumnDef="email">
+			<ng-container matColumnDef="email" [sticky]="true">
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>Email</th>
 				<td mat-cell *matCellDef="let row">{{row.email}}</td>
+			</ng-container>
+
+			<!-- First Name Column -->
+			<ng-container matColumnDef="firstName">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Prénom</th>
+				<td mat-cell *matCellDef="let row">{{row.firstName ?? '--'}}</td>
+			</ng-container>
+
+			<!-- Last Name Column -->
+			<ng-container matColumnDef="lastName">
+				<th mat-header-cell mat-sort-header *matHeaderCellDef>Nom</th>
+				<td mat-cell *matCellDef="let row">{{row.lastName ?? '--'}}</td>
 			</ng-container>
 
 			<!-- Active Column -->
 			<ng-container matColumnDef="isActive">
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>Actif</th>
-				<td mat-cell *matCellDef="let row">
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					@if (row.role !=='ADMIN') {
 					<mat-slide-toggle
 						color="primary"
-						[disabled]="row.role === 'ADMIN'"
 						[checked]="row.isActive"
 						(click)="toggleAccount(row)" />
+					} @else { ✔️ }
 				</td>
 			</ng-container>
 
 			<!-- Subscribed Column -->
 			<ng-container matColumnDef="subscribed">
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>Abonné</th>
-				<td mat-cell *matCellDef="let row">
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					@if (!row.subscribed) {
 					<mat-slide-toggle
 						color="primary"
 						[checked]="row.subscribed"
 						(click)="toggleSubscription(row)" />
+					} @else { ✔️ }
 				</td>
 			</ng-container>
 
@@ -62,21 +71,57 @@
 				<th mat-header-cell mat-sort-header *matHeaderCellDef>
 					Leçon courante
 				</th>
-				<td mat-cell *matCellDef="let row">{{row.currentLessonIndex}}</td>
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					{{row.currentLessonIndex}}
+				</td>
 			</ng-container>
 
-			<!-- LastConnection Column -->
+			<!-- Created At Column -->
 			<ng-container matColumnDef="createdAt">
-				<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
 					Date d'inscription
 				</th>
-				<td mat-cell *matCellDef="let row">{{row.createdAt | date}}</td>
+				<td mat-cell *matCellDef="let row">
+					<span class="text-xs" [matTooltip]="(row.createdAt | date) ?? '--'"
+						>{{row.createdAt | since}}</span
+					>
+				</td>
 			</ng-container>
 
-			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<!-- Last Connection Column -->
+			<ng-container matColumnDef="lastConnection">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					Dernière connexion
+				</th>
+				<td mat-cell *matCellDef="let row">
+					<span
+						class="text-xs"
+						[matTooltip]="(row.lastConnection | date) ?? '--'"
+						>{{row.lastConnection | since}}</span
+					>
+				</td>
+			</ng-container>
+
+			<!-- Newsletter Column -->
+			<ng-container matColumnDef="newsletter">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+					Newsletter
+				</th>
+				<td mat-cell *matCellDef="let row" class="!text-center">
+					{{row.newsletter ? '✔️' : '❌'}}
+				</td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 		</table>
-	</div>
 
-	<mat-paginator [length]="resultsLength" [pageSize]="30" />
-</div>
+		@if (isLoadingResults) {
+		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+		}
+	</div>
+	<mat-paginator
+		[length]="resultsLength"
+		[pageSize]="filters.size"
+		[pageIndex]="filters.page" />
+</section>

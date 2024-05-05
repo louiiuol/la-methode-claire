@@ -2,54 +2,58 @@ import {Injectable, computed, signal} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {iif, of} from 'rxjs';
-import {map, mergeMap, tap} from 'rxjs/operators';
+import {map, mergeMap, take, tap} from 'rxjs/operators';
 
 import {TokenStore, UserStore} from '@core/modules/auth/stores';
 import {LoginDto, RegisterDto} from '@core/modules/auth/types';
-import {AuthResource} from '@core/modules/auth/resources/auth.resource';
-import {CurrentUser} from '@core/modules/auth/models/current-user.model';
 
-import {UserPreviewDto} from '@shared/modules';
-import {ProfileUpdateDto} from '@shared/modules/users/types/dtos/profile-update.dto';
+import {User, UserPreviewDto, ProfileUpdateDto} from '@shared/modules/users';
+import {HttpResource} from '@core/modules/http';
+import {Token} from '../types/token.dto';
 
 /**
  * Provides methods and properties to handle current user's state in the application:
  *
- * - <strong>currentUser</strong> provides a BehaviorSubject's value (that updates over time) which contains current user global information
- * - <strong>isLoggedIn$</strong> observable allow you to easily know if user is logged in and keep track of this information over time
+ * - <strong>currentUser</strong> provides a signal value (that updates over time) which contains current user global information
+ * - <strong>isLoggedIn</strong> signal allow you to easily know if user is logged in and keep track of this information over time
  *
  * <em>These two properties provides the base tools for reactive programmation in the rest of the application.</em>
  *
  * This service also exports a couple of methods:
  * - <strong>signUp()</strong> creates a new user
  * - <strong>logIn()</strong> and <strong>logOut()</strong> toggles currentUser state
- * - <strong>hasRoles(roles: UserRole[])</strong> checks if current user has given roles
  *
- * <strong>Note</strong> This services uses internally stores (TokenStore and UserStore) to keep user informations in browser storage.
+ * <strong>Note</strong>: This services uses internally stores (TokenStore and UserStore) to keep user informations in browser storage.
  * If user refresh the page, currentUser will be initialized with browser storage values.
  *
  * @author louiiuol
  */
 @Injectable()
-export class AuthService {
+export class AuthService extends HttpResource {
+	protected resource = 'auth';
 	readonly currentUser = signal(this.userStore.getUser());
-	readonly isLoggedIn$ = computed(
+	readonly isLoggedIn = computed(
 		() => !!this.currentUser()?.uuid && this.tokenStore.checkToken()
 	);
 
 	constructor(
-		private readonly http: AuthResource,
 		private readonly router: Router,
 		private readonly tokenStore: TokenStore,
 		private readonly userStore: UserStore
-	) {}
+	) {
+		super();
+	}
 
 	/**
 	 * Tries to register the user with given information:
 	 * - if the request is successful, the user must confirm his email, so no actions follow.
 	 * - If an error occurred, user will be notified with explaining notification.
 	 */
-	signUp = (info: RegisterDto) => this.http.signUp(info);
+	signUp = (dto: RegisterDto) =>
+		this.post<Partial<User>>(dto, {
+			path: 'register',
+			customAction: 'register',
+		});
 
 	/**
 	 * Tries to authenticate the user with given credentials:
@@ -57,15 +61,21 @@ export class AuthService {
 	 * - If an error occurred, the LoginComponent will take car of displaying the error messages.
 	 */
 	logIn = (dto: LoginDto) =>
-		this.http.logIn(dto).pipe(
-			map(res => {
-				if (!res.error) this.tokenStore.saveToken(res.value?.accessToken);
-				return res;
+		this.post<Token>(dto, {
+			path: 'login',
+			customAction: 'login',
+			notifyOnError: false,
+		}).pipe(
+			tap(res => {
+				if (res.code === 403) {
+					this.router.navigate(['/inactive-account', dto.email]);
+				}
+				if (!res.error) this.tokenStore.saveTokens(res.value);
 			}),
 			mergeMap(v => iif(() => !!v.value, this.getProfile(), of(v))),
 			tap(res => {
 				if ((res?.value as UserPreviewDto)?.uuid) {
-					this.updateCurrentUser(new CurrentUser(res.value as UserPreviewDto));
+					this.updateCurrentUser(res.value as UserPreviewDto);
 					this.router
 						.navigate(['/app/dashboard'])
 						.catch(err =>
@@ -82,7 +92,8 @@ export class AuthService {
 	 * - Redirect to '/' (homepage)
 	 */
 	logOut = (): void => {
-		this.tokenStore.clearToken();
+		this.get<void>(null, {path: 'logout'}).pipe(take(1)).subscribe();
+		this.tokenStore.clearTokens();
 		this.userStore.clearUser();
 		this.currentUser.set(null);
 		this.router
@@ -90,16 +101,54 @@ export class AuthService {
 			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
 	};
 
-	getProfile = () => this.http.whoAmI();
+	/**
+	 * Retrieves current authenticated user information.
+	 * @returns Current user informations
+	 */
+	getProfile = () =>
+		this.get<UserPreviewDto>(null, {
+			customResource: '',
+			path: 'me',
+		});
 
-	updateProfile = (dto: ProfileUpdateDto) => this.http.updateProfile(dto);
+	/**
+	 * Updates current authenticated user informations and returns them after completion
+	 * @param dto information to be updated
+	 * @returns updated user object
+	 */
+	updateProfile = (dto: ProfileUpdateDto) =>
+		this.partialUpdate<UserPreviewDto>(null, dto, {
+			customResource: '',
+			path: 'me',
+		}).pipe(tap(res => this.updateCurrentUser(res.value)));
 
 	/**
 	 * Updates current user in local storage and observable shared between components and services.
-	 * @param user entity to be stored
+	 * @param user dto to be stored
 	 */
-	updateCurrentUser = (user: Partial<CurrentUser>): void =>
-		this.currentUser.set(
-			this.userStore.saveUser(Object.assign({}, this.currentUser(), user))
-		);
+	updateCurrentUser = (
+		user: Partial<UserPreviewDto> | undefined | null
+	): void => {
+		if (user) {
+			this.currentUser.set(
+				this.userStore.saveUser({
+					...this.currentUser(),
+					...user,
+				}) as UserPreviewDto
+			);
+		}
+	};
+
+	/**
+	 * Closes current authenticated user account. This account will be automatically
+	 * deleted 2 month later unless its reopen before that.
+	 * When completed, this will log out current user.
+	 */
+	closeAccount = () =>
+		this.get(null, {path: 'close-account'}).subscribe(res => {
+			if (res.value) this.logOut();
+		});
+
+	sendConfirmationEmail = (email: string) =>
+		this.get(email, {path: 'account-reconfirmation'});
 }

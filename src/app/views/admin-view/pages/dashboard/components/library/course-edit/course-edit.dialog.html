@@ -1,0 +1,77 @@
+@if (course) {
+<h3 class="text-xl text-primary text-center py-3">
+	Mise à jour de la leçon N° {{course.order + 1}}
+</h3>
+<div class="px-5 py-3 w-full max-w-xl mx-auto">
+	<mat-form-field class="block mx-auto" (keyup.enter)="updateColor()">
+		<mat-label>Couleur de la leçon</mat-label>
+		<input matInput type="text" [(ngModel)]="color" />
+	</mat-form-field>
+	<mat-accordion>
+		<!-- Files -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Fichiers </mat-panel-title>
+				<mat-panel-description>
+					Edition des fichiers principaux
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{value: 'script', viewValue: 'Script'}"
+				[fileExist]="!!course.script" />
+			<mat-divider />
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{value: 'poster', viewValue: 'Affiche'}"
+				[fileExist]="!!course.poster" />
+			<mat-divider />
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{value: 'lesson', viewValue: 'Leçon'}"
+				[fileExist]="!!course.lesson" />
+			<mat-divider />
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{value: 'exercice', viewValue: 'Exercices'}"
+				[fileExist]="!!course.exercice" />
+		</mat-expansion-panel>
+
+		<!-- Graphemes -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Graphème(s) </mat-panel-title>
+				<mat-panel-description>
+					Edition des graphèmes de la leçon
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<p>This is the primary content of the panel.</p>
+		</mat-expansion-panel>
+
+		<!-- Sounds -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Son(s) </mat-panel-title>
+				<mat-panel-description>
+					Edition des sons (affiches) de la leçon
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			@for (sound of course.sounds; track $index) {
+			<span
+				class="flex bg-slate-400 px-5 py-2 rounded-lg w-fit items-center gap-2">
+				Affiche-{{sound|uppercase}}
+				<mat-icon class="cursor-pointer" (click)="removeSound(sound)">
+					close
+				</mat-icon>
+			</span>
+			}
+			<mat-icon class="cursor-pointer" color="primary">add</mat-icon>
+		</mat-expansion-panel>
+	</mat-accordion>
+</div>
+
+}

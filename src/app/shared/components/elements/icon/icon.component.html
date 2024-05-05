@@ -1,0 +1,12 @@
+@if (svg && fetched$ && (fetched$ | async)) {
+<mat-icon
+	class="!w-full"
+	[color]="color"
+	inline
+	[svgIcon]="svg"
+	aria-hidden="false" />
+} @if (!svg) {
+<mat-icon class="!w-full" aria-hidden="false" [color]="color">
+	<ng-content></ng-content>
+</mat-icon>
+}

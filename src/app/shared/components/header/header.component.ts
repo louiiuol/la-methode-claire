@@ -1,19 +1,22 @@
 import {
+	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	HostBinding,
 	Input,
 	Output,
 } from '@angular/core';
-import {NgFor, NgIf} from '@angular/common';
+
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-const MaterialModules = [MatToolbarModule, MatMenuModule];
+const MaterialModules = [MatToolbarModule, MatMenuModule, MatButtonModule];
 
 import {AuthService, PlatformService} from '@core';
 import {ButtonComponent, IconComponent} from '@shared/components';
 import {navigationLinks} from 'src/app/app.routes';
 import {RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {InitialsPipe} from '../../pipes/initials.pipe';
 
 /**
  * Logged views global header
@@ -22,16 +25,15 @@ import {RouterLink} from '@angular/router';
  */
 @Component({
 	standalone: true,
+	selector: 'app-header',
+	templateUrl: './header.component.html',
 	imports: [
-		NgIf,
-		NgFor,
 		...MaterialModules,
 		IconComponent,
 		ButtonComponent,
 		RouterLink,
+		InitialsPipe,
 	],
-	selector: 'app-header',
-	templateUrl: './header.component.html',
 })
 export class HeaderComponent {
 	/**
@@ -43,16 +45,20 @@ export class HeaderComponent {
 	@Input({required: true}) type!: 'public' | 'logged' | 'admin';
 
 	@HostBinding('class')
-	protected class = 'w-full fixed top-0 mat-elevation-z2 z-50';
+	protected class = 'w-full sticky top-0 mat-elevation-z2 z-50';
 
 	protected currentUser = this.authenticator.currentUser();
 	protected readonly navigationLinks = navigationLinks;
 
 	constructor(
 		private readonly platform: PlatformService,
-		private readonly authenticator: AuthService
+		private readonly authenticator: AuthService,
+		private readonly cd: ChangeDetectorRef
 	) {}
 
 	protected isMobile = () => this.platform.isMobileView();
-	protected logOut = () => this.authenticator.logOut();
+	protected logOut = () => {
+		this.authenticator.logOut();
+		this.cd.detectChanges();
+	};
 }

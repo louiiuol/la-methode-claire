@@ -1,4 +1,4 @@
-import {NgFor} from '@angular/common';
+
 import {Component, HostBinding, inject} from '@angular/core';
 
 import {NotificationService} from '@core/modules/notification';
@@ -12,16 +12,17 @@ import {MessageComponent} from '@shared/components';
  */
 @Component({
 	standalone: true,
-	imports: [MessageComponent, NgFor],
+	imports: [MessageComponent],
 	selector: 'app-toaster',
 	template: `
-		<app-message
-			class="mt-3"
-			*ngFor="let n of notifications()"
-			[summary]="n.summary"
-			[details]="n.details"
-			[severity]="n.severity" />
-	`,
+		@for (n of notifications(); track n) {
+		  <app-message
+		    class="mt-3"
+		    [summary]="n.summary"
+		    [details]="n.details"
+		    [severity]="n.severity" />
+		}
+		`,
 })
 export class ToasterComponent {
 	@HostBinding('class') class = 'absolute right-2 top-16 z-50';

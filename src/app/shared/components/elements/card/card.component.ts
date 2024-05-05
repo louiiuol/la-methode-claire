@@ -1,4 +1,4 @@
-import {NgIf, NgTemplateOutlet} from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
 	Component,
 	ContentChild,
@@ -18,16 +18,16 @@ import {MatCardModule} from '@angular/material/card';
 @Component({
 	selector: 'app-card',
 	standalone: true,
-	imports: [NgIf, NgTemplateOutlet, MatCardModule],
+	imports: [NgTemplateOutlet, MatCardModule],
 	templateUrl: './card.component.html',
 })
 export class CardComponent {
-	@HostBinding('class') class = 'block mx-auto px-4';
+	@HostBinding('class') class = 'block mx-auto';
 
 	/**
 	 * Title to be displayed in the card
 	 */
-	@Input() title?: string;
+	@Input() cardTitle?: string;
 
 	/**
 	 * Description of the card

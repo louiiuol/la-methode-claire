@@ -11,7 +11,6 @@ export const ADMIN_ROUTES: Routes = [
 		children: [
 			{
 				path: 'dashboard',
-				pathMatch: 'full',
 				loadComponent: () =>
 					import('./pages/dashboard/dashboard.page').then(m => m.DashboardPage),
 			},

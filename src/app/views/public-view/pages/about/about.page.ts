@@ -6,5 +6,5 @@ import {Component, HostBinding} from '@angular/core';
 })
 export class AboutPage {
 	@HostBinding('class')
-	protected readonly class = 'block pb-16';
+	protected readonly class = 'block';
 }

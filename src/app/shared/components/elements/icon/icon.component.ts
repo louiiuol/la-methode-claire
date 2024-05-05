@@ -1,4 +1,4 @@
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {
 	Component,
@@ -20,17 +20,9 @@ import {Observable, map} from 'rxjs';
  */
 @Component({
 	standalone: true,
-	imports: [NgIf, AsyncPipe, MatIconModule],
+	imports: [AsyncPipe, MatIconModule],
 	selector: 'app-icon',
-	template: ` <mat-icon
-			class="!w-full"
-			inline
-			*ngIf="svg && fetched$ && (fetched$ | async)"
-			[svgIcon]="svg"
-			aria-hidden="false" />
-		<mat-icon *ngIf="!svg" class="!w-full" aria-hidden="false">
-			<ng-content></ng-content>
-		</mat-icon>`,
+	templateUrl: 'icon.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent implements OnChanges {
@@ -39,6 +31,8 @@ export class IconComponent implements OnChanges {
 	 * * Check assets/images/svg folder for available icons
 	 */
 	@Input() svg?: string;
+
+	@Input() color?: string;
 
 	@HostBinding('class')
 	protected readonly class = 'inline-flex items-center mx-auto';

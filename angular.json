@@ -50,7 +50,14 @@
 						"polyfills": ["zone.js"],
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
-						"assets": ["src/assets"],
+						"assets": [
+							"src/assets",
+							{
+								"glob": "**/*",
+								"input": "node_modules/ngx-extended-pdf-viewer/assets/",
+								"output": "/assets/"
+							}
+						],
 						"styles": ["src/styles.scss"],
 						"scripts": []
 					},
@@ -93,19 +100,19 @@
 						"port": 4201
 					},
 					"configurations": {
-						"production": {
-							"browserTarget": "lmc-ui:build:production"
+            "production": {
+              "buildTarget": "lmc-ui:build:production"
 						},
-						"development": {
-							"browserTarget": "lmc-ui:build:development"
+            "development": {
+              "buildTarget": "lmc-ui:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "lmc-ui:build"
+          "options": {
+            "buildTarget": "lmc-ui:build"
 					}
 				},
 				"test": {

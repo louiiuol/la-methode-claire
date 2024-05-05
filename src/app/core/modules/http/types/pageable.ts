@@ -8,21 +8,16 @@ export interface Pageable<T> {
 	items: T[];
 
 	/**
-	 * Configuration of the paginator
+	 * Current page index
 	 */
-	paginator: {
-		/**
-		 * Current page index
-		 */
-		page: number;
-		/**
-		 * Size of the page (nb of items in the list)
-		 */
-		limit: number;
+	page: number;
+	/**
+	 * Size of the page (nb of items in the list)
+	 */
+	size: number;
 
-		/**
-		 * Total length of items, matching query, in database,
-		 */
-		total: number;
-	};
+	/**
+	 * Total length of items, matching query, in database,
+	 */
+	totalItems: number;
 }

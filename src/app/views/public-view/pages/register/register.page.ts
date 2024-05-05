@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -14,7 +14,7 @@ import {
 
 @Component({
 	standalone: true,
-	imports: [NgIf, CardComponent, FormComponent, ButtonComponent],
+	imports: [CardComponent, FormComponent, ButtonComponent],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -25,6 +25,16 @@ export class RegisterPage {
 	protected readonly register = inject(AuthService).signUp;
 	protected readonly fields = [
 		{preset: 'user.email', props: {required: true}},
+		{
+			preset: 'user.firstName',
+			className: 'inline-block w-1/2',
+			props: {required: true},
+		},
+		{
+			preset: 'user.lastName',
+			className: 'inline-block w-1/2',
+			props: {required: true},
+		},
 		{
 			preset: 'user.password',
 			props: {

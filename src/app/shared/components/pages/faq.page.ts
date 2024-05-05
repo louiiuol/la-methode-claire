@@ -9,7 +9,9 @@ import {CardComponent} from '../elements';
 		<app-card
 			title="Foire Aux Questions"
 			subtitle="En attente de vos questions">
-			<img class="max-w-sm" [src]="'assets/img/email_sent.png'" />
+			<img
+				class="max-w-sm"
+				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/faq.gif" />
 		</app-card>
 	`,
 })

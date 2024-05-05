@@ -12,15 +12,14 @@ import {HeaderComponent} from '@shared/components';
 @Component({
 	standalone: true,
 	selector: 'app-admin-view',
-
 	imports: [RouterOutlet, HeaderComponent],
 	template: `
 		<app-header type="admin" />
-		<main class="pt-16">
+		<main>
 			<router-outlet />
 		</main>
 	`,
 })
 export class AdminView {
-	@HostBinding('class') class = 'app-view bg-accent text-white';
+	@HostBinding('class') class = 'block h-full bg-accent text-white';
 }

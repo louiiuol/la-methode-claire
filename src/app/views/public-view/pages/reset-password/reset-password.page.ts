@@ -1,4 +1,4 @@
-import {NgIf} from '@angular/common';
+
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -26,13 +26,12 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 @Component({
 	standalone: true,
 	imports: [
-		NgIf,
-		CardComponent,
-		FormComponent,
-		ButtonComponent,
-		MessageComponent,
-		forwardRef(() => PasswordModule),
-	],
+    CardComponent,
+    FormComponent,
+    ButtonComponent,
+    MessageComponent,
+    forwardRef(() => PasswordModule)
+],
 	templateUrl: './reset-password.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

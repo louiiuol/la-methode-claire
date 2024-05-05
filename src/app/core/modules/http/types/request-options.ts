@@ -28,7 +28,11 @@ export interface RequestOptions {
 	/**
 	 * HttpHeader for the request
 	 */
-	headers?: HttpHeaders;
+	headers?:
+		| HttpHeaders
+		| {
+				[header: string]: string | string[];
+		  };
 
 	/**
 	 * Forces displaying automated notification when request was successful
@@ -39,6 +43,8 @@ export interface RequestOptions {
 	 * Disable displaying automated notification when request has errors
 	 */
 	notifyOnError?: false;
+
+	reportProgress?: boolean;
 
 	/**
    * Defines action performed by the request, this optional property is used by HttpResource

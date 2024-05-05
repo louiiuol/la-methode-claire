@@ -1,29 +1,41 @@
+@if (!emailSent) {
 <app-card
-	*ngIf="!emailSent; else: checkYourEmail"
 	class="w-full max-w-3xl animate__animated animate__fadeInDown"
-	title="Créez votre compte"
+	cardTitle="Bienvenue sur la méthode claire"
 	subtitle="Inscrivez-vous et commencez à utiliser la méthode !">
 	<app-form
 		action="s'inscrire"
 		[submitted]="register"
 		(sent)="emailSent = $event"
+		[resettable]="false"
 		[fields]="fields"
-		[validators]="validators" />
+		[validators]="validators">
+		<small>
+			En continuant, vous acceptez les
+			<a
+				class="underline"
+				target="_blank"
+				href="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/pdf/cgv.pdf"
+				>conditions d'utilisations</a
+			>
+			de La Méthode claire.
+		</small>
+	</app-form>
 	<ng-template #cardFooter>
 		<p
-			class="flex items-center justify-center gap-3 mt-1 w-full text-center text-sm italic">
+			class="flex items-center justify-center gap-3 mt-3 w-full text-center text-sm italic">
 			Vous possédez déjà un compte ?
 			<app-button color="primary" href="/login" label="se connecter" />
 		</p>
 	</ng-template>
 </app-card>
-<ng-template #checkYourEmail>
-	<app-card
-		title="Bienvenue sur la méthode claire"
-		subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
-		<img
-			class="max-w-xs"
-			src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
-			alt="email de vérification envoyé" />
-	</app-card>
-</ng-template>
+} @else {
+<app-card
+	title="Bienvenue sur la méthode claire"
+	subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
+	<img
+		class="max-w-xs"
+		src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
+		alt="email de vérification envoyé" />
+</app-card>
+}

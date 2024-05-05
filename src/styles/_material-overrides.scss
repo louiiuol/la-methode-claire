@@ -20,6 +20,10 @@
 /** MENU **/
 .mat-mdc-menu-item > span {
 	display: flex;
+	width: 100%;
+	app-icon {
+		margin-inline: 0;
+	}
 }
 
 .mat-mdc-menu-item > span,
@@ -49,4 +53,24 @@
 /** BUTTONS **/
 .mat-mdc-icon-button {
 	color: currentColor !important;
+}
+
+.mat-mdc-tab-body-wrapper {
+	padding: 8px 12px;
+	height: 100%;
+	overflow-y: auto;
+	background-color: #fcfcfc;
+}
+
+.mat-mdc-tab-body-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.mat-expansion-indicator::after {
+	border-color: #423f65;
+}
+
+:root {
+	--mat-expansion-header-text-color: #423f65;
 }

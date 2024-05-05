@@ -1,182 +1,167 @@
-import {NgIf, DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
 	Component,
 	ViewChild,
 	AfterViewInit,
 	HostBinding,
-	signal,
+	OnInit,
 } from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
-import {merge} from 'rxjs';
-import {map, startWith, switchMap} from 'rxjs/operators';
 import {MatTableModule} from '@angular/material/table';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {UsersResource} from '../../../../services/users.resource';
-import {UserPreviewDto} from '@shared/modules';
-import {InputSearchComponent} from '@shared/components/form';
-import {MatMenuModule} from '@angular/material/menu';
-import {ButtonComponent, IconComponent} from '@shared/components';
-import {FiltersMenuComponent} from './filters-menu/filters-menu.component';
 
+import {MatMenuModule} from '@angular/material/menu';
+import {MatTooltipModule} from '@angular/material/tooltip';
 const MaterialModules = [
-	MatProgressSpinnerModule,
+	MatProgressBarModule,
 	MatTableModule,
 	MatSortModule,
 	MatPaginatorModule,
 	MatSlideToggleModule,
 	MatMenuModule,
+	ClipboardModule,
+	MatTooltipModule,
 ];
+import {ClipboardModule, Clipboard} from '@angular/cdk/clipboard';
 
-type TableConfig = {
-	pagination: {
-		index: number;
-		size: number;
-	};
-	sortOptions: {
-		active: string | null;
-		direction: 'asc' | 'desc' | '';
-	};
-	filterOptions: {
-		email: string | null;
-		isActive: boolean | null;
-		subscribed: boolean | null;
-	};
-};
+import {ActivatedRoute, Router} from '@angular/router';
+
+import {merge} from 'rxjs';
+import {map, startWith, switchMap} from 'rxjs/operators';
+
+import {NotificationService} from '@core/modules/notification';
+import {PaginationFilters} from '@core/helpers/types/pagination-filters';
+import {clean} from '@core';
+import {UserPreviewDto} from '@shared/modules';
+import {SincePipe} from '@shared/pipes';
+import {ButtonComponent, IconComponent} from '@shared/components';
+
+import {UsersAdminService} from '../../../../services/users-admin.service';
+import {FiltersComponent} from './filters/filters.component';
 
 @Component({
 	standalone: true,
 	selector: 'app-users-list',
 	imports: [
-		NgIf,
-		...MaterialModules,
-		DatePipe,
-		ButtonComponent,
-		IconComponent,
-		InputSearchComponent,
-		FiltersMenuComponent,
-	],
+    ...MaterialModules,
+    DatePipe,
+    SincePipe,
+    ButtonComponent,
+    IconComponent,
+    FiltersComponent
+],
 	templateUrl: 'users.table.html',
 })
-export class UsersTable implements AfterViewInit {
-	@HostBinding('class') class = 'block mx-auto max-w-5xl';
+export class UsersTable implements OnInit, AfterViewInit {
+	@HostBinding('class') class = 'flex flex-col mx-auto w-full pt-1 px-2';
 
-	displayedColumns: string[] = [
+	@ViewChild(FiltersComponent) filtersComponent!: FiltersComponent;
+	@ViewChild(MatPaginator) paginator!: MatPaginator;
+	@ViewChild(MatSort) sort!: MatSort;
+
+	displayedColumns = [
 		'email',
+		'firstName',
+		'lastName',
 		'createdAt',
+		'lastConnection',
 		'currentLessonIndex',
 		'isActive',
 		'subscribed',
+		'newsletter',
 	];
 	data: UserPreviewDto[] = [];
 
+	filters: PaginationFilters = {
+		page: 0,
+		size: 10,
+		sort: 'lastConnection:desc',
+	};
+
 	resultsLength = 0;
 	isLoadingResults = true;
-	isRateLimitReached = false;
 
-	searchValue = '';
+	constructor(
+		private readonly users: UsersAdminService,
+		private readonly notifier: NotificationService,
+		private readonly clipboard: Clipboard,
+		private readonly route: ActivatedRoute,
+		private readonly router: Router
+	) {}
 
-	protected readonly config = signal<TableConfig>({
-		pagination: {
-			index: 0,
-			size: 30,
-		},
-		sortOptions: {
-			active: null,
-			direction: 'asc',
-		},
-		filterOptions: {email: null, isActive: null, subscribed: null},
-	});
-
-	@ViewChild(MatPaginator) paginator!: MatPaginator;
-	@ViewChild(MatSort) sort!: MatSort;
-	@ViewChild(InputSearchComponent) search!: InputSearchComponent;
-	@ViewChild(FiltersMenuComponent) filterss!: FiltersMenuComponent;
-	filters = {noFilter: true, isActive: null, subscribed: null};
-
-	constructor(private readonly users: UsersResource) {}
+	ngOnInit(): void {
+		this.setFilters(this.route.snapshot.queryParams);
+	}
 
 	ngAfterViewInit() {
-		// If the user changes the sort order, reset back to the first page.
-		this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-		merge(this.sort.sortChange, this.paginator.page, this.search.searchEvent)
+		// If the user changes the sort order or filters, reset back to the first page.
+		merge(this.sort.sortChange, this.filtersComponent.filterChanged).subscribe(
+			() => (this.paginator.pageIndex = 0)
+		);
+		this.filtersComponent.filter = this.filters.filter;
+		merge(
+			this.sort.sortChange,
+			this.paginator.page,
+			this.filtersComponent.filterChanged
+		)
 			.pipe(
-				startWith({}),
-				switchMap(() => {
-					// Save config and sync with url
+				startWith({firstRequest: true}),
+				switchMap((req: any) => {
 					this.isLoadingResults = true;
-					const filter = this.search.value
-						? `email:like:${this.search.value}`
-						: null;
-					return this.users.getUsers(
-						this.sort.active,
-						this.sort.direction,
-						this.paginator.pageIndex,
-						this.paginator.pageSize,
-						filter
+					this.filters = clean(
+						req?.['firstRequest'] ? this.filters : this.getFilters()
 					);
+					return this.users.getUsers(this.filters);
 				}),
 				map(res => {
-					// Flip flag to show that loading has finished.
+					this.syncParams(this.filters);
+					this.resultsLength = res.value?.totalItems ?? 0;
 					this.isLoadingResults = false;
-					const items = res?.value?.items ?? [];
-					this.isRateLimitReached = items === null;
-					if (this.isRateLimitReached) return items;
-
-					// Only refresh the result length if there is new data. In case of rate
-					// limit errors, we don't want to reset the paginator, as that would prevent re-triggering requests.
-					this.resultsLength = items.length;
-					return items;
+					return res?.value?.items ?? [];
 				})
 			)
 			.subscribe(data => (this.data = data));
 	}
 
-	// Get Filters
-	getFilters = () => ({
-		email: this.search.value,
-		isActive: this.filters.isActive,
-		subscribed: this.filters.subscribed,
-	});
-
-	// Set config
-	saveConfig(input: Partial<TableConfig>) {
-		const config = this.config();
-		// this.sort.sortChange, this.paginator.page, this.search.searchEvent
-		this.config.set({
-			pagination: {
-				index: this.paginator.pageIndex,
-				size: this.paginator.pageSize,
-			},
-			sortOptions: {active: this.sort.active, direction: this.sort.direction},
-			filterOptions: {
-				email: this.search.value,
-				subscribed: config.filterOptions.subscribed,
-				isActive: null,
-			},
-		});
-		// Sync with url
-		return this.config();
-	}
-
-	// Refresh view
-
 	toggleAccount(user: UserPreviewDto) {
-		// TODO Revert if failed to update
-		this.users.toggleActivation(user).subscribe();
+		this.users.toggleActivation(user).subscribe(res => {
+			if (res.error) user.isActive = !user.isActive;
+		});
 	}
 
 	toggleSubscription(user: UserPreviewDto) {
-		this.users.toggleSubscription(user).subscribe();
-	}
-
-	resetSubscription() {
-		this.users.resetSubscription().subscribe(res => {
-			if (res.value) {
-				this.ngAfterViewInit();
-			}
+		this.users.toggleSubscription(user).subscribe(res => {
+			if (res.error) user.subscribed = !user.subscribed;
 		});
 	}
+
+	exportEmails() {
+		this.users.exportEmails().subscribe(res => {
+			if (res.value?.emails) this.clipboard.copy(res.value.emails);
+			this.notifier.success("Liste d'email ajouté au presse-papier.");
+		});
+	}
+
+	private setFilters(params: PaginationFilters) {
+		this.filters = clean({...this.filters, ...params});
+	}
+
+	private getFilters() {
+		return {
+			filter: this.filtersComponent.filter,
+			sort: [this.sort.active, this.sort.direction].join(':'),
+			page: this.paginator.pageIndex,
+			size: this.paginator.pageSize,
+		};
+	}
+
+	// saves config and sync with url
+	private syncParams = (params: PaginationFilters) => {
+		this.setFilters(params);
+		this.router.navigate(['/back-office/dashboard'], {
+			queryParams: clean(params),
+		});
+	};
 }

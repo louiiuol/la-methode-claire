@@ -2,18 +2,19 @@ import {
 	HttpRequest,
 	HttpHandler,
 	HttpInterceptor,
+	HttpClient,
 	HttpErrorResponse,
 } from '@angular/common/http';
 import {Injectable, inject} from '@angular/core';
 
-import {Observable, of, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {catchError, filter, switchMap, take} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
-import {ApiResponse} from '@core/modules/http';
 import {TokenStore} from '../stores/token.store';
 import {Router} from '@angular/router';
 import {UserStore} from '../stores';
+import {Token} from '../types/token.dto';
 
 /**
  * Intercepts every HTTP requests made by the Application thanks to `HttpInterceptor`, and adds the following logic:
@@ -28,30 +29,79 @@ export class TokenInterceptor implements HttpInterceptor {
 	private readonly tokenStore = inject(TokenStore);
 	private readonly userStore = inject(UserStore);
 	private readonly router = inject(Router);
+	private readonly http = inject(HttpClient);
+
+	private refreshingToken = false;
+	private refreshTokenSubject: BehaviorSubject<string | null> =
+		new BehaviorSubject<string | null>(null);
 
 	intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
-		if (this.tokenStore.checkToken() && req.url.includes(this.appUrlDomain)) {
-			req = this.addHeader(req, this.tokenStore.getToken());
+		let authReq = req;
+		const token = this.tokenStore.getToken();
+		if (
+			!!token &&
+			req.url.includes(this.appUrlDomain) &&
+			!this.refreshingToken
+		) {
+			authReq = this.addHeader(req, token);
 		}
-		return next.handle(req).pipe(catchError(err => this.handleAuthError(err)));
+
+		return next.handle(authReq).pipe(
+			catchError(err => {
+				const errorStatus = err.error?.code ?? err.code ?? err.status;
+				if (
+					err instanceof HttpErrorResponse &&
+					!authReq.url.includes('auth/login') &&
+					errorStatus === 401
+				) {
+					return this.handleAuthError(authReq, next);
+				}
+				return throwError(() => err);
+			})
+		);
 	}
 
 	/**
-	 * Checks if unauthorized request occurs (except for /login route which specific scenario handle in AuthService's login() method)
+	 * Checks if unauthorized request occurs (except for /login route which specific
+	 * scenario handle in AuthService's login() method)
 	 * If so, interceptor will log out currentUser and redirect him to login page
 	 * @param err error response from the API
 	 * @returns Observable explaining what went wrong with the request
 	 */
-	private handleAuthError(err: HttpErrorResponse): Observable<unknown> {
-		if (
-			(err.error as ApiResponse<null>)?.code === 401 &&
-			err.url !== this.appUrlDomain + '/login'
-		) {
-			// TODO: replace w/ refresh token mechanism
-			this.logOut();
-			return of(err?.message); // or EMPTY may be appropriate here
+	private handleAuthError(
+		request: HttpRequest<any>,
+		next: HttpHandler
+	): Observable<unknown> {
+		if (!this.refreshingToken) {
+			this.refreshingToken = true;
+			this.refreshTokenSubject.next(null);
+			const refreshToken = this.tokenStore.getRefreshToken();
+			if (refreshToken) {
+				return this.http
+					.get<Token>(`${environment.root_url}/auth/refresh`, {
+						headers: {Authorization: 'Bearer ' + refreshToken},
+					})
+					.pipe(
+						switchMap(tokens => {
+							this.refreshingToken = false;
+							this.tokenStore.saveAccessToken(tokens.accessToken);
+							this.refreshTokenSubject.next(tokens.accessToken);
+							return next.handle(this.addHeader(request, tokens.accessToken));
+						}),
+						catchError(err => {
+							console.warn('Failed to refresh tokens, logging out.');
+							this.refreshingToken = false;
+							this.logOut();
+							return throwError(() => err);
+						})
+					);
+			}
 		}
-		return throwError(() => err);
+		return this.refreshTokenSubject.pipe(
+			filter(token => token !== null),
+			take(1),
+			switchMap(token => next.handle(this.addHeader(request, token)))
+		);
 	}
 
 	/**
@@ -67,7 +117,7 @@ export class TokenInterceptor implements HttpInterceptor {
 		req.clone(token ? {setHeaders: {Authorization: 'Bearer ' + token}} : {});
 
 	private logOut = () => {
-		this.tokenStore.clearToken();
+		this.tokenStore.clearTokens();
 		this.userStore.clearUser();
 		this.router
 			.navigate(['/login'])

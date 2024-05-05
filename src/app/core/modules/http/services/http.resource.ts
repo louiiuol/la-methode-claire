@@ -104,7 +104,7 @@ export abstract class HttpResource {
 	 * @param opt request options
 	 * @returns {HttpOutput} request formatted output
 	 */
-	protected create = <T>(dto: unknown, opt?: RequestOptions) =>
+	protected post = <T>(dto: unknown, opt?: RequestOptions) =>
 		this.http
 			.post<ApiResponse<T>>(
 				this.generateURI(null, opt),
@@ -199,7 +199,7 @@ export abstract class HttpResource {
 		uuid?: string | null,
 		opt?: RequestOptions
 	): string =>
-		[this.path, opt?.customResource ?? this.resource, uuid, opt?.path]
+		[this.path, opt?.customResource ?? this.resource, opt?.path, uuid]
 			.filter(x => !!x)
 			.join('/');
 
@@ -221,7 +221,7 @@ export abstract class HttpResource {
 				`${capitalize(common_actions[action])} effectuée avec succès 🎉`
 			);
 		return {
-			value: res.data ?? (res as any),
+			value: res?.data ?? (res as any),
 		};
 	};
 
@@ -246,12 +246,16 @@ export abstract class HttpResource {
 			if (opt?.notifyOnError !== false) this.notifier.error(commonErrorMessage);
 			return of({
 				error: commonErrorMessage,
+				code: res.code,
 			} as HttpOutputEntity<null>);
 		}
 
 		if (res.code === 422) {
 			// TODO Format reasons as ApiFormErrorDTO
-			return of({error: res.error?.reasons} as HttpOutputEntity<null>);
+			return of({
+				error: res.error?.reasons,
+				code: res.code,
+			} as HttpOutputEntity<null>);
 		}
 
 		if (opt?.notifyOnError !== false)
@@ -260,6 +264,7 @@ export abstract class HttpResource {
 			);
 		return of({
 			error: res.message,
+			code: res.code,
 		} as HttpOutputEntity<null>);
 	};
 }
