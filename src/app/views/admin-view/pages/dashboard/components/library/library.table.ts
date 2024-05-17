@@ -55,6 +55,7 @@ export class LibraryTable {
 		this.dialog.open(CourseEditDialog, {
 			data: course,
 			width: '728px',
+			disableClose: true,
 		});
 	}
 

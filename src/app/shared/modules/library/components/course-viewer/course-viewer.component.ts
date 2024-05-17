@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import { JsonPipe, UpperCasePipe } from '@angular/common';
+import {JsonPipe, UpperCasePipe} from '@angular/common';
 
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
@@ -40,15 +40,15 @@ import {take} from 'rxjs';
 @Component({
 	standalone: true,
 	imports: [
-    JsonPipe,
-    ...MaterialModules,
-    ButtonComponent,
-    IconComponent,
-    CardComponent,
-    FileViewerComponent,
-    MessageComponent,
-    UpperCasePipe
-],
+		JsonPipe,
+		...MaterialModules,
+		ButtonComponent,
+		IconComponent,
+		CardComponent,
+		FileViewerComponent,
+		MessageComponent,
+		UpperCasePipe,
+	],
 	selector: 'app-course-viewer',
 	templateUrl: './course-viewer.component.html',
 	styles: [
@@ -117,9 +117,9 @@ export class CourseViewerComponent {
 		[key: string]: {name: string; fileName: string};
 	} = {
 		script: {name: 'Script', fileName: 'script'},
-		lesson: {name: 'Leçon', fileName: 'lecon'},
-		exercice: {name: 'Exercices', fileName: 'exercices'},
-		poster: {name: 'Affiche', fileName: 'affiche'},
+		lesson: {name: 'Leçon', fileName: 'lesson'},
+		exercices: {name: 'Exercices', fileName: 'exercices'},
+		poster: {name: 'Affiche', fileName: 'poster'},
 	};
 
 	protected loading = false;
@@ -190,7 +190,7 @@ export class CourseViewerComponent {
 								name:
 									'Affiche ' + (p.endOfWord ? `-${posterName}` : posterName),
 								path:
-									'affiche-' +
+									'poster-' +
 									posterName.toLocaleUpperCase().replaceAll('/', '-'),
 							})
 						);
@@ -201,13 +201,13 @@ export class CourseViewerComponent {
 				.map(p => {
 					return {
 						name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
-						path: 'affiche-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
+						path: 'poster-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
 					};
 				}),
 			...specificSounds,
 			...(course.sounds?.map(s => ({
 				name: 'Son ' + s,
-				path: 'affiche-son' + s.toLocaleUpperCase(),
+				path: 'poster-sound-' + s.toLocaleUpperCase(),
 			})) ?? [])
 		);
 	}

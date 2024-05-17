@@ -1,4 +1,11 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+	ViewEncapsulation,
+} from '@angular/core';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {FileUploadService} from '@shared/modules/library/services/file-upload.service';
 import {MatButtonModule} from '@angular/material/button';
@@ -32,6 +39,8 @@ export class FileUploadComponent implements OnInit {
 	@Input({required: true}) courseUuid!: string;
 	@Input({required: true}) type!: 'phonemes' | 'sounds' | 'files';
 	@Input() fileExist = false;
+
+	@Output() uploading = new EventEmitter();
 
 	sound?: string;
 
@@ -85,12 +94,7 @@ export class FileUploadComponent implements OnInit {
 					error: (err: any) => {
 						console.log(err);
 						this.progress = 0;
-
-						if (err.error?.message) {
-							this.message = err.error.message;
-						} else {
-							this.message = 'Could not upload the file!';
-						}
+						this.message = err.error?.message ?? 'Could not upload the file!';
 					},
 					complete: () => {
 						this.currentFile = undefined;

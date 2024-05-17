@@ -1,9 +1,19 @@
 @if (course) {
-<h3 class="text-xl text-primary text-center py-3">
-	Mise à jour de la leçon N° {{course.order + 1}}
-</h3>
+<header class="flex w-full justify-between px-4 py-2">
+	<h3 class="text-xl text-primary text-center py-3">
+		Mise à jour de la leçon N° {{course.order + 1}}
+	</h3>
+	<button
+		mat-dialog-close
+		mat-icon-button
+		aria-label="close dialog"
+		color="warn">
+		<mat-icon>close</mat-icon>
+	</button>
+</header>
+
 <div class="px-5 py-3 w-full max-w-xl mx-auto">
-	<mat-form-field class="block mx-auto" (keyup.enter)="updateColor()">
+	<mat-form-field class="!block" (keyup.enter)="updateColor()">
 		<mat-label>Couleur de la leçon</mat-label>
 		<input matInput type="text" [(ngModel)]="color" />
 	</mat-form-field>
@@ -25,19 +35,19 @@
 			<app-file-upload
 				type="files"
 				[courseUuid]="course.uuid"
-				[fieldName]="{value: 'poster', viewValue: 'Affiche'}"
+				[fieldName]="{value: 'affiche', viewValue: 'Affiche'}"
 				[fileExist]="!!course.poster" />
 			<mat-divider />
 			<app-file-upload
 				type="files"
 				[courseUuid]="course.uuid"
-				[fieldName]="{value: 'lesson', viewValue: 'Leçon'}"
+				[fieldName]="{value: 'lecon', viewValue: 'Leçon'}"
 				[fileExist]="!!course.lesson" />
 			<mat-divider />
 			<app-file-upload
 				type="files"
 				[courseUuid]="course.uuid"
-				[fieldName]="{value: 'exercice', viewValue: 'Exercices'}"
+				[fieldName]="{value: 'exercices', viewValue: 'Exercices'}"
 				[fileExist]="!!course.exercice" />
 		</mat-expansion-panel>
 
@@ -61,15 +71,20 @@
 				</mat-panel-description>
 			</mat-expansion-panel-header>
 			@for (sound of course.sounds; track $index) {
-			<span
-				class="flex bg-slate-400 px-5 py-2 rounded-lg w-fit items-center gap-2">
+			<span class="flex bg-slate-400 px-5 rounded-lg w-fit items-center gap-2">
 				Affiche-{{sound|uppercase}}
-				<mat-icon class="cursor-pointer" (click)="removeSound(sound)">
-					close
-				</mat-icon>
+				<button
+					mat-icon-button
+					aria-label="Remove sound"
+					(click)="removeSound(sound)">
+					<mat-icon> close </mat-icon>
+				</button>
 			</span>
 			}
-			<mat-icon class="cursor-pointer" color="primary">add</mat-icon>
+			<button mat-icon-button aria-label="add sound" (click)="addSound()">
+				<mat-icon class="cursor-pointer"> add </mat-icon>
+			</button>
+			<ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
 		</mat-expansion-panel>
 	</mat-accordion>
 </div>
