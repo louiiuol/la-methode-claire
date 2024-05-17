@@ -8,13 +8,14 @@ import {
 import {Injectable, inject} from '@angular/core';
 
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
-import {catchError, filter, switchMap, take} from 'rxjs/operators';
+import {catchError, filter, switchMap, take, tap} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
 import {TokenStore} from '../stores/token.store';
 import {Router} from '@angular/router';
 import {UserStore} from '../stores';
 import {Token} from '../types/token.dto';
+import {ApiResponse} from '@core/modules/http';
 
 /**
  * Intercepts every HTTP requests made by the Application thanks to `HttpInterceptor`, and adds the following logic:
@@ -55,7 +56,8 @@ export class TokenInterceptor implements HttpInterceptor {
 					errorStatus === 401
 				) {
 					return this.handleAuthError(authReq, next);
-				}
+				} else if (authReq.url.includes('auth/refresh') && errorStatus === 401)
+					this.logOut();
 				return throwError(() => err);
 			})
 		);
@@ -72,31 +74,41 @@ export class TokenInterceptor implements HttpInterceptor {
 		request: HttpRequest<any>,
 		next: HttpHandler
 	): Observable<unknown> {
+		console.log('handling');
+
 		if (!this.refreshingToken) {
 			this.refreshingToken = true;
 			this.refreshTokenSubject.next(null);
 			const refreshToken = this.tokenStore.getRefreshToken();
+			console.log('refreshing', refreshToken);
+
 			if (refreshToken) {
 				return this.http
-					.get<Token>(`${environment.root_url}/auth/refresh`, {
+					.get<ApiResponse<Token>>(`${environment.root_url}/auth/refresh`, {
 						headers: {Authorization: 'Bearer ' + refreshToken},
 					})
 					.pipe(
-						switchMap(tokens => {
+						tap(res => {
+							if (res.code != 200) this.logOut();
+						}),
+						catchError(err => {
+							this.logOut();
+							return throwError(() => err);
+						}),
+						switchMap(res => {
+							console.log(res);
 							this.refreshingToken = false;
+							const tokens = res.data as Token;
 							this.tokenStore.saveAccessToken(tokens.accessToken);
 							this.refreshTokenSubject.next(tokens.accessToken);
 							return next.handle(this.addHeader(request, tokens.accessToken));
-						}),
-						catchError(err => {
-							console.warn('Failed to refresh tokens, logging out.');
-							this.refreshingToken = false;
-							this.logOut();
-							return throwError(() => err);
 						})
 					);
+			} else {
+				this.logOut();
 			}
 		}
+
 		return this.refreshTokenSubject.pipe(
 			filter(token => token !== null),
 			take(1),
@@ -117,10 +129,12 @@ export class TokenInterceptor implements HttpInterceptor {
 		req.clone(token ? {setHeaders: {Authorization: 'Bearer ' + token}} : {});
 
 	private logOut = () => {
+		console.warn('Failed to refresh tokens, logging out.');
+		this.refreshingToken = false;
 		this.tokenStore.clearTokens();
 		this.userStore.clearUser();
 		this.router
 			.navigate(['/login'])
-			.catch(err => console.error('Failed to Redirect to [Dashboard]', err));
+			.catch(err => console.error('Failed to Redirect to [Login Page]', err));
 	};
 }
