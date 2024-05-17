@@ -6,8 +6,6 @@ import {FORMLY_CONFIG, FormlyModule} from '@ngx-formly/core';
 import {FormlyMaterialModule} from '@ngx-formly/material';
 import {formlyValidationConfig} from './config/formly-validation-config.fn';
 
-import {MaterialFileInputModule} from 'ngx-material-file-input';
-
 /**
  * Provides modules and config used to simplify form creation and management.
  *
@@ -21,18 +19,12 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
  * @internal
  */
 @NgModule({
-	imports: [
-		ReactiveFormsModule,
-		MaterialFileInputModule,
-		FormlyModule.forRoot(),
-		FormlyMaterialModule,
-	],
+	imports: [ReactiveFormsModule, FormlyModule.forRoot(), FormlyMaterialModule],
 	exports: [
 		CommonModule,
 		ReactiveFormsModule,
 		FormlyModule,
 		FormlyMaterialModule,
-		MaterialFileInputModule,
 	],
 	providers: [
 		{
