@@ -1,7 +1,7 @@
 <section class="bg-yellow-light">
-	<div class="max-w-5xl mx-auto px-16 pt-4 pb-3">
+	<div class="mx-auto px-16 pt-4 pb-3 max-w-5xl">
 		<img
-			class="w-full max-w-xl mx-auto mb-24"
+			class="mx-auto mb-24 w-full max-w-xl"
 			src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/method-intro.png"
 			alt="illustration d'introduction de la méthode" />
 
@@ -10,7 +10,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #ac981a"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<p class="flex-1 !mt-0">
 					S’appliquer à rendre les enfants conscients de tout ce qu’ils savent
 					déjà faire. L’immense majorité des enfants qui arrivent au CP portent
@@ -23,7 +23,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #fcdac6"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<p class="flex-1 !mt-0">
 					Donner aux obstacles que tout enfant rencontre quand il apprend à lire
 					et à écrire une place de choix. Omettre de parler d’obstacles à un
@@ -34,7 +34,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #ef7e64"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<p class="flex-1 !mt-0">
 					Apprendre aux enfants à mémoriser ce qu’ils ont appris. Car mémoriser
 					s’apprend. Apprenons-leur. Mémoriser commence par aller récupérer en
@@ -49,7 +49,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #b2ced8"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<p class="flex-1 !mt-0">
 					Rendre concret pour les enfants qu’apprendre à lire et à écrire ne se
 					fait pas en un jour et que c’est tous les jours que l’on progresse un
@@ -80,13 +80,13 @@
 				un regard neuf sur des principes que nous avons tellement automatisés
 				que nous ne voyons même pas ce qu’il peut y avoir à expliquer.
 			</p>
-			<div class="flex flex-wrap gap-12 my-24 px-9 justify-between">
+			<div class="flex flex-wrap justify-between gap-12 my-24 px-9">
 				<img
-					class="w-64 mx-auto"
+					class="mx-auto w-64"
 					src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/method-obstacles.png"
 					alt="illustration des obstacles" />
 				<img
-					class="w-64 mx-auto"
+					class="mx-auto w-64"
 					src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/method-digrame.png"
 					alt="illustration d'un digrame" />
 			</div>
@@ -97,7 +97,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #fcdac6"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<div class="flex-1">
 					<p class="!mt-0">
 						Une première semaine lors de laquelle on apprend trois choses
@@ -124,7 +124,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #ef7f96"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<div class="flex-1">
 					<p class="!mt-0">
 						Les autres semaines-leçons qui fonctionnent toutes sur le même
@@ -161,10 +161,10 @@
 				exercices et une ou plusieurs affiches.
 			</p>
 			<img
-				class="max-w-2xl mx-auto w-full"
+				class="mx-auto w-full max-w-2xl"
 				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/method-content.png"
 				alt="Illustration du contenu de la Méthode" />
-			<h2>La Méthode : la progression</h2>
+			<h2>La méthode : la progression</h2>
 			<p>
 				Le rythme est d’une leçon par semaine. Ainsi, aux vacances d’automne 15
 				lettres/digrammes auront été vus, comme le recommande le guide orange.
@@ -186,7 +186,7 @@
 				mat-table
 				aria-describedby="Tableau des leçons de la méthode"
 				[dataSource]="lessons"
-				class="w-fit !min-w-fit mx-auto mb-9">
+				class="mx-auto mb-9 w-fit !min-w-fit">
 				<!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
 				<!-- Position Column -->
@@ -198,7 +198,7 @@
 						mat-cell
 						*matCellDef="let element"
 						[style]="{color: element.color}"
-						class="!text-center font-bold">
+						class="font-bold !text-center">
 						{{element.order + 1}}
 					</td>
 				</ng-container>
@@ -235,7 +235,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #b2ced8"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<div class="flex-1">
 					<p class="!mt-0">
 						Pas de semaine de révision réservée dans la mesure où ce travail de
@@ -247,7 +247,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #ac981a"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<div class="flex-1">
 					<p class="!mt-0">
 						Le k, le q, le œ et le w n’apparaissent dans aucune leçon et c’est
@@ -270,7 +270,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #ef7f96"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<div class="flex-1">
 					<p class="!mt-0">
 						Pour <strong></strong> <strong>œ</strong> et <strong>w</strong>,
@@ -287,7 +287,7 @@
 			<div class="relative">
 				<span
 					style="background-color: #fcdac6"
-					class="absolute -left-12 top-2 block w-6 h-6 rounded-full"></span>
+					class="block top-2 -left-12 absolute rounded-full w-6 h-6"></span>
 				<div class="flex-1">
 					<p class="!mt-0">
 						Certaines leçons qui apparaissent dans tous les manuels de lecture
