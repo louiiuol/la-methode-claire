@@ -10,20 +10,26 @@
 		[resettable]="false"
 		[fields]="fields"
 		[validators]="validators">
-		<small>
-			En continuant, vous acceptez les
-			<a
-				class="underline"
-				target="_blank"
-				href="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/pdf/cgv.pdf"
-				>conditions d'utilisations</a
-			>
-			de La Méthode claire.
-		</small>
+		<div
+			class="flex justify-between items-center gap-3 border-orange-500 bg-orange-100 shadow-md my-3 px-3 py-2 border-l-4 rounded-r text-orange-900">
+			<app-icon>warning</app-icon>
+			<div class="flex-1">
+				<small class="w-full text-balance">
+					En continuant, vous acceptez les
+					<a
+						class="underline"
+						target="_blank"
+						href="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/pdf/cgv.pdf"
+						>conditions d'utilisations</a
+					>
+					de La Méthode claire.
+				</small>
+			</div>
+		</div>
 	</app-form>
 	<ng-template #cardFooter>
 		<p
-			class="flex items-center justify-center gap-3 mt-3 w-full text-center text-sm italic">
+			class="flex justify-center items-center gap-3 mt-3 w-full text-center text-sm italic">
 			Vous possédez déjà un compte ?
 			<app-button color="primary" href="/login" label="se connecter" />
 		</p>

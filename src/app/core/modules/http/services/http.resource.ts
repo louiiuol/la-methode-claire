@@ -233,12 +233,14 @@ export abstract class HttpResource {
 		const res = (response.error as ApiResponse<null>) ?? response;
 
 		console.error(
-			`(${new Date().toLocaleDateString()}) [${
-				res?.code ?? 0
-			}] HTTP failed to ${
+			`(${new Date().toLocaleDateString()}) [${res?.code ?? 0}] Failed to ${
 				opt?.customAction ?? action
-			} on [${this.resource.toLocaleUpperCase()}]`,
-			res
+			} on '/${['api', opt?.customResource ?? this.resource, opt?.path]
+				.filter(c => !!c)
+				.join('/')}' with the following params:`,
+			opt?.params,
+			'\n \n Error details:',
+			res.error ?? res
 		);
 
 		const commonErrorMessage = this.statusTranslation[res.code];

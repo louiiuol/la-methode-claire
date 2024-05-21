@@ -1,8 +1,8 @@
 @for (lesson of lessons; track lesson) {
-  <app-button
-    [id]="'course-' + lesson.order"
-    style="border-width: 1px"
-    class="rounded-full leading-none inline-block bg-texture snap-start border-current"
+<app-button
+	[id]="'course-' + lesson.order"
+	style="border-width: 1px"
+	class="inline-block border-current bg-texture snap-start rounded-full leading-none"
 	[style]="
 		'color:' +
 		(lesson.order === currentLesson ? 'white' : lesson.color) +
@@ -12,17 +12,14 @@
 	[class]="{
 		'font-bold': lesson.order === currentLesson,
 		'opacity-60': lesson.order < currentLesson,
-		'opacity-30': (lesson.order > 2 && !hasValidSubscription) || loading,
-		'cursor-not-allowed': lesson.order > 2 && !hasValidSubscription,
+		'opacity-30': loading,
 		'cursor-wait': loading
 	}"
-    type="icon"
-    [disabled]="(lesson.order > 2 && !hasValidSubscription) || loading"
-    matTooltip="Cette leçon est réservée aux abonnés"
-    [matTooltipDisabled]="lesson.order < 3 || hasValidSubscription"
+	type="icon"
+	[disabled]="loading"
 	(click)="
 		!loading && currentLesson !== lesson.order && setCurrentLesson(lesson.order)
 	">
-    {{ (lesson.order + 1).toFixed() }}
-  </app-button>
+	{{ (lesson.order + 1).toFixed() }}
+</app-button>
 }

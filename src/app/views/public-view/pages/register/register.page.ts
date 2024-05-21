@@ -1,4 +1,3 @@
-
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -10,11 +9,12 @@ import {
 	CardComponent,
 	FormComponent,
 	ButtonComponent,
+	IconComponent,
 } from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, ButtonComponent],
+	imports: [CardComponent, FormComponent, ButtonComponent, IconComponent],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

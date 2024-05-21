@@ -1,4 +1,4 @@
-<mat-toolbar class="gap-3 !h-16 justify-start">
+<mat-toolbar class="justify-start gap-3 !h-16">
 	<app-button
 		class="md:hidden"
 		[matMenuTriggerFor]="navigationMenu"
@@ -24,7 +24,7 @@
 
 	@for (link of navigationLinks['public']; track link) {
 	<app-button
-		class="hidden md:block"
+		class="md:block hidden"
 		color="primary"
 		[href]="'/' + link.path"
 		[label]="link.name" />
@@ -69,7 +69,7 @@
 		href="/login"
 		label="se connecter" />
 	<app-button
-		class="hidden xs:block"
+		class="xs:block hidden"
 		type="raised"
 		color="accent"
 		href="/register"
@@ -80,7 +80,7 @@
 		mat-mini-fab
 		color="primary"
 		aria-label="menu utilisateur">
-		<span class="text-base block">
+		<span class="block text-base">
 			{{ currentUser | initials }}
 		</span>
 	</button>
@@ -90,9 +90,6 @@
 		</app-button>
 		<app-button type="menu-item" href="/app/profile" label="profil">
 			<app-icon>person</app-icon>
-		</app-button>
-		<app-button type="menu-item" href="/app/subscription" label="Abonnement">
-			<app-icon>card_membership</app-icon>
 		</app-button>
 		@if (currentUser?.role === 'ADMIN') {
 		<app-button

@@ -1,4 +1,4 @@
-<nav class="flex gap-6 items-center justify-between px-1">
+<nav class="flex justify-between items-center gap-6 px-1">
 	<app-filters [loading]="isLoadingResults" />
 	<div class="flex-1"></div>
 	<button
@@ -117,7 +117,7 @@
 		</table>
 
 		@if (isLoadingResults) {
-		<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+		<mat-progress-bar mode="indeterminate" />
 		}
 	</div>
 	<mat-paginator

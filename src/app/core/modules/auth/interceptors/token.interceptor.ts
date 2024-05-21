@@ -74,13 +74,10 @@ export class TokenInterceptor implements HttpInterceptor {
 		request: HttpRequest<any>,
 		next: HttpHandler
 	): Observable<unknown> {
-		console.log('handling');
-
 		if (!this.refreshingToken) {
 			this.refreshingToken = true;
 			this.refreshTokenSubject.next(null);
 			const refreshToken = this.tokenStore.getRefreshToken();
-			console.log('refreshing', refreshToken);
 
 			if (refreshToken) {
 				return this.http
@@ -96,7 +93,6 @@ export class TokenInterceptor implements HttpInterceptor {
 							return throwError(() => err);
 						}),
 						switchMap(res => {
-							console.log(res);
 							this.refreshingToken = false;
 							const tokens = res.data as Token;
 							this.tokenStore.saveAccessToken(tokens.accessToken);

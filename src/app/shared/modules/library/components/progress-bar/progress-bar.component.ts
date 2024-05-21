@@ -36,7 +36,6 @@ export class ProgressBarComponent implements AfterViewInit {
 
 	@Input({required: true}) lessons!: CourseViewDto[];
 	@Input({required: true}) currentLesson!: number;
-	@Input({required: true}) hasValidSubscription!: boolean;
 	@Input({required: true}) loading!: boolean;
 
 	/**
@@ -51,9 +50,7 @@ export class ProgressBarComponent implements AfterViewInit {
 	}
 
 	setCurrentLesson = (index: number) => {
-		if (index <= 2 || (index > 2 && this.hasValidSubscription)) {
-			this.currentLesson = index;
-			this.selectedLesson.emit(index);
-		}
+		this.currentLesson = index;
+		this.selectedLesson.emit(index);
 	};
 }

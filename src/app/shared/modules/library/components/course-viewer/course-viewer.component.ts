@@ -78,11 +78,6 @@ export class CourseViewerComponent {
 	}
 
 	/**
-	 * Defines if current user has valid subscription. Required to display all content.
-	 */
-	@Input({required: true}) hasValidSubscription!: boolean;
-
-	/**
 	 * Defines current lesson' index for user. This property will be used to check if user
 	 * has already seen this course or not.
 	 */

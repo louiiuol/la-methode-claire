@@ -1,23 +1,23 @@
-@if (course) { @if (course.order < 3 || hasValidSubscription) {
-<mat-drawer-container class="h-full w-full" autosize>
+@if (course) {
+<mat-drawer-container class="w-full h-full" autosize>
 	<mat-drawer
 		#drawer
-		class="px-4 !flex flex-col justify-start items-start w-72"
+		class="!flex flex-col justify-start items-start px-4 w-72"
 		[mode]="platform.isMobileView() ? 'over' : 'side'"
 		opened>
-		<h2 class="text-2xl my-2" [style]="'color:' + course.color">
+		<h2 class="my-2 text-2xl" [style]="'color:' + course.color">
 			Semaine N°{{ (course.order + 1).toFixed() }}
 			<app-icon></app-icon>
 		</h2>
 		<!-- Course States -->
 		@if (course.order < currentUserLesson) {
-		<div class="mb-2 flex gap-3 items-center justify-start">
+		<div class="flex justify-start items-center gap-3 mb-2">
 			<span
-				class="px-2 py-1 bg-green-700 text-white rounded-md w-fit text-sm italic">
+				class="bg-green-700 px-2 py-1 rounded-md w-fit text-sm text-white italic">
 				Leçon terminée
 			</span>
 			<app-icon
-				class="cursor-pointer !mx-0"
+				class="!mx-0 cursor-pointer"
 				color="accent"
 				[class]="{'cursor-wait': loading}"
 				(click)="setCurrentLesson(course.order)"
@@ -26,14 +26,14 @@
 			</app-icon>
 		</div>
 		} @else { @if (course.order > currentUserLesson) {
-		<div class="mb-2 flex gap-3 items-center justify-start">
+		<div class="flex justify-start items-center gap-3 mb-2">
 			<span
 				matTooltip="Vous êtes actuellement dans une leçon précédente à celle-ci"
-				class="px-2 py-1 bg-slate-300 text-gray-700 rounded-md w-fit text-sm italic">
+				class="bg-slate-300 px-2 py-1 rounded-md w-fit text-gray-700 text-sm italic">
 				Leçon en attente
 			</span>
 			<app-icon
-				class="cursor-pointer !mx-0"
+				class="!mx-0 cursor-pointer"
 				color="accent"
 				[class]="{'cursor-wait': loading}"
 				(click)="setCurrentLesson(course.order)"
@@ -42,13 +42,13 @@
 			</app-icon>
 		</div>
 		} @else {
-		<div class="mb-2 flex gap-3 items-center justify-start">
+		<div class="flex justify-start items-center gap-3 mb-2">
 			<span
-				class="px-2 py-1 bg-primary text-white rounded-md w-fit text-sm italic">
+				class="bg-primary px-2 py-1 rounded-md w-fit text-sm text-white italic">
 				Leçon en cours
 			</span>
 			<app-icon
-				class="cursor-pointer !mx-0"
+				class="!mx-0 cursor-pointer"
 				[class]="{'cursor-wait': loading}"
 				(click)="setCurrentLesson(course.order + 1)"
 				matTooltip="Marquer comme terminée">
@@ -57,11 +57,11 @@
 		</div>
 		} }
 		<hr class="mt-3 mb-6" />
-		<h3 class="text-sm italic !mb-3">Graphème(s)</h3>
-		<div class="text-sm flex gap-3 flex-wrap" style="max-width: 14rem">
+		<h3 class="!mb-3 text-sm italic">Graphème(s)</h3>
+		<div class="flex flex-wrap gap-3 text-sm" style="max-width: 14rem">
 			@for (phoneme of course.phonemes; track phoneme) {
 			<span
-				class="py-1 px-2 h-8 rounded-md bg-primary text-white flex items-center">
+				class="flex items-center bg-primary px-2 py-1 rounded-md h-8 text-white">
 				@if (phoneme.endOfWord) {
 				<span>-</span>
 				}
@@ -75,15 +75,15 @@
 			}
 		</div>
 		<hr class="mt-3 mb-6" />
-		<div class="flex items-center justify-between">
-			<h3 class="text-sm italic !mb-1">Liste des fichiers</h3>
+		<div class="flex justify-between items-center">
+			<h3 class="!mb-1 text-sm italic">Liste des fichiers</h3>
 		</div>
 		<mat-list #files role="list">
 			@for (file of filesAvailable; track file) {
 			<mat-list-item class="!px-0">
 				<div class="flex justify-between items-center gap-2">
 					<div
-						class="text-sm cursor-pointer flex items-center justify-between flex-1 hover:bg-slate-200 px-3 py-4 rounded-lg gap-3"
+						class="flex flex-1 justify-between items-center gap-3 hover:bg-slate-200 px-3 py-4 rounded-lg text-sm cursor-pointer"
 						[class]="{
 							'cursor-wait': loading,
 							'active': selectedFile?.name === file.name
@@ -126,21 +126,4 @@
 		(fileLoaded)="fileLoaded()"
 		[fileName]="[course.order + 1, 'files', selectedFile?.path].join('/')" />
 </mat-drawer-container>
-} @else {
-<div class="max-w-md mx-auto mt-9 mb-4">
-	<h2 class="text-center text-2xl mb-3">Accès réservé aux abonnés !</h2>
-	<img
-		class="max-w-xs my-2 mx-auto"
-		src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/access-denied.gif"
-		alt="Accès non autorisé" />
-	<p class="text-lg text-primary text-balance text-center my-4">
-		Cette leçon n'est accessible uniquement pour les membres abonnés! Pour
-		accéder au reste du contenu, abonnez-vous !
-	</p>
-	<app-button
-		type="raised"
-		color="primary"
-		label="Voir l'abonnement"
-		href="/app/subscription" />
-</div>
-} }
+}

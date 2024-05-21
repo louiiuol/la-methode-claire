@@ -1,11 +1,9 @@
-
 import {Component} from '@angular/core';
 import {ButtonComponent, CardComponent} from '@shared/components';
-import {FormulaCardComponent} from 'src/app/views/teacher-view/pages/subscription/formula-card/formula-card.component';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, ButtonComponent, FormulaCardComponent],
+	imports: [CardComponent, ButtonComponent],
 	templateUrl: 'home.page.html',
 })
 export class HomePage {

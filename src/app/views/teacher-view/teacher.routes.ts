@@ -20,13 +20,6 @@ export const TEACHER_ROUTES: Routes = [
 				loadComponent: () =>
 					import('./pages/profile/profile.page').then(m => m.ProfilePage),
 			},
-			{
-				path: 'subscription',
-				loadComponent: () =>
-					import('./pages/subscription/subscription.page').then(
-						m => m.SubscriptionPage
-					),
-			},
 		],
 	},
 ];

@@ -18,9 +18,11 @@ export class InitialsPipe implements PipeTransform {
 			| {email: string; firstName: string | nullish; lastName: string | nullish}
 			| nullish
 	): string {
-		if (!user) return '??';
-		return user.firstName && user.lastName
-			? user.firstName.charAt(0) + user.lastName.charAt(0)
-			: user.email.charAt(0);
+		if (!user) return '--';
+		const name =
+			user.firstName && user.lastName
+				? user.firstName.charAt(0) + user.lastName.charAt(0)
+				: user.email.charAt(0);
+		return name.toLocaleUpperCase();
 	}
 }
