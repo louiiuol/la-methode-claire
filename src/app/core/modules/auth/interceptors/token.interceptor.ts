@@ -129,6 +129,7 @@ export class TokenInterceptor implements HttpInterceptor {
 		this.refreshingToken = false;
 		this.tokenStore.clearTokens();
 		this.userStore.clearUser();
+		location.reload();
 		this.router
 			.navigate(['/login'])
 			.catch(err => console.error('Failed to Redirect to [Login Page]', err));
