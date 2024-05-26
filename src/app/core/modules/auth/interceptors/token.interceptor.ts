@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import {Injectable, inject} from '@angular/core';
 
-import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import {catchError, filter, switchMap, take, tap} from 'rxjs/operators';
 
 import {environment} from '@env/environment';
@@ -52,12 +52,17 @@ export class TokenInterceptor implements HttpInterceptor {
 				const errorStatus = err.error?.code ?? err.code ?? err.status;
 				if (
 					err instanceof HttpErrorResponse &&
-					!authReq.url.includes('auth/login') &&
+					!['login', 'refresh'].includes(authReq.url.split('/').at(-1) ?? '') &&
 					errorStatus === 401
 				) {
 					return this.handleAuthError(authReq, next);
-				} else if (authReq.url.includes('auth/refresh') && errorStatus === 401)
+				} else if (
+					authReq.url.includes('auth/refresh') &&
+					errorStatus === 401
+				) {
 					this.logOut();
+					return of(null);
+				}
 				return throwError(() => err);
 			})
 		);

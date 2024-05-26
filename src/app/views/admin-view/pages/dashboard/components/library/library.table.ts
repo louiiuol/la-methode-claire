@@ -12,7 +12,8 @@ import {MatTableModule} from '@angular/material/table';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {MatDialog} from '@angular/material/dialog';
-import {CourseEditDialog} from './course-edit/course-edit.dialog';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {CourseEditComponent} from '../../../../../../shared/modules/library/components/course-edit/course-edit.component';
 
 @Component({
 	standalone: true,
@@ -25,6 +26,8 @@ import {CourseEditDialog} from './course-edit/course-edit.dialog';
 		AsyncPipe,
 		MatTableModule,
 		UpperCasePipe,
+		MatSidenavModule,
+		CourseEditComponent,
 	],
 	providers: [LibraryService],
 	templateUrl: 'library.table.html',
@@ -33,6 +36,8 @@ export class LibraryTable {
 	@HostBinding('class') class = 'flex flex-col mx-auto w-full pt-1 px-2';
 
 	loading = signal(false);
+
+	selectedLesson: any;
 
 	protected readonly lessons$ = inject(LibraryService).getLibrary();
 	protected readonly displayedColumns: string[] = [
@@ -47,16 +52,16 @@ export class LibraryTable {
 
 	constructor(
 		private readonly libraryForAdmin: LibraryAdminService,
-		private readonly notifier: NotificationService,
-		private readonly dialog: MatDialog
+		private readonly notifier: NotificationService
 	) {}
 
 	protected editCourse(course: CourseViewDto) {
-		this.dialog.open(CourseEditDialog, {
-			data: course,
-			width: '728px',
-			disableClose: true,
-		});
+		this.selectedLesson = course;
+		// this.dialog.open(CourseEditDialog, {
+		// 	data: course,
+		// 	width: '728px',
+		// 	disableClose: true,
+		// });
 	}
 
 	protected refresh = () => {

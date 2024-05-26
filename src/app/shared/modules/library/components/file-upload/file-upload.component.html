@@ -1,0 +1,43 @@
+<div class="flex gap-3 items-center py-3">
+	<strong>{{ fieldName.viewValue }}</strong>
+	@if (fileExist) {
+		<div class="flex gap-2">
+			<p>Fichier en ligne</p>
+			<div class="flex gap-1">
+				<mat-icon class="cursor-pointer" color="warn" (click)="deleteFile()">
+					delete
+				</mat-icon>
+			</div>
+		</div>
+	} @else {
+		<div class="block w-96">
+			<div class="flex gap-2 items-center">
+				<mat-form-field id="form-field-file" appearance="outline">
+					<input matInput [value]="fileName" />
+
+					<input
+						type="file"
+						id="fileInput"
+						(change)="selectFile($event)"
+						name="fileInput" />
+				</mat-form-field>
+				@if (currentFile) {
+					<button
+						type="button"
+						mat-flat-button
+						color="primary"
+						[disabled]="!currentFile"
+						(click)="upload()">
+						Ajouter
+					</button>
+				}
+			</div>
+		</div>
+
+		@if (message) {
+			<div class="message">
+				{{ message }}
+			</div>
+		}
+	}
+</div>

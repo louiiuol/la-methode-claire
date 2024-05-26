@@ -1,0 +1,40 @@
+<div class="flex justify-between">
+	<h2 class="text-xl text-primary">Ajout d'un nouveau son</h2>
+	<mat-icon class="cursor-pointer" color="warn" mat-dialog-close
+		>close</mat-icon
+	>
+</div>
+<div class="mx-auto flex flex-col w-fit items-center">
+	<mat-form-field>
+		<mat-label>Son</mat-label>
+		<input [(ngModel)]="sound" matInput />
+	</mat-form-field>
+	<div class="block w-96">
+		<div class="flex gap-2 items-center">
+			<mat-form-field id="form-field-file" appearance="outline">
+				<input matInput [value]="fileName" />
+
+				<input
+					type="file"
+					id="fileInput"
+					(change)="selectFile($event)"
+					name="fileInput" />
+			</mat-form-field>
+		</div>
+	</div>
+
+	@if (message) {
+		<div class="message">
+			{{ message }}
+		</div>
+	}
+
+	<button
+		type="button"
+		mat-flat-button
+		color="primary"
+		[disabled]="!currentFile"
+		(click)="upload()">
+		Ajouter
+	</button>
+</div>

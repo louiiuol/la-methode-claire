@@ -2,12 +2,10 @@ import {
 	Component,
 	EventEmitter,
 	Input,
-	OnInit,
 	Output,
 	ViewEncapsulation,
 } from '@angular/core';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
-import {FileUploadService} from '@shared/modules/library/services/file-upload.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -34,25 +32,17 @@ import {LibraryAdminService} from 'src/app/views/admin-view/services/library.ser
 	styleUrls: ['./file-upload.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent {
 	@Input({required: true}) fieldName!: {value: string; viewValue: string};
 	@Input({required: true}) courseUuid!: string;
-	@Input({required: true}) type!: 'phonemes' | 'sounds' | 'files';
 	@Input() fileExist = false;
 
-	@Output() uploading = new EventEmitter();
-
-	sound?: string;
-
-	currentFile?: File;
-	progress = 0;
-	message = '';
-
-	fileName = 'Ajouter un pdf';
+	protected currentFile?: File;
+	protected progress = 0;
+	protected message = '';
+	protected fileName = 'Ajouter un pdf';
 
 	constructor(private uploadService: LibraryAdminService) {}
-
-	ngOnInit(): void {}
 
 	selectFile(event: any): void {
 		this.progress = 0;
@@ -75,13 +65,10 @@ export class FileUploadComponent implements OnInit {
 
 	upload(): void {
 		if (this.currentFile) {
+			const formData: FormData = new FormData();
+			formData.append(this.fieldName.value, this.currentFile);
 			this.uploadService
-				.upload(
-					this.courseUuid,
-					this.currentFile,
-					this.fieldName.value,
-					this.type
-				)
+				.upload(this.courseUuid, formData, this.fieldName.value, 'files')
 				.subscribe({
 					next: (event: any) => {
 						if (event.type === HttpEventType.UploadProgress) {

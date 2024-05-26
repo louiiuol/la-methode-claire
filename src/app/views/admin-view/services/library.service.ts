@@ -18,17 +18,15 @@ export class LibraryAdminService extends HttpResource {
 
 	upload(
 		uuid: string,
-		file: File,
-		property: string,
-		type: string
+		formData: FormData,
+		type: string,
+		method = 'PATCH'
 	): Observable<HttpEvent<any>> {
-		const formData: FormData = new FormData();
-		formData.append(property, file);
 		const path = [this.path, 'admin/courses', uuid, this.getTypeUrl(type)]
 			.filter(x => !!x)
 			.join('/');
 
-		const req = new HttpRequest('PATCH', path, formData, {
+		const req = new HttpRequest(method, path, formData, {
 			reportProgress: true,
 			responseType: 'json',
 		});
