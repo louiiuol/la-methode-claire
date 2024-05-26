@@ -73,9 +73,17 @@ export class CourseEditComponent implements OnInit {
 	}
 
 	addSound() {
-		this.dialog.open(AddSoundComponent, {
-			data: {courseUuid: this.course.uuid},
-		});
+		this.dialog
+			.open(AddSoundComponent, {
+				data: {courseUuid: this.course.uuid},
+			})
+			.afterClosed()
+			.subscribe(sound => {
+				if (sound) {
+					this.course.sounds ??= [];
+					this.course.sounds.push(sound);
+				}
+			});
 	}
 
 	removeSound(sound: string) {

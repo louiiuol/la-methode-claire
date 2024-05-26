@@ -1,10 +1,4 @@
-import {
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-	ViewEncapsulation,
-} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';

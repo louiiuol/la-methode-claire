@@ -7,7 +7,11 @@ import {
 } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {MAT_DIALOG_DATA, MatDialogClose} from '@angular/material/dialog';
+import {
+	MAT_DIALOG_DATA,
+	MatDialogClose,
+	MatDialogRef,
+} from '@angular/material/dialog';
 import {MatDivider} from '@angular/material/divider';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
@@ -40,7 +44,8 @@ export class AddSoundComponent {
 	protected sound = '';
 	constructor(
 		@Inject(MAT_DIALOG_DATA) protected data: {courseUuid: string},
-		private uploadService: LibraryAdminService
+		private uploadService: LibraryAdminService,
+		private readonly dialogRef: MatDialogRef<AddSoundComponent>
 	) {}
 
 	selectFile(event: any): void {
@@ -78,6 +83,7 @@ export class AddSoundComponent {
 					},
 					complete: () => {
 						this.currentFile = undefined;
+						this.dialogRef.close(this.sound);
 					},
 				});
 		}
