@@ -1,4 +1,3 @@
-
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -8,13 +7,13 @@ import {
 	inject,
 	signal,
 } from '@angular/core';
+import {MatButton} from '@angular/material/button';
 import {ActivatedRoute} from '@angular/router';
 
 import {FieldConfig} from '@core';
 import {
 	CardComponent,
 	FormComponent,
-	ButtonComponent,
 	MessageComponent,
 } from '@shared/components';
 import {PasswordService, PasswordModule} from '@shared/modules/password';
@@ -26,12 +25,12 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 @Component({
 	standalone: true,
 	imports: [
-    CardComponent,
-    FormComponent,
-    ButtonComponent,
-    MessageComponent,
-    forwardRef(() => PasswordModule)
-],
+		CardComponent,
+		FormComponent,
+		MessageComponent,
+		forwardRef(() => PasswordModule),
+		MatButton,
+	],
 	templateUrl: './reset-password.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

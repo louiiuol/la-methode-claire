@@ -30,7 +30,7 @@ export class IconComponent implements OnChanges {
 	 * Defines icon to be shown. (can be updated)
 	 * * Check assets/images/svg folder for available icons
 	 */
-	@Input() svg?: string;
+	@Input({required: true}) svg!: string;
 
 	@Input() color?: string;
 

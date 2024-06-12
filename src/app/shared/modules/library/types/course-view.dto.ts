@@ -12,6 +12,7 @@ export interface CourseViewDto {
 	lesson?: boolean;
 	exercice?: boolean;
 	poster?: boolean;
+	posterNames?: string[];
 	sounds?: string[];
 	words?: string[];
 	[key: string]: any;

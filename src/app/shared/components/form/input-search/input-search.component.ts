@@ -11,11 +11,11 @@ import {
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {ButtonComponent, IconComponent} from '@shared/components/elements';
 import {SearchRules} from './types/search-rules';
 import {SearchField} from './types/search-field';
 import {MatSelectModule} from '@angular/material/select';
 import {nullish} from '@core';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
 	standalone: true,
@@ -26,8 +26,7 @@ import {nullish} from '@core';
 		MatFormFieldModule,
 		MatSelectModule,
 		MatInputModule,
-		ButtonComponent,
-		IconComponent,
+		MatIcon,
 	],
 	templateUrl: './input-search.component.html',
 	styleUrls: ['./input-search.component.scss'],

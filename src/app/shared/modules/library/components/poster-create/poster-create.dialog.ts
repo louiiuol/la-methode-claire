@@ -31,27 +31,25 @@ import {LibraryAdminService} from 'src/app/views/admin-view/services/library.ser
 		MatButton,
 	],
 	providers: [LibraryAdminService],
-	templateUrl: './add-sound.component.html',
+	templateUrl: './poster-create.dialog.html',
 	styleUrls: ['../file-upload/file-upload.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddSoundComponent {
+export class PosterCreateDialog {
 	@HostBinding('class') class = '!block px-6 py-3';
+
 	protected currentFile?: File;
-	protected progress = 0;
-	protected message = '';
 	protected fileName = 'Ajouter un pdf';
-	protected sound = '';
+	protected name = '';
+
 	constructor(
-		@Inject(MAT_DIALOG_DATA) protected data: {courseUuid: string},
+		@Inject(MAT_DIALOG_DATA)
+		protected data: {courseUuid: string; type: 'sounds' | 'posters'},
 		private uploadService: LibraryAdminService,
-		private readonly dialogRef: MatDialogRef<AddSoundComponent>
+		private readonly dialogRef: MatDialogRef<PosterCreateDialog>
 	) {}
 
 	selectFile(event: any): void {
-		this.progress = 0;
-		this.message = '';
-
 		if (event.target.files?.[0]) {
 			const file: File = event.target.files[0];
 			this.currentFile = file;
@@ -65,27 +63,16 @@ export class AddSoundComponent {
 		if (this.currentFile) {
 			const formData: FormData = new FormData();
 			formData.append('file', this.currentFile);
-			formData.append('name', this.sound);
-			this.uploadService
-				.upload(this.data.courseUuid, formData, 'sounds', 'POST')
-				.subscribe({
-					next: (event: any) => {
-						if (event.type === HttpEventType.UploadProgress) {
-							this.progress = Math.round((100 * event.loaded) / event.total);
-						} else if (event instanceof HttpResponse) {
-							this.message = event.body.message;
-						}
-					},
-					error: (err: any) => {
-						console.log(err);
-						this.progress = 0;
-						this.message = err.error?.message ?? 'Could not upload the file!';
-					},
-					complete: () => {
-						this.currentFile = undefined;
-						this.dialogRef.close(this.sound);
-					},
-				});
+			formData.append('name', this.name);
+			const action = this.isPoster()
+				? this.uploadService.createPoster(this.data.courseUuid, formData)
+				: this.uploadService.createSound(this.data.courseUuid, formData);
+			action.subscribe(() => {
+				this.currentFile = undefined;
+				this.dialogRef.close(this.name);
+			});
 		}
 	}
+
+	isPoster = () => this.data.type == 'posters';
 }

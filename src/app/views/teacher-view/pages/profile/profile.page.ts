@@ -1,15 +1,12 @@
 import {Component, HostBinding, inject} from '@angular/core';
 
-import { AsyncPipe } from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {MatExpansionModule} from '@angular/material/expansion';
 
-import {
-	FormComponent,
-	ButtonComponent,
-	LoaderComponent,
-} from '@shared/components';
+import {FormComponent, LoaderComponent} from '@shared/components';
 import {AuthService, FieldConfig} from '@core';
 import {PasswordModule, PasswordService} from '@shared/modules/password';
+import {MatButton} from '@angular/material/button';
 
 /**
  * Profile View, allows user to see and update their information
@@ -17,13 +14,13 @@ import {PasswordModule, PasswordService} from '@shared/modules/password';
 @Component({
 	standalone: true,
 	imports: [
-    AsyncPipe,
-    FormComponent,
-    ButtonComponent,
-    LoaderComponent,
-    MatExpansionModule,
-    PasswordModule
-],
+		AsyncPipe,
+		FormComponent,
+		LoaderComponent,
+		MatExpansionModule,
+		MatButton,
+		PasswordModule,
+	],
 	templateUrl: './profile.page.html',
 })
 export class ProfilePage {

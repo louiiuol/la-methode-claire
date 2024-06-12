@@ -9,14 +9,20 @@ import {
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
-const MaterialModules = [MatToolbarModule, MatMenuModule, MatButtonModule];
+const MaterialModules = [
+	MatToolbarModule,
+	MatMenuModule,
+	MatButtonModule,
+	MatIcon,
+];
 
 import {AuthService, PlatformService} from '@core';
-import {ButtonComponent, IconComponent} from '@shared/components';
+import {IconComponent} from '@shared/components';
 import {navigationLinks} from 'src/app/app.routes';
 import {RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {InitialsPipe} from '../../pipes/initials.pipe';
+import {MatIcon} from '@angular/material/icon';
 
 /**
  * Logged views global header
@@ -27,13 +33,7 @@ import {InitialsPipe} from '../../pipes/initials.pipe';
 	standalone: true,
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	imports: [
-		...MaterialModules,
-		IconComponent,
-		ButtonComponent,
-		RouterLink,
-		InitialsPipe,
-	],
+	imports: [...MaterialModules, IconComponent, RouterLink, InitialsPipe],
 })
 export class HeaderComponent {
 	/**

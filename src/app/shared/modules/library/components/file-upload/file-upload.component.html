@@ -1,4 +1,4 @@
-<div class="flex gap-3 items-center py-3">
+<div class="flex items-center gap-3 py-3">
 	<strong>{{ fieldName.viewValue }}</strong>
 	@if (fileExist) {
 		<div class="flex gap-2">
@@ -11,7 +11,7 @@
 		</div>
 	} @else {
 		<div class="block w-96">
-			<div class="flex gap-2 items-center">
+			<div class="flex flex-wrap items-center gap-2">
 				<mat-form-field id="form-field-file" appearance="outline">
 					<input matInput [value]="fileName" />
 
@@ -34,11 +34,5 @@
 				}
 			</div>
 		</div>
-
-		@if (message) {
-			<div class="message">
-				{{ message }}
-			</div>
-		}
 	}
 </div>

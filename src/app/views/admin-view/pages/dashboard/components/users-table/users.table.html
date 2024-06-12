@@ -5,7 +5,7 @@
 		mat-icon-button
 		[matMenuTriggerFor]="adminTools"
 		aria-label="outils admin">
-		<app-icon color="primary">more_vert</app-icon>
+		<mat-icon color="primary">more_vert</mat-icon>
 	</button>
 	<mat-menu #adminTools="matMenu" xPosition="before">
 		<button mat-menu-item (click)="exportEmails()">Exporter les emails</button>
@@ -123,5 +123,6 @@
 	<mat-paginator
 		[length]="resultsLength"
 		[pageSize]="filters.size"
+		[pageSizeOptions]="[10, 25, 50, 100]"
 		[pageIndex]="filters.page" />
 </section>

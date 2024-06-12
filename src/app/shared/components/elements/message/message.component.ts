@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import {NotificationSeverity} from '@core/modules/notification';
-import {IconComponent} from '../icon/icon.component';
+import {MatIcon} from '@angular/material/icon';
 
 const MESSAGE_DICTIONARY = {
 	info: {icon: 'info', color: 'bg-blue-100 border-blue-500 text-blue-900'},
@@ -30,7 +30,7 @@ const MESSAGE_DICTIONARY = {
  */
 @Component({
 	standalone: true,
-	imports: [IconComponent],
+	imports: [MatIcon],
 	selector: 'app-message',
 	templateUrl: 'message.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

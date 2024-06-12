@@ -59,6 +59,14 @@ $lmc-light-theme: mat.define-light-theme(
 	background-color: #f6f8ed !important;
 }
 
+.mat-disabled {
+	color: rgb(158, 158, 158);
+}
+
+.mat-white {
+	color: whitesmoke;
+}
+
 .bg-texture {
 	background-image: repeating-linear-gradient(
 		223deg,

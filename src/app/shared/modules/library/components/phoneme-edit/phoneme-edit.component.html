@@ -1,0 +1,75 @@
+<div class="flex justify-between items-center gap-3">
+	<h2 class="text-primary text-xl">{{ title }}</h2>
+	<mat-icon class="cursor-pointer" color="warn" mat-dialog-close>
+		close
+	</mat-icon>
+</div>
+<div class="flex flex-col mx-auto my-3 w-fit">
+	<div class="flex gap-2">
+		<mat-form-field>
+			<mat-label>Nom du graphème</mat-label>
+			<input required [(ngModel)]="data.name" matInput />
+		</mat-form-field>
+		<mat-checkbox [(ngModel)]="data.endOfWord">
+			<small>Fin de mot ?</small>
+		</mat-checkbox>
+	</div>
+
+	<mat-form-field class="example-chip-list">
+		<mat-label>Son(s) associés</mat-label>
+		<mat-chip-grid #chipGrid aria-label="associer des sons">
+			@for (sound of data.sounds; track sound) {
+				<mat-chip-row (removed)="removeSound(sound)">
+					{{ sound }}
+					<button matChipRemove [attr.aria-label]="'remove ' + sound">
+						<mat-icon>cancel</mat-icon>
+					</button>
+				</mat-chip-row>
+			}
+			<input
+				placeholder="Ajouter des sons."
+				[matChipInputFor]="chipGrid"
+				[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+				[matChipInputAddOnBlur]="true"
+				(matChipInputTokenEnd)="addSound($event)" />
+		</mat-chip-grid>
+	</mat-form-field>
+	<mat-form-field>
+		<mat-label>Infos complémentaires</mat-label>
+		<input [(ngModel)]="data.info" matInput />
+	</mat-form-field>
+	<div
+		class="flex flex-col gap-2 border-slate-600 my-2 px-4 pt-1 pb-2 border rounded-lg w-full">
+		@if (data.poster) {
+			<div class="flex justify-between gap-3">
+				<p class="w-fit">Affiche associée</p>
+				<div class="flex gap-1">
+					<mat-icon
+						class="cursor-pointer"
+						color="warn"
+						(click)="deletePoster()">
+						delete
+					</mat-icon>
+				</div>
+			</div>
+		} @else {
+			<p class="font-bold">Ajouter un poster</p>
+			<input
+				type="file"
+				id="fileInput"
+				accept="application/pdf"
+				(change)="selectFile($event)"
+				name="fileInput" />
+		}
+	</div>
+</div>
+<div class="flex justify-center items-center gap-3">
+	<button
+		type="button"
+		mat-flat-button
+		color="primary"
+		[disabled]="!data.name"
+		(click)="submit()">
+		{{ action }}
+	</button>
+</div>

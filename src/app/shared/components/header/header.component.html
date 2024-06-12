@@ -1,18 +1,21 @@
 <mat-toolbar class="justify-start gap-3 !h-16">
-	<app-button
-		class="md:hidden"
+	<button
+		mat-icon-button
+		class="md:!hidden"
 		[matMenuTriggerFor]="navigationMenu"
-		aria-label="Afficher le menu pour mobile"
-		type="icon">
-		<app-icon>menu</app-icon>
-	</app-button>
+		aria-label="Afficher le menu pour mobile">
+		<mat-icon>menu</mat-icon>
+	</button>
 	<mat-menu #navigationMenu="matMenu">
 		@for (link of navigationLinks['public']; track link) {
-		<app-button type="menu-item" [href]="'/' + link.path" [label]="link.name" />
-		} @if (!currentUser?.uuid) {
-		<hr />
-		<app-button type="menu-item" href="/login" label="se connecter" />
-		<app-button type="menu-item" href="/register" label="s'inscrire" />
+			<a mat-menu-item [routerLink]="'/' + link.path">
+				{{ link.name }}
+			</a>
+		}
+		@if (!currentUser?.uuid) {
+			<hr />
+			<a mat-menu-item routerLink="/login">se connecter</a>
+			<a mat-menu-item routerLink="/register">s'inscrire</a>
 		}
 	</mat-menu>
 
@@ -23,25 +26,27 @@
 		routerLinkActive="font-bold" />
 
 	@for (link of navigationLinks['public']; track link) {
-	<app-button
-		class="md:block hidden"
-		color="primary"
-		[href]="'/' + link.path"
-		[label]="link.name" />
+		<a
+			mat-button
+			class="md:!inline-block !hidden"
+			color="primary"
+			[routerLink]="'/' + link.path">
+			{{ link.name }}
+		</a>
 	}
 
 	<span class="flex-1"></span>
 
-	<app-button
+	<button
+		mat-icon-button
 		[matMenuTriggerFor]="helpMenu"
-		aria-label="Afficher le menu d'aide"
-		type="icon">
-		<app-icon color="accent">help</app-icon>
-	</app-button>
+		aria-label="Afficher le menu d'aide">
+		<mat-icon color="accent">help</mat-icon>
+	</button>
 
 	<mat-menu #helpMenu="matMenu">
 		<button mat-menu-item href="mailto:methode.claire@gmail.com">
-			<app-icon>mail</app-icon>
+			<mat-icon>mail</mat-icon>
 			contact
 		</button>
 
@@ -49,7 +54,7 @@
 			mat-menu-item
 			target="_blank"
 			href="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/pdf/cgv.pdf">
-			<app-icon>local_police</app-icon>
+			<mat-icon>local_police</mat-icon>
 			Conditions générales de ventes
 		</a>
 
@@ -57,56 +62,49 @@
 			mat-menu-item
 			target="_blank"
 			href="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/pdf/mentions-legales.pdf">
-			<app-icon>gavel</app-icon>
+			<mat-icon>gavel</mat-icon>
 			Mentions légales
 		</a>
 	</mat-menu>
 
 	@if (!currentUser?.uuid) {
-	<app-button
-		type="raised"
-		color="primary"
-		href="/login"
-		label="se connecter" />
-	<app-button
-		class="xs:block hidden"
-		type="raised"
-		color="accent"
-		href="/register"
-		label="s'inscrire" />
+		<a mat-raised-button color="primary" href="/login"> se connecter </a>
+		<a
+			mat-raised-button
+			class="md:!inline-block !hidden"
+			color="accent"
+			href="/register">
+			s'inscrire
+		</a>
 	} @else {
-	<button
-		[matMenuTriggerFor]="userMenu"
-		mat-mini-fab
-		color="primary"
-		aria-label="menu utilisateur">
-		<span class="block text-base">
-			{{ currentUser | initials }}
-		</span>
-	</button>
-	<mat-menu #userMenu="matMenu">
-		<app-button type="menu-item" href="/app/dashboard" label="Tableau de bord">
-			<app-icon>dashboard</app-icon>
-		</app-button>
-		<app-button type="menu-item" href="/app/profile" label="profil">
-			<app-icon>person</app-icon>
-		</app-button>
-		@if (currentUser?.role === 'ADMIN') {
-		<app-button
-			type="menu-item"
-			href="/back-office/dashboard"
-			label="back-office"
-			color="accent">
-			<app-icon>settings</app-icon>
-		</app-button>
-		}
-		<app-button
-			type="menu-item"
-			color="warn"
-			(click)="logOut()"
-			label="se déconnecter">
-			<app-icon>logout</app-icon>
-		</app-button>
-	</mat-menu>
+		<button
+			[matMenuTriggerFor]="userMenu"
+			mat-mini-fab
+			color="primary"
+			aria-label="menu utilisateur">
+			<span class="block text-base">
+				{{ currentUser | initials }}
+			</span>
+		</button>
+		<mat-menu #userMenu="matMenu">
+			<a mat-menu-item href="/app/dashboard">
+				<mat-icon>dashboard</mat-icon>
+				Tableau de bord
+			</a>
+			<a mat-menu-item href="/app/profile">
+				<mat-icon>person</mat-icon>
+				Profil
+			</a>
+			@if (currentUser?.role === 'ADMIN') {
+				<a mat-menu-item href="/back-office/dashboard" class="text-accent">
+					<mat-icon>settings</mat-icon>
+					Back-Office
+				</a>
+			}
+			<button mat-menu-item class="text-warn" (click)="logOut()">
+				<mat-icon>logout</mat-icon>
+				se déconnecter
+			</button>
+		</mat-menu>
 	}
 </mat-toolbar>

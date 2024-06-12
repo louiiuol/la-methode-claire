@@ -8,11 +8,7 @@ import {
 	Output,
 } from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {
-	ButtonComponent,
-	LoaderComponent,
-	MessageComponent,
-} from '@shared/components';
+import {LoaderComponent, MessageComponent} from '@shared/components';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
@@ -25,6 +21,7 @@ import {
 	APP_FORM_GROUPS,
 	takeUntilDestroyed,
 } from '@core';
+import {MatButton} from '@angular/material/button';
 
 /**
  * Standalone component used to create HTML form which will be translated and errors that
@@ -54,7 +51,7 @@ import {
 	imports: [
 		FormModule,
 		LoaderComponent,
-		ButtonComponent,
+		MatButton,
 		MatTooltipModule,
 		MatProgressBarModule,
 		MessageComponent,

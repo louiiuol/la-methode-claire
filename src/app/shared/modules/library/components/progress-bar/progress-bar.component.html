@@ -1,25 +1,27 @@
 @for (lesson of lessons; track lesson) {
-<app-button
-	[id]="'course-' + lesson.order"
-	style="border-width: 1px"
-	class="inline-block border-current bg-texture snap-start rounded-full leading-none"
-	[style]="
-		'color:' +
-		(lesson.order === currentLesson ? 'white' : lesson.color) +
-		'; background-color:' +
-		(lesson.order === currentLesson ? lesson.color : 'transparent')
-	"
-	[class]="{
-		'font-bold': lesson.order === currentLesson,
-		'opacity-60': lesson.order < currentLesson,
-		'opacity-30': loading,
-		'cursor-wait': loading
-	}"
-	type="icon"
-	[disabled]="loading"
-	(click)="
-		!loading && currentLesson !== lesson.order && setCurrentLesson(lesson.order)
-	">
-	{{ (lesson.order + 1).toFixed() }}
-</app-button>
+	<button
+		[id]="'course-' + lesson.order"
+		style="border-width: 1px"
+		class="flex justify-center items-center !border-current bg-texture snap-start rounded-full w-12 h-12 leading-none shrink-0"
+		[style]="
+			'color:' +
+			(lesson.order === currentLesson ? 'white' : lesson.color) +
+			'!important; background-color:' +
+			(lesson.order === currentLesson ? lesson.color : 'transparent')
+		"
+		[class]="{
+			'font-bold': lesson.order === currentLesson,
+			'opacity-60': lesson.order < currentLesson,
+			'opacity-30': loading,
+			'cursor-wait': loading
+		}"
+		(click)="
+			!loading &&
+				currentLesson !== lesson.order &&
+				setCurrentLesson(lesson.order)
+		">
+		<div class="flex justify-center items-center w-6 h-6">
+			{{ (lesson.order + 1).toFixed() }}
+		</div>
+	</button>
 }

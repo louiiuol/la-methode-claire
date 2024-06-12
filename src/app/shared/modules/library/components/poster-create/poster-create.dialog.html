@@ -1,0 +1,38 @@
+<div class="flex justify-between items-center gap-3">
+	<h2 class="text-primary text-xl">
+		{{isPoster() ? "Ajout d'une nouvelle affiche" : "Ajout d'un son"}}
+	</h2>
+	<mat-icon class="cursor-pointer" color="warn" mat-dialog-close>
+		close
+	</mat-icon>
+</div>
+<div class="flex flex-col items-center mx-auto my-3 w-fit">
+	<mat-form-field>
+		<mat-label>Nom</mat-label>
+		<input [(ngModel)]="name" matInput />
+	</mat-form-field>
+	<div class="block w-fit">
+		<div class="flex items-center gap-2">
+			<mat-form-field id="form-field-file" appearance="outline">
+				<input matInput [value]="fileName" />
+				<input
+					type="file"
+					id="fileInput"
+					accept="application/pdf"
+					(change)="selectFile($event)"
+					name="fileInput" />
+			</mat-form-field>
+		</div>
+	</div>
+</div>
+
+<div class="flex justify-center">
+	<button
+		type="button"
+		mat-flat-button
+		color="primary"
+		[disabled]="!currentFile"
+		(click)="upload()">
+		Ajouter
+	</button>
+</div>

@@ -1,33 +1,32 @@
 import {Component, HostBinding, inject} from '@angular/core';
+import {MatButton} from '@angular/material/button';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '@core';
 import {NotificationService} from '@core/modules/notification';
-import {ButtonComponent, CardComponent} from '@shared/components';
+import {CardComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, ButtonComponent],
+	imports: [CardComponent, MatButton],
 	providers: [AuthService],
 	template: `@if (!emailSent) {
-		<app-card
-			class="max-w-md"
-			cardTitle="Compte inactif"
-			subtitle="Ce compte n'est pas actif. Pour le réactiver, merci de confirmer votre adresse email">
-			<app-button
-				(click)="sendConfirmation()"
-				color="accent"
-				label="Renvoyer le mail de confirmation"
-				type="raised" />
-		</app-card>
+			<app-card
+				class="max-w-md"
+				cardTitle="Compte inactif"
+				subtitle="Ce compte n'est pas actif. Pour le réactiver, merci de confirmer votre adresse email">
+				<button mat-raised-button (click)="sendConfirmation()" color="accent">
+					Renvoyer le mail de confirmation
+				</button>
+			</app-card>
 		} @else {
-		<app-card
-			title="Bienvenue sur la méthode claire"
-			subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
-			<img
-				class="max-w-xs"
-				src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
-				alt="email de vérification envoyé" />
-		</app-card>
+			<app-card
+				title="Bienvenue sur la méthode claire"
+				subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
+				<img
+					class="max-w-xs"
+					src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
+					alt="email de vérification envoyé" />
+			</app-card>
 		} `,
 })
 export class InactiveAccountPage {

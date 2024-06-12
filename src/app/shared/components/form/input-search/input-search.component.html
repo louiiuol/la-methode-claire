@@ -1,29 +1,30 @@
 @if (fields) {
-<mat-form-field>
-	<mat-label>Rechercher</mat-label>
-	<input
-		matInput
-		type="search"
-		[disabled]="isLoading"
-		[(ngModel)]="searchValue"
-		(keyup.enter)="notify()" />
-</mat-form-field>
-} @if (searchFieldActive) {
-<mat-form-field class="w-36">
-	<mat-label>champ</mat-label>
-	<mat-select [disabled]="isLoading" [(value)]="searchFieldActive.value">
-		@for (option of fields; track option) {
-		<mat-option [value]="option.value">
-			{{ option.viewValue }}
-		</mat-option>
-		}
-	</mat-select>
-</mat-form-field>
+	<mat-form-field>
+		<mat-label>Rechercher</mat-label>
+		<input
+			matInput
+			type="search"
+			[disabled]="isLoading"
+			[(ngModel)]="searchValue"
+			(keyup.enter)="notify()" />
+	</mat-form-field>
+}
+@if (searchFieldActive) {
+	<mat-form-field class="w-36">
+		<mat-label>champ</mat-label>
+		<mat-select [disabled]="isLoading" [(value)]="searchFieldActive.value">
+			@for (option of fields; track option) {
+				<mat-option [value]="option.value">
+					{{ option.viewValue }}
+				</mat-option>
+			}
+		</mat-select>
+	</mat-form-field>
 }
 <button
 	[class]="{'!bg-gray-500': isLoading}"
 	[disabled]="isLoading"
 	(click)="notify()"
-	class="bg-primary h-14 w-14 z-50">
-	<app-icon matPrefix> search </app-icon>
+	class="z-50 bg-primary w-14 h-14">
+	<mat-icon matPrefix> search </mat-icon>
 </button>

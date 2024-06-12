@@ -7,8 +7,8 @@
 			opened>
 			<h2 class="my-2 text-2xl" [style]="'color:' + course.color">
 				Semaine N°{{ (course.order + 1).toFixed() }}
-				<app-icon></app-icon>
 			</h2>
+
 			<!-- Course States -->
 			@if (course.order < currentUserLesson) {
 				<div class="flex justify-start items-center gap-3 mb-2">
@@ -16,14 +16,14 @@
 						class="bg-green-700 px-2 py-1 rounded-md w-fit text-sm text-white italic">
 						Leçon terminée
 					</span>
-					<app-icon
+					<mat-icon
 						class="!mx-0 cursor-pointer"
 						color="accent"
 						[class]="{'cursor-wait': loading}"
 						(click)="setCurrentLesson(course.order)"
 						matTooltip="Revenir à cette leçon">
 						skip_previous
-					</app-icon>
+					</mat-icon>
 				</div>
 			} @else {
 				@if (course.order > currentUserLesson) {
@@ -33,14 +33,14 @@
 							class="bg-slate-300 px-2 py-1 rounded-md w-fit text-gray-700 text-sm italic">
 							Leçon en attente
 						</span>
-						<app-icon
+						<mat-icon
 							class="!mx-0 cursor-pointer"
 							color="accent"
 							[class]="{'cursor-wait': loading}"
 							(click)="setCurrentLesson(course.order)"
 							matTooltip="Passer à cette leçon">
 							skip_next
-						</app-icon>
+						</mat-icon>
 					</div>
 				} @else {
 					<div class="flex justify-start items-center gap-3 mb-2">
@@ -48,13 +48,13 @@
 							class="bg-primary px-2 py-1 rounded-md w-fit text-sm text-white italic">
 							Leçon en cours
 						</span>
-						<app-icon
+						<mat-icon
 							class="!mx-0 cursor-pointer"
 							[class]="{'cursor-wait': loading}"
 							(click)="setCurrentLesson(course.order + 1)"
 							matTooltip="Marquer comme terminée">
 							check
-						</app-icon>
+						</mat-icon>
 					</div>
 				}
 			}
@@ -98,22 +98,23 @@
 										setCurrentFile(file)
 								">
 								<span>{{ file.name }}</span>
-								<app-icon
+								<mat-icon
 									class="!mx-0"
 									[color]="
-										selectedFile?.name !== file.name ? 'primary' : 'disabled'
+										selectedFile?.name !== file.name ? 'primary' : 'white'
 									">
 									visibility
-								</app-icon>
+								</mat-icon>
 							</div>
-							<app-button
+							<button
+								mat-icon-button
 								[disabled]="loading"
 								class="!w-fit"
 								[class]="{'cursor-wait': loading}"
 								(click)="downloadFile(file)"
 								type="icon">
-								<app-icon color="accent">download</app-icon>
-							</app-button>
+								<mat-icon color="accent">download</mat-icon>
+							</button>
 						</div>
 					</mat-list-item>
 				}

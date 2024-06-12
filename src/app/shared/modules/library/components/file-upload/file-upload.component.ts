@@ -32,16 +32,11 @@ export class FileUploadComponent {
 	@Input() fileExist = false;
 
 	protected currentFile?: File;
-	protected progress = 0;
-	protected message = '';
 	protected fileName = 'Ajouter un pdf';
 
-	constructor(private uploadService: LibraryAdminService) {}
+	constructor(private libraryService: LibraryAdminService) {}
 
 	selectFile(event: any): void {
-		this.progress = 0;
-		this.message = '';
-
 		if (event.target.files?.[0]) {
 			const file: File = event.target.files[0];
 			this.currentFile = file;
@@ -52,35 +47,31 @@ export class FileUploadComponent {
 	}
 
 	deleteFile() {
-		this.uploadService
+		this.libraryService
 			.deleteFile(this.courseUuid, this.fieldName.value)
-			.subscribe(() => (this.fileExist = false));
+			.subscribe(() => {
+				this.fileExist = false;
+				this.currentFile = undefined;
+			});
 	}
 
 	upload(): void {
+		console.log(this.currentFile);
+
 		if (this.currentFile) {
 			const formData: FormData = new FormData();
 			formData.append(this.fieldName.value, this.currentFile);
-			this.uploadService
-				.upload(this.courseUuid, formData, this.fieldName.value, 'files')
-				.subscribe({
-					next: (event: any) => {
-						if (event.type === HttpEventType.UploadProgress) {
-							this.progress = Math.round((100 * event.loaded) / event.total);
-						} else if (event instanceof HttpResponse) {
-							this.message = event.body.message;
-							this.fileExist = true;
-						}
-					},
-					error: (err: any) => {
-						console.log(err);
-						this.progress = 0;
-						this.message = err.error?.message ?? 'Could not upload the file!';
-					},
-					complete: () => {
-						this.currentFile = undefined;
-					},
-				});
+			this.libraryService.editCourse(this.courseUuid, formData).subscribe({
+				next: () => {
+					this.fileExist = true;
+				},
+				error: (err: any) => {
+					console.log(err);
+				},
+				complete: () => {
+					this.currentFile = undefined;
+				},
+			});
 		}
 	}
 }

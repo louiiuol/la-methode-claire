@@ -9,7 +9,7 @@ import {FieldConfig} from '@core';
 	standalone: true,
 	selector: 'app-newsletter-admin',
 	imports: [CardComponent, FormComponent],
-	providers: [NewsletterService],
+	providers: [NewsletterService, UsersAdminService],
 	template: ` <app-card
 		title="Nouvelle newsletter"
 		subtitle="Envoyer un email aux utilisateurs abonnés à la méthode.">

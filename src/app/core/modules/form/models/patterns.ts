@@ -19,7 +19,7 @@ export function getPattern(name: string) {
 export function getPatternDescription(regex: RegExp) {
 	return (
 		APP_FORM_PATTERNS.find(p => p.regex.toString() === regex.toString())
-			?.description ?? ''
+			?.description ?? 'No description provided'
 	);
 }
 

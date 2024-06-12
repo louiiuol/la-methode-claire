@@ -9,11 +9,12 @@ import {
 	ViewChild,
 } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatIcon} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {nullish} from '@core';
-import {ButtonComponent, IconComponent} from '@shared/components';
 import {InputSearchComponent} from '@shared/components/form';
 
 export interface SearchFilter {
@@ -29,10 +30,11 @@ export interface SearchFilter {
 	standalone: true,
 	selector: 'app-filters',
 	imports: [
-		ButtonComponent,
-		IconComponent,
 		FormsModule,
 		InputSearchComponent,
+		MatIcon,
+		MatIconButton,
+		MatButton,
 		MatCheckboxModule,
 		MatMenuModule,
 		MatTooltipModule,
@@ -120,7 +122,7 @@ export class FiltersComponent implements AfterViewInit {
 				? null
 				: `isActive:like:${Number(
 						this.advancedFilters.active
-				  )}&subscribed:like:${Number(this.advancedFilters.subscribed)}`,
+					)}&subscribed:like:${Number(this.advancedFilters.subscribed)}`,
 		]
 			.filter(x => !!x)
 			.join('&');

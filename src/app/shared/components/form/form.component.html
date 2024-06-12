@@ -1,40 +1,42 @@
 @if (form && formFields?.length) {
-<form
-	[formGroup]="form"
-	(ngSubmit)="onSubmit(formModel)"
-	class="form-grid grid px-2 py-1 md:px-6 md:py-2 gap-2">
-	@for (message of errorMessages; track message) {
-	<app-message class="mb-3" severity="error" [summary]="message" />
-	} @if (isLoading) {
-	<mat-progress-bar mode="indeterminate" />
-	}
-	<formly-form
-		style="max-height: 60vh"
-		class="overflow-y-auto"
-		[form]="form"
-		[options]="options"
-		[fields]="formFields ?? []"
-		[model]="formModel" />
-	<ng-content></ng-content>
-	<footer class="mt-4 flex w-full justify-center gap-5">
-		@if (resettable) {
-		<app-button
-			type="stroked"
-			(click)="reset()"
-			[disabled]="pristine()"
-			color="primary"
-			label="Réinitialiser" />
+	<form
+		[formGroup]="form"
+		(ngSubmit)="onSubmit(formModel)"
+		class="gap-2 form-grid grid px-2 md:px-6 py-1 md:py-2">
+		@for (message of errorMessages; track message) {
+			<app-message class="mb-3" severity="error" [summary]="message" />
 		}
-		<app-button
-			mat-flat-button
-			color="primary"
-			type="flat"
-			matTooltip="Le formulaire est invalide"
-			[matTooltipDisabled]="isValidForm()"
-			[disabled]="!isValidForm()"
-			[label]="action" />
-	</footer>
-</form>
+		@if (isLoading) {
+			<mat-progress-bar mode="indeterminate" />
+		}
+		<formly-form
+			style="max-height: 60vh"
+			class="overflow-y-auto"
+			[form]="form"
+			[options]="options"
+			[fields]="formFields ?? []"
+			[model]="formModel" />
+		<ng-content></ng-content>
+		<footer class="flex justify-center gap-5 mt-4 w-full">
+			@if (resettable) {
+				<button
+					mat-stroked-button
+					(click)="reset()"
+					[disabled]="pristine()"
+					color="primary">
+					Réinitialiser
+				</button>
+			}
+			<button
+				mat-flat-button
+				color="primary"
+				matTooltip="Le formulaire est invalide"
+				[matTooltipDisabled]="isValidForm()"
+				[disabled]="!isValidForm()">
+				{{ action }}
+			</button>
+		</footer>
+	</form>
 } @else {
-<app-loader></app-loader>
+	<app-loader></app-loader>
 }

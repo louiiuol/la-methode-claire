@@ -58,7 +58,7 @@ export class TokenInterceptor implements HttpInterceptor {
 					return this.handleAuthError(authReq, next);
 				} else if (
 					authReq.url.includes('auth/refresh') &&
-					errorStatus === 401
+					[401, 403].includes(errorStatus)
 				) {
 					this.logOut();
 					return of(null);

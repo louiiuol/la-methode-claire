@@ -5,12 +5,9 @@ import {
 	inject,
 } from '@angular/core';
 
-import {
-	FormComponent,
-	CardComponent,
-	ButtonComponent,
-} from '@shared/components';
+import {FormComponent, CardComponent} from '@shared/components';
 import {AuthService, FieldConfig} from '@core';
+import {MatButton} from '@angular/material/button';
 
 /**
  * Login View, allows user to enter their credentials to authenticate and access
@@ -19,7 +16,7 @@ import {AuthService, FieldConfig} from '@core';
  */
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, ButtonComponent],
+	imports: [CardComponent, FormComponent, MatButton],
 	templateUrl: './login.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

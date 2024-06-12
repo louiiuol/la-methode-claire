@@ -11,26 +11,27 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
 import {MatRadioModule} from '@angular/material/radio';
+
 const MaterialModules = [
 	MatChipsModule,
 	MatSidenavModule,
 	MatListModule,
 	MatRadioModule,
 	MatTooltipModule,
+	MatIcon,
+	MatButton,
+	MatIconButton,
 ];
 
 import {AuthService, PlatformService, isBoolean, nullish} from '@core';
-import {
-	ButtonComponent,
-	CardComponent,
-	IconComponent,
-	MessageComponent,
-} from '@shared/components';
+import {CardComponent, MessageComponent} from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {take} from 'rxjs';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton, MatIconButton} from '@angular/material/button';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -42,8 +43,6 @@ import {take} from 'rxjs';
 	imports: [
 		JsonPipe,
 		...MaterialModules,
-		ButtonComponent,
-		IconComponent,
 		CardComponent,
 		FileViewerComponent,
 		MessageComponent,
@@ -179,29 +178,18 @@ export class CourseViewerComponent {
 			...course.phonemes
 				.filter(p => p.poster)
 				.map(p => {
-					if (p.posterNames?.length) {
-						p.posterNames.forEach(posterName =>
-							specificSounds.push({
-								name:
-									'Affiche ' + (p.endOfWord ? `-${posterName}` : posterName),
-								path:
-									'poster-' +
-									posterName.toLocaleUpperCase().replaceAll('/', '-'),
-							})
-						);
-					}
-					return p;
-				})
-				.filter(p => !p.posterNames?.length)
-				.map(p => {
 					return {
 						name: 'Affiche ' + (p.endOfWord ? `-${p.name}` : p.name),
 						path: 'poster-' + p.name.toLocaleUpperCase().replaceAll('/', '-'),
 					};
 				}),
+			...(course.posterNames?.map(p => ({
+				name: `Affiche ${p.toLocaleUpperCase()}`,
+				path: `poster-${p.toLocaleUpperCase().replaceAll('/', '-')}`,
+			})) ?? []),
 			...specificSounds,
 			...(course.sounds?.map(s => ({
-				name: 'Son ' + s,
+				name: 'Son ' + s.toLocaleUpperCase(),
 				path: 'poster-sound-' + s.toLocaleUpperCase(),
 			})) ?? [])
 		);

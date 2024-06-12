@@ -1,21 +1,21 @@
 @if (summary && severity) {
-<div
-	class="flex items-center justify-between gap-3 border-l-4 rounded-r px-3 py-2 shadow-md"
-	[class]="getMessageColor()">
-	@if (showIcon) {
-	<app-icon class="my-1 !mx-0 text-xl">
-		{{ getMessageIcon() }}
-	</app-icon>
-	}
-	<div class="flex-1">
-		<span
-			class="text-balance w-full"
-			[class]="{'font-bold': !!details}"
-			[innerHTML]="summary"></span>
-		<br />
-		@if (details) {
-		<span class="text-sm text-balance" [innerHTML]="details"></span>
+	<div
+		class="flex justify-between items-center gap-3 shadow-md px-3 py-2 border-l-4 rounded-r"
+		[class]="getMessageColor()">
+		@if (showIcon) {
+			<mat-icon class="!mx-0 my-1 text-xl">
+				{{ getMessageIcon() }}
+			</mat-icon>
 		}
+		<div class="flex-1">
+			<span
+				class="w-full text-balance"
+				[class]="{'font-bold': !!details}"
+				[innerHTML]="summary"></span>
+			<br />
+			@if (details) {
+				<span class="text-balance text-sm" [innerHTML]="details"></span>
+			}
+		</div>
 	</div>
-</div>
 }

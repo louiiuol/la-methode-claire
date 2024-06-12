@@ -10,13 +10,12 @@ import {
 } from '@angular/core';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {ButtonComponent} from '@shared/components';
 import {CourseViewDto} from '../../types/course-view.dto';
 
 @Component({
 	selector: 'app-progress-bar',
 	standalone: true,
-	imports: [ButtonComponent, MatTooltipModule],
+	imports: [MatTooltipModule],
 	templateUrl: './progress-bar.component.html',
 	styles: [
 		`

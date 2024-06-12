@@ -1,6 +1,6 @@
 @if (model$ | async; as model) {
-<h1 class="text-2xl text-center mt-4 mb-6 text-primary">Profil utilisateur</h1>
-<mat-accordion class="block max-w-3xl mx-auto">
+<h1 class="mt-4 mb-6 text-2xl text-center text-primary">Profil utilisateur</h1>
+<mat-accordion class="block mx-auto max-w-3xl">
 	<mat-expansion-panel expanded>
 		<mat-expansion-panel-header>
 			<mat-panel-title> Informations personnelles </mat-panel-title>
@@ -40,13 +40,13 @@
 			supprimé dans les 2 mois. <br />
 			Si vous souhaitez le rouvrir, il vous suffira de vous reconnecter.
 		</p>
-		<app-button
-			class="!w-fit block mx-auto my-3"
-			type="raised"
+		<button
+			mat-raised-button
+			class="block mx-auto my-3 !w-fit"
 			color="warn"
 			(click)="closeAccount()">
 			Fermer mon compte
-		</app-button>
+		</button>
 	</mat-expansion-panel>
 </mat-accordion>
 } @else {

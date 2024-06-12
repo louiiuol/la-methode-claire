@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {
 	Component,
 	ViewChild,
@@ -15,6 +15,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 const MaterialModules = [
+	MatIcon,
+	MatButton,
 	MatProgressBarModule,
 	MatTableModule,
 	MatSortModule,
@@ -36,22 +38,17 @@ import {PaginationFilters} from '@core/helpers/types/pagination-filters';
 import {clean} from '@core';
 import {UserPreviewDto} from '@shared/modules';
 import {SincePipe} from '@shared/pipes';
-import {ButtonComponent, IconComponent} from '@shared/components';
 
 import {UsersAdminService} from '../../../../services/users-admin.service';
 import {FiltersComponent} from './filters/filters.component';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 
 @Component({
 	standalone: true,
 	selector: 'app-users-list',
-	imports: [
-    ...MaterialModules,
-    DatePipe,
-    SincePipe,
-    ButtonComponent,
-    IconComponent,
-    FiltersComponent
-],
+	imports: [...MaterialModules, DatePipe, SincePipe, FiltersComponent],
+	providers: [UsersAdminService],
 	templateUrl: 'users.table.html',
 })
 export class UsersTable implements OnInit, AfterViewInit {
@@ -65,13 +62,13 @@ export class UsersTable implements OnInit, AfterViewInit {
 		'email',
 		'firstName',
 		'lastName',
-		'createdAt',
 		'lastConnection',
 		'currentLessonIndex',
 		'isActive',
-		'subscribed',
 		'newsletter',
+		'createdAt',
 	];
+
 	data: UserPreviewDto[] = [];
 
 	filters: PaginationFilters = {
@@ -138,10 +135,8 @@ export class UsersTable implements OnInit, AfterViewInit {
 	}
 
 	exportEmails() {
-		this.users.exportEmails().subscribe(res => {
-			if (res.value?.emails) this.clipboard.copy(res.value.emails);
-			this.notifier.success("Liste d'email ajouté au presse-papier.");
-		});
+		this.clipboard.copy(this.data.map(u => u.email).join(', '));
+		this.notifier.success("Liste d'email ajouté au presse-papier.");
 	}
 
 	private setFilters(params: PaginationFilters) {

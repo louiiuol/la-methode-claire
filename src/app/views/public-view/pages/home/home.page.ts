@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {ButtonComponent, CardComponent} from '@shared/components';
+import {MatButtonModule} from '@angular/material/button';
+import {CardComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, ButtonComponent],
+	imports: [CardComponent, MatButtonModule],
 	templateUrl: 'home.page.html',
 })
 export class HomePage {

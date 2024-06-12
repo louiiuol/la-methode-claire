@@ -1,5 +1,4 @@
 import {NgModule, Component, HostBinding, OnInit} from '@angular/core';
-
 /**
  * Root component of the Application, responsible for:
  * - Displaying "root" notifications to the user.
@@ -17,7 +16,7 @@ import {NgModule, Component, HostBinding, OnInit} from '@angular/core';
 export class AppShell implements OnInit {
 	@HostBinding('class') class =
 		'block relative antialiased text-primary text-lg h-screen';
-	private readonly version = '0.4.0';
+	private readonly version = '0.5.0';
 	ngOnInit(): void {
 		console.log(`Bienvenue sur la méthode claire ! (V${this.version})`);
 	}

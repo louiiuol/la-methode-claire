@@ -2,18 +2,19 @@
 	[defaultField]="searchFieldActive"
 	[isLoading]="loading"
 	[fields]="searchFields" />
-<app-button
-	type="icon"
+<button
+	mat-icon-button
 	[matMenuTriggerFor]="filtersMenu"
 	matTooltip="Filtres avancés">
-	<app-icon color="primary">filter_list</app-icon>
-</app-button>
-<app-button
+	<mat-icon color="primary">filter_list</mat-icon>
+</button>
+<button
+	mat-icon-button
 	matTooltip="Réinitialiser les filtres"
 	type="icon"
 	(click)="resetFilters()">
-	<app-icon color="warn">restart_alt</app-icon>
-</app-button>
+	<mat-icon color="warn">restart_alt</mat-icon>
+</button>
 
 <mat-menu #filtersMenu="matMenu" xPosition="before">
 	<div mat-menu-item (click)="$event.stopPropagation()">
@@ -23,34 +24,34 @@
 	</div>
 
 	@if (!hideAdvancedFilters) {
-	<div>
-		<div mat-menu-item (click)="$event.stopPropagation()">
-			<mat-checkbox
-				[(ngModel)]="advancedFilters.active"
-				labelPosition="after"
-				[disabled]="loading">
-				Actifs
-			</mat-checkbox>
+		<div>
+			<div mat-menu-item (click)="$event.stopPropagation()">
+				<mat-checkbox
+					[(ngModel)]="advancedFilters.active"
+					labelPosition="after"
+					[disabled]="loading">
+					Actifs
+				</mat-checkbox>
+			</div>
+			<div mat-menu-item (click)="$event.stopPropagation()">
+				<mat-checkbox
+					class="example-margin"
+					[(ngModel)]="advancedFilters.subscribed"
+					labelPosition="after"
+					[disabled]="loading">
+					Abonnés
+				</mat-checkbox>
+			</div>
 		</div>
-		<div mat-menu-item (click)="$event.stopPropagation()">
-			<mat-checkbox
-				class="example-margin"
-				[(ngModel)]="advancedFilters.subscribed"
-				labelPosition="after"
-				[disabled]="loading">
-				Abonnés
-			</mat-checkbox>
-		</div>
-	</div>
 	}
 	<div mat-menu-item>
 		<div class="flex justify-center w-full">
-			<app-button
+			<button
+				mat-raised-button
 				class="mx-auto"
-				type="raised"
 				(click)="emitRequest()"
 				color="primary"
-				label="Appliquer les filtres" />
+				label="Appliquer les filtres"></button>
 		</div>
 	</div>
 </mat-menu>
