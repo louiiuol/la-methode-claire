@@ -1,5 +1,5 @@
 import {Component, HostBinding, inject} from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '@core';
 import {NotificationService} from '@core/modules/notification';
@@ -7,7 +7,7 @@ import {CardComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, MatButton],
+	imports: [CardComponent, MatButtonModule],
 	providers: [AuthService],
 	template: `@if (!emailSent) {
 			<app-card

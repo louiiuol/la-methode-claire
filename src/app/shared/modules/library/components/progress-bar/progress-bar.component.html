@@ -1,8 +1,7 @@
 @for (lesson of lessons; track lesson) {
 	<button
 		[id]="'course-' + lesson.order"
-		style="border-width: 1px"
-		class="flex justify-center items-center !border-current bg-texture snap-start rounded-full w-12 h-12 leading-none shrink-0"
+		class="flex justify-center items-center !border-current bg-texture snap-start border rounded-full w-12 h-12 leading-none shrink-0"
 		[style]="
 			'color:' +
 			(lesson.order === currentLesson ? 'white' : lesson.color) +
@@ -20,7 +19,7 @@
 				currentLesson !== lesson.order &&
 				setCurrentLesson(lesson.order)
 		">
-		<div class="flex justify-center items-center w-6 h-6">
+		<div class="flex justify-center items-center w-6 h-6 text-xl">
 			{{ (lesson.order + 1).toFixed() }}
 		</div>
 	</button>

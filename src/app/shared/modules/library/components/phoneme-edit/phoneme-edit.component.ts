@@ -1,6 +1,6 @@
-import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	HostBinding,
 	Inject,
@@ -21,16 +21,8 @@ import {LibraryAdminService} from 'src/app/views/admin-view/services/library.ser
 
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {PhonemeEditDto} from '../../types/phoneme-edit.dto';
 
-export interface PhonemeEditDto {
-	courseUuid: string;
-	uuid?: string;
-	name?: string;
-	poster?: boolean | File;
-	endOfWord?: boolean;
-	sounds?: string[];
-	info?: string;
-}
 @Component({
 	selector: 'app-add-phoneme',
 	standalone: true,
@@ -57,7 +49,8 @@ export class PhonemeEditComponent {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) protected data: PhonemeEditDto,
 		private libraryService: LibraryAdminService,
-		private readonly dialogRef: MatDialogRef<PhonemeEditComponent>
+		private readonly dialogRef: MatDialogRef<PhonemeEditComponent>,
+		private readonly cd: ChangeDetectorRef
 	) {}
 
 	get title() {
@@ -76,22 +69,22 @@ export class PhonemeEditComponent {
 
 	submit(): void {
 		const formData: FormData = new FormData();
-		// if (this.data.name) formData.append('name', this.data.name);
-		// formData.append('endOfWord', String(!!this.data.endOfWord));
-		// if (typeof this.data.sounds == 'string')
-		// 	this.data.sounds = [this.data.sounds];
-		// if (this.data.sounds)
-		// 	this.data.sounds.forEach(s => formData.append('sounds[]', s));
-		// if (this.currentFile) formData.append('poster', this.currentFile);
-		// if (this.data.info) formData.append('info', this.data.info);
+		if (this.data.name) formData.append('name', this.data.name);
+		formData.append('endOfWord', String(!!this.data.endOfWord));
+		if (typeof this.data.sounds == 'string')
+			this.data.sounds = [this.data.sounds];
+		if (this.data.sounds)
+			this.data.sounds.forEach(s => formData.append('sounds[]', s));
+		if (this.currentFile) formData.append('poster', this.currentFile);
+		if (this.data.info) formData.append('info', this.data.info);
 		this.data.poster = this.currentFile;
 		const action = this.data.uuid
 			? this.libraryService.editPhoneme(
 					this.data.courseUuid,
 					this.data.uuid,
-					this.data
+					formData
 				)
-			: this.libraryService.createPhoneme(this.data.courseUuid, this.data);
+			: this.libraryService.createPhoneme(this.data.courseUuid, formData);
 
 		action.subscribe(res => {
 			const result = res.value;
@@ -106,21 +99,20 @@ export class PhonemeEditComponent {
 	deletePoster() {
 		this.libraryService
 			.deletePhonemePoster(this.data.courseUuid, this.data.name)
-			.subscribe(() => (this.data.poster = undefined));
+			.subscribe(() => {
+				this.data.poster = undefined;
+				this.cd.markForCheck();
+			});
 	}
 
 	readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
 	addSound(event: MatChipInputEvent): void {
 		const value = (event.value || '').trim();
-
-		// Add our fruit
 		if (value) {
 			this.data.sounds ??= [];
 			this.data.sounds.push(value);
 		}
-
-		// Clear the input value
 		event.chipInput.clear();
 	}
 
@@ -129,4 +121,6 @@ export class PhonemeEditComponent {
 		const index = this.data.sounds.indexOf(fruit);
 		if (index >= 0) this.data.sounds?.splice(index, 1);
 	}
+
+	closeDialog = () => this.dialogRef.close(this.data);
 }

@@ -72,6 +72,7 @@ export class CourseEditComponent implements OnInit {
 	editPhoneme(phoneme?: PhonemeViewDto) {
 		this.dialog
 			.open(PhonemeEditComponent, {
+				disableClose: true,
 				data: {
 					courseUuid: this.course.uuid,
 					...phoneme,

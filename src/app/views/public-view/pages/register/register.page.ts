@@ -4,14 +4,14 @@ import {
 	HostBinding,
 	inject,
 } from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {AuthService} from '@core';
 import {CardComponent, FormComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, MatButton, MatIcon],
+	imports: [CardComponent, FormComponent, MatButtonModule, MatIcon],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

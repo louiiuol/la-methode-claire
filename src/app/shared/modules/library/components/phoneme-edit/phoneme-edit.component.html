@@ -1,8 +1,8 @@
 <div class="flex justify-between items-center gap-3">
 	<h2 class="text-primary text-xl">{{ title }}</h2>
-	<mat-icon class="cursor-pointer" color="warn" mat-dialog-close>
-		close
-	</mat-icon>
+	<button mat-icon-button (click)="closeDialog()">
+		<mat-icon color="warn" mat-dialog-close> close </mat-icon>
+	</button>
 </div>
 <div class="flex flex-col mx-auto my-3 w-fit">
 	<div class="flex gap-2">
