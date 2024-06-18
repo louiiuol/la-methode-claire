@@ -4,7 +4,7 @@ import {
 	HostBinding,
 	inject,
 } from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 import {FieldConfig} from '@core';
 import {CardComponent, FormComponent} from '@shared/components';
 import {PasswordService, PasswordModule} from '@shared/modules/password';
@@ -15,7 +15,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
  */
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, PasswordModule, MatButton],
+	imports: [CardComponent, FormComponent, PasswordModule, MatButtonModule],
 	templateUrl: './forgot-password.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
