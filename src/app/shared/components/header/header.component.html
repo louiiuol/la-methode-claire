@@ -68,12 +68,12 @@
 	</mat-menu>
 
 	@if (!currentUser?.uuid) {
-		<a mat-raised-button color="primary" href="/login"> se connecter </a>
+		<a mat-raised-button color="primary" routerLink="/login"> se connecter </a>
 		<a
 			mat-raised-button
 			class="md:!inline-block !hidden"
 			color="accent"
-			href="/register">
+			routerLink="/register">
 			s'inscrire
 		</a>
 	} @else {
@@ -87,16 +87,19 @@
 			</span>
 		</button>
 		<mat-menu #userMenu="matMenu">
-			<a mat-menu-item href="/app/dashboard">
+			<a mat-menu-item routerLink="/app/dashboard">
 				<mat-icon>dashboard</mat-icon>
 				Tableau de bord
 			</a>
-			<a mat-menu-item href="/app/profile">
+			<a mat-menu-item routerLink="/app/profile">
 				<mat-icon>person</mat-icon>
 				Profil
 			</a>
 			@if (currentUser?.role === 'ADMIN') {
-				<a mat-menu-item href="/back-office/dashboard" class="text-accent">
+				<a
+					mat-menu-item
+					routerLink="/back-office/dashboard"
+					class="text-accent">
 					<mat-icon>settings</mat-icon>
 					Back-Office
 				</a>

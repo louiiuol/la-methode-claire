@@ -6,12 +6,13 @@ import {
 } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
 import {AuthService} from '@core';
 import {CardComponent, FormComponent} from '@shared/components';
 
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, MatButtonModule, MatIcon],
+	imports: [CardComponent, FormComponent, MatButtonModule, MatIcon, RouterLink],
 	templateUrl: './register.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

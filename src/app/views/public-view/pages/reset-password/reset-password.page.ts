@@ -8,7 +8,7 @@ import {
 	signal,
 } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 
 import {FieldConfig} from '@core';
 import {
@@ -30,6 +30,7 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
 		MessageComponent,
 		forwardRef(() => PasswordModule),
 		MatButtonModule,
+		RouterLink,
 	],
 	templateUrl: './reset-password.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,

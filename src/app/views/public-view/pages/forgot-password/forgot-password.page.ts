@@ -5,6 +5,7 @@ import {
 	inject,
 } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 import {FieldConfig} from '@core';
 import {CardComponent, FormComponent} from '@shared/components';
 import {PasswordService, PasswordModule} from '@shared/modules/password';
@@ -15,7 +16,13 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
  */
 @Component({
 	standalone: true,
-	imports: [CardComponent, FormComponent, PasswordModule, MatButtonModule],
+	imports: [
+		CardComponent,
+		FormComponent,
+		PasswordModule,
+		MatButtonModule,
+		RouterLink,
+	],
 	templateUrl: './forgot-password.page.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
