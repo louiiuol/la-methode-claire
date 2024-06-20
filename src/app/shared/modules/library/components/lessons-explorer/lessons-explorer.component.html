@@ -1,26 +1,29 @@
-@if (lessons$ | async; as lessons) { @if (lessons.length) {
-<app-progress-bar
-	class="rounded-t-xl mat-elevation-z2"
-	[currentLesson]="currentLesson"
-	[loading]="isLoading"
-	[lessons]="lessons"
-	(selectedLesson)="changeLesson($event)" />
-<app-course-viewer
-	[currentUserLesson]="currentUserLesson"
-	[currentLessonIndex]="currentLesson"
-	[course]="lessons[currentLesson]"
-	(loaded)="isLoading = !$event"
-	(nextLesson)="changeLesson($event)" />
+@if (lessons$ | async; as lessons) {
+	@if (lessons.length) {
+		<app-progress-bar
+			class="rounded-t-xl mat-elevation-z2"
+			[currentLesson]="currentLesson"
+			[loading]="isLoading"
+			[lessons]="lessons"
+			(selectedLesson)="changeLesson($event)" />
+		<app-course-viewer
+			[currentUserLesson]="currentUserLesson"
+			[currentLessonIndex]="currentLesson"
+			[course]="lessons[currentLesson]"
+			(loaded)="isLoading = !$event"
+			(nextLesson)="changeLesson($event)" />
+	} @else {
+		<app-card title="Méthode inaccessible" class="mt-7 w-80 text-center">
+			<img
+				class="w-44"
+				src="assets/img/illustrations/poster.png"
+				alt="Not found" />
+			<p>
+				La méthode n'est pas disponible pour le moment, merci de revenir plus
+				tard.
+			</p>
+		</app-card>
+	}
 } @else {
-<app-card title="Méthode inaccessible" class="mt-7 w-80 text-center">
-	<img
-		class="w-44"
-		src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/illustrations/poster.png"
-		alt="Not found" />
-	<p>
-		La méthode n'est pas disponible pour le moment, merci de revenir plus tard.
-	</p>
-</app-card>
-} } @else {
-<app-loader>Chargement de la bibliothèque.</app-loader>
+	<app-loader>Chargement de la bibliothèque.</app-loader>
 }

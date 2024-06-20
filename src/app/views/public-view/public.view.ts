@@ -37,11 +37,7 @@ import {HeaderComponent} from '@shared/components/header/header.component';
 						<a [href]="social.path" target="_blank">
 							<img
 								class="w-8 h-8"
-								[src]="
-									'https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/socials/' +
-									social.name +
-									'.png'
-								"
+								[src]="'assets/img/socials/' + social.name + '.png'"
 								[alt]="social.name + ' logo'" />
 						</a>
 					</li>

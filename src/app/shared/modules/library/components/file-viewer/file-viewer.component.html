@@ -1,25 +1,24 @@
 @if (pdf(); as pdf) {
-  <iframe
-    class="w-full"
-    [src]="pdf | trustURL"
-  title="visualiser le pdf"></iframe>
+	<iframe
+		class="w-full"
+		[src]="pdf | trustURL"
+		title="visualiser le pdf"></iframe>
 } @else {
-  @if (!failedToLoad) {
-    <app-loader />
-  } @else {
-    <div class="w-96 mx-auto mt-8">
-      <h3 class="text-3xl text-primary text-center text-balance mb-5">
-        Impossible de récupérer le fichier
-      </h3>
-      <img
-        class="max-w-sm mx-auto"
-        src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/no-file.png"
-        alt="Aucun fichier" />
-        <app-message
-          class="text-lg"
-          severity="error"
-          summary="Merci de réessayer ultérieurement" />
-        </div>
-      }
-    }
-
+	@if (!failedToLoad) {
+		<app-loader />
+	} @else {
+		<div class="mx-auto mt-8 w-96">
+			<h3 class="mb-5 text-3xl text-balance text-center text-primary">
+				Impossible de récupérer le fichier
+			</h3>
+			<img
+				class="mx-auto max-w-sm"
+				src="assets/img/no-file.png"
+				alt="Aucun fichier" />
+			<app-message
+				class="text-lg"
+				severity="error"
+				summary="Merci de réessayer ultérieurement" />
+		</div>
+	}
+}

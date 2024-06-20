@@ -24,7 +24,7 @@ import {CardComponent} from '@shared/components';
 				subtitle="Afin de vérifier votre compte, nous vous avons envoyé un email de vérification.">
 				<img
 					class="max-w-xs"
-					src="https://raw.githubusercontent.com/louiiuol/la-methode-claire/main/src/assets/img/email_sent.png"
+					src="assets/img/email_sent.png"
 					alt="email de vérification envoyé" />
 			</app-card>
 		} `,
