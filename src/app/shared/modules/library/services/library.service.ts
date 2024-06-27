@@ -21,7 +21,7 @@ export class LibraryService extends HttpResource {
 			: this.getAll<CourseViewDto>({
 					notifyOnSuccess: false,
 					notifyOnError: false,
-			  }).pipe(map(this.updateLocalLessons));
+				}).pipe(map(this.updateLocalLessons));
 
 	setCurrentLesson = (index: number) =>
 		this.partialUpdate<number>(null, null, {
@@ -48,7 +48,7 @@ export class LibraryService extends HttpResource {
 			.get([environment.root_url, 'courses', index, 'download'].join('/'), {
 				responseType: 'blob',
 			})
-			.subscribe(res => saveFile(res, (index + 1).toString(), 'zip'));
+			.subscribe(res => saveFile(res, index.toString(), 'zip'));
 
 	private updateLocalLessons = (
 		lessons: HttpOutputEntity<null> | HttpOutputArray<CourseViewDto>

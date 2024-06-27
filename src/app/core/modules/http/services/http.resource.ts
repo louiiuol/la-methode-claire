@@ -49,10 +49,9 @@ export abstract class HttpResource {
 	 */
 	protected get = <T>(uuid?: string | null, opt?: RequestOptions) =>
 		this.http
-			.get<ApiResponse<T>>(
-				this.generateURI(uuid, opt),
-				this.getRequestOptions(opt)
-			)
+			.get<
+				ApiResponse<T>
+			>(this.generateURI(uuid, opt), this.getRequestOptions(opt))
 			.pipe(
 				map(res => this.formatData(res, 'get', opt) as HttpOutputEntity<T>),
 				catchError(err => this.formatError<T>(err, 'get', opt))
@@ -67,10 +66,9 @@ export abstract class HttpResource {
 	 */
 	protected getAll = <T>(opt?: RequestOptions) =>
 		this.http
-			.get<ApiResponse<T[]>>(
-				this.generateURI(null, opt),
-				this.getRequestOptions(opt)
-			)
+			.get<
+				ApiResponse<T[]>
+			>(this.generateURI(null, opt), this.getRequestOptions(opt))
 			.pipe(
 				map(res => this.formatData<T[]>(res, 'get', opt) as HttpOutputArray<T>),
 				catchError(err => this.formatError<null>(err, 'get', opt))
@@ -85,10 +83,9 @@ export abstract class HttpResource {
 	 */
 	protected getAllPaginated = <T>(opt?: RequestOptions) =>
 		this.http
-			.get<ApiResponse<T>>(
-				this.generateURI(null, opt),
-				this.getRequestOptions(opt)
-			)
+			.get<
+				ApiResponse<T>
+			>(this.generateURI(null, opt), this.getRequestOptions(opt))
 			.pipe(
 				map(
 					res => this.formatData<T>(res, 'get', opt) as HttpOutputPaginated<T>
@@ -106,11 +103,9 @@ export abstract class HttpResource {
 	 */
 	protected post = <T>(dto: unknown, opt?: RequestOptions) =>
 		this.http
-			.post<ApiResponse<T>>(
-				this.generateURI(null, opt),
-				dto,
-				this.getRequestOptions(opt)
-			)
+			.post<
+				ApiResponse<T>
+			>(this.generateURI(null, opt), dto, this.getRequestOptions(opt))
 			.pipe(
 				map(res => this.formatData(res, 'create', opt) as HttpOutputEntity<T>),
 				catchError(err => this.formatError<T>(err, 'create', opt))
@@ -131,11 +126,9 @@ export abstract class HttpResource {
 		opt?: RequestOptions
 	) =>
 		this.http
-			.put<ApiResponse<T>>(
-				this.generateURI(uuid, opt),
-				dto,
-				this.getRequestOptions(opt)
-			)
+			.put<
+				ApiResponse<T>
+			>(this.generateURI(uuid, opt), dto, this.getRequestOptions(opt))
 			.pipe(
 				map(
 					res => this.formatData<T>(res, 'update', opt) as HttpOutputEntity<T>
@@ -158,11 +151,9 @@ export abstract class HttpResource {
 		opt?: RequestOptions
 	) =>
 		this.http
-			.patch<ApiResponse<T>>(
-				this.generateURI(uuid, opt),
-				dto,
-				this.getRequestOptions(opt)
-			)
+			.patch<
+				ApiResponse<T>
+			>(this.generateURI(uuid, opt), dto, this.getRequestOptions(opt))
 			.pipe(
 				map(
 					res => this.formatData<T>(res, 'update', opt) as HttpOutputEntity<T>
@@ -179,10 +170,9 @@ export abstract class HttpResource {
 	 */
 	protected delete = (uuid: string, opt?: RequestOptions) =>
 		this.http
-			.delete<ApiResponse<string>>(
-				this.generateURI(uuid, opt),
-				this.getRequestOptions(opt)
-			)
+			.delete<
+				ApiResponse<string>
+			>(this.generateURI(uuid, opt), this.getRequestOptions(opt))
 			.pipe(
 				map(
 					res => this.formatData(res, 'delete', opt) as HttpOutputEntity<string>

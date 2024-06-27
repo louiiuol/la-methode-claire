@@ -13,17 +13,22 @@
 			(loaded)="isLoading = !$event"
 			(nextLesson)="changeLesson($event)" />
 	} @else {
-		<app-card title="Méthode inaccessible" class="mt-7 w-80 text-center">
-			<img
-				class="w-44"
-				src="assets/img/illustrations/poster.png"
-				alt="Not found" />
-			<p>
-				La méthode n'est pas disponible pour le moment, merci de revenir plus
-				tard.
-			</p>
-		</app-card>
+		<ng-container *ngTemplateOutlet="inaccessibleMethod"></ng-container>
 	}
-} @else {
+} @else if (loading()) {
 	<app-loader>Chargement de la bibliothèque.</app-loader>
+} @else {
+	<ng-container *ngTemplateOutlet="inaccessibleMethod"></ng-container>
 }
+<ng-template #inaccessibleMethod>
+	<app-card title="Méthode inaccessible" class="mt-7 w-80 text-center">
+		<img
+			class="w-44"
+			src="assets/img/illustrations/poster.png"
+			alt="Not found" />
+		<p>
+			La méthode n'est pas disponible pour le moment, merci de revenir plus
+			tard.
+		</p>
+	</app-card>
+</ng-template>
