@@ -1,26 +1,39 @@
-@for (lesson of lessons; track lesson) {
-	<button
-		[id]="'course-' + lesson.order"
-		class="flex justify-center items-center !border-current bg-texture snap-start border rounded-full w-12 h-12 leading-none shrink-0"
-		[style]="
-			'color:' +
-			(lesson.order === currentLesson ? 'white' : lesson.color) +
-			'!important; background-color:' +
-			(lesson.order === currentLesson ? lesson.color : 'transparent')
-		"
-		[class]="{
-			'font-bold': lesson.order === currentLesson,
-			'opacity-60': lesson.order < currentLesson,
-			'opacity-30': loading,
-			'cursor-wait': loading
-		}"
-		(click)="
-			!loading &&
-				currentLesson !== lesson.order &&
-				setCurrentLesson(lesson.order)
-		">
-		<div class="flex justify-center items-center w-6 h-6 text-xl">
-			{{ (lesson.order + 1).toFixed() }}
-		</div>
-	</button>
-}
+<button
+	class="flex justify-center items-center bg-white w-12"
+	(click)="scroll('back')">
+	<mat-icon class="!w-4" color="primary">arrow_back_ios</mat-icon>
+</button>
+<nav
+	class="flex flex-1 justify-start items-center gap-2 bg-white shadow-inner p-4 overflow-x-auto overscroll-x-contain"
+	#scrollContainer>
+	@for (lesson of lessons; track lesson) {
+		<button
+			[id]="'course-' + lesson.order"
+			class="flex justify-center items-center !border-current bg-texture snap-start border rounded-full w-12 h-12 leading-none select-none shrink-0"
+			[style]="
+				'color:' +
+				(lesson.order === currentLesson ? 'white' : lesson.color) +
+				'!important; background-color:' +
+				(lesson.order === currentLesson ? lesson.color : 'transparent')
+			"
+			[class]="{
+				'font-bold': lesson.order === currentLesson,
+				'opacity-30': loading,
+				'cursor-wait': loading
+			}"
+			(click)="
+				!loading &&
+					currentLesson !== lesson.order &&
+					setCurrentLesson(lesson.order)
+			">
+			<div class="flex justify-center items-center w-6 h-6 text-xl">
+				{{ (lesson.order + 1).toFixed() }}
+			</div>
+		</button>
+	}
+</nav>
+<button
+	class="flex justify-center items-center bg-white w-12"
+	(click)="scroll('forward')">
+	<mat-icon class="!pr-5 !w-4" color="primary">arrow_forward_ios</mat-icon>
+</button>

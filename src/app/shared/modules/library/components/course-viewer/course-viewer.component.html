@@ -9,55 +9,6 @@
 				Semaine N°{{ (course.order + 1).toFixed() }}
 			</h2>
 
-			<!-- Course States -->
-			@if (course.order < currentUserLesson) {
-				<div class="flex justify-start items-center gap-3 mb-2">
-					<span
-						class="bg-green-700 px-2 py-1 rounded-md w-fit text-sm text-white italic">
-						Leçon terminée
-					</span>
-					<mat-icon
-						class="!mx-0 cursor-pointer"
-						color="accent"
-						[class]="{'cursor-wait': loading}"
-						(click)="setCurrentLesson(course.order)"
-						matTooltip="Revenir à cette leçon">
-						skip_previous
-					</mat-icon>
-				</div>
-			} @else {
-				@if (course.order > currentUserLesson) {
-					<div class="flex justify-start items-center gap-3 mb-2">
-						<span
-							matTooltip="Vous êtes actuellement dans une leçon précédente à celle-ci"
-							class="bg-slate-300 px-2 py-1 rounded-md w-fit text-gray-700 text-sm italic">
-							Leçon en attente
-						</span>
-						<mat-icon
-							class="!mx-0 cursor-pointer"
-							color="accent"
-							[class]="{'cursor-wait': loading}"
-							(click)="setCurrentLesson(course.order)"
-							matTooltip="Passer à cette leçon">
-							skip_next
-						</mat-icon>
-					</div>
-				} @else {
-					<div class="flex justify-start items-center gap-3 mb-2">
-						<span
-							class="bg-primary px-2 py-1 rounded-md w-fit text-sm text-white italic">
-							Leçon en cours
-						</span>
-						<mat-icon
-							class="!mx-0 cursor-pointer"
-							[class]="{'cursor-wait': loading}"
-							(click)="setCurrentLesson(course.order + 1)"
-							matTooltip="Marquer comme terminée">
-							check
-						</mat-icon>
-					</div>
-				}
-			}
 			<hr class="mt-3 mb-6" />
 			<h3 class="!mb-3 text-sm italic">Graphème(s)</h3>
 			<div class="flex flex-wrap gap-3 text-sm" style="max-width: 14rem">
@@ -80,6 +31,7 @@
 				}
 			</div>
 			<hr class="mt-3 mb-6" />
+
 			<div class="flex justify-between items-center">
 				<h3 class="!mb-1 text-sm italic">Liste des fichiers</h3>
 			</div>

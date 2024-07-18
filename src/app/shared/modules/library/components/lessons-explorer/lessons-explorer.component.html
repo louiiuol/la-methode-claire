@@ -10,8 +10,7 @@
 			[currentUserLesson]="currentUserLesson"
 			[currentLessonIndex]="currentLesson"
 			[course]="lessons[currentLesson]"
-			(loaded)="isLoading = !$event"
-			(nextLesson)="changeLesson($event)" />
+			(loaded)="isLoading = !$event" />
 	} @else {
 		<ng-container *ngTemplateOutlet="inaccessibleMethod"></ng-container>
 	}

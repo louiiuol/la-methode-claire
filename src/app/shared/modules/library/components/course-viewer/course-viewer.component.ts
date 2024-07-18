@@ -10,28 +10,25 @@ import {JsonPipe, UpperCasePipe} from '@angular/common';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
-import {MatRadioModule} from '@angular/material/radio';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton, MatIconButton} from '@angular/material/button';
 
 const MaterialModules = [
 	MatChipsModule,
 	MatSidenavModule,
 	MatListModule,
-	MatRadioModule,
 	MatTooltipModule,
 	MatIcon,
 	MatButton,
 	MatIconButton,
 ];
 
-import {AuthService, PlatformService, isBoolean, nullish} from '@core';
+import {PlatformService, isBoolean, nullish} from '@core';
 import {CardComponent, MessageComponent} from '@shared/components';
 import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 import {FileViewerComponent} from '../file-viewer/file-viewer.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {take} from 'rxjs';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -89,11 +86,6 @@ export class CourseViewerComponent {
 	@Input({required: true}) currentLessonIndex!: number;
 
 	/**
-	 * Emits next Course index, this allows to move up to the next lesson from the parent component.
-	 */
-	@Output() nextLesson = new EventEmitter();
-
-	/**
 	 * Emits new value when loading status changes.
 	 */
 	@Output() loaded = new EventEmitter<boolean>();
@@ -120,29 +112,8 @@ export class CourseViewerComponent {
 
 	constructor(
 		private readonly library: LibraryService,
-		private readonly authenticator: AuthService,
 		protected readonly platform: PlatformService
 	) {}
-
-	setCurrentLesson(index: number) {
-		if (!this.loading) {
-			const reload = index == this.currentLessonIndex;
-			this.loading = reload;
-			this.library
-				.setCurrentLesson(index)
-				.pipe(take(1))
-				.subscribe(res => {
-					if (!res.error) {
-						this.currentLessonIndex = index;
-						this.currentUserLesson = index;
-						this.nextLesson.emit(index);
-						this.loaded.emit(reload);
-						this.authenticator.updateCurrentUser({currentLessonIndex: index});
-						this.loading = false;
-					}
-				});
-		}
-	}
 
 	setCurrentFile(file?: {name: string; path: string}) {
 		this.loading = true;
