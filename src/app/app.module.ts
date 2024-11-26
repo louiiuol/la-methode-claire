@@ -1,4 +1,4 @@
-import {NgModule, Component, HostBinding, OnInit} from '@angular/core';
+import { Component, HostBinding, NgModule, OnInit } from '@angular/core';
 /**
  * Root component of the Application, responsible for:
  * - Displaying "root" notifications to the user.
@@ -16,22 +16,22 @@ import {NgModule, Component, HostBinding, OnInit} from '@angular/core';
 export class AppShell implements OnInit {
 	@HostBinding('class') class =
 		'block relative antialiased text-primary text-lg h-screen';
-	private readonly version = '0.5.0';
+	private readonly version = '0.5.1';
 	ngOnInit(): void {
 		console.log(`Bienvenue sur la méthode claire ! (V${this.version})`);
 	}
 }
 
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
-import {environment} from '@env/environment';
+import { environment } from '@env/environment';
 
-import {CoreModule} from '@core/core.module';
-import {CORE_MODULES} from '@core/modules';
-import {ToasterComponent} from '@core/modules/notification';
+import { CoreModule } from '@core/core.module';
+import { CORE_MODULES } from '@core/modules';
+import { ToasterComponent } from '@core/modules/notification';
 
-import {APP_ROUTES} from './app.routes';
-import {FileValueAccessor} from '@shared/directives/file-value-accessor.directive';
+import { FileValueAccessor } from '@shared/directives/file-value-accessor.directive';
+import { APP_ROUTES } from './app.routes';
 
 /**
  * Root module of this application.
