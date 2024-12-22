@@ -1,12 +1,15 @@
 # La Méthode Claire 👓
 
-[![Github Page status](https://github.com/louiiuol/la-methode-claire/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/louiiuol/la-methode-claire/actions/workflows/pages/pages-build-deployment)
-
 > A simple yet neat and effective reading methodology for school teachers. This project allows:
 >
 > - Public to discover the project, and sign up
 > - Logged in user to follow their progress and more ..
 > - Administrators to manage content and users.
+
+## Status
+
+[![Github Page status](https://github.com/louiiuol/la-methode-claire/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/louiiuol/la-methode-claire/actions/workflows/pages/pages-build-deployment)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/249c415a-24c0-4d03-bcd4-6a3fcf5aa968/deploy-status)](https://app.netlify.com/sites/methode-claire/deploys)
 
 ## Features 🎉
 
