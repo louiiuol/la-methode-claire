@@ -1,22 +1,22 @@
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
-	Component,
-	ViewChild,
-	AfterViewInit,
-	HostBinding,
-	OnInit,
+  AfterViewInit,
+  Component,
+  HostBinding,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
-import {MatMenuModule} from '@angular/material/menu';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 const MaterialModules = [
 	MatIcon,
-	MatButton,
 	MatProgressBarModule,
 	MatTableModule,
 	MatSortModule,
@@ -26,23 +26,21 @@ const MaterialModules = [
 	ClipboardModule,
 	MatTooltipModule,
 ];
-import {ClipboardModule, Clipboard} from '@angular/cdk/clipboard';
 
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {merge} from 'rxjs';
-import {map, startWith, switchMap} from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
 
-import {NotificationService} from '@core/modules/notification';
-import {PaginationFilters} from '@core/helpers/types/pagination-filters';
-import {clean} from '@core';
-import {UserPreviewDto} from '@shared/modules';
-import {SincePipe} from '@shared/pipes';
+import { clean } from '@core';
+import { PaginationFilters } from '@core/helpers/types/pagination-filters';
+import { NotificationService } from '@core/modules/notification';
+import { UserPreviewDto } from '@shared/modules';
+import { SincePipe } from '@shared/pipes';
 
-import {UsersAdminService} from '../../../../services/users-admin.service';
-import {FiltersComponent} from './filters/filters.component';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { UsersAdminService } from '../../../../services/users-admin.service';
+import { FiltersComponent } from './filters/filters.component';
 
 @Component({
     selector: 'app-users-list',

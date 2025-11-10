@@ -1,22 +1,20 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import {
-	ChangeDetectionStrategy,
-	Component,
-	HostBinding,
-	Inject,
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Inject,
 } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import {
-	MAT_DIALOG_DATA,
-	MatDialogClose,
-	MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogClose,
+  MatDialogRef,
 } from '@angular/material/dialog';
-import {MatDivider} from '@angular/material/divider';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIcon} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
 
 @Component({
     selector: 'app-add-sound',
@@ -25,7 +23,6 @@ import {LibraryAdminService} from 'src/app/views/admin-view/services/library.ser
         FormsModule,
         MatInputModule,
         MatDialogClose,
-        MatDivider,
         MatIcon,
         MatButton,
     ],

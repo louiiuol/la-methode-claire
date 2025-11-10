@@ -1,26 +1,25 @@
 import {
-	AfterViewInit,
-	ChangeDetectionStrategy,
-	Component,
-	ElementRef,
-	EventEmitter,
-	HostBinding,
-	Input,
-	Output,
-	ViewChild,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+  ViewChild,
 } from '@angular/core';
 
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {CourseViewDto} from '../../types/course-view.dto';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {LibraryService} from '../../services/library.service';
-import {take} from 'rxjs/internal/operators/take';
-import {AuthService} from '@core';
-import {MatIcon} from '@angular/material/icon';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '@core';
+import { take } from 'rxjs/internal/operators/take';
+import { LibraryService } from '../../services/library.service';
+import { CourseViewDto } from '../../types/course-view.dto';
 
 @Component({
     selector: 'app-progress-bar',
-    imports: [MatTooltipModule, MatIconButton, MatIcon, MatButton],
+    imports: [MatTooltipModule, MatIcon],
     templateUrl: './progress-bar.component.html',
     styles: [
         `

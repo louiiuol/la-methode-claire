@@ -1,28 +1,28 @@
-import {UpperCasePipe} from '@angular/common';
-import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import { UpperCasePipe } from '@angular/common';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import {
-	FormControl,
-	FormGroup,
-	FormsModule,
-	ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
 } from '@angular/forms';
-import {MatDialog, MatDialogClose} from '@angular/material/dialog';
-import {MatDivider} from '@angular/material/divider';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {FileUploadComponent} from '@shared/modules/library/components/file-upload/file-upload.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDivider } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FileUploadComponent } from '@shared/modules/library/components/file-upload/file-upload.component';
 
-import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
-import {take} from 'rxjs';
+import { CourseViewDto } from '@shared/modules/library/types/course-view.dto';
+import { take } from 'rxjs';
 
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
-import {PosterCreateDialog} from '../poster-create/poster-create.dialog';
-import {PhonemeViewDto} from '../../types/phoneme-view.dto';
-import {PhonemeEditComponent} from '../phoneme-edit/phoneme-edit.component';
-import {addOrReplace} from '@core/helpers/fn/add-or-replace.fn';
-import {MatButton} from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
+import { addOrReplace } from '@core/helpers/fn/add-or-replace.fn';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
+import { PhonemeViewDto } from '../../types/phoneme-view.dto';
+import { PhonemeEditComponent } from '../phoneme-edit/phoneme-edit.component';
+import { PosterCreateDialog } from '../poster-create/poster-create.dialog';
 
 @Component({
     selector: 'app-course-edit',
@@ -36,7 +36,6 @@ import {MatButton} from '@angular/material/button';
         MatDivider,
         FileUploadComponent,
         MatExpansionModule,
-        MatDialogClose,
         ReactiveFormsModule,
     ],
     providers: [LibraryAdminService],

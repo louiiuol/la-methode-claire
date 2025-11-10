@@ -1,18 +1,15 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {AsyncPipe} from '@angular/common';
-import {MatIconModule} from '@angular/material/icon';
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
 
 @Component({
     selector: 'app-file-upload',
     imports: [
-        AsyncPipe,
         MatToolbarModule,
         MatIconModule,
         MatButtonModule,

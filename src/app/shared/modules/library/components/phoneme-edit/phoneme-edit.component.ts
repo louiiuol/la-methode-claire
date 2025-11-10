@@ -1,27 +1,26 @@
 import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	HostBinding,
-	Inject,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Inject,
 } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
-import {MatChipsModule, MatChipInputEvent} from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import {
-	MAT_DIALOG_DATA,
-	MatDialogClose,
-	MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogClose,
+  MatDialogRef,
 } from '@angular/material/dialog';
-import {MatDivider} from '@angular/material/divider';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIcon} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
 
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatCheckbox} from '@angular/material/checkbox';
-import {PhonemeEditDto} from '../../types/phoneme-edit.dto';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { PhonemeEditDto } from '../../types/phoneme-edit.dto';
 
 @Component({
     selector: 'app-add-phoneme',
@@ -30,7 +29,6 @@ import {PhonemeEditDto} from '../../types/phoneme-edit.dto';
         FormsModule,
         MatInputModule,
         MatDialogClose,
-        MatDivider,
         MatIcon,
         MatButton,
         MatChipsModule,

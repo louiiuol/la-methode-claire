@@ -1,18 +1,18 @@
+import { UpperCasePipe } from '@angular/common';
 import {
-	Component,
-	EventEmitter,
-	HostBinding,
-	Input,
-	Output,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
 } from '@angular/core';
-import {JsonPipe, UpperCasePipe} from '@angular/common';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatListModule} from '@angular/material/list';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIcon } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const MaterialModules = [
 	MatChipsModule,
@@ -24,11 +24,10 @@ const MaterialModules = [
 	MatIconButton,
 ];
 
-import {PlatformService, isBoolean, nullish} from '@core';
-import {CardComponent, MessageComponent} from '@shared/components';
-import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
-import {LibraryService} from '@shared/modules/library/services/library.service';
-import {FileViewerComponent} from '../file-viewer/file-viewer.component';
+import { PlatformService, isBoolean, nullish } from '@core';
+import { LibraryService } from '@shared/modules/library/services/library.service';
+import { CourseViewDto } from '@shared/modules/library/types/course-view.dto';
+import { FileViewerComponent } from '../file-viewer/file-viewer.component';
 
 /**
  * Display lesson details, including phonemes, words and files for the given `Course`
@@ -37,11 +36,8 @@ import {FileViewerComponent} from '../file-viewer/file-viewer.component';
  */
 @Component({
     imports: [
-        JsonPipe,
         ...MaterialModules,
-        CardComponent,
         FileViewerComponent,
-        MessageComponent,
         UpperCasePipe,
     ],
     selector: 'app-course-viewer',
