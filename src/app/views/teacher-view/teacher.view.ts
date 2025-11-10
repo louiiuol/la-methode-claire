@@ -12,15 +12,14 @@ import {HeaderComponent} from '@shared/components';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	selector: 'app-teacher-view',
-	imports: [RouterOutlet, HeaderComponent],
-	template: `
+    selector: 'app-teacher-view',
+    imports: [RouterOutlet, HeaderComponent],
+    template: `
 		<app-header type="logged" />
 		<main class="flex-1">
 			<router-outlet />
 		</main>
-	`,
+	`
 })
 export class TeacherView {
 	@HostBinding('class') class = 'bg-yellow-light h-screen flex flex-col';

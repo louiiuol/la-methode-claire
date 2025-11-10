@@ -16,10 +16,9 @@ import {MatCardModule} from '@angular/material/card';
  * @author louiiuol
  */
 @Component({
-	selector: 'app-card',
-	standalone: true,
-	imports: [NgTemplateOutlet, MatCardModule],
-	templateUrl: './card.component.html',
+    selector: 'app-card',
+    imports: [NgTemplateOutlet, MatCardModule],
+    templateUrl: './card.component.html'
 })
 export class CardComponent {
 	@HostBinding('class') class = 'block mx-auto';

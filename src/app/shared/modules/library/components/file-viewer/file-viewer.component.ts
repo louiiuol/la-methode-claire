@@ -18,10 +18,9 @@ import {LoaderComponent, MessageComponent} from '@shared/components/elements';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	selector: 'app-file-viewer',
-	imports: [TrustUrlPipe, MessageComponent, LoaderComponent],
-	templateUrl: './file-viewer.component.html',
+    selector: 'app-file-viewer',
+    imports: [TrustUrlPipe, MessageComponent, LoaderComponent],
+    templateUrl: './file-viewer.component.html'
 })
 export class FileViewerComponent {
 	@HostBinding('class')

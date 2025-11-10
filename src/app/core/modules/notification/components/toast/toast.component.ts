@@ -11,10 +11,9 @@ import {MessageComponent} from '@shared/components';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [MessageComponent],
-	selector: 'app-toaster',
-	template: `
+    imports: [MessageComponent],
+    selector: 'app-toaster',
+    template: `
 		@for (n of notifications(); track n) {
 		  <app-message
 		    class="mt-3"
@@ -22,7 +21,7 @@ import {MessageComponent} from '@shared/components';
 		    [details]="n.details"
 		    [severity]="n.severity" />
 		}
-		`,
+		`
 })
 export class ToasterComponent {
 	@HostBinding('class') class = 'absolute right-2 top-16 z-50';

@@ -25,23 +25,22 @@ import {addOrReplace} from '@core/helpers/fn/add-or-replace.fn';
 import {MatButton} from '@angular/material/button';
 
 @Component({
-	standalone: true,
-	selector: 'app-course-edit',
-	imports: [
-		UpperCasePipe,
-		MatFormFieldModule,
-		MatInputModule,
-		FormsModule,
-		MatButton,
-		MatIconModule,
-		MatDivider,
-		FileUploadComponent,
-		MatExpansionModule,
-		MatDialogClose,
-		ReactiveFormsModule,
-	],
-	providers: [LibraryAdminService],
-	templateUrl: 'course-edit.component.html',
+    selector: 'app-course-edit',
+    imports: [
+        UpperCasePipe,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButton,
+        MatIconModule,
+        MatDivider,
+        FileUploadComponent,
+        MatExpansionModule,
+        MatDialogClose,
+        ReactiveFormsModule,
+    ],
+    providers: [LibraryAdminService],
+    templateUrl: 'course-edit.component.html'
 })
 export class CourseEditComponent implements OnInit {
 	@HostBinding('class') class = '!block px-4 pb-2';

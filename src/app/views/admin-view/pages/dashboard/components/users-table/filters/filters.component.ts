@@ -27,20 +27,19 @@ export interface SearchFilter {
 }
 
 @Component({
-	standalone: true,
-	selector: 'app-filters',
-	imports: [
-		FormsModule,
-		InputSearchComponent,
-		MatIcon,
-		MatIconButton,
-		MatButton,
-		MatCheckboxModule,
-		MatMenuModule,
-		MatTooltipModule,
-	],
-	templateUrl: 'filters.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-filters',
+    imports: [
+        FormsModule,
+        InputSearchComponent,
+        MatIcon,
+        MatIconButton,
+        MatButton,
+        MatCheckboxModule,
+        MatMenuModule,
+        MatTooltipModule,
+    ],
+    templateUrl: 'filters.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FiltersComponent implements AfterViewInit {
 	@HostBinding('class') class = 'flex items-center justify-start';

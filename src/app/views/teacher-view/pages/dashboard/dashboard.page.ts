@@ -4,12 +4,11 @@ import {AuthService} from '@core';
 import {LessonsExplorerComponent} from '@shared/modules/library/components/lessons-explorer/lessons-explorer.component';
 
 @Component({
-	standalone: true,
-	imports: [LessonsExplorerComponent],
-	template: `<app-lessons-explorer
+    imports: [LessonsExplorerComponent],
+    template: `<app-lessons-explorer
 		[currentUserLesson]="currentUserLesson"
 		[currentLesson]="currentUserLesson"
-		[hasValidSubscription]="subscribed" />`,
+		[hasValidSubscription]="subscribed" />`
 })
 export class DashboardPage {
 	@HostBinding('class') class = 'h-full';

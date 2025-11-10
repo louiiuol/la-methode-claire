@@ -30,10 +30,9 @@ import {MatIcon} from '@angular/material/icon';
  * Contains navigation links and preference buttons (heme & lang)
  */
 @Component({
-	standalone: true,
-	selector: 'app-header',
-	templateUrl: './header.component.html',
-	imports: [...MaterialModules, IconComponent, RouterLink, InitialsPipe],
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    imports: [...MaterialModules, IconComponent, RouterLink, InitialsPipe]
 })
 export class HeaderComponent {
 	/**

@@ -36,26 +36,25 @@ import {FileViewerComponent} from '../file-viewer/file-viewer.component';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [
-		JsonPipe,
-		...MaterialModules,
-		CardComponent,
-		FileViewerComponent,
-		MessageComponent,
-		UpperCasePipe,
-	],
-	selector: 'app-course-viewer',
-	templateUrl: './course-viewer.component.html',
-	styles: [
-		`
+    imports: [
+        JsonPipe,
+        ...MaterialModules,
+        CardComponent,
+        FileViewerComponent,
+        MessageComponent,
+        UpperCasePipe,
+    ],
+    selector: 'app-course-viewer',
+    templateUrl: './course-viewer.component.html',
+    styles: [
+        `
 			:host mat-list-item div.active {
 				background: var(--lmc-primary-color);
 				color: white;
 				font-weight: bold;
 			}
 		`,
-	],
+    ]
 })
 export class CourseViewerComponent {
 	/**

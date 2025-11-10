@@ -19,20 +19,19 @@ import {AuthService} from '@core';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({
-	selector: 'app-progress-bar',
-	standalone: true,
-	imports: [MatTooltipModule, MatIconButton, MatIcon, MatButton],
-	templateUrl: './progress-bar.component.html',
-	styles: [
-		`
+    selector: 'app-progress-bar',
+    imports: [MatTooltipModule, MatIconButton, MatIcon, MatButton],
+    templateUrl: './progress-bar.component.html',
+    styles: [
+        `
 			:host {
 				scroll-snap-type: inline mandatory;
 				scroll-padding-inline: 0.5rem;
 				scroll-behavior: smooth;
 			}
 		`,
-	],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProgressBarComponent implements AfterViewInit {
 	@HostBinding('class')

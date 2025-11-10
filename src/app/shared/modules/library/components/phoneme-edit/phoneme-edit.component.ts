@@ -24,23 +24,22 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {PhonemeEditDto} from '../../types/phoneme-edit.dto';
 
 @Component({
-	selector: 'app-add-phoneme',
-	standalone: true,
-	imports: [
-		MatFormFieldModule,
-		FormsModule,
-		MatInputModule,
-		MatDialogClose,
-		MatDivider,
-		MatIcon,
-		MatButton,
-		MatChipsModule,
-		MatCheckbox,
-	],
-	providers: [LibraryAdminService],
-	templateUrl: './phoneme-edit.component.html',
-	styleUrls: ['../file-upload/file-upload.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-add-phoneme',
+    imports: [
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatDialogClose,
+        MatDivider,
+        MatIcon,
+        MatButton,
+        MatChipsModule,
+        MatCheckbox,
+    ],
+    providers: [LibraryAdminService],
+    templateUrl: './phoneme-edit.component.html',
+    styleUrls: ['../file-upload/file-upload.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PhonemeEditComponent {
 	@HostBinding('class') class = '!block px-6 py-3 w-96';

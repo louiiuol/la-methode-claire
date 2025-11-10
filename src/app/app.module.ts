@@ -7,11 +7,12 @@ import { Component, HostBinding, NgModule, OnInit } from '@angular/core';
  * @author louiiuol
  */
 @Component({
-	selector: 'app-root',
-	template: `
+    selector: 'app-root',
+    template: `
 		<app-toaster />
 		<router-outlet />
 	`,
+    standalone: false
 })
 export class AppShell implements OnInit {
 	@HostBinding('class') class =

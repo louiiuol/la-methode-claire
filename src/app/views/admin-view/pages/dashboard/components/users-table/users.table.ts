@@ -45,11 +45,10 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
 
 @Component({
-	standalone: true,
-	selector: 'app-users-list',
-	imports: [...MaterialModules, DatePipe, SincePipe, FiltersComponent],
-	providers: [UsersAdminService],
-	templateUrl: 'users.table.html',
+    selector: 'app-users-list',
+    imports: [...MaterialModules, DatePipe, SincePipe, FiltersComponent],
+    providers: [UsersAdminService],
+    templateUrl: 'users.table.html'
 })
 export class UsersTable implements OnInit, AfterViewInit {
 	@HostBinding('class') class = 'flex flex-col mx-auto w-full pt-1 px-2';

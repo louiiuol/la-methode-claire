@@ -16,10 +16,9 @@ import {RouterLink} from '@angular/router';
  * @see {@link AuthService} login() method for more information
  */
 @Component({
-	standalone: true,
-	imports: [CardComponent, FormComponent, MatButtonModule, RouterLink],
-	templateUrl: './login.page.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CardComponent, FormComponent, MatButtonModule, RouterLink],
+    templateUrl: './login.page.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPage {
 	@HostBinding('class')

@@ -1,8 +1,8 @@
 /* Root style declaration */
-@import './styles/selection.scss';
-@import './styles/_material-theme.scss';
-@import './styles/_material-overrides.scss';
-@import './styles/tailwind.scss';
-@import './styles/layout.scss';
-@import './styles/typography.scss';
-@import 'animate.css';
+@use './styles/selection.scss';
+@use './styles/_material-theme.scss';
+@use './styles/_material-overrides.scss';
+@use './styles/tailwind.scss';
+@use './styles/layout.scss';
+@use './styles/typography.scss';
+@use 'animate.css';

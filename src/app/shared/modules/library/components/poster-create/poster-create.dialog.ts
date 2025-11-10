@@ -19,21 +19,20 @@ import {MatInputModule} from '@angular/material/input';
 import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
 
 @Component({
-	selector: 'app-add-sound',
-	standalone: true,
-	imports: [
-		MatFormFieldModule,
-		FormsModule,
-		MatInputModule,
-		MatDialogClose,
-		MatDivider,
-		MatIcon,
-		MatButton,
-	],
-	providers: [LibraryAdminService],
-	templateUrl: './poster-create.dialog.html',
-	styleUrls: ['../file-upload/file-upload.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-add-sound',
+    imports: [
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        MatDialogClose,
+        MatDivider,
+        MatIcon,
+        MatButton,
+    ],
+    providers: [LibraryAdminService],
+    templateUrl: './poster-create.dialog.html',
+    styleUrls: ['../file-upload/file-upload.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PosterCreateDialog {
 	@HostBinding('class') class = '!block px-6 py-3';

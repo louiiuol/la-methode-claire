@@ -14,18 +14,17 @@ import {LibraryService} from '@shared/modules/library/services/library.service';
 import {tap} from 'rxjs';
 
 @Component({
-	standalone: true,
-	selector: 'app-lessons-explorer',
-	imports: [
-		AsyncPipe,
-		LibraryModule,
-		CardComponent,
-		LoaderComponent,
-		NgTemplateOutlet,
-	],
-	providers: [LibraryService],
-	templateUrl: './lessons-explorer.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-lessons-explorer',
+    imports: [
+        AsyncPipe,
+        LibraryModule,
+        CardComponent,
+        LoaderComponent,
+        NgTemplateOutlet,
+    ],
+    providers: [LibraryService],
+    templateUrl: './lessons-explorer.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LessonsExplorerComponent {
 	@Input({required: true}) hasValidSubscription!: boolean;

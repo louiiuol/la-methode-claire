@@ -6,11 +6,10 @@ import {NewsletterService} from '../../../services/newsletter.service';
 import {FieldConfig} from '@core';
 
 @Component({
-	standalone: true,
-	selector: 'app-newsletter-admin',
-	imports: [CardComponent, FormComponent],
-	providers: [NewsletterService, UsersAdminService],
-	template: ` <app-card
+    selector: 'app-newsletter-admin',
+    imports: [CardComponent, FormComponent],
+    providers: [NewsletterService, UsersAdminService],
+    template: ` <app-card
 		title="Nouvelle newsletter"
 		subtitle="Envoyer un email aux utilisateurs abonnés à la méthode.">
 		<img src="assets/img/banner.png" alt="" />
@@ -20,7 +19,7 @@ import {FieldConfig} from '@core';
 			[fields]="fields"
 			[askConfirmation]="true"
 			[forceReset]="true" />
-	</app-card>`,
+	</app-card>`
 })
 export class NewsletterTab {
 	constructor(

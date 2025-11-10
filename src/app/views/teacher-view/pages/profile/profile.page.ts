@@ -12,16 +12,15 @@ import {MatButton} from '@angular/material/button';
  * Profile View, allows user to see and update their information
  */
 @Component({
-	standalone: true,
-	imports: [
-		AsyncPipe,
-		FormComponent,
-		LoaderComponent,
-		MatExpansionModule,
-		MatButton,
-		PasswordModule,
-	],
-	templateUrl: './profile.page.html',
+    imports: [
+        AsyncPipe,
+        FormComponent,
+        LoaderComponent,
+        MatExpansionModule,
+        MatButton,
+        PasswordModule,
+    ],
+    templateUrl: './profile.page.html'
 })
 export class ProfilePage {
 	@HostBinding('class') class = 'page p-6';

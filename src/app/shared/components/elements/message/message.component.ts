@@ -29,11 +29,10 @@ const MESSAGE_DICTIONARY = {
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [MatIcon],
-	selector: 'app-message',
-	templateUrl: 'message.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [MatIcon],
+    selector: 'app-message',
+    templateUrl: 'message.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageComponent {
 	@HostBinding('class') class = 'block';

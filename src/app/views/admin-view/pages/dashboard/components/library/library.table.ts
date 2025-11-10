@@ -1,24 +1,23 @@
-import {Component, HostBinding, ViewChild, inject, signal} from '@angular/core';
-import {NotificationService} from '@core/modules/notification';
-import {LoaderComponent} from '@shared/components';
-import {LibraryAdminService} from '../../../../services/library.service';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {AsyncPipe, UpperCasePipe} from '@angular/common';
-import {MatTable, MatTableModule} from '@angular/material/table';
-import {LibraryService} from '@shared/modules/library/services/library.service';
-import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
+import { UpperCasePipe } from '@angular/common';
+import { Component, HostBinding, ViewChild, inject, signal } from '@angular/core';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationService } from '@core/modules/notification';
+import { LibraryService } from '@shared/modules/library/services/library.service';
+import { CourseViewDto } from '@shared/modules/library/types/course-view.dto';
+import { LibraryAdminService } from '../../../../services/library.service';
 
-import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
-import {CourseEditComponent} from '../../../../../../shared/modules/library/components/course-edit/course-edit.component';
 import {
-	CdkDropList,
-	DragDropModule,
-	moveItemInArray,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import {CdkTableModule} from '@angular/cdk/table';
-import {MatIcon} from '@angular/material/icon';
-import {take} from 'rxjs';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { take } from 'rxjs';
+import { CourseEditComponent } from '../../../../../../shared/modules/library/components/course-edit/course-edit.component';
 
 const MaterialModules = [
 	MatIcon,
@@ -30,27 +29,24 @@ const MaterialModules = [
 ];
 
 @Component({
-	standalone: true,
-	selector: 'app-library-admin',
-	imports: [
-		LoaderComponent,
-		AsyncPipe,
-		UpperCasePipe,
-		...MaterialModules,
-		CourseEditComponent,
-		DragDropModule,
-		CdkDropList,
-		CdkTableModule,
-	],
-	providers: [LibraryService, LibraryAdminService],
-	styles: [
-		`
+    selector: 'app-library-admin',
+    imports: [
+        UpperCasePipe,
+        ...MaterialModules,
+        CourseEditComponent,
+        DragDropModule,
+        CdkDropList,
+        CdkTableModule,
+    ],
+    providers: [LibraryService, LibraryAdminService],
+    styles: [
+        `
 			.mat-column-name {
 				flex: 5;
 			}
 		`,
-	],
-	templateUrl: 'library.table.html',
+    ],
+    templateUrl: 'library.table.html'
 })
 export class LibraryTable {
 	@HostBinding('class') class = 'flex flex-col mx-auto w-full pt-1 px-2';

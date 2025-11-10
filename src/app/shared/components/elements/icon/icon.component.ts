@@ -19,11 +19,10 @@ import {Observable, map} from 'rxjs';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [AsyncPipe, MatIconModule],
-	selector: 'app-icon',
-	templateUrl: 'icon.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [AsyncPipe, MatIconModule],
+    selector: 'app-icon',
+    templateUrl: 'icon.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent implements OnChanges {
 	/**

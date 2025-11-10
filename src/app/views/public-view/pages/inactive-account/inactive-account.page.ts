@@ -6,10 +6,9 @@ import {NotificationService} from '@core/modules/notification';
 import {CardComponent} from '@shared/components';
 
 @Component({
-	standalone: true,
-	imports: [CardComponent, MatButtonModule],
-	providers: [AuthService],
-	template: `@if (!emailSent) {
+    imports: [CardComponent, MatButtonModule],
+    providers: [AuthService],
+    template: `@if (!emailSent) {
 			<app-card
 				class="max-w-md"
 				cardTitle="Compte inactif"
@@ -27,7 +26,7 @@ import {CardComponent} from '@shared/components';
 					src="assets/img/email_sent.png"
 					alt="email de vérification envoyé" />
 			</app-card>
-		} `,
+		} `
 })
 export class InactiveAccountPage {
 	@HostBinding('class')
