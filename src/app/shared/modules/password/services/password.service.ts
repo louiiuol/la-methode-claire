@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpResource} from '@core/modules/http/services/http.resource';
-import {PasswordUpdateDto, PasswordResetDto} from '../types';
-import {map, tap} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {HttpResource} from '@core/modules/http/services/http.resource';
+import {map, tap} from 'rxjs';
+import {PasswordResetDto, PasswordUpdateDto} from '../types';
 
 /**
  * CRUD requests related to user's password.
@@ -13,9 +13,7 @@ import {Router} from '@angular/router';
 export class PasswordService extends HttpResource {
 	protected resource = 'users';
 
-	constructor(private readonly router: Router) {
-		super();
-	}
+	private readonly router = inject(Router);
 
 	forgotPassword = (dto: {email: string}) =>
 		this.post(dto, {

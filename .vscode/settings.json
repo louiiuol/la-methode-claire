@@ -1,4 +1,51 @@
 {
+	"eslint.workingDirectories": [
+		{
+			"changeProcessCWD": true,
+			"directory": "./"
+		}
+	],
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSaveMode": "file",
+	"emmet.triggerExpansionOnTab": true,
+	"editor.renderWhitespace": "all",
+	"editor.stickyScroll.enabled": true,
+	"editor.stickyScroll.defaultModel": "indentationModel",
+	"editor.codeActionsOnSave": [
+		"source.addMissingImports",
+		"source.fixAll.eslint",
+		"source.organizeImports"
+	],
+	"editor.formatOnSave": true,
+	"eslint.validate": ["javascript", "typescript"],
+	"eslint.useFlatConfig": false,
+	"typescript.preferences.includePackageJsonAutoImports": "on",
+	"files.exclude": {
+		"**/.git": true,
+		"**/.nx": true,
+		"**/node_modules": true,
+		"**/.DS_Store": true,
+		"tailwind.directives.json": true
+	},
+	"files.watcherExclude": {
+		"**/dist": true,
+		"**/.nx": true,
+		"**/.git/objects/**": true,
+		"**/.git/subtree-cache/**": true,
+		"**/node_modules/*/**": true
+	},
+	"search.exclude": {
+		"**/dist": true,
+		"**/.nx": true,
+		"**/node_modules/**": true,
+		"**/*.d.ts": true,
+		"**/*.d.ts.map": true
+	},
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"typescript.preferences.importModuleSpecifier": "project-relative",
 	"workbench.colorCustomizations": {
 		"statusBar.background": "#d24ac2",
 		"statusBar.foreground": "#15202b",
@@ -27,10 +74,5 @@
 		"theming",
 		"webp"
 	],
-	"scss.lint.unknownAtRules": "ignore",
-	"angular-schematics.schematicsDefaultOptions": {
-		"angular-*": {
-			"inlineStyle": true
-		}
-	}
+	"scss.lint.unknownAtRules": "ignore"
 }

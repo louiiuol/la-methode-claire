@@ -1,25 +1,26 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {FieldConfig} from '@core';
 import {NotificationService} from '@core/modules/notification';
 import {CardComponent, FormComponent} from '@shared/components';
-import {UsersAdminService} from '../../../services/users-admin.service';
 import {NewsletterService} from '../../../services/newsletter.service';
-import {FieldConfig} from '@core';
+import {UsersAdminService} from '../../../services/users-admin.service';
 
 @Component({
-    selector: 'app-newsletter-admin',
-    imports: [CardComponent, FormComponent],
-    providers: [NewsletterService, UsersAdminService],
-    template: ` <app-card
+	selector: 'app-newsletter-admin',
+
+	template: ` <app-card
 		title="Nouvelle newsletter"
 		subtitle="Envoyer un email aux utilisateurs abonnés à la méthode.">
-		<img src="assets/img/banner.png" alt="" />
 		<app-form
 			action="Envoyer"
 			[submitted]="sendNewsletter"
 			[fields]="fields"
 			[askConfirmation]="true"
 			[forceReset]="true" />
-	</app-card>`
+	</app-card>`,
+	imports: [CardComponent, FormComponent],
+	providers: [NewsletterService, UsersAdminService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsletterTab {
 	constructor(

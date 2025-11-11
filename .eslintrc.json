@@ -8,7 +8,11 @@
 				"eslint:recommended",
 				"plugin:@typescript-eslint/recommended",
 				"plugin:@angular-eslint/recommended",
-				"plugin:@angular-eslint/template/process-inline-templates"
+				"plugin:@typescript-eslint/recommended-type-checked",
+				"plugin:@typescript-eslint/recommended-requiring-type-checking",
+				"plugin:@angular-eslint/recommended",
+				"plugin:@angular-eslint/template/process-inline-templates", // ✅ Lint inline templates
+				"plugin:prettier/recommended"
 			],
 			"rules": {
 				"@angular-eslint/directive-selector": [
@@ -33,6 +37,8 @@
 						"suffixes": ["Component", "Page", "Dialog", "Card", "Form"]
 					}
 				],
+				"@angular-eslint/prefer-on-push-component-change-detection": ["error"],
+				"@angular-eslint/no-attribute-decorator": ["error"],
 				"indent": ["off", "tab"],
 				"linebreak-style": ["error", "unix"],
 				"quotes": [
@@ -47,6 +53,22 @@
 				"no-empty-function": "off",
 				"no-useless-escape": "warn",
 				"no-unused-vars": "off",
+				"@typescript-eslint/consistent-type-assertions": [
+					"error",
+					{
+						"assertionStyle": "as",
+						"objectLiteralTypeAssertions": "allow-as-parameter"
+					}
+				],
+				"lines-between-class-members": [
+					"error",
+					"always",
+					{
+						"exceptAfterSingleLine": true
+					}
+				],
+				"no-else-return": ["error"],
+				"curly": ["error"],
 				"no-console": [
 					"warn",
 					{

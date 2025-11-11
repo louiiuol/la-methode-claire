@@ -1,9 +1,12 @@
-@if (course) {
+@if (course(); as course) {
 	<div class="mx-auto px-5 py-3 w-full max-w-xl">
 		<div class="flex justify-center items-center gap-3">
 			<mat-form-field class="flex-1" (keyup.enter)="updateColor()">
 				<mat-label>Couleur de la leçon</mat-label>
 				<input matInput type="text" [(ngModel)]="course.color" />
+				<mat-hint>
+					Appuyer sur Entrée pour valider - Format hexadécimal (ex: #FF5733)
+				</mat-hint>
 			</mat-form-field>
 			<span
 				class="block mb-6 rounded-xl w-12 h-12"

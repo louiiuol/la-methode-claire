@@ -1,14 +1,7 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	EventEmitter,
-	HostBinding,
-	Input,
-	Output,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input} from '@angular/core';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
 const MaterialModules = [
 	MatToolbarModule,
 	MatMenuModule,
@@ -16,13 +9,13 @@ const MaterialModules = [
 	MatIcon,
 ];
 
+import {MatButtonModule} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
 import {AuthService, PlatformService} from '@core';
 import {IconComponent} from '@shared/components';
 import {navigationLinks} from 'src/app/app.routes';
-import {RouterLink} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
 import {InitialsPipe} from '../../pipes/initials.pipe';
-import {MatIcon} from '@angular/material/icon';
 
 /**
  * Logged views global header
@@ -30,34 +23,132 @@ import {MatIcon} from '@angular/material/icon';
  * Contains navigation links and preference buttons (heme & lang)
  */
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    imports: [...MaterialModules, IconComponent, RouterLink, InitialsPipe]
+	selector: 'app-header',
+	host: {class: 'w-full sticky top-0 mat-elevation-z2 z-50'},
+	template: `
+		@let currentUser = authenticator.currentUser();
+		<mat-toolbar class="justify-start gap-3 !h-16">
+			<button
+				mat-icon-button
+				class="md:!hidden"
+				[matMenuTriggerFor]="navigationMenu"
+				aria-label="Afficher le menu pour mobile">
+				<mat-icon>menu</mat-icon>
+			</button>
+			<mat-menu #navigationMenu="matMenu">
+				@for (link of navigationLinks['public']; track link) {
+					<a mat-menu-item [routerLink]="'/' + link.path">
+						{{ link.name }}
+					</a>
+				}
+				@if (!currentUser?.uuid) {
+					<hr />
+					<a mat-menu-item routerLink="/login">se connecter</a>
+					<a mat-menu-item routerLink="/register">s'inscrire</a>
+				}
+			</mat-menu>
+
+			<app-icon
+				class="w-16 cursor-pointer"
+				svg="logo"
+				routerLink="/"
+				routerLinkActive="font-bold" />
+
+			@for (link of navigationLinks['public']; track link) {
+				<a
+					mat-button
+					class="md:!inline-block !hidden"
+					color="primary"
+					[routerLink]="'/' + link.path">
+					{{ link.name }}
+				</a>
+			}
+
+			<span class="flex-1"></span>
+
+			<mat-icon
+				class="text-3xl !w-10 !h-10 cursor-pointer"
+				color="accent"
+				[matMenuTriggerFor]="helpMenu"
+				aria-label="Afficher le menu d'aide">
+				help
+			</mat-icon>
+
+			<mat-menu #helpMenu="matMenu">
+				<a mat-menu-item href="mailto:methode.claire@gmail.com">
+					<mat-icon>mail</mat-icon>
+					contact
+				</a>
+
+				<a mat-menu-item target="_blank" href="assets/pdf/cgv.pdf">
+					<mat-icon>local_police</mat-icon>
+					Conditions générales de ventes
+				</a>
+
+				<a mat-menu-item target="_blank" href="assets/pdf/mentions-legales.pdf">
+					<mat-icon>gavel</mat-icon>
+					Mentions légales
+				</a>
+			</mat-menu>
+
+			@if (!currentUser?.uuid) {
+				<a mat-raised-button color="primary" routerLink="/login">
+					se connecter
+				</a>
+				<a
+					mat-raised-button
+					class="md:!inline-block !hidden"
+					color="accent"
+					routerLink="/register">
+					s'inscrire
+				</a>
+			} @else {
+				<button
+					[matMenuTriggerFor]="userMenu"
+					mat-mini-fab
+					color="primary"
+					aria-label="menu utilisateur">
+					<span class="block text-base">
+						{{ currentUser | initials }}
+					</span>
+				</button>
+				<mat-menu #userMenu="matMenu">
+					<a mat-menu-item routerLink="/app/dashboard">
+						<mat-icon>dashboard</mat-icon>
+						Tableau de bord
+					</a>
+					<a mat-menu-item routerLink="/app/profile">
+						<mat-icon>person</mat-icon>
+						Profil
+					</a>
+					@if (currentUser?.role === 'ADMIN') {
+						<a
+							mat-menu-item
+							routerLink="/back-office/dashboard"
+							class="text-accent">
+							<mat-icon>settings</mat-icon>
+							Back-Office
+						</a>
+					}
+					<button
+						mat-menu-item
+						class="text-warn"
+						(click)="authenticator.logOut()">
+						<mat-icon>logout</mat-icon>
+						se déconnecter
+					</button>
+				</mat-menu>
+			}
+		</mat-toolbar>
+	`,
+	imports: [...MaterialModules, IconComponent, RouterLink, InitialsPipe],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	/**
-	 * Emits when "hamburger" button is clicked.
-	 * This event will be used by {@link TeacherPage} to toggle Sidebar display mode.
-	 */
-	@Output() toggledMobileMenu = new EventEmitter();
+	readonly type = input.required<'public' | 'logged' | 'admin'>();
 
-	@Input({required: true}) type!: 'public' | 'logged' | 'admin';
+	protected readonly platform = inject(PlatformService);
+	protected readonly authenticator = inject(AuthService);
 
-	@HostBinding('class')
-	protected class = 'w-full sticky top-0 mat-elevation-z2 z-50';
-
-	protected currentUser = this.authenticator.currentUser();
 	protected readonly navigationLinks = navigationLinks;
-
-	constructor(
-		private readonly platform: PlatformService,
-		private readonly authenticator: AuthService,
-		private readonly cd: ChangeDetectorRef
-	) {}
-
-	protected isMobile = () => this.platform.isMobileView();
-	protected logOut = () => {
-		this.authenticator.logOut();
-		this.cd.detectChanges();
-	};
 }

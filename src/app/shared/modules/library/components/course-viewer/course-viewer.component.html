@@ -1,87 +1,104 @@
-@if (course) {
+@if (course(); as course) {
 	<mat-drawer-container class="w-full h-full" autosize>
 		<mat-drawer
 			#drawer
-			class="!flex flex-col justify-start items-start px-4 w-72"
 			[mode]="platform.isMobileView() ? 'over' : 'side'"
 			opened>
-			<h2 class="my-2 text-2xl" [style]="'color:' + course.color">
-				Semaine N°{{ (course.order + 1).toFixed() }}
-			</h2>
-
-			<hr class="mt-3 mb-6" />
-			<h3 class="!mb-3 text-sm italic">Graphème(s)</h3>
-			<div class="flex flex-wrap gap-3 text-sm" style="max-width: 14rem">
-				@for (phoneme of course.phonemes; track phoneme) {
-					<span
-						class="flex items-center bg-primary px-2 py-1 rounded-md h-8 text-white">
-						@if (phoneme.endOfWord) {
-							<span>-</span>
+			<section class="flex flex-col gap-8 h-full pt-3 px-6">
+				<h2 class="my-2 text-2xl" [style]="'color:' + course.color">
+					Semaine N°{{ (course.order + 1).toFixed() }}
+				</h2>
+				<div class="flex flex-col gap-2">
+					<h3 class="text-sm italic">Graphème(s)</h3>
+					<div class="flex flex-wrap gap-3 text-sm" style="max-width: 14rem">
+						@for (phoneme of phonemes(); track phoneme.uuid) {
+							<span
+								class="flex items-center bg-primary px-2 py-1 rounded-md h-8 text-white">
+								@if (phoneme.endOfWord) {
+									<span>-</span>
+								}
+								{{ phoneme.name | uppercase }}
+								@if (phoneme.sounds; as sounds) {
+									@for (sound of sounds; track sound) {
+										<span class="px-1 text-xs"> [{{ sound }}] </span>
+									}
+								}
+								@if (phoneme.info) {
+									<span class="pl-1 text-sm">({{ phoneme.info }})</span>
+								}
+							</span>
+						} @empty {
+							<span class="text-xs text-gray-600 italic">
+								Aucun graphème défini pour cette semaine.
+							</span>
 						}
-						{{ phoneme.name | uppercase }}
-						@if (phoneme.sounds; as sounds) {
-							@for (sound of sounds; track sound) {
-								<span class="px-1 text-xs"> [{{ sound }}] </span>
-							}
-						}
-						@if (phoneme.info) {
-							<span class="pl-1 text-sm">({{ phoneme.info }})</span>
-						}
-					</span>
-				}
-			</div>
-			<hr class="mt-3 mb-6" />
-
-			<div class="flex justify-between items-center">
-				<h3 class="!mb-1 text-sm italic">Liste des fichiers</h3>
-			</div>
-			<mat-list #files role="list">
-				@for (file of filesAvailable; track file) {
-					<mat-list-item class="!px-0">
-						<div class="flex justify-between items-center gap-2">
-							<div
-								class="flex flex-1 justify-between items-center gap-3 hover:bg-slate-200 px-3 py-4 rounded-lg text-sm cursor-pointer"
-								[class]="{
-									'cursor-wait': loading,
-									'active': selectedFile?.name === file.name
-								}"
-								(click)="
-									(loading || selectedFile?.name !== file.name) &&
-										setCurrentFile(file)
-								">
-								<span>{{ file.name }}</span>
-								<mat-icon
-									class="!mx-0"
-									[color]="
-										selectedFile?.name !== file.name ? 'primary' : 'white'
-									">
-									visibility
-								</mat-icon>
-							</div>
-							<button
-								mat-icon-button
-								[disabled]="loading"
-								class="!w-fit"
-								[class]="{'cursor-wait': loading}"
-								(click)="downloadFile(file)"
-								type="icon">
-								<mat-icon color="accent">download</mat-icon>
-							</button>
+					</div>
+				</div>
+				<div class="flex flex-col gap-2">
+					@if (filesAvailable() && filesAvailable().length > 0) {
+						<div class="flex justify-between items-center">
+							<h3 class="text-sm italic">Liste des fichiers</h3>
 						</div>
-					</mat-list-item>
-				}
-			</mat-list>
-			<button
-				class="mx-auto"
-				mat-stroked-button
-				(click)="downloadCourse()"
-				color="accent">
-				Tout télécharger
-			</button>
-			<span class="flex-1"></span>
+						<mat-list #files role="list">
+							@for (file of filesAvailable(); track file.path) {
+								<mat-list-item class="!px-0">
+									<div class="flex justify-between items-center gap-2">
+										<div
+											class="flex flex-1 justify-between items-center gap-3 hover:bg-slate-200 px-3 py-4 rounded-lg text-sm cursor-pointer"
+											[class]="{
+												'cursor-wait': loading(),
+												'active': selectedFile()?.name === file.name,
+											}"
+											(click)="
+												(loading() || selectedFile()?.name !== file.name) &&
+													selectedFile.set(file)
+											">
+											<span>{{ file.name }}</span>
+											<mat-icon
+												class="!mx-0"
+												[color]="
+													selectedFile()?.name !== file.name
+														? 'primary'
+														: 'white'
+												">
+												visibility
+											</mat-icon>
+										</div>
+										<button
+											mat-icon-button
+											[disabled]="loading()"
+											class="!w-fit"
+											[class]="{'cursor-wait': loading()}"
+											(click)="
+												library.downloadPdf(
+													`${course.order + 1}/files/${file.path}`
+												)
+											"
+											type="icon">
+											<mat-icon color="accent">download</mat-icon>
+										</button>
+									</div>
+								</mat-list-item>
+							}
+						</mat-list>
+						<button
+							class="w-full"
+							mat-stroked-button
+							[disabled]="loading()"
+							(click)="library.downloadCourse(course.order + 1)"
+							color="accent">
+							Tout télécharger
+						</button>
+					}
+				</div>
+				<!-- Push content to top -->
+				<span class="flex-1"></span>
+			</section>
 		</mat-drawer>
 		<app-file-viewer
-			(fileLoaded)="fileLoaded()"
-			[fileName]="[course.order + 1, 'files', selectedFile?.path].join('/')" />
+			(fileLoaded)="loaded.emit(true); loading.set(false)"
+			[fileName]="
+				[course.order + 1, 'files', selectedFile()?.path].join('/')
+			" />
 	</mat-drawer-container>
 }
