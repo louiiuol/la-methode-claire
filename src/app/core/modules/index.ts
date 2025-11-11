@@ -1,9 +1,8 @@
 export * from './auth';
-export * from './platform';
+export * from './form';
 export * from './http';
 export * from './platform';
 export * from './storage';
-export * from './form';
 
 import {AuthModule} from './auth/auth.module';
 import {FormModule} from './form/form.module';

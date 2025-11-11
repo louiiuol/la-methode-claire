@@ -1,136 +1,148 @@
 {
-	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-	"version": 1,
-	"newProjectRoot": "projects",
-	"projects": {
-		"lmc-ui": {
-			"projectType": "application",
-			"schematics": {
-				"@schematics/angular:component": {
-					"inlineStyle": true,
-					"inlineTemplate": true,
-					"style": "scss",
-					"skipTests": true,
-					"standalone": true,
-					"changeDetection": "OnPush",
-					"flat": true
-				},
-				"@schematics/angular:class": {
-					"skipTests": true
-				},
-				"@schematics/angular:directive": {
-					"skipTests": true
-				},
-				"@schematics/angular:guard": {
-					"skipTests": true
-				},
-				"@schematics/angular:interceptor": {
-					"skipTests": true
-				},
-				"@schematics/angular:pipe": {
-					"skipTests": true
-				},
-				"@schematics/angular:resolver": {
-					"skipTests": true
-				},
-				"@schematics/angular:service": {
-					"skipTests": true
-				}
-			},
-			"root": "",
-			"sourceRoot": "src",
-			"prefix": "app",
-			"architect": {
-				"build": {
-					"builder": "@angular/build:application",
-					"options": {
-						"outputPath": {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "lmc-ui": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineStyle": true,
+          "inlineTemplate": true,
+          "style": "scss",
+          "skipTests": true,
+          "standalone": true,
+          "changeDetection": "OnPush",
+          "flat": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": {
               "base": "dist/lmc-ui"
             },
             "index": "src/index.html",
-						"polyfills": ["zone.js"],
-						"tsConfig": "tsconfig.app.json",
-						"inlineStyleLanguage": "scss",
-						"assets": [
-							"src/assets",
-							{
-								"glob": "**/*",
-								"input": "node_modules/ngx-extended-pdf-viewer/assets/",
-								"output": "/assets/"
-							}
-						],
-						"styles": ["src/styles.scss"],
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ng2-pdfjs-viewer/pdfjs",
+                "output": "/assets/pdfjs"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": [],
             "browser": "src/main.ts"
-					},
-					"configurations": {
-						"production": {
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "2mb",
-									"maximumError": "5mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "2kb",
-									"maximumError": "4kb"
-								}
-							],
-							"fileReplacements": [
-								{
-									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.prod.ts"
-								}
-							],
-							"outputHashing": "all"
-						},
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "optimization": false,
-							"extractLicenses": false,
-							"sourceMap": true,
-							"namedChunks": true
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"serve": {
-					"builder": "@angular/build:dev-server",
-					"options": {
-						"port": 4201
-					},
-					"configurations": {
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4201
+          },
+          "configurations": {
             "production": {
               "buildTarget": "lmc-ui:build:production"
-						},
+            },
             "development": {
               "buildTarget": "lmc-ui:build:development"
-						}
-					},
-					"defaultConfiguration": "development"
-				},
-				"extract-i18n": {
-					"builder": "@angular/build:extract-i18n",
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "lmc-ui:build"
-					}
-				},
-				"test": {
-					"builder": "@angular/build:karma",
-					"options": {
-						"polyfills": ["zone.js", "zone.js/testing"],
-						"tsConfig": "tsconfig.spec.json",
-						"inlineStyleLanguage": "scss",
-						"assets": ["src/favicon.ico", "src/assets"],
-						"styles": ["src/styles.scss"],
-						"scripts": []
-					}
-				}
-			}
-		}
-	},
-	"cli": {
-		"analytics": false
+          }
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
   },
   "schematics": {
     "@schematics/angular:component": {

@@ -1,8 +1,21 @@
 @if (pdf(); as pdf) {
-	<iframe
+	<!-- <iframe
 		class="w-full"
 		[src]="pdf | trustURL"
-		title="visualiser le pdf"></iframe>
+		title="visualiser le pdf"></iframe> -->
+	<ng2-pdfjs-viewer
+		class="w-full"
+		[urlValidation]="false"
+		[showSpinner]="false"
+		textColor="red"
+		[showAnnotations]="false"
+		[showDownload]="false"
+		[showPrint]="false"
+		[showOpenFile]="false"
+		[showToolbarLeft]="false"
+		[showSecondaryToolbarToggle]="true"
+		[pdfSrc]="pdf"
+		theme="auto" />
 } @else {
 	@if (!failedToLoad) {
 		<app-loader />

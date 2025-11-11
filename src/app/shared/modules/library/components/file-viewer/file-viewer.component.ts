@@ -7,10 +7,11 @@ import {
 	signal,
 } from '@angular/core';
 
-import {catchError, take} from 'rxjs';
-import {TrustUrlPipe} from '@shared/pipes';
-import {LibraryService} from '@shared/modules/library/services/library.service';
 import {LoaderComponent, MessageComponent} from '@shared/components/elements';
+import {LibraryService} from '@shared/modules/library/services/library.service';
+import {TrustUrlPipe} from '@shared/pipes';
+import {PdfJsViewerModule} from 'ng2-pdfjs-viewer';
+import {catchError, take} from 'rxjs';
 
 /**
  * Simple component to display a file into an iframe based on given file name.
@@ -18,9 +19,9 @@ import {LoaderComponent, MessageComponent} from '@shared/components/elements';
  * @author louiiuol
  */
 @Component({
-    selector: 'app-file-viewer',
-    imports: [TrustUrlPipe, MessageComponent, LoaderComponent],
-    templateUrl: './file-viewer.component.html'
+	selector: 'app-file-viewer',
+	imports: [TrustUrlPipe, MessageComponent, LoaderComponent, PdfJsViewerModule],
+	templateUrl: './file-viewer.component.html',
 })
 export class FileViewerComponent {
 	@HostBinding('class')

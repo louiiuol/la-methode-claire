@@ -1,4 +1,4 @@
-import { Component, HostBinding, NgModule, OnInit } from '@angular/core';
+import {Component, HostBinding, NgModule, OnInit} from '@angular/core';
 /**
  * Root component of the Application, responsible for:
  * - Displaying "root" notifications to the user.
@@ -7,12 +7,12 @@ import { Component, HostBinding, NgModule, OnInit } from '@angular/core';
  * @author louiiuol
  */
 @Component({
-    selector: 'app-root',
-    template: `
+	selector: 'app-root',
+	template: `
 		<app-toaster />
 		<router-outlet />
 	`,
-    standalone: false
+	standalone: false,
 })
 export class AppShell implements OnInit {
 	@HostBinding('class') class =
@@ -23,16 +23,16 @@ export class AppShell implements OnInit {
 	}
 }
 
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
 
-import { environment } from '@env/environment';
+import {environment} from '@env/environment';
 
-import { CoreModule } from '@core/core.module';
-import { CORE_MODULES } from '@core/modules';
-import { ToasterComponent } from '@core/modules/notification';
+import {CoreModule} from '@core/core.module';
+import {CORE_MODULES} from '@core/modules';
+import {ToasterComponent} from '@core/modules/notification';
 
-import { FileValueAccessor } from '@shared/directives/file-value-accessor.directive';
-import { APP_ROUTES } from './app.routes';
+import {FileValueAccessor} from '@shared/directives/file-value-accessor.directive';
+import {APP_ROUTES} from './app.routes';
 
 /**
  * Root module of this application.
