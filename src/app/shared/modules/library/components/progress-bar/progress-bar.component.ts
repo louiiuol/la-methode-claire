@@ -10,12 +10,12 @@ import {
 	viewChild,
 } from '@angular/core';
 
-import {MatIcon} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {AuthService} from '@core';
-import {take} from 'rxjs/internal/operators/take';
-import {LibraryService} from '../../services/library.service';
-import {CourseViewDto} from '../../types/course-view.dto';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '@core';
+import { take } from 'rxjs/internal/operators/take';
+import { LibraryService } from '../../services/library.service';
+import { CourseViewDto } from '../../types/course-view.dto';
 
 @Component({
 	selector: 'app-progress-bar',
@@ -33,22 +33,24 @@ import {CourseViewDto} from '../../types/course-view.dto';
 			#scrollContainer>
 			@for (lesson of lessons(); track lesson) {
 				<button
-					[id]="'course-' + lesson.order"
 					class="flex justify-center items-center !border-current bg-texture snap-start border rounded-full w-12 h-12 leading-none select-none shrink-0"
-					[style]="
-						'color:' +
-						(lesson.order === currentLesson() ? 'white' : lesson.color) +
-						'!important; background-color:' +
-						(lesson.order === currentLesson() ? lesson.color : 'transparent')
-					"
 					[class]="{
-						'font-bold': lesson.order === currentLesson(),
+						'font-bold': lesson.order === currentLessonIndex(),
 						'opacity-30': loading(),
 						'cursor-wait': loading(),
 					}"
+					[id]="'course-' + lesson.order"
+					[style]="
+						'color:' +
+						(lesson.order === currentLessonIndex() ? 'white' : lesson.color) +
+						'!important; background-color:' +
+						(lesson.order === currentLessonIndex()
+							? lesson.color
+							: 'transparent')
+					"
 					(click)="
 						!loading() &&
-							currentLesson() !== lesson.order &&
+							currentLessonIndex() !== lesson.order &&
 							setCurrentLesson(lesson.order)
 					">
 					<div class="flex justify-center items-center w-6 h-6 text-xl">
@@ -77,7 +79,7 @@ import {CourseViewDto} from '../../types/course-view.dto';
 export class ProgressBarComponent {
 	readonly lessons = input.required<CourseViewDto[]>();
 
-	readonly currentLesson = model.required<number>();
+	readonly currentLessonIndex = model.required<number>();
 	readonly loading = model.required<boolean>();
 
 	readonly selectedLesson = output<number>();
@@ -92,7 +94,7 @@ export class ProgressBarComponent {
 	private readonly syncScrollWithCurrentLesson = effect(() => {
 		const lessons = this.lessons();
 		const container = this.scrollContainer();
-		const lessonIndex = this.currentLesson();
+		const lessonIndex = this.currentLessonIndex();
 
 		if (!container || !lessons?.length) {
 			return;
@@ -118,15 +120,15 @@ export class ProgressBarComponent {
 
 	protected setCurrentLesson(index: number) {
 		if (!this.loading()) {
-			const reload = index == this.currentLesson();
+			const reload = index == this.currentLessonIndex();
 			this.loading.set(reload);
 			this.library
 				.setCurrentLesson(index)
 				.pipe(take(1))
 				.subscribe(res => {
 					if (!res.error) {
-						this.currentLesson.set(index);
-						this.authenticator.updateCurrentUser({currentLessonIndex: index});
+						this.currentLessonIndex.set(index);
+						this.authenticator.updateCurrentUser({ currentLessonIndex: index });
 						this.loading.set(false);
 						this.selectedLesson.emit(index);
 					}

@@ -2,8 +2,8 @@
 	<mat-drawer-container class="w-full h-full" autosize>
 		<mat-drawer
 			#drawer
-			[mode]="platform.isMobileView() ? 'over' : 'side'"
-			opened>
+			opened
+			[mode]="platform.isTabletOrBigger() ? 'side' : 'over'">
 			<section class="flex flex-col gap-8 h-full pt-3 px-6">
 				<h2 class="my-2 text-2xl" [style]="'color:' + course.color">
 					Semaine N°{{ (course.order + 1).toFixed() }}
@@ -65,16 +65,16 @@
 											</mat-icon>
 										</div>
 										<button
-											mat-icon-button
-											[disabled]="loading()"
 											class="!w-fit"
-											[class]="{'cursor-wait': loading()}"
+											mat-icon-button
+											type="icon"
+											[class]="{ 'cursor-wait': loading() }"
+											[disabled]="loading()"
 											(click)="
 												library.downloadPdf(
 													`${course.order + 1}/files/${file.path}`
 												)
-											"
-											type="icon">
+											">
 											<mat-icon color="accent">download</mat-icon>
 										</button>
 									</div>
@@ -83,10 +83,10 @@
 						</mat-list>
 						<button
 							class="w-full"
+							color="accent"
 							mat-stroked-button
 							[disabled]="loading()"
-							(click)="library.downloadCourse(course.order + 1)"
-							color="accent">
+							(click)="library.downloadCourse(course.order + 1)">
 							Tout télécharger
 						</button>
 					}
@@ -95,10 +95,19 @@
 				<span class="flex-1"></span>
 			</section>
 		</mat-drawer>
-		<app-file-viewer
-			(fileLoaded)="loaded.emit(true); loading.set(false)"
-			[fileName]="
-				[course.order + 1, 'files', selectedFile()?.path].join('/')
-			" />
+		<div class="relative w-full h-full bg-white">
+			@if (!platform.isTabletOrBigger()) {
+				<button
+					class="w-full h-8 rounded-lg flex items-center justify-start gap-2 px-3 text-primary"
+					(click)="drawer.toggle()">
+					<mat-icon> menu </mat-icon>
+					<span class="text-sm">Ouvrir le menu de la leçon</span>
+				</button>
+			}
+			<app-file-viewer
+				[fileName]="[course.order + 1, 'files', selectedFile()?.path].join('/')"
+				[textColor]="course.color"
+				(fileLoaded)="loaded.emit(true); loading.set(false)" />
+		</div>
 	</mat-drawer-container>
 }

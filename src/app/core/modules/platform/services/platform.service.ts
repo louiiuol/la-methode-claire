@@ -1,12 +1,10 @@
-import {Injectable} from '@angular/core';
-import {
-	Breakpoints,
-	BreakpointObserver,
-	BreakpointState,
-} from '@angular/cdk/layout';
-import {Platform} from '@angular/cdk/platform';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Platform } from '@angular/cdk/platform';
+import { computed, inject, Injectable } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-import {takeUntilDestroyed} from '@core';
+import { takeUntilDestroyed } from '@core';
+import { map } from 'rxjs';
 
 type PlatformBreakpointName = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'unset';
 
@@ -21,19 +19,14 @@ type PlatformBreakpointName = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'unset';
  */
 @Injectable()
 export class PlatformService {
-	/**
-	 * name of the current size based on device screen width (default is unset)
-	 */
-	currentSize: PlatformBreakpointName = 'unset';
+	private readonly breakpointObserver = inject(BreakpointObserver);
+	private readonly platform = inject(Platform);
 
-	/**
-	 * Checks if platform is a mobile (android or ios)
-	 */
-	isMobilePlatform = this.platform.ANDROID || this.platform.IOS;
+	readonly isMobilePlatform = this.platform.ANDROID || this.platform.IOS;
 
 	private readonly breakPointSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
-	private platformMap = new Map([
+	private readonly platformMap = new Map<string, PlatformBreakpointName>([
 		[Breakpoints.XSmall, 'xs'],
 		[Breakpoints.Small, 'sm'],
 		[Breakpoints.Medium, 'md'],
@@ -41,70 +34,8 @@ export class PlatformService {
 		[Breakpoints.XLarge, 'xl'],
 	]);
 
-	constructor(
-		breakpointObserver: BreakpointObserver,
-		private platform: Platform
-	) {
-		this.watchPlatformBreakpoints(breakpointObserver);
-	}
-
-	/**
-	 * Checks viewport and returns desired size.
-	 * For example, if device is a mobile, this method will return {mobileSize}
-	 * Note: If called directly in component template: `[class]="responsive(...)"`,
-	 * value will update automatically !
-	 * @param mobileSize size of element on mobile view
-	 * @param mediumSize size of element on tablet view
-	 * @param largeSize size of element on desktop view
-	 * @returns Tailwind class to apply according to current viewport size
-	 */
-	responsive = (mobileSize: string, mediumSize: string, largeSize: string) =>
-		this.isMobileView() ? mobileSize : this.getLargeSize(mediumSize, largeSize);
-
-	/**
-	 *  Checks if currentSize if smaller or equal to 'sm' size
-	 * @returns True if viewport is smaller or equal to 'sm' size, false otherwise
-	 */
-	isMobileView = () => this.isSmallerOrEqual('sm');
-
-	/**
-	 * Checks if current browser size (width) is bigger than the size given.
-	 * @param size name of the minimal size required
-	 * @returns True is current size is bigger than given one
-	 */
-	isBiggerThan = (size: PlatformBreakpointName) =>
-		this.breakPointSizes.indexOf(size) <
-		this.breakPointSizes.indexOf(this.currentSize);
-
-	/**
-	 * Checks if current browser size (width) is bigger or equal to the size given.
-	 * @param size name of the minimal size required
-	 * @returns True is current size is bigger or equal to the given one
-	 */
-	isBiggerOrEqual = (size: PlatformBreakpointName) =>
-		this.breakPointSizes.indexOf(size) <=
-		this.breakPointSizes.indexOf(this.currentSize);
-
-	/**
-	 * Checks if current browser size (width) is smaller than the size given.
-	 * @param size name of the minimal size required
-	 * @returns True is current size is smaller than given one
-	 */
-	isSmallerThan = (size: PlatformBreakpointName) =>
-		this.breakPointSizes.indexOf(size) >
-		this.breakPointSizes.indexOf(this.currentSize);
-
-	/**
-	 * Checks if current browser size (width) is smaller or equal to the size given.
-	 * @param size name of the minimal size required
-	 * @returns True is current size is smaller or equal to the given one
-	 */
-	isSmallerOrEqual = (size: PlatformBreakpointName) =>
-		this.breakPointSizes.indexOf(size) >
-		this.breakPointSizes.indexOf(this.currentSize);
-
-	private watchPlatformBreakpoints(breakpointObserver: BreakpointObserver) {
-		breakpointObserver
+	readonly currentSize = toSignal(
+		this.breakpointObserver
 			.observe([
 				Breakpoints.XSmall,
 				Breakpoints.Small,
@@ -112,17 +43,29 @@ export class PlatformService {
 				Breakpoints.Large,
 				Breakpoints.XLarge,
 			])
-			.pipe(takeUntilDestroyed())
-			.subscribe(result => this.updateCurrentSize(result));
-	}
+			.pipe(
+				map(res => {
+					return (
+						Object.keys(res.breakpoints)
+							.filter(query => res.breakpoints[query])
+							.map(query => this.platformMap.get(query))
+							?.at(0) ?? 'unset'
+					);
+				}),
+				takeUntilDestroyed()
+			),
+		{ initialValue: 'unset' }
+	);
 
-	private updateCurrentSize(result: BreakpointState) {
-		for (const query of Object.keys(result.breakpoints))
-			if (result.breakpoints[query])
-				this.currentSize = (this.platformMap.get(query) ??
-					'unset') as PlatformBreakpointName;
-	}
+	readonly isMobileView = computed(
+		() =>
+			this.breakPointSizes.indexOf('xs') >=
+			this.breakPointSizes.indexOf(this.currentSize())
+	);
 
-	private getLargeSize = (mediumSize: string, largeSize: string) =>
-		this.isSmallerThan('xl') ? mediumSize : largeSize;
+	readonly isTabletOrBigger = computed(
+		() =>
+			this.breakPointSizes.indexOf('md') <=
+			this.breakPointSizes.indexOf(this.currentSize())
+	);
 }

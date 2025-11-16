@@ -4,10 +4,14 @@
 	"overrides": [
 		{
 			"files": ["*.ts"],
+			"parser": "@typescript-eslint/parser",
+			"parserOptions": {
+				"project": "./tsconfig.json",
+				"sourceType": "module"
+			},
 			"extends": [
 				"eslint:recommended",
 				"plugin:@typescript-eslint/recommended",
-				"plugin:@angular-eslint/recommended",
 				"plugin:@typescript-eslint/recommended-type-checked",
 				"plugin:@typescript-eslint/recommended-requiring-type-checking",
 				"plugin:@angular-eslint/recommended",
@@ -26,7 +30,7 @@
 				"@angular-eslint/component-selector": [
 					"error",
 					{
-						"type": "element",
+						"type": ["element", "attribute"],
 						"prefix": "app",
 						"style": "kebab-case"
 					}
@@ -34,25 +38,23 @@
 				"@angular-eslint/component-class-suffix": [
 					"error",
 					{
-						"suffixes": ["Component", "Page", "Dialog", "Card", "Form"]
+						"suffixes": [
+							"Component",
+							"Page",
+							"Dialog",
+							"Form",
+							"Card",
+							"Overlay",
+							"Icon"
+						]
 					}
 				],
 				"@angular-eslint/prefer-on-push-component-change-detection": ["error"],
 				"@angular-eslint/no-attribute-decorator": ["error"],
-				"indent": ["off", "tab"],
-				"linebreak-style": ["error", "unix"],
-				"quotes": [
-					"error",
-					"single",
-					{"avoidEscape": true, "allowTemplateLiterals": true}
-				],
-				"semi": ["error", "always"],
-				"@typescript-eslint/no-empty-function": "off",
-				"@typescript-eslint/no-explicit-any": "off",
-				"@angular-eslint/no-input-rename": "off",
-				"no-empty-function": "off",
-				"no-useless-escape": "warn",
-				"no-unused-vars": "off",
+				"@typescript-eslint/ban-ts-comment": "off",
+				"@typescript-eslint/no-namespace": "off",
+				"@typescript-eslint/consistent-type-imports": "error",
+
 				"@typescript-eslint/consistent-type-assertions": [
 					"error",
 					{
@@ -68,24 +70,42 @@
 					}
 				],
 				"no-else-return": ["error"],
-				"curly": ["error"],
-				"no-console": [
-					"warn",
-					{
-						"allow": ["warn", "error"]
-					}
-				],
-				"@typescript-eslint/ban-ts-comment": "off",
-				"@typescript-eslint/no-unused-vars": "off"
+				"curly": ["error"]
 			}
 		},
 		{
 			"files": ["*.html"],
+			"parser": "@angular-eslint/template-parser",
 			"extends": [
-				"plugin:@angular-eslint/template/recommended",
-				"plugin:@angular-eslint/template/accessibility"
+				"plugin:@angular-eslint/template/accessibility",
+				"plugin:prettier/recommended"
 			],
-			"rules": {}
+			"rules": {
+				"prettier/prettier": [
+					"warn",
+					{
+						"parser": "angular",
+						"htmlWhitespaceSensitivity": "ignore",
+						"config": "./.prettierrc"
+					}
+				],
+				"@angular-eslint/template/prefer-control-flow": ["error"],
+				"@angular-eslint/template/prefer-self-closing-tags": ["error"],
+				"@angular-eslint/no-empty-lifecycle-method": ["warn"]
+			}
+		},
+
+		{
+			"files": ["*.spec.ts"], // seulement les tests
+			"rules": {
+				"@typescript-eslint/no-unsafe-member-access": "off",
+				"@typescript-eslint/no-unsafe-call": "off",
+				"@typescript-eslint/no-unsafe-assignment": "off",
+				"@typescript-eslint/no-unsafe-argument": "off",
+				"@typescript-eslint/no-explicit-any": "off",
+				"@typescript-eslint/unbound-method": "off",
+				"@angular-eslint/prefer-on-push-component-change-detection": "off"
+			}
 		}
 	]
 }
