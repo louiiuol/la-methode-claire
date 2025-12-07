@@ -8,13 +8,14 @@ import {
 	linkedSignal,
 	output,
 	signal,
+	ViewChild,
 } from '@angular/core';
 
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIcon } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 const MaterialModules = [
@@ -47,7 +48,7 @@ type FileDto = { name: string; path: string };
 	},
 	templateUrl: './course-viewer.component.html',
 	styles: `
-		:host mat-list-item div.active {
+		:host mat-list-item button.active {
 			background: var(--lmc-primary-color);
 			color: white;
 			font-weight: bold;
@@ -72,6 +73,8 @@ export class CourseViewerComponent {
 		exercices: { name: 'Exercices', fileName: 'exercices' },
 		poster: { name: 'Affiche', fileName: 'poster' },
 	};
+
+	@ViewChild('drawer') protected readonly drawer?: MatDrawer;
 
 	protected readonly loading = signal(false);
 
@@ -117,5 +120,12 @@ export class CourseViewerComponent {
 		this.course().phonemes.sort((a, b) => a.name.localeCompare(b.name))
 	);
 
-	protected openPanel() {}
+	protected openFile(file: FileDto) {
+		if (!this.loading() || this.selectedFile()?.name !== file.name) {
+			this.selectedFile.set(file);
+		}
+		if (!this.platform.isTabletOrBigger()) {
+			this.drawer?.toggle();
+		}
+	}
 }

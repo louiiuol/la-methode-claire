@@ -39,20 +39,17 @@
 						<div class="flex justify-between items-center">
 							<h3 class="text-sm italic">Liste des fichiers</h3>
 						</div>
-						<mat-list #files role="list">
+						<mat-list #files>
 							@for (file of filesAvailable(); track file.path) {
 								<mat-list-item class="!px-0">
 									<div class="flex justify-between items-center gap-2">
-										<div
+										<button
 											class="flex flex-1 justify-between items-center gap-3 hover:bg-slate-200 px-3 py-4 rounded-lg text-sm cursor-pointer"
 											[class]="{
 												'cursor-wait': loading(),
 												'active': selectedFile()?.name === file.name,
 											}"
-											(click)="
-												(loading() || selectedFile()?.name !== file.name) &&
-													selectedFile.set(file)
-											">
+											(click)="openFile(file)">
 											<span>{{ file.name }}</span>
 											<mat-icon
 												class="!mx-0"
@@ -63,7 +60,7 @@
 												">
 												visibility
 											</mat-icon>
-										</div>
+										</button>
 										<button
 											class="!w-fit"
 											mat-icon-button
@@ -98,10 +95,10 @@
 		<div class="relative w-full h-full bg-white">
 			@if (!platform.isTabletOrBigger()) {
 				<button
-					class="w-full h-8 rounded-lg flex items-center justify-start gap-2 px-3 text-primary"
+					class="w-full rounded-lg flex items-center justify-start gap-2 px-3 py-2 text-primary"
 					(click)="drawer.toggle()">
 					<mat-icon> menu </mat-icon>
-					<span class="text-sm">Ouvrir le menu de la leçon</span>
+					<span class="font-medium text-sm">Ouvrir le menu de la leçon</span>
 				</button>
 			}
 			<app-file-viewer

@@ -1,15 +1,15 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  Inject,
+	ChangeDetectionStrategy,
+	Component,
+	HostBinding,
+	Inject,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import {
-  MAT_DIALOG_DATA,
-  MatDialogClose,
-  MatDialogRef,
+	MAT_DIALOG_DATA,
+	MatDialogClose,
+	MatDialogRef,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -17,19 +17,19 @@ import { MatInputModule } from '@angular/material/input';
 import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
 
 @Component({
-    selector: 'app-add-sound',
-    imports: [
-        MatFormFieldModule,
-        FormsModule,
-        MatInputModule,
-        MatDialogClose,
-        MatIcon,
-        MatButton,
-    ],
-    providers: [LibraryAdminService],
-    templateUrl: './poster-create.dialog.html',
-    styleUrls: ['../file-upload/file-upload.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+	selector: 'app-add-sound',
+	imports: [
+		MatFormFieldModule,
+		FormsModule,
+		MatInputModule,
+		MatDialogClose,
+		MatIcon,
+		MatButton,
+	],
+	providers: [LibraryAdminService],
+	templateUrl: './poster-create.dialog.html',
+	styleUrls: ['../file-upload/file-upload.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PosterCreateDialog {
 	@HostBinding('class') class = '!block px-6 py-3';
@@ -40,7 +40,7 @@ export class PosterCreateDialog {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
-		protected data: {courseUuid: string; type: 'sounds' | 'posters'},
+		protected data: { courseUuid: string; type: 'sounds' | 'posters' },
 		private uploadService: LibraryAdminService,
 		private readonly dialogRef: MatDialogRef<PosterCreateDialog>
 	) {}

@@ -33,18 +33,17 @@ import { firstValueFrom } from 'rxjs';
 		} @else if (pdf.isLoading()) {
 			<app-loader />
 		} @else {
-			<div class="mx-auto mt-24 w-96">
-				<h3 class="mb-5 text-3xl text-balance text-center text-primary">
-					Impossible de récupérer le fichier
-				</h3>
+			<div class="mx-auto my-auto w-96 flex flex-col items-center gap-6">
 				<img
-					class="mx-auto max-w-sm"
+					class="mx-auto max-w-60"
 					alt="Aucun fichier"
 					src="assets/img/no-file.png" />
+
 				<app-message
 					class="text-lg"
+					details="Merci de réessayer ultérieurement."
 					severity="error"
-					summary="Merci de réessayer ultérieurement" />
+					summary="Ce fichier n'est pas disponible." />
 			</div>
 		} `,
 	imports: [MessageComponent, LoaderComponent, PdfJsViewerModule],
