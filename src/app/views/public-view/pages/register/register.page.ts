@@ -11,10 +11,9 @@ import {AuthService} from '@core';
 import {CardComponent, FormComponent} from '@shared/components';
 
 @Component({
-	standalone: true,
-	imports: [CardComponent, FormComponent, MatButtonModule, MatIcon, RouterLink],
-	templateUrl: './register.page.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CardComponent, FormComponent, MatButtonModule, MatIcon, RouterLink],
+    templateUrl: './register.page.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterPage {
 	@HostBinding('class')

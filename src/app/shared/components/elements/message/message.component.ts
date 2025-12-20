@@ -1,12 +1,12 @@
 import {
-	Component,
-	Input,
 	ChangeDetectionStrategy,
-	HostBinding,
+	Component,
+	computed,
+	input,
 } from '@angular/core';
 
-import {NotificationSeverity} from '@core/modules/notification';
 import {MatIcon} from '@angular/material/icon';
+import {NotificationSeverity} from '@core/modules/notification';
 
 const MESSAGE_DICTIONARY = {
 	info: {icon: 'info', color: 'bg-blue-100 border-blue-500 text-blue-900'},
@@ -29,28 +29,43 @@ const MESSAGE_DICTIONARY = {
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [MatIcon],
 	selector: 'app-message',
-	templateUrl: 'message.component.html',
+	host: {
+		'class':
+			'flex justify-between items-center gap-3 shadow-md px-3 py-2 border-l-4 rounded-r',
+		'[class]': 'getMessageColor()',
+	},
+	template: `
+		@if (showIcon()) {
+			<mat-icon class="!mx-0 my-1 text-xl">
+				{{ getMessageIcon() }}
+			</mat-icon>
+		}
+		<div class="flex-1">
+			<span
+				class="w-full text-balance"
+				[class]="{'font-bold': !!details()}"
+				[innerHTML]="summary()"></span>
+			<br />
+			@if (details()) {
+				<span class="text-balance text-sm" [innerHTML]="details()"></span>
+			}
+		</div>
+	`,
+	imports: [MatIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageComponent {
-	@HostBinding('class') class = 'block';
-	/** Primary message of the notification */
-	@Input({required: true}) summary!: string;
+	readonly summary = input.required<string>();
+	readonly severity = input.required<NotificationSeverity>();
+	readonly details = input<string>();
+	readonly showIcon = input<boolean>(true);
 
-	/** Severity of the message, Defines the type of Notification to be displayed */
-	@Input({required: true}) severity!: NotificationSeverity;
+	protected readonly getMessageIcon = computed(() =>
+		this.severity() ? MESSAGE_DICTIONARY[this.severity()].icon : 'info'
+	);
 
-	/** Secondary message, provide more context (can be omitted) */
-	@Input() details?: string;
-
-	@Input() showIcon = true;
-
-	protected readonly getMessageIcon = () =>
-		this.severity ? MESSAGE_DICTIONARY[this.severity].icon : 'info';
-
-	protected readonly getMessageColor = () =>
-		this.severity ? MESSAGE_DICTIONARY[this.severity].color : '';
+	protected readonly getMessageColor = computed(() =>
+		this.severity() ? MESSAGE_DICTIONARY[this.severity()].color : ''
+	);
 }

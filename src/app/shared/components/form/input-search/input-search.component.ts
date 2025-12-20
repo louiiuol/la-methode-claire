@@ -18,20 +18,19 @@ import {nullish} from '@core';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({
-	standalone: true,
-	selector: 'app-input-search',
-	imports: [
-		FormsModule,
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatInputModule,
-		MatIcon,
-	],
-	templateUrl: './input-search.component.html',
-	styleUrls: ['./input-search.component.scss'],
-	encapsulation: ViewEncapsulation.None,
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-input-search',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatIcon,
+    ],
+    templateUrl: './input-search.component.html',
+    styleUrls: ['./input-search.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputSearchComponent implements OnInit {
 	@Input({required: true}) isLoading = true;

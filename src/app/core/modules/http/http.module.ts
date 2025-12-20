@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {NgModule} from '@angular/core';
 
 /**
@@ -8,7 +8,5 @@ import {NgModule} from '@angular/core';
  * > in any modules, nor provides services, they already injected and available anywhere !
  * @internal
  */
-@NgModule({
-	imports: [HttpClientModule],
-})
+@NgModule({ imports: [], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class HttpModule {}

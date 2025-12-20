@@ -8,11 +8,10 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
 	selector: 'app-loader',
 	template: `<span class="text-primary"></span>
 		<p class="absolute left-1/2 top-2/3 -translate-x-1/2">
-			<ng-content></ng-content>
+			<ng-content />
 		</p> `,
 	styleUrls: ['./loader.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

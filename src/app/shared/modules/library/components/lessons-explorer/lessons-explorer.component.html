@@ -8,7 +8,6 @@
 			(selectedLesson)="changeLesson($event)" />
 		<app-course-viewer
 			[currentUserLesson]="currentUserLesson"
-			[currentLessonIndex]="currentLesson"
 			[course]="lessons[currentLesson]"
 			(loaded)="isLoading = !$event" />
 	} @else {

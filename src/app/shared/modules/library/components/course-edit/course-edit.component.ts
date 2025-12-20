@@ -1,32 +1,38 @@
-import {UpperCasePipe} from '@angular/common';
-import {Component, HostBinding, Input, OnInit} from '@angular/core';
+import { UpperCasePipe } from '@angular/common';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	model,
+} from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
 } from '@angular/forms';
-import {MatDialog, MatDialogClose} from '@angular/material/dialog';
-import {MatDivider} from '@angular/material/divider';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {FileUploadComponent} from '@shared/modules/library/components/file-upload/file-upload.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDivider } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FileUploadComponent } from '@shared/modules/library/components/file-upload/file-upload.component';
 
-import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
-import {take} from 'rxjs';
+import { CourseViewDto } from '@shared/modules/library/types/course-view.dto';
+import { take } from 'rxjs';
 
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
-import {PosterCreateDialog} from '../poster-create/poster-create.dialog';
-import {PhonemeViewDto} from '../../types/phoneme-view.dto';
-import {PhonemeEditComponent} from '../phoneme-edit/phoneme-edit.component';
-import {addOrReplace} from '@core/helpers/fn/add-or-replace.fn';
-import {MatButton} from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
+import { addOrReplace } from '@core/helpers/fn/add-or-replace.fn';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
+import { PhonemeViewDto } from '../../types/phoneme-view.dto';
+import { ColorSelectorComponent } from '../fields/color-selector.component';
+import { PhonemeEditComponent } from '../phoneme-edit/phoneme-edit.component';
+import { PosterCreateDialog } from '../poster-create/poster-create.dialog';
 
 @Component({
-	standalone: true,
 	selector: 'app-course-edit',
+	host: { class: 'mx-auto px-5 py-3 w-full max-w-xl' },
 	imports: [
 		UpperCasePipe,
 		MatFormFieldModule,
@@ -37,34 +43,30 @@ import {MatButton} from '@angular/material/button';
 		MatDivider,
 		FileUploadComponent,
 		MatExpansionModule,
-		MatDialogClose,
 		ReactiveFormsModule,
+		ColorSelectorComponent,
 	],
-	providers: [LibraryAdminService],
+	providers: [LibraryAdminService, ColorSelectorComponent],
 	templateUrl: 'course-edit.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CourseEditComponent implements OnInit {
-	@HostBinding('class') class = '!block px-4 pb-2';
+export class CourseEditComponent {
+	readonly course = model.required<CourseViewDto>();
 
-	@Input({required: true}) course!: CourseViewDto;
+	private readonly library = inject(LibraryAdminService);
+	private readonly dialog = inject(MatDialog);
 
-	protected readonly editCourse$ = this.libraryService.editCourse;
+	//protected readonly editCourse$ = this.library.editCourse;
 
-	soundFormGroup = new FormGroup({
+	protected readonly soundFormGroup = new FormGroup({
 		name: new FormControl(''),
 		file: new FormControl(null),
 	});
 
-	constructor(
-		private readonly libraryService: LibraryAdminService,
-		private readonly dialog: MatDialog
-	) {}
-
-	ngOnInit(): void {}
-
-	updateColor() {
-		this.libraryService
-			.editCourse(this.course.uuid, {color: this.course.color})
+	protected updateColor() {
+		const course = this.course();
+		this.library
+			.editCourse(course.uuid, { color: course.color })
 			.pipe(take(1))
 			.subscribe();
 	}
@@ -74,15 +76,16 @@ export class CourseEditComponent implements OnInit {
 			.open(PhonemeEditComponent, {
 				disableClose: true,
 				data: {
-					courseUuid: this.course.uuid,
+					courseUuid: this.course().uuid,
 					...phoneme,
 				},
 			})
 			.afterClosed()
+			.pipe(take(1))
 			.subscribe(phoneme => {
 				if (phoneme) {
-					this.course.phonemes = addOrReplace(
-						this.course.phonemes,
+					this.course().phonemes = addOrReplace(
+						this.course().phonemes,
 						phoneme,
 						'uuid'
 					);
@@ -92,12 +95,12 @@ export class CourseEditComponent implements OnInit {
 
 	removePhoneme(phoneme: string) {
 		if (confirm('Êtes vous sûr de vouloir supprimer ce graphème ? '))
-			this.libraryService
-				.removePhoneme(this.course.uuid, phoneme)
+			this.library
+				.removePhoneme(this.course().uuid, phoneme)
 				.pipe(take(1))
 				.subscribe(
 					() =>
-						(this.course.phonemes = this.course.phonemes?.filter(
+						(this.course().phonemes = this.course().phonemes?.filter(
 							s => s.name != phoneme
 						))
 				);
@@ -106,47 +109,53 @@ export class CourseEditComponent implements OnInit {
 	addSound() {
 		this.dialog
 			.open(PosterCreateDialog, {
-				data: {courseUuid: this.course.uuid, type: 'sounds'},
+				data: { courseUuid: this.course().uuid, type: 'sounds' },
 			})
 			.afterClosed()
 			.subscribe(sound => {
 				if (sound) {
-					this.course.sounds ??= [];
-					this.course.sounds.push(sound);
+					const course = this.course();
+					course.sounds ??= [];
+					course.sounds.push(sound);
+					this.course.set(course);
 				}
 			});
 	}
 
 	removeSound(sound: string) {
-		this.libraryService
-			.removeSound(this.course.uuid, sound)
+		this.library
+			.removeSound(this.course().uuid, sound)
 			.pipe(take(1))
 			.subscribe(
-				() => (this.course.sounds = this.course.sounds?.filter(s => s != sound))
+				() =>
+					(this.course().sounds = this.course().sounds?.filter(s => s != sound))
 			);
 	}
 
 	addPoster() {
 		this.dialog
 			.open(PosterCreateDialog, {
-				data: {courseUuid: this.course.uuid, type: 'posters'},
+				data: { courseUuid: this.course().uuid, type: 'posters' },
 			})
 			.afterClosed()
+			.pipe(take(1))
 			.subscribe(poster => {
 				if (poster) {
-					this.course.posterNames ??= [];
-					this.course.posterNames.push(poster);
+					const course = this.course();
+					course.posterNames ??= [];
+					course.posterNames.push(poster);
+					this.course.set(course);
 				}
 			});
 	}
 
 	removePoster(poster: string | undefined) {
-		this.libraryService
-			.deletePoster(this.course.uuid, poster)
+		this.library
+			.deletePoster(this.course().uuid, poster)
 			.pipe(take(1))
 			.subscribe(
 				() =>
-					(this.course.posterNames = this.course.posterNames?.filter(
+					(this.course().posterNames = this.course().posterNames?.filter(
 						s => s != poster
 					))
 			);

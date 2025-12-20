@@ -1,16 +1,14 @@
-import {AsyncPipe} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {
-	Component,
-	OnChanges,
-	Input,
 	ChangeDetectionStrategy,
-	HostBinding,
+	Component,
+	inject,
+	input,
+	resource,
 } from '@angular/core';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
-import {takeUntilDestroyed} from '@core';
-import {Observable, map} from 'rxjs';
+import {firstValueFrom, map} from 'rxjs';
 
 /**
  * Embedded SVG icon fetched locally from custom assets.
@@ -19,51 +17,48 @@ import {Observable, map} from 'rxjs';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [AsyncPipe, MatIconModule],
 	selector: 'app-icon',
-	templateUrl: 'icon.component.html',
+	host: {class: 'inline-flex items-center mx-auto'},
+	template: `@if (svg() && fetched.value()) {
+		<mat-icon
+			class="!w-full"
+			[color]="color()"
+			inline
+			[svgIcon]="svg()"
+			aria-hidden="false" />
+	} `,
+	imports: [MatIconModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IconComponent implements OnChanges {
-	/**
-	 * Defines icon to be shown. (can be updated)
-	 * * Check assets/images/svg folder for available icons
-	 */
-	@Input({required: true}) svg!: string;
-
-	@Input() color?: string;
-
-	@HostBinding('class')
-	protected readonly class = 'inline-flex items-center mx-auto';
-
-	protected fetched$?: Observable<boolean>;
+export class IconComponent {
+	readonly svg = input.required<string>();
+	readonly color = input<string>();
 
 	private readonly _ASSETS_ROOT = 'assets/img/icon';
-	private readonly untilDestroyed$ = takeUntilDestroyed();
 
-	constructor(
-		private _httpClient: HttpClient,
-		private iconRegistry: MatIconRegistry,
-		private sanitizer: DomSanitizer
-	) {}
+	private readonly httpClient = inject(HttpClient);
+	private readonly iconRegistry = inject(MatIconRegistry);
+	private readonly sanitizer = inject(DomSanitizer);
 
-	ngOnChanges(): void {
-		if (this.svg)
-			this.fetched$ = this._httpClient
-				.get(`${this._ASSETS_ROOT}/${this.svg}.svg`, {
-					responseType: 'text',
-				})
-				.pipe(
-					this.untilDestroyed$,
-					map(icon => {
-						if (this.svg)
-							this.iconRegistry.addSvgIconLiteral(
-								this.svg,
-								this.sanitizer.bypassSecurityTrustHtml(icon as string)
-							);
-						return !!this.svg;
+	protected readonly fetched = resource({
+		params: () => this.svg(),
+		loader: async ({params: svg}) => {
+			return firstValueFrom(
+				this.httpClient
+					.get(`${this._ASSETS_ROOT}/${svg}.svg`, {
+						responseType: 'text',
 					})
-				);
-	}
+					.pipe(
+						map(icon => {
+							if (svg)
+								this.iconRegistry.addSvgIconLiteral(
+									svg,
+									this.sanitizer.bypassSecurityTrustHtml(icon as string)
+								);
+							return !!svg;
+						})
+					)
+			);
+		},
+	});
 }

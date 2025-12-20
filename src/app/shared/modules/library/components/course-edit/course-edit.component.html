@@ -1,152 +1,153 @@
-@if (course) {
-	<div class="mx-auto px-5 py-3 w-full max-w-xl">
-		<div class="flex justify-center items-center gap-3">
-			<mat-form-field class="flex-1" (keyup.enter)="updateColor()">
-				<mat-label>Couleur de la leçon</mat-label>
-				<input matInput type="text" [(ngModel)]="course.color" />
-			</mat-form-field>
-			<span
-				class="block mb-6 rounded-xl w-12 h-12"
-				[style]="'background-color:' + course.color"></span>
-		</div>
+@if (course(); as course) {
+	<app-color-selector
+		label="Couleur de la leçon"
+		(changed)="updateColor()"
+		[(value)]="course.color" />
 
-		<mat-accordion>
-			<!-- Files -->
-			<mat-expansion-panel expanded>
-				<mat-expansion-panel-header>
-					<mat-panel-title> Fichiers </mat-panel-title>
-					<mat-panel-description>
-						Edition des fichiers principaux
-					</mat-panel-description>
-				</mat-expansion-panel-header>
-				<app-file-upload
-					type="files"
-					[courseUuid]="course.uuid"
-					[fieldName]="{value: 'script', viewValue: 'Script'}"
-					[fileExist]="!!course.script" />
-				<mat-divider />
-				<app-file-upload
-					type="files"
-					[courseUuid]="course.uuid"
-					[fieldName]="{value: 'poster', viewValue: 'Affiche'}"
-					[fileExist]="!!course.poster" />
-				<mat-divider />
-				<app-file-upload
-					type="files"
-					[courseUuid]="course.uuid"
-					[fieldName]="{value: 'lesson', viewValue: 'Leçon'}"
-					[fileExist]="!!course.lesson" />
-				<mat-divider />
-				<app-file-upload
-					type="files"
-					[courseUuid]="course.uuid"
-					[fieldName]="{value: 'exercices', viewValue: 'Exercices'}"
-					[fileExist]="!!course.exercice" />
-			</mat-expansion-panel>
+	<mat-accordion>
+		<!-- Files -->
+		<mat-expansion-panel expanded>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Fichiers </mat-panel-title>
+				<mat-panel-description>
+					Edition des fichiers principaux
+				</mat-panel-description>
+			</mat-expansion-panel-header>
 
-			<!-- Graphemes -->
-			<mat-expansion-panel>
-				<mat-expansion-panel-header>
-					<mat-panel-title> Graphème(s) </mat-panel-title>
-					<mat-panel-description> Edition des graphèmes </mat-panel-description>
-				</mat-expansion-panel-header>
-				<button mat-raised-button color="accent" (click)="editPhoneme()">
-					ajouter un graphème
-				</button>
-				<mat-divider class="!my-3" />
-				<div class="flex flex-wrap gap-3 max-w-sm">
-					@for (phoneme of course.phonemes; track phoneme) {
-						<span
-							class="flex items-center gap-2 bg-primary px-5 py-1 rounded-lg w-fit text-white">
-							<span class="flex flex-wrap items-center gap-1">
-								@if (phoneme.endOfWord) {
-									<span>-</span>
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{ value: 'script', viewValue: 'Script' }"
+				[fileExist]="!!course.script" />
+
+			<mat-divider />
+
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{ value: 'poster', viewValue: 'Affiche' }"
+				[fileExist]="!!course.poster" />
+
+			<mat-divider />
+
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{ value: 'lesson', viewValue: 'Leçon' }"
+				[fileExist]="!!course.lesson" />
+
+			<mat-divider />
+
+			<app-file-upload
+				type="files"
+				[courseUuid]="course.uuid"
+				[fieldName]="{ value: 'exercices', viewValue: 'Exercices' }"
+				[fileExist]="!!course.exercice" />
+		</mat-expansion-panel>
+
+		<!-- Graphemes -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Graphème(s) </mat-panel-title>
+				<mat-panel-description> Edition des graphèmes </mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<button color="accent" mat-raised-button (click)="editPhoneme()">
+				ajouter un graphème
+			</button>
+			<mat-divider class="!my-3" />
+			<div class="flex flex-wrap gap-3 max-w-sm">
+				@for (phoneme of course.phonemes; track phoneme) {
+					<span
+						class="flex items-center gap-2 bg-primary px-5 py-1 rounded-lg w-fit text-white">
+						<span class="flex flex-wrap items-center gap-1">
+							@if (phoneme.endOfWord) {
+								<span>-</span>
+							}
+							<span class="font-bold">{{ phoneme.name | uppercase }}</span>
+							@if (phoneme.sounds; as sounds) {
+								@for (sound of sounds; track sound) {
+									<span class="px-1 text-xs"> [{{ sound }}] </span>
 								}
-								<span class="font-bold">{{ phoneme.name | uppercase }}</span>
-								@if (phoneme.sounds; as sounds) {
-									@for (sound of sounds; track sound) {
-										<span class="px-1 text-xs"> [{{ sound }}] </span>
-									}
-								}
-								@if (phoneme.info) {
-									<span class="pl-1 text-xs"> ({{ phoneme.info }}) </span>
-								}
-							</span>
-
-							<mat-icon
-								inline
-								class="cursor-pointer"
-								(click)="editPhoneme(phoneme)">
-								edit
-							</mat-icon>
-
-							<mat-icon
-								inline
-								class="cursor-pointer"
-								color="warn"
-								(click)="removePhoneme(phoneme.name)">
-								delete
-							</mat-icon>
+							}
+							@if (phoneme.info) {
+								<span class="pl-1 text-xs"> ({{ phoneme.info }}) </span>
+							}
 						</span>
-					}
-				</div>
-			</mat-expansion-panel>
 
-			<!-- Sounds -->
-			<mat-expansion-panel>
-				<mat-expansion-panel-header>
-					<mat-panel-title> Son(s) </mat-panel-title>
-					<mat-panel-description>
-						Edition des sons (affiches)
-					</mat-panel-description>
-				</mat-expansion-panel-header>
-				<button mat-raised-button color="accent" (click)="addSound()">
-					ajouter un son
-				</button>
-				<mat-divider class="!my-3" />
-				<div class="flex flex-wrap gap-4">
-					@for (sound of course.sounds; track $index) {
-						<span
-							class="flex items-center gap-2 bg-primary px-2 py-1 rounded-lg w-fit text-white">
-							Son {{ sound | uppercase }}
+						<mat-icon
+							class="cursor-pointer"
+							inline
+							(click)="editPhoneme(phoneme)">
+							edit
+						</mat-icon>
 
-							<mat-icon
-								inline
-								class="cursor-pointer"
-								(click)="removeSound(sound)">
-								close
-							</mat-icon>
-						</span>
-					}
-				</div>
-			</mat-expansion-panel>
+						<mat-icon
+							class="cursor-pointer"
+							color="warn"
+							inline
+							(click)="removePhoneme(phoneme.name)">
+							delete
+						</mat-icon>
+					</span>
+				}
+			</div>
+		</mat-expansion-panel>
 
-			<!-- Posters -->
-			<mat-expansion-panel>
-				<mat-expansion-panel-header>
-					<mat-panel-title> Affiche(s) </mat-panel-title>
-					<mat-panel-description> Edition des affiches </mat-panel-description>
-				</mat-expansion-panel-header>
-				<button mat-raised-button color="accent" (click)="addPoster()">
-					ajouter une affiche
-				</button>
-				<mat-divider class="!my-3" />
-				<div class="flex flex-wrap gap-4">
-					@for (poster of course.posterNames; track $index) {
-						<span
-							class="flex items-center gap-2 bg-primary px-2 py-1 rounded-lg w-fit text-white">
-							Affiche {{ poster | uppercase }}
+		<!-- Sounds -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Son(s) </mat-panel-title>
+				<mat-panel-description>
+					Edition des sons (affiches)
+				</mat-panel-description>
+			</mat-expansion-panel-header>
+			<button color="accent" mat-raised-button (click)="addSound()">
+				ajouter un son
+			</button>
+			<mat-divider class="!my-3" />
+			<div class="flex flex-wrap gap-4">
+				@for (sound of course.sounds; track $index) {
+					<span
+						class="flex items-center gap-2 bg-primary px-2 py-1 rounded-lg w-fit text-white">
+						Son {{ sound | uppercase }}
 
-							<mat-icon
-								inline
-								class="cursor-pointer"
-								(click)="removePoster(poster)">
-								close
-							</mat-icon>
-						</span>
-					}
-				</div>
-			</mat-expansion-panel>
-		</mat-accordion>
-	</div>
+						<mat-icon
+							class="cursor-pointer"
+							inline
+							(click)="removeSound(sound)">
+							close
+						</mat-icon>
+					</span>
+				}
+			</div>
+		</mat-expansion-panel>
+
+		<!-- Posters -->
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title> Affiche(s) </mat-panel-title>
+				<mat-panel-description> Edition des affiches </mat-panel-description>
+			</mat-expansion-panel-header>
+			<button color="accent" mat-raised-button (click)="addPoster()">
+				ajouter une affiche
+			</button>
+			<mat-divider class="!my-3" />
+			<div class="flex flex-wrap gap-4">
+				@for (poster of course.posterNames; track $index) {
+					<span
+						class="flex items-center gap-2 bg-primary px-2 py-1 rounded-lg w-fit text-white">
+						Affiche {{ poster | uppercase }}
+
+						<mat-icon
+							class="cursor-pointer"
+							inline
+							(click)="removePoster(poster)">
+							close
+						</mat-icon>
+					</span>
+				}
+			</div>
+		</mat-expansion-panel>
+	</mat-accordion>
 }

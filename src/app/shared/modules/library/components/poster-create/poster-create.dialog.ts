@@ -1,32 +1,28 @@
-import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
 	Inject,
 } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import {
 	MAT_DIALOG_DATA,
 	MatDialogClose,
 	MatDialogRef,
 } from '@angular/material/dialog';
-import {MatDivider} from '@angular/material/divider';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIcon} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
 
 @Component({
 	selector: 'app-add-sound',
-	standalone: true,
 	imports: [
 		MatFormFieldModule,
 		FormsModule,
 		MatInputModule,
 		MatDialogClose,
-		MatDivider,
 		MatIcon,
 		MatButton,
 	],
@@ -44,7 +40,7 @@ export class PosterCreateDialog {
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA)
-		protected data: {courseUuid: string; type: 'sounds' | 'posters'},
+		protected data: { courseUuid: string; type: 'sounds' | 'posters' },
 		private uploadService: LibraryAdminService,
 		private readonly dialogRef: MatDialogRef<PosterCreateDialog>
 	) {}

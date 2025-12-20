@@ -1,10 +1,10 @@
-import {Component, HostBinding} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CardComponent} from '../elements';
 
 @Component({
-	standalone: true,
 	selector: 'app-faq-page',
-	imports: [CardComponent],
+	host: {class: 'block page p-6 bg-accent'},
+
 	template: `
 		<app-card
 			title="Foire Aux Questions"
@@ -12,7 +12,7 @@ import {CardComponent} from '../elements';
 			<img class="max-w-sm" src="assets/img/faq.gif" />
 		</app-card>
 	`,
+	imports: [CardComponent],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FaqPage {
-	@HostBinding('class') class = 'block page p-6 bg-accent';
-}
+export class FaqPage {}

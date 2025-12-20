@@ -47,18 +47,17 @@ import {MatButton} from '@angular/material/button';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
-	imports: [
-		FormModule,
-		LoaderComponent,
-		MatButton,
-		MatTooltipModule,
-		MatProgressBarModule,
-		MessageComponent,
-	],
-	selector: 'app-form',
-	templateUrl: './form.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        FormModule,
+        LoaderComponent,
+        MatButton,
+        MatTooltipModule,
+        MatProgressBarModule,
+        MessageComponent,
+    ],
+    selector: 'app-form',
+    templateUrl: './form.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent implements OnInit {
 	/**

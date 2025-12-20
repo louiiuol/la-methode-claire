@@ -1,38 +1,40 @@
-<div class="flex items-center gap-3 py-3">
-	<strong>{{ fieldName.viewValue }}</strong>
-	@if (fileExist) {
-		<div class="flex gap-2">
-			<p>Fichier en ligne</p>
+<strong>{{ fieldName.viewValue }}</strong>
+@if (fileExist()) {
+	<div class="flex gap-2">
+		<p>Fichier en ligne</p>
+		<div class="flex gap-1">
+			<mat-icon class="cursor-pointer" color="warn" (click)="deleteFile()">
+				delete
+			</mat-icon>
+		</div>
+	</div>
+} @else {
+	<div class="flex items-center gap-2 max-w-96">
+		@if (currentFile()) {
+			<p class="truncate w-48">{{ currentFile()?.name }}</p>
 			<div class="flex gap-1">
-				<mat-icon class="cursor-pointer" color="warn" (click)="deleteFile()">
-					delete
-				</mat-icon>
+				<button
+					color="primary"
+					mat-mini-fab
+					type="button"
+					[disabled]="!currentFile()"
+					(click)="upload()">
+					<mat-icon> add </mat-icon>
+				</button>
+				<button
+					color="warn"
+					mat-mini-fab
+					type="button"
+					(click)="currentFile.set(undefined)">
+					<mat-icon> delete </mat-icon>
+				</button>
 			</div>
-		</div>
-	} @else {
-		<div class="block w-96">
-			<div class="flex flex-wrap items-center gap-2">
-				<mat-form-field id="form-field-file" appearance="outline">
-					<input matInput [value]="fileName" />
-
-					<input
-						type="file"
-						id="fileInput"
-						accept="application/pdf"
-						(change)="selectFile($event)"
-						name="fileInput" />
-				</mat-form-field>
-				@if (currentFile) {
-					<button
-						type="button"
-						mat-flat-button
-						color="primary"
-						[disabled]="!currentFile"
-						(click)="upload()">
-						Ajouter
-					</button>
-				}
-			</div>
-		</div>
-	}
-</div>
+		} @else {
+			<input
+				name="fileInput"
+				accept="application/pdf"
+				type="file"
+				(change)="selectFile($event)" />
+		}
+	</div>
+}

@@ -4,10 +4,9 @@ import {MatTableModule} from '@angular/material/table';
 import {LibraryService} from '@shared/modules/library/services/library.service';
 
 @Component({
-	standalone: true,
-	imports: [AsyncPipe, MatTableModule, UpperCasePipe],
-	providers: [LibraryService],
-	templateUrl: 'method.page.html',
+    imports: [AsyncPipe, MatTableModule, UpperCasePipe],
+    providers: [LibraryService],
+    templateUrl: 'method.page.html'
 })
 export class MethodPage {
 	@HostBinding('class') class = 'block';

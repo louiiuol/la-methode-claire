@@ -1,22 +1,18 @@
-import {Component, HostBinding, inject} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import {AuthService} from '@core';
-import {LessonsExplorerComponent} from '@shared/modules/library/components/lessons-explorer/lessons-explorer.component';
+import { AuthService } from '@core';
+import { LessonsExplorerComponent } from '@shared/modules/library/components/lessons-explorer/lessons-explorer.component';
 
 @Component({
-	standalone: true,
+	selector: 'app-teacher-dashboard-page',
+	host: { class: 'h-full' },
+	template: ` <app-lessons-explorer
+		[currentUserLesson]="
+			authenticator.currentUser()?.currentLessonIndex ?? 0
+		" />`,
 	imports: [LessonsExplorerComponent],
-	template: `<app-lessons-explorer
-		[currentUserLesson]="currentUserLesson"
-		[currentLesson]="currentUserLesson"
-		[hasValidSubscription]="subscribed" />`,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardPage {
-	@HostBinding('class') class = 'h-full';
-
 	protected readonly authenticator = inject(AuthService);
-	protected readonly currentUserLesson =
-		this.authenticator.currentUser()?.currentLessonIndex ?? 0;
-	protected readonly subscribed =
-		!!this.authenticator.currentUser()?.subscribed;
 }

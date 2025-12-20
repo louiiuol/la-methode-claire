@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthService} from './services/auth.service';
 import {TokenInterceptor} from './interceptors/token.interceptor';
 import {TokenStore, UserStore} from './stores';

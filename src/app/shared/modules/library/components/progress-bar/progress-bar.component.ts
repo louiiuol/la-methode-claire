@@ -1,28 +1,69 @@
 import {
-	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
+	effect,
 	ElementRef,
-	EventEmitter,
-	HostBinding,
-	Input,
-	Output,
-	ViewChild,
+	inject,
+	input,
+	model,
+	output,
+	viewChild,
 } from '@angular/core';
 
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {CourseViewDto} from '../../types/course-view.dto';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {LibraryService} from '../../services/library.service';
-import {take} from 'rxjs/internal/operators/take';
-import {AuthService} from '@core';
-import {MatIcon} from '@angular/material/icon';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '@core';
+import { take } from 'rxjs/internal/operators/take';
+import { LibraryService } from '../../services/library.service';
+import { CourseViewDto } from '../../types/course-view.dto';
 
 @Component({
 	selector: 'app-progress-bar',
-	standalone: true,
-	imports: [MatTooltipModule, MatIconButton, MatIcon, MatButton],
-	templateUrl: './progress-bar.component.html',
+	host: {
+		class: 'w-full flex overflow-hidden',
+		style: 'border-radius: 0.5rem 0.5rem 0px 0px;',
+	},
+	template: `<button
+			class="flex justify-center items-center bg-white w-12"
+			(click)="scroll('back')">
+			<mat-icon class="!w-4" color="primary">arrow_back_ios</mat-icon>
+		</button>
+		<nav
+			class="flex flex-1 justify-start items-center gap-2 bg-white shadow-inner p-4 overflow-x-auto overscroll-x-contain"
+			#scrollContainer>
+			@for (lesson of lessons(); track lesson) {
+				<button
+					class="flex justify-center items-center !border-current bg-texture snap-start border rounded-full w-12 h-12 leading-none select-none shrink-0"
+					[class]="{
+						'font-bold': lesson.order === currentLessonIndex(),
+						'opacity-30': loading(),
+						'cursor-wait': loading(),
+					}"
+					[id]="'course-' + lesson.order"
+					[style]="
+						'color:' +
+						(lesson.order === currentLessonIndex() ? 'white' : lesson.color) +
+						'!important; background-color:' +
+						(lesson.order === currentLessonIndex()
+							? lesson.color
+							: 'transparent')
+					"
+					(click)="
+						!loading() &&
+							currentLessonIndex() !== lesson.order &&
+							setCurrentLesson(lesson.order)
+					">
+					<div class="flex justify-center items-center w-6 h-6 text-xl">
+						{{ (lesson.order + 1).toFixed() }}
+					</div>
+				</button>
+			}
+		</nav>
+		<button
+			class="flex justify-center items-center bg-white w-12"
+			(click)="scroll('forward')">
+			<mat-icon class="!pr-5 !w-4" color="primary">arrow_forward_ios</mat-icon>
+		</button> `,
 	styles: [
 		`
 			:host {
@@ -32,60 +73,90 @@ import {MatIcon} from '@angular/material/icon';
 			}
 		`,
 	],
+	imports: [MatTooltipModule, MatIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProgressBarComponent implements AfterViewInit {
-	@HostBinding('class')
-	protected readonly class = 'w-full flex';
+export class ProgressBarComponent {
+	readonly lessons = input.required<CourseViewDto[]>();
 
-	@Input({required: true}) lessons!: CourseViewDto[];
-	@Input({required: true}) currentLesson!: number;
-	@Input({required: true}) loading!: boolean;
+	readonly currentLessonIndex = model.required<number>();
+	readonly loading = model.required<boolean>();
 
-	/**
-	 * Emits new value when user select a new lesson (clicked on lesson button)
-	 */
-	@Output() selectedLesson = new EventEmitter<number>();
+	readonly selectedLesson = output<number>();
 
-	@ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLElement>;
-	protected startX = 0;
-	protected scrollLeft = 0;
-	protected isDown?: boolean;
+	private readonly library = inject(LibraryService);
+	private readonly authenticator = inject(AuthService);
 
-	constructor(
-		private readonly library: LibraryService,
-		private readonly authenticator: AuthService
-	) {}
+	private readonly scrollContainer = viewChild('scrollContainer', {
+		read: ElementRef<HTMLElement>,
+	});
 
-	ngAfterViewInit(): void {
-		this.scrollContainer.nativeElement.scrollTo(
-			(this.currentLesson - 1) * 48,
-			0
-		);
-	}
+	private readonly syncScrollWithCurrentLesson = effect(() => {
+		const lessons = this.lessons();
+		const container = this.scrollContainer();
+		const lessonIndex = this.currentLessonIndex();
 
-	scroll(direction: 'back' | 'forward') {
-		this.scrollContainer.nativeElement.scrollBy({
+		if (!container || !lessons?.length) {
+			return;
+		}
+
+		const run = () =>
+			this.scrollLessonIntoView(container.nativeElement, lessonIndex);
+
+		if (typeof window === 'undefined') {
+			run();
+			return;
+		}
+
+		window.requestAnimationFrame(run);
+	});
+
+	protected scroll(direction: 'back' | 'forward') {
+		this.scrollContainer()?.nativeElement.scrollBy({
 			left: direction == 'back' ? -96 : 96,
 			behavior: 'smooth',
 		});
 	}
 
-	setCurrentLesson(index: number) {
-		if (!this.loading) {
-			const reload = index == this.currentLesson;
-			this.loading = reload;
+	protected setCurrentLesson(index: number) {
+		if (!this.loading()) {
+			const reload = index == this.currentLessonIndex();
+			this.loading.set(reload);
 			this.library
 				.setCurrentLesson(index)
 				.pipe(take(1))
 				.subscribe(res => {
 					if (!res.error) {
-						this.currentLesson = index;
-						this.authenticator.updateCurrentUser({currentLessonIndex: index});
-						this.loading = false;
+						this.currentLessonIndex.set(index);
+						this.authenticator.updateCurrentUser({ currentLessonIndex: index });
+						this.loading.set(false);
 						this.selectedLesson.emit(index);
 					}
 				});
 		}
+	}
+
+	private scrollLessonIntoView(container: HTMLElement, lessonIndex: number) {
+		const currentLessonButton = container.querySelector<HTMLElement>(
+			`#course-${lessonIndex}`
+		);
+
+		if (!currentLessonButton) {
+			return;
+		}
+
+		const centeredOffset =
+			currentLessonButton.offsetLeft -
+			(container.clientWidth - currentLessonButton.offsetWidth) / 2;
+
+		const targetOffset = Math.min(
+			Math.max(centeredOffset, 0),
+			container.scrollWidth - container.clientWidth
+		);
+
+		container.scrollTo({
+			left: targetOffset,
+			behavior: 'smooth',
+		});
 	}
 }

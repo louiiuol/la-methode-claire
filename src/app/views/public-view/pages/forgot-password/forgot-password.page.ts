@@ -15,16 +15,15 @@ import {PasswordService, PasswordModule} from '@shared/modules/password';
  * will allow user to reset their password.
  */
 @Component({
-	standalone: true,
-	imports: [
-		CardComponent,
-		FormComponent,
-		PasswordModule,
-		MatButtonModule,
-		RouterLink,
-	],
-	templateUrl: './forgot-password.page.html',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        CardComponent,
+        FormComponent,
+        PasswordModule,
+        MatButtonModule,
+        RouterLink,
+    ],
+    templateUrl: './forgot-password.page.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotPasswordPage {
 	@HostBinding('class')

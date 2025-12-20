@@ -1,16 +1,16 @@
 import {
+	ChangeDetectionStrategy,
 	Component,
-	EventEmitter,
-	HostBinding,
-	Input,
-	Output,
-	signal,
+	inject,
+	input,
+	output,
+	resource,
 } from '@angular/core';
 
-import {catchError, take} from 'rxjs';
-import {TrustUrlPipe} from '@shared/pipes';
-import {LibraryService} from '@shared/modules/library/services/library.service';
-import {LoaderComponent, MessageComponent} from '@shared/components/elements';
+import { LoaderComponent, MessageComponent } from '@shared/components/elements';
+import { LibraryService } from '@shared/modules/library/services/library.service';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // https://www.npmjs.com/package/ng2-pdfjs-viewer
+import { firstValueFrom } from 'rxjs';
 
 /**
  * Simple component to display a file into an iframe based on given file name.
@@ -18,45 +18,59 @@ import {LoaderComponent, MessageComponent} from '@shared/components/elements';
  * @author louiiuol
  */
 @Component({
-	standalone: true,
 	selector: 'app-file-viewer',
-	imports: [TrustUrlPipe, MessageComponent, LoaderComponent],
-	templateUrl: './file-viewer.component.html',
+	host: { class: 'flex w-full h-full' },
+	template: `@if (pdf.value(); as pdf) {
+			<ng2-pdfjs-viewer
+				class="w-full"
+				theme="auto"
+				[downloadFileName]="fileName()"
+				[pdfSrc]="pdf"
+				[showAnnotations]="false"
+				[showOpenFile]="false"
+				[showSpinner]="false"
+				[urlValidation]="false" />
+		} @else if (pdf.isLoading()) {
+			<app-loader />
+		} @else {
+			<div class="mx-auto my-auto w-96 flex flex-col items-center gap-6">
+				<img
+					class="mx-auto max-w-60"
+					alt="Aucun fichier"
+					src="assets/img/no-file.png" />
+
+				<app-message
+					class="text-lg"
+					details="Merci de réessayer ultérieurement."
+					severity="error"
+					summary="Ce fichier n'est pas disponible." />
+			</div>
+		} `,
+	imports: [MessageComponent, LoaderComponent, PdfJsViewerModule],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileViewerComponent {
-	@HostBinding('class')
-	protected readonly class = 'flex w-full h-full';
+	readonly fileName = input.required<string>();
+	readonly textColor = input<string>('black');
 
-	@Input({required: true}) set fileName(fileName: string) {
-		this.pdf.set(null);
-		if (fileName.length > 2)
-			this.libraryService
-				.getPdf(fileName)
-				.pipe(take(1))
-				.pipe(
-					catchError(res => {
-						this.failedToLoad = !res.ok;
-						this.fileLoaded.emit(false);
-						throw res;
-					})
-				)
-				.subscribe((res: any) => {
-					const blob = new Blob([new Uint8Array(res)], {
-						type: 'application/pdf',
-					});
-					this.pdf.set(URL.createObjectURL(blob));
-					this.fileLoaded.emit(true);
-					this.failedToLoad = false;
+	readonly fileLoaded = output<boolean>();
+
+	private readonly library = inject(LibraryService);
+
+	protected readonly pdf = resource({
+		params: () => this.fileName(),
+		loader: async ({ params: fileName }) => {
+			try {
+				const res = await firstValueFrom(this.library.getPdf(fileName));
+				const blob = new Blob([new Uint8Array(res)], {
+					type: 'application/pdf',
 				});
-	}
-
-	/**
-	 * Emits new value when file was loaded (or failed) based on boolean
-	 */
-	@Output() fileLoaded = new EventEmitter<boolean>();
-
-	protected readonly pdf = signal<any>(null);
-	protected failedToLoad = false;
-
-	constructor(private readonly libraryService: LibraryService) {}
+				this.fileLoaded.emit(true);
+				return URL.createObjectURL(blob);
+			} catch (error) {
+				this.fileLoaded.emit(true);
+				return null;
+			}
+		},
+	});
 }

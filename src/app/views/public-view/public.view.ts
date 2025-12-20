@@ -13,10 +13,9 @@ import {HeaderComponent} from '@shared/components/header/header.component';
  * **This container must only contain public actions; At this point, user isn't authenticated yet !**
  */
 @Component({
-	standalone: true,
-	selector: 'app-public-view',
-	imports: [RouterOutlet, HeaderComponent, MatIconButton, MatIcon],
-	template: `
+    selector: 'app-public-view',
+    imports: [RouterOutlet, HeaderComponent, MatIconButton, MatIcon],
+    template: `
 		<app-header type="public" />
 		<main class="flex-1">
 			<router-outlet />
@@ -44,7 +43,7 @@ import {HeaderComponent} from '@shared/components/header/header.component';
 				}
 			</ul>
 		</footer>
-	`,
+	`
 })
 export class PublicView {
 	@HostBinding('class') class = 'flex flex-col h-full';

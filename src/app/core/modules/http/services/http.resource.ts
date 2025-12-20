@@ -1,19 +1,19 @@
-import {inject} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, map, of} from 'rxjs';
-import {environment} from '@env/environment';
-import {NotificationService} from '@core/modules/notification/services/notification.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { capitalize, clean } from '@core/helpers';
+import { NotificationService } from '@core/modules/notification/services/notification.service';
+import { environment } from '@env/environment';
+import { catchError, map, of } from 'rxjs';
+import { common_actions } from '../models/http-errors';
 import {
 	ApiResponse,
-	RequestOptions,
-	RequestActions,
-	HttpOutputEntity,
-	HttpOutputArray,
-	HttpOutputPaginated,
 	HttpOutput,
+	HttpOutputArray,
+	HttpOutputEntity,
+	HttpOutputPaginated,
+	RequestActions,
+	RequestOptions,
 } from '../types';
-import {capitalize, clean} from '@core/helpers';
-import {common_actions} from '../models/http-errors';
 
 /**
  * Abstract class to automate workflow for every REST requests performed by the application
@@ -29,7 +29,7 @@ export abstract class HttpResource {
 	protected readonly http = inject(HttpClient);
 	protected readonly notifier = inject(NotificationService);
 
-	private readonly statusTranslation: {[key: number | string]: string} = {
+	private readonly statusTranslation: { [key: number | string]: string } = {
 		undefined: "L'API est hors ligne. Merci de réessayer plus tard !",
 		0: "L'API est hors ligne. Merci de réessayer plus tard !",
 		401: 'Identifiants incorrects',
