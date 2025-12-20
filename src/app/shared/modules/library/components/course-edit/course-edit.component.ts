@@ -1,32 +1,38 @@
-import {UpperCasePipe} from '@angular/common';
-import {ChangeDetectionStrategy, Component, inject, model} from '@angular/core';
+import { UpperCasePipe } from '@angular/common';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	model,
+} from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
 } from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
-import {MatDivider} from '@angular/material/divider';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {FileUploadComponent} from '@shared/modules/library/components/file-upload/file-upload.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDivider } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { FileUploadComponent } from '@shared/modules/library/components/file-upload/file-upload.component';
 
-import {CourseViewDto} from '@shared/modules/library/types/course-view.dto';
-import {take} from 'rxjs';
+import { CourseViewDto } from '@shared/modules/library/types/course-view.dto';
+import { take } from 'rxjs';
 
-import {MatButton} from '@angular/material/button';
-import {addOrReplace} from '@core/helpers/fn/add-or-replace.fn';
-import {LibraryAdminService} from 'src/app/views/admin-view/services/library.service';
-import {PhonemeViewDto} from '../../types/phoneme-view.dto';
-import {PhonemeEditComponent} from '../phoneme-edit/phoneme-edit.component';
-import {PosterCreateDialog} from '../poster-create/poster-create.dialog';
+import { MatButton } from '@angular/material/button';
+import { addOrReplace } from '@core/helpers/fn/add-or-replace.fn';
+import { LibraryAdminService } from 'src/app/views/admin-view/services/library.service';
+import { PhonemeViewDto } from '../../types/phoneme-view.dto';
+import { ColorSelectorComponent } from '../fields/color-selector.component';
+import { PhonemeEditComponent } from '../phoneme-edit/phoneme-edit.component';
+import { PosterCreateDialog } from '../poster-create/poster-create.dialog';
 
 @Component({
 	selector: 'app-course-edit',
-	host: {class: 'block px-4 pb-2'},
+	host: { class: 'mx-auto px-5 py-3 w-full max-w-xl' },
 	imports: [
 		UpperCasePipe,
 		MatFormFieldModule,
@@ -38,8 +44,9 @@ import {PosterCreateDialog} from '../poster-create/poster-create.dialog';
 		FileUploadComponent,
 		MatExpansionModule,
 		ReactiveFormsModule,
+		ColorSelectorComponent,
 	],
-	providers: [LibraryAdminService],
+	providers: [LibraryAdminService, ColorSelectorComponent],
 	templateUrl: 'course-edit.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,10 +63,10 @@ export class CourseEditComponent {
 		file: new FormControl(null),
 	});
 
-	updateColor() {
+	protected updateColor() {
 		const course = this.course();
 		this.library
-			.editCourse(course.uuid, {color: course.color})
+			.editCourse(course.uuid, { color: course.color })
 			.pipe(take(1))
 			.subscribe();
 	}
@@ -102,7 +109,7 @@ export class CourseEditComponent {
 	addSound() {
 		this.dialog
 			.open(PosterCreateDialog, {
-				data: {courseUuid: this.course().uuid, type: 'sounds'},
+				data: { courseUuid: this.course().uuid, type: 'sounds' },
 			})
 			.afterClosed()
 			.subscribe(sound => {
@@ -128,7 +135,7 @@ export class CourseEditComponent {
 	addPoster() {
 		this.dialog
 			.open(PosterCreateDialog, {
-				data: {courseUuid: this.course().uuid, type: 'posters'},
+				data: { courseUuid: this.course().uuid, type: 'posters' },
 			})
 			.afterClosed()
 			.pipe(take(1))

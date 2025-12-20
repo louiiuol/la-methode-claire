@@ -1,60 +1,72 @@
 app-file-upload,
 app-add-sound {
-	.progress-bar {
-		padding: 0;
-	}
+  .progress-bar {
+    padding: 0;
+  }
 
-	.progress {
-		width: 50px;
-	}
+  .progress {
+    width: 50px;
+  }
 
-	#form-field-file {
-		.mdc-text-field--no-label .mat-mdc-form-field-infix {
-			padding-block: 4px !important;
-		}
-		.mat-mdc-text-field-wrapper {
-			height: 32px;
-		}
-		.mat-mdc-form-field-subscript-wrapper {
-			display: none !important;
-		}
-	}
+  .form-field-file {
+    .mdc-text-field--no-label .mat-mdc-form-field-infix {
+      padding-block: 4px !important;
+    }
 
-	#fileInput {
-		position: absolute;
-		cursor: pointer;
-		z-index: 10;
-		opacity: 0;
-		height: 32px;
-		width: 100%;
-		left: 0px;
-		top: 0px;
-	}
+    .mat-mdc-text-field-wrapper {
+      height: 32px;
+    }
 
-	.mat-toolbar-single-row {
-		height: auto !important;
-		background: transparent;
-		padding: 0;
-	}
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none !important;
+    }
+  }
 
-	.mat-toolbar-single-row button {
-		width: 100px;
-	}
+  #fileInput {
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    height: 32px;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+  }
 
-	.mat-form-field {
-		width: 100%;
-	}
+  input[type=file]::file-selector-button {
+    margin-right: 8px;
+    border: none;
+    background: var(--lmc-primary-color);
+    padding: 8px 12px;
+    color: #fff;
+    cursor: pointer;
+    max-width: 248px;
+  }
 
-	.mat-mdc-form-field {
-		display: block;
-	}
+  .mat-toolbar-single-row {
+    height: auto !important;
+    background: transparent;
+    padding: 0;
+  }
 
-	.message {
-		background-color: #ddd;
-		padding: 15px;
-		color: #333;
-		border: #aaa solid 1px;
-		border-radius: 4px;
-		margin-bottom: 10px;
-	}
+  .mat-toolbar-single-row button {
+    width: 100px;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .mat-mdc-form-field {
+    display: block;
+  }
+
+  .message {
+    background-color: #ddd;
+    padding: 15px;
+    color: #333;
+    border: #aaa solid 1px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
 }
